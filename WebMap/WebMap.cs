@@ -20,7 +20,7 @@ namespace WebMap
     {
         // upstream's: BepInEx names the config file after it, so every operator's config hangs on it
         public const string GUID = "com.github.h0tw1r3.valheim.webmap";
-        public const string NAME = "WebMap";
+        public const string NAME = "ForgeMap";   // ForgeServer.fr's fork; GUID kept so the config file and a WebMap install carry over
         public const string VERSION = Manifest.Version;        // manifest.json's, compiled in by WebMap.csproj
 
         internal static readonly string[] ALLOWED_PINS = { "dot", "fire", "mine", "house", "cave" };

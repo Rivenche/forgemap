@@ -1,44 +1,47 @@
-/* site.css — the theme, the base, the shared components and the chrome of every
+/* site.css — ForgeMap (ForgeServer.fr), from WebMap (MIT): ForgeServer's dark forge palette, ember accent
+ * (--gold keeps its name upstream, it holds the ember now) and JetBrains Mono for the display face.
+ * The theme, the base, the shared components and the chrome of every
  * page. A page's own <style> holds only what that page alone draws.
  */
 
 /* ---------- tokens ---------- */
 :root{
   /* surfaces, darkest to lightest */
-  --stage:#0a0c0a;   /* the ground behind the world */
-  --bg:#0d0f0e;      /* the page */
-  --bg-2:#12150f;    /* bars and sidebars */
-  --well:#0f120e;    /* inset: an input, the log */
-  --sheet:#141813;   /* a dialog */
-  --card:#171b18;
-  --card-2:#1f2521;  /* a row under the pointer */
-  --glass:rgba(18,21,15,.92);   /* a control floating over the map */
-  --line:#2a302a;
+  --stage:#0c0a09;   /* the ground behind the world */
+  --bg:#141110;      /* the page */
+  --bg-2:#1b1715;    /* bars and sidebars */
+  --well:#100d0c;    /* inset: an input, the log */
+  --sheet:#1f1a17;   /* a dialog */
+  --card:#221d1a;
+  --card-2:#2b2420;  /* a row under the pointer */
+  --glass:rgba(27,23,21,.92);   /* a control floating over the map */
+  --line:#3a2f28;
   /* ink */
-  --ink:#e7e2d4;--ink-2:#c2bcab;--muted:#9aa093;--faint:#6b7065;--bright:#fff;
+  --ink:#f3ede4;--ink-2:#d6cbbd;--muted:#a89c92;--faint:#75685e;--bright:#fff;
   /* accents */
-  --gold:#c9a15a;--gold-ink:#0d0f0e;--gold-dim:#241d10;
+  --gold:#f97316;--gold-ink:#141110;--gold-dim:#2e1706;
   --ok:#6faf68;--off:#a85757;--unknown:#8a8577;--portal:#6fd8e6;
   --ok-line:#2f4b2e;   /* the edge of a card that is live */
-  --nil:#565b53;       /* a figure that is nothing */
+  --nil:#5e534b;       /* a figure that is nothing */
   /* the map's own hues: what a portal, a trader, a grave wears; the atlas's ground */
   --portal-ink:#9fe8f2;--portal-dim:#97c4d0;--portal-line:#3a5a65;
   --portal-well:rgba(14,21,24,.9);--portal-on:rgba(111,216,230,.14);
   --trader:#f0cf7a;--grave:#d9c7a6;--chart:#05070a;--void:#000;
   /* over the world: a label's backing, a text's halo, an icon's shadow */
-  --halo:rgba(10,12,10,.8);--halo-text:0 1px 3px #000,0 0 6px #000;
+  --halo:rgba(12,9,7,.8);--halo-text:0 1px 3px #000,0 0 6px #000;
   --shadow-ink:drop-shadow(0 1px 2px rgba(0,0,0,.55));
-  --modal:rgba(4,6,4,.72);--hair:rgba(255,255,255,.035);--scroll:#2f362f;
+  --modal:rgba(6,4,3,.72);--hair:rgba(255,255,255,.035);--scroll:#3a2f28;
   /* shape */
   --r-sm:.35rem;--r:.5rem;--r-lg:.7rem;--pill:999px;
   --shadow:0 2px 8px rgba(0,0,0,.55);--shadow-lg:0 20px 60px rgba(0,0,0,.6);
   --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --display:var(--font);   /* the brand, a page's title, the map's capitals: the same sans, set in tracked capitals */
-  --mono:"Cascadia Code",Consolas,monospace;
+  --display:"JetBrains Mono",ui-monospace,Consolas,monospace;   /* the brand, a page's title, the map's capitals: the same sans, set in tracked capitals */
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
   --nav:52px;--side:320px;--ctl:36px;   /* --ctl: a button floating over the map */
 }
 
 /* the one face of our own, served with the pages: one variable file covers every weight */
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:400 700;font-display:swap;src:url(fonts/JetBrainsMono.woff2) format("woff2")}  /* SIL OFL 1.1, fonts/OFL.txt */
 
 /* ---------- base ---------- */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -238,13 +241,18 @@ textarea.field{resize:vertical;min-height:74px;font-size:.8rem;line-height:1.45}
 .who .out:hover{color:var(--off);text-decoration:none}
 .navlinks a.here{color:var(--gold)}
 .navlinks a.here::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--gold)}
+/* ForgeMap: the FR / EN switch at the bar's end */
+.lang-switch{display:flex;align-items:center;gap:.15rem;padding-left:.9rem;border-left:1px solid var(--line);align-self:stretch;font-family:var(--mono);font-size:.72rem}
+.lang-switch button{background:none;border:1px solid transparent;border-radius:var(--r-sm);color:var(--muted);padding:.15rem .4rem;cursor:pointer;letter-spacing:.04em}
+.lang-switch button:hover{color:var(--ink);border-color:var(--line)}
+.lang-switch button.on{color:var(--gold-ink);background:var(--gold);font-weight:700}
 /* on a phone the bar swipes; a fade at the edge says so, over blank padding so the
    last link is never under it */
 @media (max-width:760px){
   .brand{font-size:.8rem}
   .navlinks{gap:.9rem;padding-right:2.2rem}
   .nav::after{content:"";position:absolute;right:0;top:0;bottom:0;width:2.2rem;pointer-events:none;
-    background:linear-gradient(90deg,rgba(18,21,15,0),var(--bg-2) 70%)}
+    background:linear-gradient(90deg,rgba(27,23,21,0),var(--bg-2) 70%)}
 }
 
 /* ---------- app shell ---------- */

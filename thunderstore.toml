@@ -9,11 +9,11 @@
 schemaVersion = "0.0.1"
 
 [package]
-namespace = "Mubs"
-name = "WebMap"
+namespace = "ForgeServer"   # the Thunderstore team: to confirm before the first upload
+name = "ForgeMap"
 versionNumber = "0.0.0"
-description = "Dedicated-server web map for Valheim 1.0."
-websiteUrl = "https://github.com/hunter-jsb/valheim-webmap"
+description = "Live web map for Valheim dedicated servers, in French and English."
+websiteUrl = "https://forgeserver.fr"
 containsNsfwContent = false
 
 [package.dependencies]

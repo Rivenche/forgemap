@@ -9,7 +9,7 @@
     <TargetFramework>net48</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <AssemblyName>WebMap</AssemblyName>
-    <AssemblyTitle>Valheim WebMap</AssemblyTitle>
+    <AssemblyTitle>ForgeMap (Valheim WebMap fork, ForgeServer.fr)</AssemblyTitle>
     <Copyright>(c) 2025 Various Authors</Copyright>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>

@@ -1,5 +1,19 @@
 # Changelog
 
+## ForgeMap 1.0.0
+
+ForgeMap, by ForgeServer.fr, starts from WebMap 2.16.1.
+
+* **French and English.** Every page speaks French or English, the browser's language by
+  default, with a FR / EN switch at the end of the top bar (kept in this browser). The
+  texts live in `web/js/lang/fr.js`; a text with no translation shows in English.
+* **ForgeServer's look.** The forge's dark palette, the ember orange accent, and JetBrains
+  Mono (bundled, SIL OFL) for titles, capitals and figures.
+* Credits for WebMap's authors kept in the README, the licence and the pages.
+
+---
+
+
 ## 2.16.1
 
 * The map page's script is split into files with one global each, as `map-core.js` and
