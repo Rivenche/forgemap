@@ -8,6 +8,10 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 WEB = ROOT / "WebMap" / "web"
 v = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))["version_number"]
+# plus the build's own mark, so two builds of one version never share a cached file
+import subprocess, time
+try: v += "-" + subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--short", "HEAD"], capture_output=True, text=True, check=True).stdout.strip()
+except Exception: v += "-" + time.strftime("%Y%m%d%H%M")
 pat = re.compile(r'((?:src|href)=")((?!https?:|//|#|data:)[^"?#]+\.(?:js|css))(?:\?v=[^"]*)?(")')
 n = 0
 for page in sorted(WEB.glob("*.html")):

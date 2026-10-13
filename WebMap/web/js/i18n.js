@@ -57,11 +57,24 @@
     const n = NAMES[String(prefab || "").replace(/\(Clone\)$/, "").trim()];
     return n ? (lang === "fr" && n[1]) || n[0] : "";
   }
+  // The choice is kept in this browser, and also in the address: a page served in a sandbox
+  // (ForgeServer's Atelier serves the map so) may not touch localStorage at all, so the ?lang=
+  // rides along on every link to another page of the map (see the click handler below).
   function setLang(code){
     if(!LANGS.includes(code)) return;
     try{ localStorage.setItem("forgemap.lang", code); }catch(e){}
-    const u = new URL(location.href); u.searchParams.delete("lang"); location.replace(u.href);
+    const u = new URL(location.href); u.searchParams.set("lang", code); location.replace(u.href);
   }
+  let queried = false;
+  try{ queried = LANGS.includes(new URLSearchParams(location.search).get("lang")); }catch(e){}
+  if(queried && typeof document.addEventListener === "function")
+    document.addEventListener("click", e => {
+      const a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+      if(!a || a.target === "_blank") return;
+      let u; try{ u = new URL(a.getAttribute("href"), location.href); }catch(err){ return; }
+      if(u.origin !== location.origin || !/\.html$/.test(u.pathname) || u.searchParams.has("lang")) return;
+      u.searchParams.set("lang", lang); a.href = u.href;   // the browser follows the link as rewritten
+    }, true);
 
   // ---------- static text ----------
   const ATTRS = ["title", "placeholder", "aria-label", "alt"];
