@@ -1,5 +1,5 @@
 {
- "<b>Kitchen</b> {cooked} meals cooked, {burnt} burnt &#183; {brewed} meads brewed &#183; {honey} honey taken &#183; {smelted} bars smelted": "<b>Cuisine</b> {cooked} repas cuisinés, {burnt} brûlés &#183; {brewed} hydromels brassés &#183; {honey} miel récolté &#183; {smelted} lingots fondus",
+ "<b>Kitchen</b> {cooked} meals cooked, {burnt} burnt &#183; {brewed} meads brewed &#183; {honey} honey taken &#183; {smelted} bars smelted": "<b>Cuisine</b> repas cuisinés : {cooked}, brûlés : {burnt} &#183; hydromels brassés : {brewed} &#183; miel récolté : {honey} &#183; lingots fondus : {smelted}",
  "<span class=\"k\"></span> a standing link · <span class=\"k dash\"></span> one retag away · drag to pan, scroll or pinch to zoom": "<span class=\"k\"></span> lien établi · <span class=\"k dash\"></span> à un renommage près · glisse pour te déplacer, molette ou pincement pour zoomer",
  "A live map of a Valheim server: builds, forest, portals, boats and players.": "La carte en direct d'un serveur Valheim : constructions, forêt, portails, bateaux et joueurs.",
  "Afloat": "À flot",

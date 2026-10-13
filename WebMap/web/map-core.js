@@ -837,7 +837,7 @@ function biomeRows(list){
     return `<span class="b"><i style="background:${BIOME_INK[b.biome] || "#9aa093"}"></i>${esc(I18N.t(b.biome))}</span>`
       + `<span class="bar" style="width:${Math.max(1, 100*m/most).toFixed(1)}%" title="${I18N.t("{biome}: {km} km walked, {deaths}", {biome: esc(I18N.t(b.biome)), km: km(m), deaths: plural(d, "death")})}"></span>`
       + `<span class="km">${km(m)} km</span>`
-      + `<span class="dx${d ? "" : " safe"}"><b>${d ? "× " + d : "✓"}</b> ${d ? per(d, m) : ""}</span>`; }).join("");
+      + `<span class="dx${d ? "" : " safe"}">${d ? I18N.t("<b>× {n}</b> {per}", {n: d, per: per(d, m)}) : "<b>✓</b> "}</span>`; }).join("");
 }
 const pic = {
   strip(list, me, get){
@@ -850,7 +850,7 @@ const pic = {
     const r = 12, C = 2*Math.PI*r;
     return `<svg viewBox="0 0 200 34"><circle class="rg" cx="17" cy="17" r="${r}"/>`
       + `<circle class="rf" cx="17" cy="17" r="${r}" stroke-dasharray="${(C*Math.max(.02, Math.min(1, share))).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 17 17)"/>`
-      + `<text class="t" x="40" y="21"><tspan class="tb">${Math.round(share*100)}%</tspan> ${esc(text)}</text></svg>`;
+      + `<text class="t" x="40" y="21"><tspan class="tb">${Math.round(share*100)}${I18N.lang === "fr" ? "\u202f%" : "%"}</tspan> ${esc(text)}</text></svg>`;
   },
   bars(rows){   // [{frac, label, colour?}]: one thin bar each, labelled at the right
     const h = rows.length > 1 ? 12 : 16, gap = 4;

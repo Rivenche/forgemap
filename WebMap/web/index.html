@@ -168,6 +168,7 @@
   .layers:hover .tray,.layers.open .tray{display:flex}
   .trow{display:flex;align-items:center;gap:.7rem}
   .trow .tk{width:2.6rem}
+  html[lang="fr"] .trow .tk{width:3.7rem}   /* AFFICHER, DÉTAILS, LUMIÈRE: the French column is wider */
   .grounds{display:flex;gap:.55rem}
   .gcard{display:flex;flex-direction:column;align-items:center;gap:.25rem;padding:0;border:0;background:none;
     color:var(--muted);cursor:pointer;font-size:.68rem}
@@ -383,10 +384,10 @@
     <h3>Pins</h3>
     <div class="cmds">
       <div><code>!pin</code><span>drop an unnamed dot where you stand</span></div>
-      <div><code>!pin &lt;text&gt;</code><span>drop a dot with a label</span></div>
-      <div><code>!pin &lt;type&gt; &lt;text&gt;</code><span data-i18n>a typed pin, e.g. <code>!pin house Base</code></span></div>
+      <div><code data-i18n>!pin &lt;text&gt;</code><span>drop a dot with a label</span></div>
+      <div><code data-i18n>!pin &lt;type&gt; &lt;text&gt;</code><span data-i18n>a typed pin, e.g. <code>!pin house Base</code></span></div>
       <div><code>!undoPin</code><span>remove your most recent pin</span></div>
-      <div><code>!deletePin &lt;text&gt;</code><span>remove the pin matching that text</span></div>
+      <div><code data-i18n>!deletePin &lt;text&gt;</code><span>remove the pin matching that text</span></div>
       <div><code>!deletePin</code><span data-i18n>with no text, removes your most recent <em>unnamed</em> pin</span></div>
       <div class="pintypes">
         <b class="eyebrow">Types</b>

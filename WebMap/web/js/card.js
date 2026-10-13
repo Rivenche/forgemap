@@ -35,6 +35,8 @@ const AXES = [
   ["Slayer", ["kills"], p => I18N.tn(num(p.kills), "{n} kill", "{n} kills")],
   ["Harvester", ["trees", "rocks", "cooked", "smelted"], p => `${I18N.tn(num(p.trees), "{n} tree", "{n} trees")} · ${I18N.tn(num(p.rocks), "{n} rock", "{n} rocks")}${BEST.cooked > 0 || BEST.smelted > 0 ? ` · ${I18N.t("{n} made", {n: I18N.num(num(kit(p).cooked) + num(kit(p).smelted))})}` : ""}`],
 ];
+// ForgeMap: in French the longer words of a side figure run off the card, so its parts stand one under the other
+const lines = (t, anchor, lx) => I18N.lang === "fr" && anchor !== "middle" ? t.split(" · ").map((s, j) => j ? `<tspan x="${lx.toFixed(1)}" dy="10">${esc(s)}</tspan>` : esc(s)).join("") : esc(t);
 function radar(p, size, big){
   const c = size/2, R = big ? c - 30 : c - 3, pts = [];
   AXES.forEach(([, keys], i) => {
@@ -52,7 +54,7 @@ function radar(p, size, big){
       const a = -Math.PI/2 + i*2*Math.PI/5, lx = c + (R + 14)*Math.cos(a), ly = c + (R + 14)*Math.sin(a);
       const anchor = Math.abs(Math.cos(a)) < .2 ? "middle" : Math.cos(a) > 0 ? "start" : "end";
       out += `<text class="lb" x="${lx.toFixed(1)}" y="${(ly + (Math.sin(a) > .5 ? 6 : Math.sin(a) < -.5 ? -4 : 0)).toFixed(1)}" text-anchor="${anchor}">${I18N.t(name)}</text>`
-        + `<text class="lv" x="${lx.toFixed(1)}" y="${(ly + (Math.sin(a) > .5 ? 17 : Math.sin(a) < -.5 ? 7 : 11)).toFixed(1)}" text-anchor="${anchor}">${esc(text(p))}</text>`;
+        + `<text class="lv" x="${lx.toFixed(1)}" y="${(ly + (Math.sin(a) > .5 ? 17 : Math.sin(a) < -.5 ? 7 : 11)).toFixed(1)}" text-anchor="${anchor}">${lines(text(p), anchor, lx)}</text>`;
     });
   }
   return out + `</svg>`;
@@ -203,12 +205,13 @@ function classify(p, roster){
 // the class as its pill, the reason under the pointer
 const pill = c => c ? `<span class="cls${c.early ? " early" : ""}" title="${esc(c.why)}">${c.title}</span>` : "";
 const mini = (v, k, cls) => `<span class="m${cls ? " " + cls : ""}"><span class="v">${v}</span><span class="k">${k}</span></span>`;
-// the four figures people compare
+// the four figures people compare; a label agrees with its count in French, English keeps its one word
+const lab = (n, one, many) => I18N.lang === "fr" ? I18N.tn(n, one, many) : I18N.t(many);
 function figures(p){
   const d = num(p.deaths), m = num(p.dist_m);
-  return `<span class="mini">` + mini(d, I18N.t("deaths"), d ? "" : "nil") + mini(km(m), "km", m ? "" : "nil")
+  return `<span class="mini">` + mini(I18N.num(d), lab(d, "death", "deaths"), d ? "" : "nil") + mini(km(m), "km", m ? "" : "nil")
     + mini(per(d, m).replace(/^1\D*?(?=\d)/, ""), I18N.t("per death"), d && m ? "" : "nil")
-    + mini(num(p.pieces), I18N.t("pieces"), num(p.pieces) ? "" : "nil") + `</span>`;
+    + mini(I18N.num(num(p.pieces)), lab(num(p.pieces), "piece", "pieces"), num(p.pieces) ? "" : "nil") + `</span>`;
 }
 // ---------- the Viking ----------
 // The player as the 3D view draws them, on a slow turntable on the map's ground colour

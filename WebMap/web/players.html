@@ -74,6 +74,8 @@
   .dhead .links{margin-left:auto;display:flex;gap:.4rem;flex-wrap:wrap}
   .top{display:grid;grid-template-columns:minmax(0,1fr) 232px;gap:.6rem 1.4rem;align-items:start;margin-top:1.1rem}
   .portrait{display:grid;gap:.9rem;width:232px}
+  /* the pentagon's labels reach past its square; BÂTISSEUR, longer than BUILDER, needs more room at the right */
+  @media (min-width:761px){ html[lang="fr"] .top{padding-right:1.25rem} }
   .viking canvas{height:300px}
   .radar.big{width:232px;height:232px;display:block}
   .groups{display:grid;gap:.75rem}
@@ -230,7 +232,7 @@ function gearGroup(p){
   const w = p.gear && p.gear.worn; if(!w || !Object.keys(w).length) return "";
   const slots = [["right", "right hand"], ["left", "left hand"], ["rightBack", "on the back"], ["leftBack", "on the back"], ["chest", "chest"], ["helmet", "head"], ["legs", "legs"], ["shoulder", "cape"]];
   return `<section class="group"><h3 class="eyebrow">${I18N.t("Gear")} <small>${I18N.t("last seen wearing")}</small></h3><div class="figs">`
-    + slots.filter(([k]) => w[k]).map(([k, label]) => `<div class="stat fig txt" title="${esc(w[k])}"><div class="v">${esc(itemWord(w[k]))}</div><div class="k">${I18N.t(label)}</div></div>`).join("") + `</div></section>`;
+    + slots.filter(([k]) => w[k]).map(([k, label]) => `<div class="stat fig txt" title="${esc(itemWord(w[k]))}"><div class="v">${esc(itemWord(w[k]))}</div><div class="k">${I18N.t(label)}</div></div>`).join("") + `</div></section>`;
 }
 function row(p){
   const on = !!p.online;
@@ -275,6 +277,8 @@ function renderDetail(){
   if(!p){ head.innerHTML = `<button class="btn quiet sm back" id="back">&larr; ${I18N.t("Players")}</button><h2>${esc(PICK)}</h2>`; body.innerHTML = `<p class="empty">${I18N.t("No tally under that name.")}</p>`; DLAST = ""; return; }
   const on = !!p.online, graves = num(p.graves), runs = p.runs || {}, streak = p.streak_m || {}, runm = p.run_m || {};
   const nil = n => n ? "" : "nil";
+  // a count as the page writes numbers, and its label agreeing with it in French (English keeps its one word)
+  const cnt = v => I18N.num(num(v)), lab = (v, one, many) => I18N.lang === "fr" ? I18N.tn(num(v), one, many) : I18N.t(many);
   const calls = num(p.close_calls), lowest = num(p.lowest_hp);
   const last = (DEATHS.filter(d => d.n === p.name).slice(-1))[0];
   const lastLink = last ? mapLink(p.name, `&at=${Math.round(last.x)},${Math.round(last.z)},14`) : null;
@@ -300,37 +304,37 @@ function renderDetail(){
   const group = (name, figs, more) => `<section class="group"><h3 class="eyebrow">${name}</h3><div class="figs">${figs}</div>${more || ""}</section>`;
   const K = p.kitchen, dishes = K ? Object.entries(K.dishes || {}).sort((a, b) => num(b[1]) - num(a[1])).slice(0, 3) : [];   // none from a mod without a kitchen
   const kitchen = K ? group(I18N.t("Kitchen"),
-        fig(num(K.cooked), I18N.t("dishes cooked"), nil(num(K.cooked)))
-        + fig(num(K.burnt), I18N.t("burnt"), num(K.burnt) ? "warn" : "nil")
-        + fig(num(K.brewed), I18N.t("meads brewed"), nil(num(K.brewed)))
-        + fig(num(K.honey), I18N.t("honey taken"), nil(num(K.honey)))
-        + fig(num(K.smelted), I18N.t("smelted"), nil(num(K.smelted))),
-        dishes.length ? `<div class="line"><b>${I18N.t("Most made")}</b> ${dishes.map(([k, n]) => `${num(n)} ${esc(itemWord(k))}`).join(" &#183; ")}</div>` : "") : "";
+        fig(cnt(K.cooked), lab(K.cooked, "dish cooked", "dishes cooked"), nil(num(K.cooked)))
+        + fig(cnt(K.burnt), lab(K.burnt, "dish burnt", "burnt"), num(K.burnt) ? "warn" : "nil")
+        + fig(cnt(K.brewed), lab(K.brewed, "mead brewed", "meads brewed"), nil(num(K.brewed)))
+        + fig(cnt(K.honey), I18N.t("honey taken"), nil(num(K.honey)))
+        + fig(cnt(K.smelted), lab(K.smelted, "item smelted", "smelted"), nil(num(K.smelted))),
+        dishes.length ? `<div class="line"><b>${I18N.t("Most made")}</b> ${dishes.map(([k, n]) => `${cnt(n)} ${esc(itemWord(k))}`).join(" &#183; ")}</div>` : "") : "";
   // the spotlight leads the groups as a strip of fixed height: the pentagon column ends where it ends, and a turn never reflows the page
   const html = `<div class="top"><div class="groups"><div class="card spot wide" id="spot" title="${esc(I18N.t("Next"))}"></div>`
     + group(I18N.t("Survival"),
-        fig(num(p.deaths), I18N.t("deaths"), nil(num(p.deaths)))
+        fig(cnt(p.deaths), lab(p.deaths, "death", "deaths"), nil(num(p.deaths)))
         + fig(per(p.deaths, p.dist_m).replace(/^1\D*?(?=\d)/, ""), I18N.t("km per death"), num(p.deaths) && num(p.dist_m) ? "" : "nil", I18N.t("one death every so many km walked"))
-        + fig(calls, I18N.t("close calls"), calls ? "warn" : "nil", calls ? I18N.t("lowest survived: {pct}% health", {pct: Math.round(lowest*100)}) : "")
-        + fig(graves, graves ? I18N.t("gear still out") : I18N.t("graves"), graves ? "warn" : "nil"),
+        + fig(cnt(calls), lab(calls, "close call", "close calls"), calls ? "warn" : "nil", calls ? I18N.t("lowest survived: {pct}% health", {pct: Math.round(lowest*100)}) : "")
+        + fig(cnt(graves), graves ? I18N.t("gear still out") : I18N.t("graves"), graves ? "warn" : "nil"),
         streakLine + runLine)
     + group(I18N.t("Journeys"),
         fig(km(p.dist_m), "km", num(p.dist_m) ? "" : "nil")
-        + fig(num(p.hops), I18N.t("hops"), nil(num(p.hops)))
+        + fig(cnt(p.hops), lab(p.hops, "hop", "hops"), nil(num(p.hops)))
         + (BEST.sea > 0 ? fig(km(sea(p)), I18N.t("km at sea"), sea(p) ? "" : "nil") : ""))
     + group(I18N.t("Deeds"),
-        fig(num(p.kills), I18N.t("kills"), nil(num(p.kills)))
-        + fig(num(p.trees), I18N.t("trees felled"), nil(num(p.trees)))
-        + fig(num(p.rocks), I18N.t("rocks broken"), nil(num(p.rocks))))
+        fig(cnt(p.kills), lab(p.kills, "kill", "kills"), nil(num(p.kills)))
+        + fig(cnt(p.trees), lab(p.trees, "tree felled", "trees felled"), nil(num(p.trees)))
+        + fig(cnt(p.rocks), lab(p.rocks, "rock broken", "rocks broken"), nil(num(p.rocks))))
     + kitchen
     + group(I18N.t("Building"),
-        fig(num(p.pieces), I18N.t("pieces"), nil(num(p.pieces)))
-        + fig(num(p.portals), I18N.t("portals"), nil(num(p.portals)))
-        + fig(num(p.ships), I18N.t("ships"), nil(num(p.ships)))
-        + fig(num(p.pins), I18N.t("pins"), nil(num(p.pins))))
+        fig(cnt(p.pieces), lab(p.pieces, "piece", "pieces"), nil(num(p.pieces)))
+        + fig(cnt(p.portals), lab(p.portals, "portal", "portals"), nil(num(p.portals)))
+        + fig(cnt(p.ships), lab(p.ships, "ship", "ships"), nil(num(p.ships)))
+        + fig(cnt(p.pins), lab(p.pins, "pin", "pins"), nil(num(p.pins))))
     + group(I18N.t("Presence"),
-        fig(num(p.joins), I18N.t("joins"), nil(num(p.joins)))
-        + fig(num(p.chat), I18N.t("chat lines"), nil(num(p.chat))))
+        fig(cnt(p.joins), lab(p.joins, "join", "joins"), nil(num(p.joins)))
+        + fig(cnt(p.chat), lab(p.chat, "chat line", "chat lines"), nil(num(p.chat))))
     + gearGroup(p)
     + `</div><div class="portrait"><i id="vslot" hidden></i>` + radar(p, 232, true) + `</div></div>` + danger(p);
   if(html !== DLAST){ body.innerHTML = html; DLAST = html; Spot.render(); }
@@ -363,7 +367,7 @@ function rankLine(p, get, top, bottom, desc = true){
 const slice = (p, get) => { const all = DATA.reduce((t, q) => t + get(q), 0); return all ? get(p)/all : 0; };   // of everyone's together
 const SPOTS = [
   p => { const c = classify(p); return c && c.top && c.top.length ? {k: "Class", v: c.title, c: c.why, svg: bars(c.top.map(t => ({frac: t.share, label: I18N.t("{pct}% {what}", {pct: Math.round(t.share*100), what: I18N.t(t.fam)})})))} : null; },
-  p => num(p.deaths) ? {k: "Deaths", v: `${num(p.deaths)}`, c: rankLine(p, q => num(q.deaths), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(q.deaths))} : null,
+  p => num(p.deaths) ? {k: "Deaths", v: `${I18N.num(num(p.deaths))}`, c: rankLine(p, q => num(q.deaths), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(q.deaths))} : null,
   p => num(p.dist_m) ? {k: "Distance", v: `${km(p.dist_m)} <small>km</small>`, c: rankLine(p, q => num(q.dist_m), I18N.t("farthest on the roster"), I18N.t("least on the roster")), svg: strip(p, q => num(q.dist_m))} : null,
   p => kpd(p) ? {k: "Survivor", v: `${kpd(p) >= 10 ? I18N.num(Math.round(kpd(p))) : I18N.num(+kpd(p).toFixed(1), {minimumFractionDigits: 1, maximumFractionDigits: 1})} <small>${I18N.t("km per death")}</small>`, c: rankLine(p, kpd, I18N.t("safest on the roster"), I18N.t("deadliest on the roster")), svg: strip(p, kpd)} : null,
   p => num(p.close_calls) ? {k: "Closest call", v: I18N.t("{pct}% <small>health</small>", {pct: Math.round(num(p.lowest_hp)*100)}), c: I18N.tn(num(p.close_calls), "{n} close call: under a tenth and back", "{n} close calls: under a tenth and back"), svg: bars([{frac: num(p.lowest_hp), label: I18N.t("and lived"), colour: "var(--off)"}])} : null,
@@ -381,12 +385,12 @@ const SPOTS = [
   p => { const k = kit(p), c = num(k.cooked), b = num(k.burnt); return c + b ? {k: "Cooked", v: I18N.tn(c, "{n} <small>dish</small>", "{n} <small>dishes</small>"), c: b ? I18N.t("burnt {b} of {n} cooked", {b, n: c + b}) : I18N.t("nothing burnt yet"),
          svg: ring(slice(p, q => num(kit(q).cooked)), I18N.t("of the roster's cooking"))} : null; },
   p => { const d = Object.entries(kit(p).dishes || {}).sort((a, b) => num(b[1]) - num(a[1])); if(!d.length) return null; const most = num(d[0][1]);
-         return {k: "Top dish", v: esc(itemWord(d[0][0])), c: I18N.t("{n} made", {n: most}), svg: bars(d.slice(0, 3).map(([k, n]) => ({frac: num(n)/most, label: `${num(n)} ${itemWord(k)}`})))}; },
+         return {k: "Top dish", v: esc(itemWord(d[0][0])), c: I18N.t("{n} made", {n: I18N.num(most)}), svg: bars(d.slice(0, 3).map(([k, n]) => ({frac: num(n)/most, label: `${I18N.num(num(n))} ${itemWord(k)}`})))}; },
   p => num(kit(p).brewed) ? {k: "Brewed", v: I18N.tn(num(kit(p).brewed), "{n} <small>mead</small>", "{n} <small>meads</small>"), c: rankLine(p, q => num(kit(q).brewed), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(kit(q).brewed))} : null,
-  p => num(kit(p).smelted) ? {k: "Smelted", v: `${num(kit(p).smelted)}`, c: rankLine(p, q => num(kit(q).smelted), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(kit(q).smelted))} : null,
-  p => num(p.pins) ? {k: "Pins", v: `${num(p.pins)}`, c: rankLine(p, q => num(q.pins), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: ring(slice(p, q => num(q.pins)), I18N.t("of the map's pins"))} : null,
+  p => num(kit(p).smelted) ? {k: "Smelted", v: `${I18N.num(num(kit(p).smelted))}`, c: rankLine(p, q => num(kit(q).smelted), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(kit(q).smelted))} : null,
+  p => num(p.pins) ? {k: "Pins", v: `${I18N.num(num(p.pins))}`, c: rankLine(p, q => num(q.pins), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: ring(slice(p, q => num(q.pins)), I18N.t("of the map's pins"))} : null,
   p => num(p.chat) ? {k: "Chat", v: I18N.tn(num(p.chat), "{n} <small>line</small>", "{n} <small>lines</small>"), c: rankLine(p, q => num(q.chat), I18N.t("the roster's loudest"), I18N.t("the roster's quietest")), svg: ring(slice(p, q => num(q.chat)), I18N.t("of everything said"))} : null,
-  p => num(p.joins) ? {k: "Joins", v: `${num(p.joins)}`, c: rankLine(p, q => num(q.joins), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(q.joins))} : null,
+  p => num(p.joins) ? {k: "Joins", v: `${I18N.num(num(p.joins))}`, c: rankLine(p, q => num(q.joins), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(q.joins))} : null,
   p => { const r = p.runs || {}, n = num(r.ok) + num(r.failed) + num(r.rescued) + num(r.open); if(!n) return null;
          return {k: "Corpse runs", v: I18N.t("{n} <small>recovered</small>", {n: num(r.ok)}), c: [num(r.failed) && I18N.t("{n} failed", {n: num(r.failed)}), num(r.rescued) && I18N.t("{n} rescued by others", {n: num(r.rescued)}), num(r.open) && I18N.t("{n} still out there", {n: num(r.open)})].filter(Boolean).join(" · ") || I18N.t("every grave reclaimed"),
                  svg: bars([{frac: num(r.ok)/n, label: I18N.t("{pct}% got back", {pct: Math.round(100*num(r.ok)/n)}), colour: "var(--ok)"}])}; },

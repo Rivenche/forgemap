@@ -142,7 +142,7 @@ const LOC = [
 ];
 const BOSS_OF = [[/eikthyr/i, "Eikthyr"], [/gdking/i, "The Elder"], [/bonemass/i, "Bonemass"], [/dragon/i, "Moder"], [/goblin/i, "Yagluth"], [/queen|seeker/i, "The Queen"], [/fader/i, "Fader"]];
 const bossOf = n => (BOSS_OF.find(([re]) => re.test(n)) || [])[1];
-const decamel = n => I18N.name(n) || n.replace(/\d+$/, "").replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim();
+const decamel = n => I18N.name(n) || I18N.t(n.replace(/\d+$/, "").replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim());
 function locKind(prefab){
   const row = LOC.find(([re]) => re.test(prefab));
   if(row) return row[1] ? {group: row[1], one: row[2], many: row[3]} : null;
@@ -305,9 +305,9 @@ function tourPool(){
         const info = lib.get(l.kind), boss = g === "altar" || g === "runestone" ? bossOf(l.kind) : null;
         const title = g === "altar" && boss ? I18N.t("{whose} altar", {whose: whose(boss), who: I18N.t(boss)}) : nameAt(l.x, l.z) || I18N.t(k.one);
         const line = g === "runestone" && boss ? I18N.t("it points the way to {boss}", {boss: I18N.t(boss)}) : g === "altar" ? inAt(l.x, l.z)
-          : kinds.size > 1 ? I18N.t("one of {n} such places walked so far", {n: I18N.num(list.length)}) : I18N.t("one of {n} {many} walked so far", {n: I18N.num(list.length), many: I18N.t(k.many)});
+          : list.length < 2 && I18N.lang === "fr" ? I18N.t("the only one of its kind walked so far") : kinds.size > 1 ? I18N.t("one of {n} such places walked so far", {n: I18N.num(list.length)}) : I18N.t("one of {n} {many} walked so far", {n: I18N.num(list.length), many: I18N.t(k.many)});
         add("loc:" + g, {kind: I18N.t(k.one), title, line, x: l.x, z: l.z, zoom: [22, 34], dist: tightDist(info, 90), moves: info && info.m ? ["orbit", "crane", "sweep"] : ["crane", "dolly", "sweep"],
-          stats: [[decamel(l.kind), I18N.t("kind")]].concat(biome(l.x, l.z), [[list.length, I18N.t("walked")]])});
+          stats: [[decamel(l.kind), I18N.t("kind")]].concat(biome(l.x, l.z), [[list.length, I18N.lang === "fr" ? I18N.tn(list.length, "place found", "places found") : I18N.t("walked")]])});
       });
     }
     // where people go: the trails over the whole walked world
