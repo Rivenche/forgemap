@@ -25,3 +25,5 @@ WebMap/Util, WebMap/web/js/view3d.js, WebMap/web/js/sky.js) are from
 f00d4tehg0dz/valheim-webmap (https://github.com/f00d4tehg0dz/valheim-webmap), under this
 same MIT licence. three.js, vendored under WebMap/web/vendor/three, is Copyright
 2010-2025 three.js authors, MIT.
+websocket-sharp.dll, shipped beside WebMap.dll, is Copyright (c) sta.blockhead
+(https://github.com/sta/websocket-sharp), MIT.

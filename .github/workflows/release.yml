@@ -35,8 +35,8 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: WebMap-package
-          path: dist/WebMap-*.zip
+          name: ForgeMap-package
+          path: dist/ForgeMap-*.zip
 
       - name: Publish to Thunderstore
         env:
@@ -46,4 +46,4 @@ jobs:
           V=$(python3 -c "import json;print(json.load(open('manifest.json'))['version_number'])")
           # no --package-version with --file: tcli rejects the pair, and the version
           # comes from the manifest.json inside the zip anyway
-          dotnet tcli publish --file "dist/WebMap-$V.zip" --token "$TOKEN"
+          dotnet tcli publish --file "dist/ForgeMap-$V.zip" --token "$TOKEN"

@@ -32,8 +32,8 @@ ForgeServer's look and a full French translation. Free, for the whole community.
 
 1. Installe [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/)
    sur ton **serveur dédié**.
-2. Copie le contenu de l'archive dans `BepInEx/plugins/ForgeMap/` (le fichier `WebMap.dll`
-   et le dossier `web`).
+2. Copie le contenu de l'archive dans `BepInEx/plugins/ForgeMap/` (les fichiers `WebMap.dll`
+   et `websocket-sharp.dll`, et le dossier `web`).
 3. Démarre le serveur, ouvre le port configuré (3000 par défaut) et va sur
    `http://ip_du_serveur:3000`.
 
@@ -41,7 +41,10 @@ Tu es chez [ForgeServer.fr](https://forgeserver.fr) ? Rien à faire : la carte s
 un clic depuis L'Atelier (onglet Mods, « Carte en direct »).
 
 > ForgeMap remplace WebMap : n'installe pas les deux en même temps. Ta configuration
-> WebMap (`com.github.h0tw1r3.valheim.webmap.cfg`) est reprise telle quelle.
+> WebMap (`com.github.h0tw1r3.valheim.webmap.cfg`) est reprise telle quelle. Pour garder la
+> carte déjà explorée, les repères et les réglages du site, déplace aussi le dossier
+> `map_data` (et `announce.token` s'il existe) de l'ancien dossier de WebMap vers celui de
+> ForgeMap : ils sont rangés à côté de `WebMap.dll`.
 
 ---
 
@@ -61,13 +64,15 @@ un clic depuis L'Atelier (onglet Mods, « Carte en direct »).
 
 1. Install [BepInExPack Valheim](https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/)
    on your **dedicated server**.
-2. Copy the archive's content into `BepInEx/plugins/ForgeMap/` (`WebMap.dll` and the `web`
-   folder).
+2. Copy the archive's content into `BepInEx/plugins/ForgeMap/` (`WebMap.dll`,
+   `websocket-sharp.dll` and the `web` folder).
 3. Start the server, open the configured port (3000 by default) and browse to
    `http://server_ip:3000`.
 
 > ForgeMap replaces WebMap: don't install both. Your WebMap configuration
-> (`com.github.h0tw1r3.valheim.webmap.cfg`) is kept as it is.
+> (`com.github.h0tw1r3.valheim.webmap.cfg`) is kept as it is. To keep the explored map, the
+> pins and the site's settings, also move the `map_data` folder (and `announce.token` if
+> there is one) from the old WebMap folder to ForgeMap's: they live beside `WebMap.dll`.
 
 The full documentation of every feature, route and setting (English) is in
 [README-WebMap.md](README-WebMap.md).
@@ -85,7 +90,13 @@ The full documentation of every feature, route and setting (English) is in
   [f00d4tehg0dz/valheim-webmap](https://github.com/f00d4tehg0dz/valheim-webmap) (MIT)
 * [three.js](https://threejs.org) r180 (MIT), vendored under `web/vendor/three`
 * [JetBrains Mono](https://www.jetbrains.com/lp/mono/) (SIL Open Font License 1.1), `web/fonts`
-* Background by [webtreats](https://www.flickr.com/photos/webtreatsetc/4081217254),
+* [websocket-sharp](https://github.com/sta/websocket-sharp) by sta.blockhead (MIT),
+  `websocket-sharp.dll`
+* Earlier WebMap versions' page background (`tile.webp`, no longer shipped) by
+  [webtreats](https://www.flickr.com/photos/webtreatsetc/4081217254),
   [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+* Item, creature and build piece names (EN/FR, `web/js/lang/noms.js`) are Valheim's own.
+  Valheim is a trademark of Iron Gate AB; ForgeMap is a fan project, not affiliated with
+  Iron Gate or Coffee Stain.
 
 MIT licence: see [LICENSE](LICENSE).
