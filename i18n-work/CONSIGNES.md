@@ -51,10 +51,12 @@ ForgeMap is ForgeServer.fr's fork of the Valheim WebMap mod (MIT). The web viewe
 - Keep it as short as the English where the UI is tight (buttons, column headers, chart labels).
 - Valheim official French terms: Meadows = Prairies, Black Forest = Forêt noire, Swamp = Marais,
   Mountain(s) = Montagnes, Plains = Plaines, Ocean = Océan, Mistlands = Terres brumeuses,
-  Ashlands = Terres cendrées, Deep North = Grand Nord. Bosses: keep Eikthyr, Moder, Yagluth, Fader,
-  Bonemass as names; The Elder = L'Ancien; The Queen = La Reine. Portal = portail, workbench = établi,
+  Ashlands = Terres cendrées, Deep North = Grand Nord. Bosses (game's French): Eikthyr, Moder, Yagluth, Fader,
+  Bonemass = Masse-d'Os, The Elder = L'Aîné, The Queen = La Reine. Ships: Raft = Radeau, Karve = Karv,
+  Longship = Long navire (Drakkar is the Ashlands ship), Cart = Charrette. When in doubt, i18n-work/_noms-jeu.json
+  holds the game's own names. Portal = portail, workbench = établi,
   forge = forge, cultivator = cultivateur, hoe = houe, pickaxe = pioche, tombstone/grave = tombe,
-  build piece = pièce de construction, cart = chariot, longship = drakkar, karve = karve,
+  build piece = pièce de construction, cart = charrette, longship = long navire, karve = karv,
   raft = radeau, trader = marchand (Haldor, Hildir, Bog Witch = la sorcière des marais),
   biome = biome, boss = boss, fog of war = brouillard, pin = repère, map = carte, world = monde,
   player = joueur, death = mort, kill = victime / ennemi tué, mead = hydromel, skill = compétence,
