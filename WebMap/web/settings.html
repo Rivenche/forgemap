@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="site.css">
 <script src="js/i18n.js"></script>
 <script src="js/lang/fr.js"></script>
+<script src="js/lang/noms.js"></script>
 <script src="site-config.js"></script>
 <script src="map-core.js"></script>
 <style>
@@ -39,7 +40,7 @@
   <h1 class="title">Settings</h1>
   <p class="sub" id="sub">The map mod's settings, kept by the server. Changes apply at once unless marked, and every change is posted to the Discord.</p>
   <p class="note bad" id="note"></p>
-  <div class="card" id="restart" hidden><b>A restart is due.</b> <span class="note">A setting marked <em>restart</em> has changed; it takes effect when the server next restarts.</span></div>
+  <div class="card" id="restart" hidden><b>A restart is due.</b> <span class="note" data-i18n>A setting marked <em>restart</em> has changed; it takes effect when the server next restarts.</span></div>
   <div class="rows" id="rows"></div>
   <p class="foot"><span id="stamp"></span><span class="credits"> · <a class="repo" href="https://github.com/hunter-jsb/xn-valheim">state-as-code</a></span></p>
 </main>
@@ -53,15 +54,15 @@ function row(s){
   // a moment the server stamps as its own now: sign_out_before, one button and no reset
   const time = s.kind === "time";
   const input = time
-    ? `<input type="hidden" name="value" value="now"><div class="note">${+s.value ? "Sessions from before " + esc(new Date(s.value * 1000).toLocaleString()) + " are refused." : "No sessions refused yet."}</div>`
+    ? `<input type="hidden" name="value" value="now"><div class="note">${+s.value ? I18N.t("Sessions from before {when} are refused.", {when: esc(I18N.datetime(s.value * 1000))}) : I18N.t("No sessions refused yet.")}</div>`
     : s.kind === "bool"
     ? `<select class="field" name="value"><option value="true"${s.value === "true" ? " selected" : ""}>true</option><option value="false"${s.value === "false" ? " selected" : ""}>false</option></select>`
-    : `<input class="field" name="value" value="${esc(s.secret ? "" : s.value)}" placeholder="${esc(s.secret ? (s.set ? "set · paste a new one to replace it" : "not set") : s.default)}" autocomplete="off"${s.secret ? ' type="password"' : ""}>`;
+    : `<input class="field" name="value" value="${esc(s.secret ? "" : s.value)}" placeholder="${esc(s.secret ? (s.set ? I18N.t("set · paste a new one to replace it") : I18N.t("not set")) : s.default)}" autocomplete="off"${s.secret ? ' type="password"' : ""}>`;
   return `<div class="card set" data-key="${esc(s.key)}">
-    <div><div class="k">${esc(s.key)}<span class="tag${s.live ? "" : " restart"}">${s.live ? "live" : "restart"}</span></div>
+    <div><div class="k">${esc(s.key)}<span class="tag${s.live ? "" : " restart"}">${s.live ? I18N.t("live") : I18N.t("restart")}</span></div>
       <div class="d">${esc(s.desc)}</div>
-      <div class="who">${s.given ? `set by <b>${esc(s.by || "someone")}</b> ${s.t ? MapCore.secsAgo(s.t) : ""} · the config says ${esc(s.secret ? (s.default ? "set" : "nothing") : s.default || "nothing")}` : "the config's own value"}</div></div>
-    <form><div>${input}</div><div class="btnrow"><button class="btn sm" type="submit">${time ? "Sign everyone out" : "Save"}</button>${s.given && !time ? '<button class="btn quiet sm" type="button" data-reset title="Back to the config file\'s value">Reset</button>' : ""}</div><div class="note" data-note></div></form>
+      <div class="who">${s.given ? I18N.t("set by <b>{who}</b> {ago} · the config says {def}", {who: esc(s.by || I18N.t("someone")), ago: s.t ? MapCore.secsAgo(s.t) : "", def: esc(s.secret ? (s.default ? I18N.t("set") : I18N.t("nothing")) : s.default || I18N.t("nothing"))}) : I18N.t("the config's own value")}</div></div>
+    <form><div>${input}</div><div class="btnrow"><button class="btn sm" type="submit">${time ? I18N.t("Sign everyone out") : I18N.t("Save")}</button>${s.given && !time ? `<button class="btn quiet sm" type="button" data-reset title="${esc(I18N.t("Back to the config file's value"))}">${I18N.t("Reset")}</button>` : ""}</div><div class="note" data-note></div></form>
   </div>`;
 }
 // the settings read in groups, as an admin thinks of them, not in the file's order
@@ -81,10 +82,10 @@ function render(){
     const rows = keys.map(k => by.get(k)).filter(Boolean);
     if(!rows.length) continue;
     rows.forEach(s => placed.add(s.key));
-    html += `<h2 class="eyebrow section">${esc(title)}</h2>` + rows.map(row).join("");
+    html += `<h2 class="eyebrow section">${esc(I18N.t(title))}</h2>` + rows.map(row).join("");
   }
   const rest = SETTINGS.settings.filter(s => !placed.has(s.key));   // a newer mod's settings this page has not sorted yet
-  if(rest.length) html += `<h2 class="eyebrow section">More</h2>` + rest.map(row).join("");
+  if(rest.length) html += `<h2 class="eyebrow section">${I18N.t("More")}</h2>` + rest.map(row).join("");
   document.getElementById("rows").innerHTML = html;
   document.getElementById("restart").hidden = !SETTINGS.restart;
   upgradePickers();
@@ -98,7 +99,7 @@ function fillPicker(key, options, current){
   if(!card || !options.length) return;
   const sel = document.createElement("select");
   sel.className = "field"; sel.name = "value";
-  sel.innerHTML = `<option value="">— none —</option>` + options.map(o =>
+  sel.innerHTML = `<option value="">${I18N.t("— none —")}</option>` + options.map(o =>
     `<option value="${esc(o.id)}"${o.id === current ? " selected" : ""}>${esc(o.name)}</option>`).join("");
   card.replaceWith(sel);
 }
@@ -123,17 +124,17 @@ async function upgradePickers(){
 async function load(){
   const me = await MapCore.whoami();
   const note = document.getElementById("note"), rows = document.getElementById("rows");
-  if(!me){ note.textContent = "Sign in with Discord to see the settings."; rows.innerHTML = ""; return; }
-  if(!me.admin){ note.textContent = "The settings are for the server's admins."; rows.innerHTML = ""; return; }
+  if(!me){ note.textContent = I18N.t("Sign in with Discord to see the settings."); rows.innerHTML = ""; return; }
+  if(!me.admin){ note.textContent = I18N.t("The settings are for the server's admins."); rows.innerHTML = ""; return; }
   try{
     SETTINGS = await MapCore.fetchJSON(API, "/settings", {headers: MapCore.authHeaders()}); note.textContent = ""; render();
-    document.getElementById("stamp").textContent = "read " + new Date().toLocaleTimeString();
-  }catch(e){ note.textContent = e.message === "HTTP 404" ? "This server does not take settings from the site yet (it needs the mod build that does)." : e.message; }
+    document.getElementById("stamp").textContent = I18N.t("read {time}", {time: I18N.time()});
+  }catch(e){ note.textContent = e.message === "HTTP 404" ? I18N.t("This server does not take settings from the site yet (it needs the mod build that does).") : e.message; }
 }
 document.getElementById("rows").addEventListener("submit", async e => {
   e.preventDefault();
   const card = e.target.closest(".set"), key = card.dataset.key, n = card.querySelector("[data-note]");
-  n.className = "note"; n.textContent = "saving…";
+  n.className = "note"; n.textContent = I18N.t("saving…");
   try{
     const r = await MapCore.post(API, "/settings", {key, value: e.target.value.value});
     SETTINGS = r.settings; render();
@@ -142,16 +143,16 @@ document.getElementById("rows").addEventListener("submit", async e => {
     if(key === "sign_out_before" && !await MapCore.whoami()){
       const note = document.getElementById("note");
       document.getElementById("rows").innerHTML = "";
-      note.className = "note"; note.textContent = "Everyone is signed out, you too. Sign in again to come back here.";
+      note.className = "note"; note.textContent = I18N.t("Everyone is signed out, you too. Sign in again to come back here.");
     }
-  }catch(err){ n.className = "note bad"; n.textContent = err.message || "could not save"; }
+  }catch(err){ n.className = "note bad"; n.textContent = err.message || I18N.t("could not save"); }
 });
 document.getElementById("rows").addEventListener("click", async e => {
   const b = e.target.closest("[data-reset]"); if(!b) return;
   const card = b.closest(".set"), n = card.querySelector("[data-note]");
-  n.className = "note"; n.textContent = "resetting…";
+  n.className = "note"; n.textContent = I18N.t("resetting…");
   try{ const r = await MapCore.post(API, "/settings", {key: card.dataset.key, value: ""}); SETTINGS = r.settings; render(); }
-  catch(err){ n.className = "note bad"; n.textContent = err.message || "could not reset"; }
+  catch(err){ n.className = "note bad"; n.textContent = err.message || I18N.t("could not reset"); }
 });
 load();
 </script>

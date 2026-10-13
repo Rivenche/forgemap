@@ -51,7 +51,7 @@ export default [
   {
     files: ["WebMap/web/**/*.{js,html}"],
     plugins: {html},
-    languageOptions: {sourceType: "script", globals: {...globals.browser, ...Object.fromEntries(Object.keys(MODULES).map(g => [g, "readonly"]))}},
+    languageOptions: {sourceType: "script", globals: {...globals.browser, I18N: "readonly", ...Object.fromEntries(Object.keys(MODULES).map(g => [g, "readonly"]))}},
     rules: {...rules, "no-restricted-globals": ["error", ...CONFUSING]},
   },
   // A classic script is its one global and nothing else at its top level: its own name is

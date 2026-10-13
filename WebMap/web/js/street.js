@@ -35,9 +35,9 @@ async function enter3D(x, z, look, prep){
   const q = toPx(x, z); V.centre(q.px, q.py, Math.max(V.scale, 6));   // the map behind stands where you do, close enough to see it
   const first = !IN3D;
   IN3D = true; v3dEl.hidden = false; markView();
-  if(!V3D) veil3D("Loading the 3D view…");
+  if(!V3D) veil3D(I18N.t("Loading the 3D view…"));
   let v;
-  try{ v = await loadView3D(); }catch(e){ veil3D("The 3D view did not load: " + (e.message || e)); return; }
+  try{ v = await loadView3D(); }catch(e){ veil3D(I18N.t("The 3D view did not load: {err}", {err: e.message || e})); return; }
   if(!IN3D) return;                                  // left again while it loaded
   if(first && world.state) feed3D(world.state);
   v.goTo(x, z, look || 0);
@@ -73,7 +73,7 @@ function moved3D(x, z, heading){
   if(!IN3D) return;
   history.replaceState(null, "", location.pathname + location.search
     + `#3d=${Math.round(x)},${Math.round(z)}` + (heading != null ? `&look=${Math.round(heading)}` : ""));
-  const at = `${Math.round(x)}, ${Math.round(z)}` + (heading != null ? ` · facing ${DIRS[Math.round(heading/45) % 8]}` : "");
+  const xz = `${Math.round(x)}, ${Math.round(z)}`, at = heading != null ? I18N.t("{xz} · facing {dir}", {xz, dir: I18N.t(DIRS[Math.round(heading/45) % 8])}) : xz;
   v3d$("v3dWhere").innerHTML = (v3d$("v3dWhere").dataset.name ? `<b>${esc(v3d$("v3dWhere").dataset.name)}</b> · ` : "") + at;
   clearTimeout(placeT);
   placeT = setTimeout(async () => {
@@ -86,22 +86,22 @@ function moved3D(x, z, heading){
 function status3D(s){
   const lib = s.library;
   v3dEl.dataset.ground = s.ground; v3dEl.dataset.objects = s.objects;
-  v3d$("v3dStatus").textContent = `${MapCore.plural(s.ground, "chunk")} of ground \u00b7 ${s.objects.toLocaleString()} objects`
-    + (lib ? ` \u00b7 ${lib.readable} models` + (lib.queued ? `, ${lib.queued} exporting` : "") : "");
+  v3d$("v3dStatus").textContent = I18N.tn(s.ground, "{n} chunk of ground", "{n} chunks of ground") + " \u00b7 " + I18N.tn(s.objects, "{n} object", "{n} objects")
+    + (lib ? " \u00b7 " + I18N.tn(lib.readable, "{n} model", "{n} models") + (lib.queued ? ", " + I18N.t("{n} exporting", {n: I18N.num(lib.queued)}) : "") : "");
   // a mod from before the 3D view answers /state without its revisions
   const before = world.state && world.state.rev && world.state.rev.objects === undefined;
-  veil3D(before ? "The server’s map mod has no 3D view yet: it comes with the mod’s next restart."
-    : s.unwalked ? "Nobody has walked here yet, so there is nothing to show."
-    : s.ground ? "" : "Reading the ground…");
+  veil3D(before ? I18N.t("The server’s map mod has no 3D view yet: it comes with the mod’s next restart.")
+    : s.unwalked ? I18N.t("Nobody has walked here yet, so there is nothing to show.")
+    : s.ground ? "" : I18N.t("Reading the ground…"));
 }
 let hintT = 0;
 function hint3D(orbit){
   const h = v3d$("v3dHint");
   h.textContent = orbit
-    ? (PHONE3D ? "Drag to pan · two fingers to turn and zoom"
-               : "Drag to pan, right-drag to turn · W A S D to fly over · E and Q up and down · Shift faster")
-    : PHONE3D ? "Drag to look around · tap the ground to walk there"
-    : "Drag to look · W A S D to walk · click the ground to go there · Esc for the map";
+    ? (PHONE3D ? I18N.t("Drag to pan · two fingers to turn and zoom")
+               : I18N.t("Drag to pan, right-drag to turn · W A S D to fly over · E and Q up and down · Shift faster"))
+    : PHONE3D ? I18N.t("Drag to look around · tap the ground to walk there")
+    : I18N.t("Drag to look · W A S D to walk · click the ground to go there · Esc for the map");
   h.classList.remove("gone");
   clearTimeout(hintT); hintT = setTimeout(() => h.classList.add("gone"), 6000);
 }
@@ -115,7 +115,7 @@ function dropPeg(x, y){
   const q = V.at(x, y), w = MapCore.toWorld(q.px, q.py), walked = MapCore.explored(LAYERS.imgs.fog);
   if(walked && !walked(q.px, q.py)){
     const n = document.createElement("div");
-    n.className = "dropnote glass"; n.textContent = "Nobody has walked here yet";
+    n.className = "dropnote glass"; n.textContent = I18N.t("Nobody has walked here yet");
     n.style.left = x + "px"; n.style.top = y + "px";
     stage.appendChild(n); setTimeout(() => n.remove(), 1800);
     return;
@@ -149,7 +149,7 @@ function init(o){
     const m = V3D.mode === "street" ? "orbit" : "street";
     V3D.setMode(m);
     v3dEl.classList.toggle("orbit", m === "orbit");
-    v3d$("v3dMode").title = m === "street" ? "Overview: circle the spot from above" : "Street: stand on the spot";
+    v3d$("v3dMode").title = m === "street" ? I18N.t("Overview: circle the spot from above") : I18N.t("Street: stand on the spot");
     hint3D(m === "orbit");
   };
   v3d$("v3dOpts").onclick = () => v3d$("v3dTray").classList.toggle("open");

@@ -49,6 +49,14 @@
   function datetime(d){ return new Date(d).toLocaleString(locale); }
 
   function add(code, table){ TABLES[code] = Object.assign(TABLES[code] || {}, table); }
+  // the game's own names for a prefab (js/lang/noms.js): "ArmorIronChest" -> "Iron Scale Mail" /
+  // "Armure d'écailles de fer"; "" for a prefab the table doesn't know, so callers keep their own
+  const NAMES = {};
+  function addNames(table){ Object.assign(NAMES, table); }
+  function name(prefab){
+    const n = NAMES[String(prefab || "").replace(/\(Clone\)$/, "").trim()];
+    return n ? (lang === "fr" && n[1]) || n[0] : "";
+  }
   function setLang(code){
     if(!LANGS.includes(code)) return;
     try{ localStorage.setItem("forgemap.lang", code); }catch(e){}
@@ -84,7 +92,7 @@
     const md = document.querySelector('meta[name="description"]');
     if(md && has(md.content.trim())) md.content = TABLES[lang][md.content.trim()];
   }
-  window.I18N = {lang, locale, LANGS, t, tn, num, date, time, datetime, add, setLang, translateTree};
+  window.I18N = {lang, locale, LANGS, t, tn, num, date, time, datetime, add, addNames, name, setLang, translateTree};
   // the pages' own scripts run before DOMContentLoaded and may write markup with t() already
   // translated; walking it again finds no English key there, so it is left as it is
   document.addEventListener("DOMContentLoaded", () => translateTree(document.body));

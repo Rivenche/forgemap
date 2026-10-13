@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="site.css">
 <script src="js/i18n.js"></script>
 <script src="js/lang/fr.js"></script>
+<script src="js/lang/noms.js"></script>
 <script src="site-config.js"></script>
 <script src="map-core.js"></script>
 <script src="js/card.js"></script>
@@ -303,8 +304,7 @@
     <p class="stamp" id="stamp"></p>
     <div class="foot">
       <span id="buildstamp"></span><span class="credits"> ·
-      <a class="repo" href="https://github.com/hunter-jsb/xn-valheim">state-as-code</a> ·
-      <a href="https://indifferentbroccoli.com/valheim-server-hosting">indifferent broccoli</a></span>
+      <a class="repo" href="https://github.com/hunter-jsb/xn-valheim">state-as-code</a></span>
     </div>
   </aside>
 
@@ -378,16 +378,16 @@
   <div class="sheet">
     <button class="btn sq quiet close" id="helpClose" aria-label="Close">&times;</button>
     <h2 class="title" id="helpTitle">Map commands</h2>
-    <p>Type these in the in-game chat (press <b>Enter</b> to open chat).</p>
+    <p data-i18n>Type these in the in-game chat (press <b>Enter</b> to open chat).</p>
 
     <h3>Pins</h3>
     <div class="cmds">
       <div><code>!pin</code><span>drop an unnamed dot where you stand</span></div>
       <div><code>!pin &lt;text&gt;</code><span>drop a dot with a label</span></div>
-      <div><code>!pin &lt;type&gt; &lt;text&gt;</code><span>a typed pin, e.g. <code>!pin house Base</code></span></div>
+      <div><code>!pin &lt;type&gt; &lt;text&gt;</code><span data-i18n>a typed pin, e.g. <code>!pin house Base</code></span></div>
       <div><code>!undoPin</code><span>remove your most recent pin</span></div>
       <div><code>!deletePin &lt;text&gt;</code><span>remove the pin matching that text</span></div>
-      <div><code>!deletePin</code><span>with no text, removes your most recent <em>unnamed</em> pin</span></div>
+      <div><code>!deletePin</code><span data-i18n>with no text, removes your most recent <em>unnamed</em> pin</span></div>
       <div class="pintypes">
         <b class="eyebrow">Types</b>
         <span><svg><use href="#ic-pin-dot"></use></svg>dot</span>
@@ -398,11 +398,11 @@
       </div>
     </div>
 
-    <p style="margin-top:.8rem">Or on this map, signed in: tap walked ground and <b>Pin here</b>, or tap a
+    <p style="margin-top:.8rem" data-i18n>Or on this map, signed in: tap walked ground and <b>Pin here</b>, or tap a
        pin to relabel, retype, move or delete it.</p>
 
     <h3>Layers</h3>
-    <p>Each row of the sidebar's <b>Legend</b> is a switch, remembered by this browser; the
+    <p data-i18n>Each row of the sidebar's <b>Legend</b> is a switch, remembered by this browser; the
        <b>Layers</b> card on the map holds presets of them, details (torches and fires,
        deaths, trails), and swaps the ground between the terrain render and a flat atlas of biomes
        (<b>L</b> cycles). Zoomed right in, builds
@@ -410,7 +410,7 @@
        roofs. Portal lines join linked pairs, and a grave is gear still lying there.</p>
 
     <h3>3D</h3>
-    <p>Drag the little figure from the buttons onto walked ground (on a phone: tap it, then
+    <p data-i18n>Drag the little figure from the buttons onto walked ground (on a phone: tap it, then
        tap the map), or pick <b>3D</b> under View in the <b>Layers</b> card, or <b>See in 3D</b>
        on a place or a pin, and you stand there at eye height. Drag to look around, scroll or
        pinch to zoom the eye, <b>W A S D</b> or the arrows to walk (<b>Shift</b> runs), click the
@@ -420,7 +420,7 @@
        game's own models, mined rocks as far as they have been mined.</p>
 
     <h3>Show yourself on the map</h3>
-    <p>Press <b>M</b> in game and turn on <b>visible to other players</b>. Without it you
+    <p data-i18n>Press <b>M</b> in game and turn on <b>visible to other players</b>. Without it you
        still show in the online list, but never with a location.</p>
 
     <h3>Good to know</h3>
@@ -537,17 +537,17 @@ function buildMarkers(){
   // Hull size is drawn to scale so a longship reads as one without a label.
   const v = (WORLD.vehicles||[]).map(m => {
     const st = MapCore.vehicleStyle(m);
-    return `<div class="marker veh" data-kind="${st.label.toLowerCase()}" data-px="${m.px}" data-py="${m.py}" title="${esc(st.label)}">`
+    return `<div class="marker veh" data-kind="${st.label.toLowerCase()}" data-px="${m.px}" data-py="${m.py}" title="${esc(I18N.t(st.label))}">`
       + `<svg class="ic" style="width:${st.size}px;height:${st.size}px"><use href="#ic-${st.icon}"></use></svg></div>`;
   });
   // Named, because the name is the whole point of a portal.
   const w = (WORLD.portals||[]).map(m =>
-    `<div class="marker portal${ARRIVAL.portals.has(m.id)?" hl":""}" data-id="${esc(m.id)}" data-px="${m.px}" data-py="${m.py}" title="${esc(m.name||"unnamed portal")}">`
+    `<div class="marker portal${ARRIVAL.portals.has(m.id)?" hl":""}" data-id="${esc(m.id)}" data-px="${m.px}" data-py="${m.py}" title="${esc(m.name||I18N.t("unnamed portal"))}">`
     + `<svg class="ic"><use href="#ic-portal"></use></svg>`
     + (m.name ? `<span class="nm">${esc(m.name)}</span>` : "") + `</div>`);
   // Someone's gear is still lying here; the name matters more than the icon.
   const g = (WORLD.graves||[]).map(m =>
-    `<div class="marker grave" data-px="${m.px}" data-py="${m.py}" title="${esc(m.name||"grave")}${m.age>0?" · "+graveAge(m.age):""}">`
+    `<div class="marker grave" data-px="${m.px}" data-py="${m.py}" title="${esc(m.name||I18N.t("grave"))}${m.age>0?" · "+graveAge(m.age):""}">`
     + `<svg class="ic"><use href="#ic-grave"></use></svg>`
     + (m.name ? `<span class="nm">${esc(m.name)}</span>` : "") + `</div>`);
   // A trader is a place, so it wears its name like a portal does.
@@ -585,9 +585,9 @@ function drawPortalLinks(){
 function graveAge(sec){
   const d = sec/86400;
   if(d >= 1){ const t = d<10 ? (Math.round(d*10)/10) : Math.round(d);
-              return t + " day" + (t===1?"":"s"); }
+              return I18N.tn(t, "{n} day", "{n} days"); }
   const h = sec/3600;
-  return h >= 1 ? h.toFixed(0)+"h" : Math.max(1,Math.round(sec/60))+"m";
+  return h >= 1 ? I18N.t("{n}h", {n: h.toFixed(0)}) : I18N.t("{n}m", {n: Math.max(1,Math.round(sec/60))});
 }
 
 // ---------- the layers card: legend, presets, details, names, ground ----------
@@ -654,7 +654,7 @@ function renderStatus(){
   const mark = cls => { box.classList.remove("ok", "warn", "bad"); if(cls) box.classList.add(cls); };
   if(!sum){
     mark(live===true?"ok":live===false?"bad":"");
-    head.textContent = live===true?"Online":live===false?"Offline":"Status unavailable";
+    head.textContent = I18N.t(live===true?"Online":live===false?"Offline":"Status unavailable");
     rows.innerHTML = ""; return;
   }
   const comps = (sum.components||[]).filter(c=>!c.group);
@@ -663,7 +663,7 @@ function renderStatus(){
   // the cron behind Statuspage runs every 15 minutes, so a live failure wins
   if(live === false){ cls="bad"; overall="Server unreachable"; }
   mark(cls);
-  head.textContent = overall;
+  head.textContent = I18N.t(overall);
   rows.innerHTML = comps.map(c=>{
     const now = (live===false && /server/i.test(c.name)) ? "major_outage" : c.status;
     return `<span class="${STATUS_CLASS[now]||""}"><span class="dot"></span>${esc(c.name)}</span>`;
@@ -671,8 +671,8 @@ function renderStatus(){
 }
 // the line under the legend: when the server last answered, or that it did not
 function renderStamp(){
-  document.getElementById("stamp").textContent = WORLD.live === false ? "server unreachable"
-    : "live · updated " + new Date(WORLD.updated).toLocaleTimeString();
+  document.getElementById("stamp").textContent = WORLD.live === false ? I18N.t("server unreachable")
+    : I18N.t("live · updated {time}", {time: I18N.time(WORLD.updated)});
 }
 
 // ---------- the spotlight ----------
@@ -689,16 +689,16 @@ function renderTiles(){
   const P = WORLD.players;
   const count = (P && P.count != null) ? P.count : "\u2014";
   document.getElementById("pcount").textContent = count;
-  document.getElementById("explored").innerHTML = WORLD.explored==null ? "\u2014" : (WORLD.explored*100).toFixed(1) + "<small>%</small>";
+  document.getElementById("explored").innerHTML = WORLD.explored==null ? "\u2014" : I18N.num(WORLD.explored*100, {minimumFractionDigits: 1, maximumFractionDigits: 1}) + "<small>%</small>";
   const list = (P && P.players) || [];
   const hiddenCount = list.filter(p=>p.hidden).length;
-  let line = list.length ? `<b>Online:</b> ${list.map(p=>esc(p.name)).join(", ")}` : "";
+  let line = list.length ? I18N.t("<b>Online:</b> {names}", {names: list.map(p=>esc(p.name)).join(", ")}) : "";
   if(list.length && hiddenCount === list.length)
-    line += `<br><span style="font-size:.7rem">not shown on map \u2014 enable \u201cvisible to other players\u201d on the in-game map (M)</span>`;
+    line += `<br><span style="font-size:.7rem">${I18N.t("not shown on map \u2014 enable \u201cvisible to other players\u201d on the in-game map (M)")}</span>`;
   document.getElementById("online").innerHTML = line;
   document.getElementById("mini").classList.toggle("on", list.length > 0);
   document.getElementById("miniText").innerHTML = list.length
-    ? `<b>${list.length} online</b> · ${esc(list.map(p=>p.name).join(", "))}` : "nobody online";
+    ? I18N.t("<b>{n} online</b> · {names}", {n: list.length, names: esc(list.map(p=>p.name).join(", "))}) : I18N.t("nobody online");
   buildMarkers();
   Spot.render();
 }
@@ -722,7 +722,7 @@ function renderFeed(){
   const el=document.getElementById("feed");
   const msgs = FEED==="chat" ? WORLD.messages.filter(m=>!isEvent(m)) : WORLD.messages;
   if(!msgs.length){
-    el.innerHTML = `<div class="msg sys">${FEED==="chat" ? "nobody has said anything yet" : "nothing yet"}</div>`;
+    el.innerHTML = `<div class="msg sys">${I18N.t(FEED==="chat" ? "nobody has said anything yet" : "nothing yet")}</div>`;
     return;
   }
   el.innerHTML = msgs.slice().reverse().map(m=>{
@@ -799,33 +799,35 @@ let CARD = null;                      // a place {here, at, i, tap, walked, edit
 const KIND = {continent: "Continent", island: "Island", holm: "Holm", range: "Mountain range", lake: "Lake", bay: "Bay",
               river: "River", forest: "Black Forest", swamp: "Swamp", plains: "Plains", meadows: "Meadows",
               mistlands: "Mistlands", ashlands: "Ashlands", north: "Deep North"};
-const km2 = a => a >= 1 ? a.toFixed(1) + " km\u00b2" : Math.round(a*100) + " ha";
+const kindName = k => KIND[k] ? I18N.t(KIND[k]) : k;
+const dec1 = n => I18N.num(n, {minimumFractionDigits: 1, maximumFractionDigits: 1});
+const km2 = a => a >= 1 ? dec1(a) + " km\u00b2" : Math.round(a*100) + " ha";
 function renderCard(){
   const c = CARD; if(!c) return;
   stage.classList.toggle("placing", c.mode === "move");
   if(c.pin || c.adding) return renderPin(c);
   const f = c.here[c.i], me = MapCore.user();
-  const bits = [KIND[f.kind] || f.kind];
-  bits.push(f.kind === "river" ? (f.area >= 1000 ? (f.area/1000).toFixed(1) + " km long" : Math.round(f.area) + " m long") : km2(f.area));
-  if(f.explored != null) bits.push(Math.round(f.explored*100) + "% walked");
+  const bits = [kindName(f.kind)];
+  bits.push(f.kind === "river" ? (f.area >= 1000 ? I18N.t("{n} km long", {n: dec1(f.area/1000)}) : I18N.t("{n} m long", {n: Math.round(f.area)})) : km2(f.area));
+  if(f.explored != null) bits.push(I18N.t("{n}% walked", {n: Math.round(f.explored*100)}));
   const facts = [];
-  if(f.elev) facts.push(f.kind === "range" ? `up to ${Math.round(f.elev.max)} m` : `${Math.round(Math.max(0, f.elev.min))}\u2013${Math.round(f.elev.max)} m`);
-  if(f.builds) facts.push(f.builds.toLocaleString() + (f.builds === 1 ? " piece built" : " pieces built"));
-  if(f.portals) facts.push(f.portals + (f.portals === 1 ? " portal" : " portals"));
-  if(f.deaths) facts.push(f.deaths + (f.deaths === 1 ? " death" : " deaths"));
+  if(f.elev) facts.push(f.kind === "range" ? I18N.t("up to {n} m", {n: Math.round(f.elev.max)}) : `${Math.round(Math.max(0, f.elev.min))}\u2013${Math.round(f.elev.max)} m`);
+  if(f.builds) facts.push(I18N.tn(f.builds, "{n} piece built", "{n} pieces built"));
+  if(f.portals) facts.push(I18N.tn(f.portals, "{n} portal", "{n} portals"));
+  if(f.deaths) facts.push(I18N.tn(f.deaths, "{n} death", "{n} deaths"));
   const on = c.here.find((g, j) => j !== c.i && (g.kind === "continent" || g.kind === "island" || g.kind === "holm"));
-  if(on && f.kind !== "continent" && f.kind !== "island" && f.kind !== "holm") facts.push("on " + on.name);
-  const others = c.here.map((g, j) => j === c.i ? "" : `<button class="chip" data-i="${j}">${esc(g.name)} \u00b7 ${esc((KIND[g.kind] || g.kind).toLowerCase())}</button>`).join("");
+  if(on && f.kind !== "continent" && f.kind !== "island" && f.kind !== "holm") facts.push(I18N.t("on {name}", {name: on.name}));
+  const others = c.here.map((g, j) => j === c.i ? "" : `<button class="chip" data-i="${j}">${esc(g.name)} \u00b7 ${esc(kindName(g.kind).toLowerCase())}</button>`).join("");
   namer.innerHTML = `<div class="eyebrow">${esc(bits.join(" \u00b7 "))}</div>`
     + (c.editing
         ? `<input class="field" id="nameIn" maxlength="40" value="${esc(f.name)}" autocomplete="off">
-           <div class="btnrow"><button class="btn" id="nameSave">Save</button>${f.by ? '<button class="btn quiet" id="nameReset" title="Back to the name the world gave it">Own name</button>' : ""}<button class="btn quiet" id="nameCancel">Cancel</button></div>`
-        : `<div class="nm">${esc(f.name)}${me ? ' <a href="#" class="edit" id="nameEdit" title="Rename">\u270e</a>' : ""}</div>`)
+           <div class="btnrow"><button class="btn" id="nameSave">${I18N.t("Save")}</button>${f.by ? `<button class="btn quiet" id="nameReset" title="${I18N.t("Back to the name the world gave it")}">${I18N.t("Own name")}</button>` : ""}<button class="btn quiet" id="nameCancel">${I18N.t("Cancel")}</button></div>`
+        : `<div class="nm">${esc(f.name)}${me ? ` <a href="#" class="edit" id="nameEdit" title="${I18N.t("Rename")}">\u270e</a>` : ""}</div>`)
     + (facts.length ? `<div class="facts">${esc(facts.join(" \u00b7 "))}</div>` : "")
     + (others ? `<div class="others">${others}</div>` : "")
-    + (c.walked && !c.editing ? `<div class="btnrow">${me ? `<button class="btn" id="pinHere">${pinIcon("dot")}Pin here</button>` : ""}`
-        + `<a class="btn" href="${see3d(c.tap.x, c.tap.z)}">See in 3D</a></div>` : "")
-    + `<div class="note" id="nameNote">${f.by ? "named by " + esc(f.by) : (me ? "the world's own name" : "the world's own name \u00b7 sign in to rename")}</div>`;
+    + (c.walked && !c.editing ? `<div class="btnrow">${me ? `<button class="btn" id="pinHere">${pinIcon("dot")}${I18N.t("Pin here")}</button>` : ""}`
+        + `<a class="btn" href="${see3d(c.tap.x, c.tap.z)}">${I18N.t("See in 3D")}</a></div>` : "")
+    + `<div class="note" id="nameNote">${f.by ? I18N.t("named by {name}", {name: esc(f.by)}) : I18N.t(me ? "the world's own name" : "the world's own name \u00b7 sign in to rename")}</div>`;
   placeCard(c);
   const ph = document.getElementById("pinHere"); if(ph) ph.onclick = () => { c.adding = true; renderCard(); };
   namer.querySelectorAll(".others .chip").forEach(el => el.onclick = () => { c.i = +el.dataset.i; c.editing = false; renderCard(); });
@@ -853,14 +855,14 @@ async function saveName(name){
   const c = CARD; if(!c) return;
   const f = c.here[c.i];
   const note = document.getElementById("nameNote");
-  note.className = "note"; note.textContent = "saving\u2026";
+  note.className = "note"; note.textContent = I18N.t("saving\u2026");
   try{
     const r = await MapCore.post(API, "/names", {id: f.id, name});
     if(r && r.rev) await LAYERS.features(r.rev, takeFeatures);
     const fresh = (WORLD.features || []).find(g => g.id === f.id);
     if(fresh){ f.name = fresh.name; f.by = fresh.by; }
     c.editing = false; renderCard();
-  }catch(e){ note.className = "note bad"; note.textContent = e.message || "could not save"; }
+  }catch(e){ note.className = "note bad"; note.textContent = e.message || I18N.t("could not save"); }
 }
 // open the card for a spot, or for a place (its own spot then); nothing for unwalked ground
 async function openCard(x, y, wx, wz, want, tap){
@@ -898,27 +900,27 @@ function placing(){ return !!(CARD && CARD.mode === "move"); }
 function renderPin(c){
   const p = c.pin || {type: "dot", text: ""}, me = MapCore.user();
   const form = c.adding || c.mode === "edit";
-  const head = c.adding ? "New pin" : c.mode === "edit" ? "Edit pin" : c.mode === "move" ? "Moving pin" : "Pin \u00b7 " + p.type;
-  const title = `<div class="nm">${pinIcon(p.type)}${p.text ? esc(p.text) : "<i>no label</i>"}`
-    + (me && c.mode === "view" ? ' <a href="#" class="edit" id="pinEdit" title="Relabel or retype">\u270e</a>' : "") + `</div>`;
-  const by = c.pin ? `<div class="facts">${c.pin.site ? "pinned on the site by " : "placed in game by "}${esc(c.pin.owner || "someone")}</div>` : "";
+  const head = c.adding ? I18N.t("New pin") : c.mode === "edit" ? I18N.t("Edit pin") : c.mode === "move" ? I18N.t("Moving pin") : I18N.t("Pin \u00b7 {type}", {type: p.type});
+  const title = `<div class="nm">${pinIcon(p.type)}${p.text ? esc(p.text) : `<i>${I18N.t("no label")}</i>`}`
+    + (me && c.mode === "view" ? ` <a href="#" class="edit" id="pinEdit" title="${I18N.t("Relabel or retype")}">\u270e</a>` : "") + `</div>`;
+  const by = c.pin ? `<div class="facts">${I18N.t(c.pin.site ? "pinned on the site by {name}" : "placed in game by {name}", {name: esc(c.pin.owner || I18N.t("someone"))})}</div>` : "";
   let body, note = c.msg || "";
   if(form){
-    body = `<input class="field" id="pinText" maxlength="60" placeholder="a label, or none" value="${esc(p.text)}" autocomplete="off">`
+    body = `<input class="field" id="pinText" maxlength="60" placeholder="${I18N.t("a label, or none")}" value="${esc(p.text)}" autocomplete="off">`
       + `<div class="pick">${PIN_TYPES.map(t => `<button class="chip${t === p.type ? " on" : ""}" data-t="${t}">${pinIcon(t)}${t}</button>`).join("")}</div>`
-      + `<div class="btnrow"><button class="btn" id="pinSave">${c.adding ? "Pin it" : "Save"}</button><button class="btn quiet" id="pinCancel">Cancel</button></div>`;
+      + `<div class="btnrow"><button class="btn" id="pinSave">${I18N.t(c.adding ? "Pin it" : "Save")}</button><button class="btn quiet" id="pinCancel">${I18N.t("Cancel")}</button></div>`;
   } else if(c.mode === "move"){
-    body = title + `<div class="btnrow"><button class="btn quiet" id="pinCancel">Cancel</button></div>`;
-    note = note || "Tap the map where it goes.";
+    body = title + `<div class="btnrow"><button class="btn quiet" id="pinCancel">${I18N.t("Cancel")}</button></div>`;
+    note = note || I18N.t("Tap the map where it goes.");
   } else if(c.mode === "confirm"){
-    body = title + by + `<div class="btnrow"><button class="btn" id="pinDelete">Delete</button><button class="btn quiet" id="pinCancel">Keep</button></div>`;
+    body = title + by + `<div class="btnrow"><button class="btn" id="pinDelete">${I18N.t("Delete")}</button><button class="btn quiet" id="pinCancel">${I18N.t("Keep")}</button></div>`;
   } else {
-    body = title + by + `<div class="btnrow">` + (me ? `<button class="btn" id="pinMove">Move</button><button class="btn" id="pinAsk">Delete</button>` : "")
-      + `<a class="btn" href="${see3d(p.x, p.z)}">See in 3D</a></div>`;
-    note = note || (me ? "" : "sign in to change it");
+    body = title + by + `<div class="btnrow">` + (me ? `<button class="btn" id="pinMove">${I18N.t("Move")}</button><button class="btn" id="pinAsk">${I18N.t("Delete")}</button>` : "")
+      + `<a class="btn" href="${see3d(p.x, p.z)}">${I18N.t("See in 3D")}</a></div>`;
+    note = note || (me ? "" : I18N.t("sign in to change it"));
   }
   namer.innerHTML = `<div class="eyebrow">${esc(head)}</div>` + body
-    + `<div class="note${c.mode === "confirm" ? " bad" : ""}" id="nameNote">${esc(c.mode === "confirm" ? "Delete this pin for everyone?" : note)}</div>`;
+    + `<div class="note${c.mode === "confirm" ? " bad" : ""}" id="nameNote">${esc(c.mode === "confirm" ? I18N.t("Delete this pin for everyone?") : note)}</div>`;
   placeCard(c);
   const $ = id => document.getElementById(id), on = (id, f) => { const el = $(id); if(el) el.onclick = e => { e.preventDefault(); f(); }; };
   const view = mode => { if(c.adding) c.adding = false; else c.mode = mode; c.msg = ""; renderCard(); };
@@ -947,15 +949,15 @@ function openPin(id, x, y, msg){
 // 2 s, so for a moment after a write that answer is the fresher, and the tick waits.
 async function writePin(body){
   const note = document.getElementById("nameNote");
-  note.className = "note"; note.textContent = "saving\u2026";
+  note.className = "note"; note.textContent = I18N.t("saving\u2026");
   try{
     const r = await MapCore.post(API, "/pins", body);
     // a mod from before site pins answers a POST with its CSV: no answer at all
-    if(!r || !r.ok || !r.pins) throw new Error("the server takes pins from the site after its next restart");
+    if(!r || !r.ok || !r.pins) throw new Error(I18N.t("the server takes pins from the site after its next restart"));
     WORLD.pins = MapCore.parsePins(r.pins); WORLD.pinsAt = Date.now();
     renderTiles();
     return r;
-  }catch(e){ note.className = "note bad"; note.textContent = e.message || "could not save"; return null; }
+  }catch(e){ note.className = "note bad"; note.textContent = e.message || I18N.t("could not save"); return null; }
 }
 async function savePin(c, text, type){
   if(c.busy) return;
@@ -963,7 +965,7 @@ async function savePin(c, text, type){
   const r = await writePin(c.adding ? {op: "add", x: +c.tap.x.toFixed(2), z: +c.tap.z.toFixed(2), type, text}
                                     : {op: "edit", id: c.pin.id, type, text});
   c.busy = false;
-  if(r && CARD === c) openPin(r.id, c.x, c.y, c.adding ? "pinned" : "saved");
+  if(r && CARD === c) openPin(r.id, c.x, c.y, I18N.t(c.adding ? "pinned" : "saved"));
 }
 async function movePin(c, x, y){
   if(c.busy) return;
@@ -971,12 +973,12 @@ async function movePin(c, x, y){
   const q = V.at(x, y), w = MapCore.toWorld(q.px, q.py);
   const r = await writePin({op: "edit", id: c.pin.id, x: +w.x.toFixed(2), z: +w.z.toFixed(2)});
   c.busy = false;
-  if(r && CARD === c) openPin(c.pin.id, x, y, "moved");
+  if(r && CARD === c) openPin(c.pin.id, x, y, I18N.t("moved"));
 }
 
 const BUILD = "2026-09-26b";   // shown in the footer, so a stale page is obvious
 async function boot(){
-  document.getElementById("buildstamp").textContent = "build " + BUILD;
+  document.getElementById("buildstamp").textContent = I18N.t("build {v}", {v: BUILD});
   LAYERS.loadBase();
   try{ await MapCore.fetchConfig(API); }catch(e){}
   await tickState();

@@ -1,0 +1,6974 @@
+{
+ "Abomination": {
+  "en": "Abomination",
+  "fr": "Abomination"
+ },
+ "Acorn": {
+  "en": "Acorns",
+  "fr": "Glands"
+ },
+ "Amber": {
+  "en": "Amber",
+  "fr": "Ambre"
+ },
+ "AmberPearl": {
+  "en": "Amber Pearl",
+  "fr": "Perle d’ambre"
+ },
+ "AncientCoin": {
+  "en": "Ancient Coin",
+  "fr": "Pièce ancienne"
+ },
+ "AncientGemstoneBlack": {
+  "en": "Draumyx",
+  "fr": null
+ },
+ "AncientGemstoneGreen": {
+  "en": "Grimvarn",
+  "fr": null
+ },
+ "AncientGemstoneOrange": {
+  "en": "Solryth",
+  "fr": null
+ },
+ "AncientGemstonePurple": {
+  "en": "Veydris",
+  "fr": null
+ },
+ "AncientSeed": {
+  "en": "Ancient Seed",
+  "fr": "Graine ancienne"
+ },
+ "ArmorAshlandsMediumChest": {
+  "en": "Breastplate of Ask",
+  "fr": "Plastron d'Ask"
+ },
+ "ArmorAshlandsMediumlegs": {
+  "en": "Trousers of Ask",
+  "fr": "Pantalon d'Ask"
+ },
+ "ArmorBerserkerChest": {
+  "en": "Patterns of the Bear",
+  "fr": "Marque de l'ours"
+ },
+ "ArmorBerserkerLegs": {
+  "en": "Loincloth of the Bear",
+  "fr": "Pagne de l'ours"
+ },
+ "ArmorBerserkerUndeadChest": {
+  "en": "Vilebone Cage",
+  "fr": "Torse d'ours maudit"
+ },
+ "ArmorBerserkerUndeadLegs": {
+  "en": "Vilebone Drapes",
+  "fr": "Parure d'ours maudit"
+ },
+ "ArmorBronzeChest": {
+  "en": "Bronze Plate Tunic",
+  "fr": "Cuirasse en plaques de bronze"
+ },
+ "ArmorBronzeLegs": {
+  "en": "Bronze Plate Leggings",
+  "fr": "Jambières en plaques de bronze"
+ },
+ "ArmorCarapaceChest": {
+  "en": "Carapace Breastplate",
+  "fr": "Plastron en carapace"
+ },
+ "ArmorCarapaceLegs": {
+  "en": "Carapace Greaves",
+  "fr": "Jambières en carapace"
+ },
+ "ArmorDeepNorthHeavyChest": {
+  "en": "Breastplate of the Protector",
+  "fr": "Plastron du courage"
+ },
+ "ArmorDeepNorthHeavylegs": {
+  "en": "Trousers of the Protector",
+  "fr": "Pantalon du courage"
+ },
+ "ArmorDeepNorthMageChest": {
+  "en": "Robes of the Caller",
+  "fr": "Robe de l'orateur"
+ },
+ "ArmorDeepNorthMagelegs": {
+  "en": "Trousers of the Caller",
+  "fr": "Pantalon de l'orateur"
+ },
+ "ArmorDeepNorthMediumChest": {
+  "en": "Chestpiece of the Vanguard",
+  "fr": "Plastron de cuir de l'Avant-garde"
+ },
+ "ArmorDeepNorthMediumlegs": {
+  "en": "Trousers of the Vanguard",
+  "fr": "Pantalon de l'Avant-garde"
+ },
+ "ArmorDress1": {
+  "en": "Plain Brown Dress",
+  "fr": "Robe marron simple"
+ },
+ "ArmorDress10": {
+  "en": "Simple Undyed Dress",
+  "fr": "Robe neutre simple"
+ },
+ "ArmorDress2": {
+  "en": "Brown Dress with Shawl",
+  "fr": "Robe marron avec châle"
+ },
+ "ArmorDress3": {
+  "en": "Brown Dress with Beads",
+  "fr": "Robe marron avec perles"
+ },
+ "ArmorDress4": {
+  "en": "Plain Blue Dress",
+  "fr": "Robe bleue simple"
+ },
+ "ArmorDress5": {
+  "en": "Blue Dress with Shawl",
+  "fr": "Robe bleue avec châle"
+ },
+ "ArmorDress6": {
+  "en": "Blue Dress with Beads",
+  "fr": "Robe bleue avec perles"
+ },
+ "ArmorDress7": {
+  "en": "Plain Yellow Dress",
+  "fr": "Robe jaune simple"
+ },
+ "ArmorDress8": {
+  "en": "Yellow Dress with Shawl",
+  "fr": "Robe jaune avec châle"
+ },
+ "ArmorDress9": {
+  "en": "Yellow Dress with Beads",
+  "fr": "Robe jaune avec perles"
+ },
+ "ArmorFenringChest": {
+  "en": "Fenris Coat",
+  "fr": "Manteau de Fenris"
+ },
+ "ArmorFenringLegs": {
+  "en": "Fenris Leggings",
+  "fr": "Braies de Fenris"
+ },
+ "ArmorFlametalChest": {
+  "en": "Flametal Breastplate",
+  "fr": "Plastron en flametal"
+ },
+ "ArmorFlametalLegs": {
+  "en": "Flametal Greaves",
+  "fr": "Jambières en flametal"
+ },
+ "ArmorGoldHeavyChestUncooked": {
+  "en": "Cast: Breastplate of the Protector",
+  "fr": "Moulage : plastron du courage"
+ },
+ "ArmorGoldHeavyHelmetUncooked": {
+  "en": "Cast: Helmet of the Protector",
+  "fr": "Moulage : casque du courage"
+ },
+ "ArmorGoldHeavyLegsUncooked": {
+  "en": "Cast: Trousers of the Protector",
+  "fr": "Moulage : pantalon du courage"
+ },
+ "ArmorGoldMageChestUncooked": {
+  "en": "Cast: Robes of the Caller",
+  "fr": "Moulage : robe de l'orateur"
+ },
+ "ArmorGoldMageHelmetUncooked": {
+  "en": "Cast: Headdress of the Caller",
+  "fr": "Moulage : coiffe de l'orateur"
+ },
+ "ArmorGoldMageLegsUncooked": {
+  "en": "Cast: Trousers of the Caller",
+  "fr": "Moulage : pantalon de l'orateur"
+ },
+ "ArmorGoldMediumChestUncooked": {
+  "en": "Cast: Chestpiece of the Vanguard",
+  "fr": "Moulage : plastron de cuir de l'Avant-garde"
+ },
+ "ArmorGoldMediumHelmetUncooked": {
+  "en": "Cast: Hood of the Vanguard",
+  "fr": "Moulage : capuche de l'Avant-garde"
+ },
+ "ArmorGoldMediumLegsUncooked": {
+  "en": "Cast: Trousers of the Vanguard",
+  "fr": "Moulage : pantalon de l'Avant-garde"
+ },
+ "ArmorHarvester1": {
+  "en": "Harvest Tunic",
+  "fr": "Tunique des moissons"
+ },
+ "ArmorHarvester2": {
+  "en": "Harvest Dress",
+  "fr": "Robe des moissons"
+ },
+ "ArmorIronChest": {
+  "en": "Iron Scale Mail",
+  "fr": "Armure d'écailles de fer"
+ },
+ "ArmorIronLegs": {
+  "en": "Iron Greaves",
+  "fr": "Jambières en plaques de fer"
+ },
+ "ArmorLeatherChest": {
+  "en": "Leather Tunic",
+  "fr": "Tunique en cuir"
+ },
+ "ArmorLeatherLegs": {
+  "en": "Leather Trousers",
+  "fr": "Pantalon en cuir"
+ },
+ "ArmorLoxChest": {
+  "en": "Lox Fur Jacket",
+  "fr": "Veste en fourrure de lox"
+ },
+ "ArmorLoxLegs": {
+  "en": "Lox Fur Trousers",
+  "fr": "Pantalon en fourrure de lox"
+ },
+ "ArmorMageChest": {
+  "en": "Eitr-weave Robe",
+  "fr": "Robe d'Eitr tissé"
+ },
+ "ArmorMageChest_Ashlands": {
+  "en": "Robes of Embla",
+  "fr": "Robe d'Embla"
+ },
+ "ArmorMageLegs": {
+  "en": "Eitr-weave Trousers",
+  "fr": "Pantalon d'Eitr tissé"
+ },
+ "ArmorMageLegs_Ashlands": {
+  "en": "Trousers of Embla",
+  "fr": "Pantalon d'Embla"
+ },
+ "ArmorPaddedCuirass": {
+  "en": "Padded Cuirass",
+  "fr": "Cuirasse rembourrée"
+ },
+ "ArmorPaddedGreaves": {
+  "en": "Padded Greaves",
+  "fr": "Jambières rembourrées"
+ },
+ "ArmorRagsChest": {
+  "en": "Rag Tunic",
+  "fr": "Tunique en haillons"
+ },
+ "ArmorRagsLegs": {
+  "en": "Rag Trousers",
+  "fr": "Pantalon en haillons"
+ },
+ "ArmorRootChest": {
+  "en": "Root Harnesk",
+  "fr": "Cuirasse de racines"
+ },
+ "ArmorRootLegs": {
+  "en": "Root Leggings",
+  "fr": "Bottes de racines"
+ },
+ "ArmorStand": {
+  "en": "Armour Stand",
+  "fr": "Support d'armure"
+ },
+ "ArmorStand_Female": {
+  "en": "Armour Stand",
+  "fr": "Support d'armure"
+ },
+ "ArmorTrollLeatherChest": {
+  "en": "Troll Leather Tunic",
+  "fr": "Tunique en cuir de troll"
+ },
+ "ArmorTrollLeatherLegs": {
+  "en": "Troll Leather Trousers",
+  "fr": "Pantalon en cuir de troll"
+ },
+ "ArmorTunic1": {
+  "en": "Plain Blue Tunic",
+  "fr": "Tunique bleue simple"
+ },
+ "ArmorTunic10": {
+  "en": "Simple Undyed Tunic",
+  "fr": "Tunique neutre simple"
+ },
+ "ArmorTunic2": {
+  "en": "Blue Tunic with Cape",
+  "fr": "Tunique bleue avec cape"
+ },
+ "ArmorTunic3": {
+  "en": "Blue Tunic with Beads",
+  "fr": "Tunique bleue avec perles"
+ },
+ "ArmorTunic4": {
+  "en": "Plain Red Tunic",
+  "fr": "Tunique rouge simple"
+ },
+ "ArmorTunic5": {
+  "en": "Red Tunic with Cape",
+  "fr": "Tunique rouge avec cape"
+ },
+ "ArmorTunic6": {
+  "en": "Red Tunic with Beads",
+  "fr": "Tunique rouge avec perles"
+ },
+ "ArmorTunic7": {
+  "en": "Plain Yellow Tunic",
+  "fr": "Tunique jaune simple"
+ },
+ "ArmorTunic8": {
+  "en": "Yellow Tunic with Cape",
+  "fr": "Tunique jaune avec cape"
+ },
+ "ArmorTunic9": {
+  "en": "Yellow Tunic with Beads",
+  "fr": "Tunique jaune avec perles"
+ },
+ "ArmorWolfChest": {
+  "en": "Wolf Hide Chestpiece",
+  "fr": "Plastron de loup"
+ },
+ "ArmorWolfLegs": {
+  "en": "Wolf Hide Trousers",
+  "fr": "Jambières de loup"
+ },
+ "ArrowBloodGold": {
+  "en": "Bloodgold Arrow",
+  "fr": "Flèche d'or-sang"
+ },
+ "ArrowBronze": {
+  "en": "Bronzehead Arrow",
+  "fr": "Flèche en bronze"
+ },
+ "ArrowCarapace": {
+  "en": "Carapace Arrow",
+  "fr": "Flèche en carapace"
+ },
+ "ArrowCharred": {
+  "en": "Charred Arrow",
+  "fr": "Flèche calcinée"
+ },
+ "ArrowFire": {
+  "en": "Fire Arrow",
+  "fr": "Flêche enflammée"
+ },
+ "ArrowFlint": {
+  "en": "Flinthead Arrow",
+  "fr": "Flèche en silex"
+ },
+ "ArrowFrost": {
+  "en": "Frost Arrow",
+  "fr": "Flèche de givre"
+ },
+ "ArrowIron": {
+  "en": "Ironhead Arrow",
+  "fr": "Flèche en fer"
+ },
+ "ArrowNeedle": {
+  "en": "Needle Arrow",
+  "fr": "Flèche aiguille"
+ },
+ "ArrowObsidian": {
+  "en": "Obsidian Arrow",
+  "fr": "Flèche d'obsidienne"
+ },
+ "ArrowPoison": {
+  "en": "Poison Arrow",
+  "fr": "Flèche empoisonnée"
+ },
+ "ArrowSilver": {
+  "en": "Silver Arrow",
+  "fr": "Flèche d’argent"
+ },
+ "ArrowWood": {
+  "en": "Wood Arrow",
+  "fr": "Flèche en bois"
+ },
+ "Ashlands_Arch1": {
+  "en": "Stone Wall 1x1",
+  "fr": "Mur de pierre 1x1"
+ },
+ "Ashlands_Arch2": {
+  "en": "Stone Wall 1x1",
+  "fr": "Mur de pierre 1x1"
+ },
+ "Ashlands_WallBlock_1x2x2": {
+  "en": "Stone Wall 1x1",
+  "fr": "Mur de pierre 1x1"
+ },
+ "Ashlands_WallBlock_base": {
+  "en": "Stone Wall 1x1",
+  "fr": "Mur de pierre 1x1"
+ },
+ "AskBladder": {
+  "en": "Asksvin Bladder",
+  "fr": "Vessie d'asksvin"
+ },
+ "AskHide": {
+  "en": "Asksvin Hide",
+  "fr": "Peau d'asksvin"
+ },
+ "Asksvin": {
+  "en": "Asksvin",
+  "fr": "Asksvin"
+ },
+ "AsksvinCarrionNeck": {
+  "en": "Asksvin Neck",
+  "fr": "Cou d'asksvin"
+ },
+ "AsksvinCarrionPelvic": {
+  "en": "Asksvin Pelvis",
+  "fr": "Pelvis d'asksvin"
+ },
+ "AsksvinCarrionRibcage": {
+  "en": "Asksvin Ribcage",
+  "fr": "Cage thoracique d'asksvin"
+ },
+ "AsksvinCarrionSkull": {
+  "en": "Asksvin Skull",
+  "fr": "Crâne d'asksvin"
+ },
+ "AsksvinEgg": {
+  "en": "Asksvin Egg",
+  "fr": "Œuf d'asksvin"
+ },
+ "AsksvinMeat": {
+  "en": "Asksvin Tail",
+  "fr": "Queue d'asksvin"
+ },
+ "Asksvin_hatchling": {
+  "en": "Asksvin Hatchling",
+  "fr": "Jeune asksvin"
+ },
+ "Aspect_Bonemass": {
+  "en": "Aspect of the Writhing Dead",
+  "fr": "Aspect de la Mort difforme"
+ },
+ "Aspect_Eikthyr": {
+  "en": "Aspect of the Lightning Stag",
+  "fr": "Aspect du Cerf de l'orage"
+ },
+ "Aspect_Elder": {
+  "en": "Aspect of the Living Forest",
+  "fr": "Aspect de la Forêt vivante"
+ },
+ "Aspect_Fader": {
+  "en": "Aspect of the Emerald Flame",
+  "fr": "Aspect de la Flamme d'émeraude"
+ },
+ "Aspect_Moder": {
+  "en": "Aspect of the Dragon Mother",
+  "fr": "Aspect de la Mère des dragons"
+ },
+ "Aspect_SeekerQueen": {
+  "en": "Aspect of the Crawling Matriarch",
+  "fr": "Aspect de la Matriarche rampante"
+ },
+ "Aspect_TentaRoot": {
+  "en": "Root",
+  "fr": null
+ },
+ "Aspect_Yagluth": {
+  "en": "Aspect of the Twisted Soul",
+  "fr": "Aspect de l'Âme tourmentée"
+ },
+ "AtgeirBlackmetal": {
+  "en": "Black Metal Atgeir",
+  "fr": "Atgeir en sombracier"
+ },
+ "AtgeirBronze": {
+  "en": "Bronze Atgeir",
+  "fr": "Atgeir en bronze"
+ },
+ "AtgeirGold": {
+  "en": "Nord Atgeir",
+  "fr": "Atgeir nordique"
+ },
+ "AtgeirGoldUncooked": {
+  "en": "Cast: Nord Atgeir",
+  "fr": "Moulage : atgeir nordique"
+ },
+ "AtgeirGold_BloodLightning": {
+  "en": "Thunderblood Atgeir",
+  "fr": "Atgeir de sang-tonnerre"
+ },
+ "AtgeirGold_FrostFire": {
+  "en": "Frostfire Atgeir",
+  "fr": "Atgeir de givrefeu"
+ },
+ "AtgeirHimminAfl": {
+  "en": "Himminafl",
+  "fr": "Himmin afl"
+ },
+ "AtgeirIron": {
+  "en": "Iron Atgeir",
+  "fr": "Atgeir en fer"
+ },
+ "AtgeirWood": {
+  "en": "Wooden Atgeir",
+  "fr": "Atgeir en bois"
+ },
+ "AxeBerzerkr": {
+  "en": "Berserkir Axes",
+  "fr": "Haches des berserkir"
+ },
+ "AxeBerzerkrBlood": {
+  "en": "Bleeding Berserkir Axes",
+  "fr": "Haches des berserkir d'hémorragie"
+ },
+ "AxeBerzerkrLightning": {
+  "en": "Thundering Berserkir Axes",
+  "fr": "Haches des berserkir du tonnerre"
+ },
+ "AxeBerzerkrNature": {
+  "en": "Primal Berserkir Axes",
+  "fr": "Haches des berserkir primitives"
+ },
+ "AxeBlackMetal": {
+  "en": "Black Metal Axe",
+  "fr": "Hache en sombracier"
+ },
+ "AxeBronze": {
+  "en": "Bronze Axe",
+  "fr": "Hache en bronze"
+ },
+ "AxeEarly": {
+  "en": "Early Axes",
+  "fr": "Haches primitives"
+ },
+ "AxeFlint": {
+  "en": "Flint Axe",
+  "fr": "Hache en silex"
+ },
+ "AxeGold": {
+  "en": "Nord Axe",
+  "fr": "Hache nordique"
+ },
+ "AxeGoldUncooked": {
+  "en": "Cast: Nord Axe",
+  "fr": "Moulage : hache nordique"
+ },
+ "AxeGold_BloodLightning": {
+  "en": "Thunderblood Axe",
+  "fr": "Hache de sang-tonnerre"
+ },
+ "AxeGold_FrostFire": {
+  "en": "Frostfire Axe",
+  "fr": "Hache de givrefeu"
+ },
+ "AxeHead1": {
+  "en": "Curious Axe Head",
+  "fr": "Tête de hache curieuse"
+ },
+ "AxeHead2": {
+  "en": "Mysterious Axe Head",
+  "fr": "Tête de hache mystérieuse"
+ },
+ "AxeIron": {
+  "en": "Iron Axe",
+  "fr": "Hache en fer"
+ },
+ "AxeJotunBane": {
+  "en": "Jotun Bane",
+  "fr": "Fléau des jötnars"
+ },
+ "AxeStone": {
+  "en": "Stone Axe",
+  "fr": "Hache en pierre"
+ },
+ "AxeWood": {
+  "en": "Wooden Axe",
+  "fr": "Hache en bois"
+ },
+ "BakedPoteitr": {
+  "en": "Baked Poteitr",
+  "fr": "Poteitr au four"
+ },
+ "BakedPoteitrUncooked": {
+  "en": "Unbaked Poteitr",
+  "fr": "Poteitr crue"
+ },
+ "BarberKit": {
+  "en": "Barber Kit",
+  "fr": "Nécessaire de barbier"
+ },
+ "Barka": {
+  "en": "Barka",
+  "fr": null
+ },
+ "BarkaBranch": {
+  "en": "Frozen Branch",
+  "fr": "Branche gelée"
+ },
+ "Barley": {
+  "en": "Barley",
+  "fr": "Orge"
+ },
+ "BarleyFlour": {
+  "en": "Barley Flour",
+  "fr": "Farine d'orge"
+ },
+ "BarleyWine": {
+  "en": "Fire Resistance Barley Wine",
+  "fr": "Vin d'orge de résistance au feu"
+ },
+ "BarleyWineBase": {
+  "en": "Barley Wine Base: Fire Resistance",
+  "fr": "Base de vin d'orge : résistance au feu"
+ },
+ "BarrelRings": {
+  "en": "Barrel Hoops",
+  "fr": "Cercles de tonneau"
+ },
+ "Bat": {
+  "en": "Bat",
+  "fr": "Chauve souris"
+ },
+ "Bat_Swamp": {
+  "en": "Bat",
+  "fr": "Chauve souris"
+ },
+ "BatteringRam": {
+  "en": "Battering Ram",
+  "fr": "Bélier"
+ },
+ "Battleaxe": {
+  "en": "Battleaxe",
+  "fr": "Hache de combat"
+ },
+ "BattleaxeBlackmetal": {
+  "en": "Black Metal Battleaxe",
+  "fr": "Hache de combat en sombracier"
+ },
+ "BattleaxeCrystal": {
+  "en": "Crystal Battleaxe",
+  "fr": "Hache de combat en cristal"
+ },
+ "BattleaxeGold": {
+  "en": "Nord Greataxe",
+  "fr": "Bardiche nordique"
+ },
+ "BattleaxeGoldUncooked": {
+  "en": "Cast: Nord Greataxe",
+  "fr": "Moulage : bardiche nordique"
+ },
+ "BattleaxeGold_BloodLightning": {
+  "en": "Thunderblood Greataxe",
+  "fr": "Bardiche de sang-tonnerre"
+ },
+ "BattleaxeGold_FrostFire": {
+  "en": "Frostfire Greataxe",
+  "fr": "Bardiche de givrefeu"
+ },
+ "BattleaxeSkullSplittur": {
+  "en": "Skull Splittur",
+  "fr": "Fend-les-crânes"
+ },
+ "BattleaxeWood": {
+  "en": "Wooden Battleaxe",
+  "fr": "Hache de combat en bois"
+ },
+ "Beard1": {
+  "en": "Majestic",
+  "fr": "Longue 1"
+ },
+ "Beard10": {
+  "en": "Top Braid",
+  "fr": "Tressée 4"
+ },
+ "Beard11": {
+  "en": "Facewarmer",
+  "fr": "Fournie 2"
+ },
+ "Beard12": {
+  "en": "Royal",
+  "fr": "Royale 1"
+ },
+ "Beard13": {
+  "en": "Triplets",
+  "fr": "Royale 2"
+ },
+ "Beard14": {
+  "en": "Split Braid",
+  "fr": "Tressée 5"
+ },
+ "Beard15": {
+  "en": "Mini Braid",
+  "fr": "Courte 4"
+ },
+ "Beard16": {
+  "en": "Stonedweller",
+  "fr": "Troglodyte"
+ },
+ "Beard17": {
+  "en": "Neat",
+  "fr": "Soignée"
+ },
+ "Beard18": {
+  "en": "Jarl Braids",
+  "fr": "Royale 3"
+ },
+ "Beard19": {
+  "en": "Bushy",
+  "fr": "Touffue"
+ },
+ "Beard2": {
+  "en": "Twin Braids",
+  "fr": "Longue 2"
+ },
+ "Beard20": {
+  "en": "Spiky",
+  "fr": "En épis"
+ },
+ "Beard21": {
+  "en": "Tidy",
+  "fr": "Courte 5"
+ },
+ "Beard22": {
+  "en": "Mustache",
+  "fr": "Moustache"
+ },
+ "Beard23": {
+  "en": "Crumb Catcher",
+  "fr": "Ramasse-miettes"
+ },
+ "Beard24": {
+  "en": "Waxed",
+  "fr": "Épilée"
+ },
+ "Beard25": {
+  "en": "Trimmed",
+  "fr": "Taillée"
+ },
+ "Beard26": {
+  "en": "Handlebar",
+  "fr": "Impériale"
+ },
+ "Beard3": {
+  "en": "Short",
+  "fr": "Courte 1"
+ },
+ "Beard4": {
+  "en": "Straight",
+  "fr": "Courte 2"
+ },
+ "Beard5": {
+  "en": "Single Braid",
+  "fr": "Tressée 1"
+ },
+ "Beard6": {
+  "en": "Loose Braid",
+  "fr": "Tressée 2"
+ },
+ "Beard7": {
+  "en": "Split Shave",
+  "fr": "Courte 3"
+ },
+ "Beard8": {
+  "en": "Thick",
+  "fr": "Fourni 1"
+ },
+ "Beard9": {
+  "en": "Trobadour",
+  "fr": "Tressée 3"
+ },
+ "BeardNone": {
+  "en": "No Beard",
+  "fr": "Pas de barbe"
+ },
+ "BeechSeeds": {
+  "en": "Beech Seeds",
+  "fr": "Graine de hêtre"
+ },
+ "Beech_Sapling": {
+  "en": "Beech sapling",
+  "fr": "Jeune hêtre"
+ },
+ "Bell": {
+  "en": "Bell",
+  "fr": "Cloche"
+ },
+ "BellFragment": {
+  "en": "Bell Fragment",
+  "fr": "Fragment de cloche"
+ },
+ "BeltStrength": {
+  "en": "Megingjord",
+  "fr": "Megingjord"
+ },
+ "Bilebag": {
+  "en": "Bilebag",
+  "fr": "Sac de bile"
+ },
+ "BirchSeeds": {
+  "en": "Birch Seeds",
+  "fr": "Graines de bouleau"
+ },
+ "Birch_Sapling": {
+  "en": "Birch Sapling",
+  "fr": "Jeune bouleau"
+ },
+ "Bjorn": {
+  "en": "Bear",
+  "fr": "Ours"
+ },
+ "BjornHide": {
+  "en": "Bear Hide",
+  "fr": "Peau d'ours"
+ },
+ "BjornMeat": {
+  "en": "Bear Meat",
+  "fr": "Viande d'ours"
+ },
+ "BjornPaw": {
+  "en": "Bear Paw",
+  "fr": "Patte d'ours"
+ },
+ "Bjorn_sleeping": {
+  "en": "Bear",
+  "fr": "Ours"
+ },
+ "BlackCore": {
+  "en": "Black Core",
+  "fr": "Noyau noir"
+ },
+ "BlackMarble": {
+  "en": "Black Marble",
+  "fr": "Marbre noir"
+ },
+ "BlackMetal": {
+  "en": "Black Metal",
+  "fr": "Sombracier"
+ },
+ "BlackMetalScrap": {
+  "en": "Black Metal Scrap",
+  "fr": "Morceau de sombracier"
+ },
+ "BlackSoup": {
+  "en": "Black Soup",
+  "fr": "Soupe noire"
+ },
+ "Blackwood": {
+  "en": "Ashwood",
+  "fr": "Cendrebois"
+ },
+ "Blob": {
+  "en": "Blob",
+  "fr": "Blob"
+ },
+ "BlobAspect": {
+  "en": "Blob",
+  "fr": "Blob"
+ },
+ "BlobElite": {
+  "en": "Oozer",
+  "fr": "Oozer"
+ },
+ "BlobFrost": {
+  "en": "Frost Blob",
+  "fr": "Blob de givre"
+ },
+ "BlobLava": {
+  "en": "Lava Blob",
+  "fr": "Blob de lave"
+ },
+ "BlobMork": {
+  "en": "Shapeless Pulp",
+  "fr": "Pâte sans forme"
+ },
+ "BlobMorkMini": {
+  "en": "Tiny Pulp",
+  "fr": "Petite pâte"
+ },
+ "BlobTar": {
+  "en": "Growth",
+  "fr": "Excroissance"
+ },
+ "BlobVial": {
+  "en": "Corked Vial",
+  "fr": "Fiole à bouchon"
+ },
+ "BloodGoldKey": {
+  "en": "Intricate Key",
+  "fr": "Clé délicate"
+ },
+ "BloodPudding": {
+  "en": "Blood Pudding",
+  "fr": "Boudin"
+ },
+ "Bloodbag": {
+  "en": "Bloodbag",
+  "fr": "Poche de sang"
+ },
+ "Blueberries": {
+  "en": "Blueberries",
+  "fr": "Myrtilles"
+ },
+ "Boar": {
+  "en": "Boar",
+  "fr": "Sanglier"
+ },
+ "BoarJerky": {
+  "en": "Boar Jerky",
+  "fr": "Viande séchée de sanglier"
+ },
+ "Boar_piggy": {
+  "en": "Piggy",
+  "fr": "Marcassin"
+ },
+ "BogWitchKvastur": {
+  "en": "Kvastur",
+  "fr": "Kvastur"
+ },
+ "BogWitch_Fire_Pit": {
+  "en": "Campfire",
+  "fr": "Feu de camp"
+ },
+ "BoltBlackmetal": {
+  "en": "Black Metal Bolt",
+  "fr": "Carreau en sombracier"
+ },
+ "BoltBloodGold": {
+  "en": "Bloodgold Bolt",
+  "fr": "Carreau d'or-sang"
+ },
+ "BoltBone": {
+  "en": "Bone Bolt",
+  "fr": "Carreau en os"
+ },
+ "BoltCarapace": {
+  "en": "Carapace Bolt",
+  "fr": "Carreau en carapace"
+ },
+ "BoltCharred": {
+  "en": "Charred Bolt",
+  "fr": "Carreau calciné"
+ },
+ "BoltIron": {
+  "en": "Iron Bolt",
+  "fr": "Carreau en fer"
+ },
+ "BombBile": {
+  "en": "Bile Bomb",
+  "fr": "Bombe de bile"
+ },
+ "BombBlob_Frost": {
+  "en": "Blob Bomb: Frost",
+  "fr": "Bombe de blob : givre"
+ },
+ "BombBlob_Lava": {
+  "en": "Blob Bomb: Lava",
+  "fr": "Bombe de blob : lave"
+ },
+ "BombBlob_Morkhalla": {
+  "en": "Blob Bomb: Pulp",
+  "fr": "Bombe de blob : blob"
+ },
+ "BombBlob_Poison": {
+  "en": "Blob Bomb: Poison",
+  "fr": "Bombe de blob : poison"
+ },
+ "BombBlob_PoisonElite": {
+  "en": "Blob Bomb: Elite Poison",
+  "fr": "Bombe de blob : poison avancé"
+ },
+ "BombBlob_Tar": {
+  "en": "Blob Bomb: Tar",
+  "fr": "Bombe de blob : goudron"
+ },
+ "BombDynamite": {
+  "en": "Ember Charge",
+  "fr": "Charge de braise"
+ },
+ "BombLava": {
+  "en": "Basalt Bomb",
+  "fr": "Bombe au basalte"
+ },
+ "BombOoze": {
+  "en": "Ooze Bomb",
+  "fr": "Bombe puante"
+ },
+ "BombSiege": {
+  "en": "Explosive Payload",
+  "fr": "Projectile explosif"
+ },
+ "BombSmoke": {
+  "en": "Smoke Bomb",
+  "fr": "Bombe fumigène"
+ },
+ "BoneFragments": {
+  "en": "Bone Fragments",
+  "fr": "Fragments d'os"
+ },
+ "BoneMawSerpentMeat": {
+  "en": "Bonemaw Meat",
+  "fr": "Viande de gueule-d'os"
+ },
+ "Bonemass": {
+  "en": "Bonemass",
+  "fr": "Masse-d'Os"
+ },
+ "BonemawSerpent": {
+  "en": "Bonemaw",
+  "fr": "Gueule-d'os"
+ },
+ "BonemawSerpentScale": {
+  "en": "Bonemaw Scale",
+  "fr": "Écaille de gueule-d'os"
+ },
+ "BonemawSerpentTooth": {
+  "en": "Bonemaw Tooth",
+  "fr": "Croc de gueule-d'os"
+ },
+ "Bow": {
+  "en": "Crude Bow",
+  "fr": "Arc"
+ },
+ "BowAshlands": {
+  "en": "Ash Fang",
+  "fr": "Croc de Cendre"
+ },
+ "BowAshlandsBlood": {
+  "en": "Blood Fang",
+  "fr": "Croc sanglant"
+ },
+ "BowAshlandsRoot": {
+  "en": "Root Fang",
+  "fr": "Croc sauvage"
+ },
+ "BowAshlandsStorm": {
+  "en": "Storm Fang",
+  "fr": "Croc des tempêtes"
+ },
+ "BowDraugrFang": {
+  "en": "Draugr Fang",
+  "fr": "Croc de draugr"
+ },
+ "BowFineWood": {
+  "en": "Finewood Bow",
+  "fr": "Arc de bois noble"
+ },
+ "BowGold": {
+  "en": "Nord Bow",
+  "fr": "Arc nordique"
+ },
+ "BowGoldUncooked": {
+  "en": "Cast: Nord Bow",
+  "fr": "Moulage : arc nordique"
+ },
+ "BowGold_BloodLightning": {
+  "en": "Thunderblood Bow",
+  "fr": "Arc de sang-tonnerre"
+ },
+ "BowGold_FrostFire": {
+  "en": "Frostfire Bow",
+  "fr": "Arc de givrefeu"
+ },
+ "BowHuntsman": {
+  "en": "Huntsman Bow",
+  "fr": "Arc de chasse"
+ },
+ "BowSpineSnap": {
+  "en": "Spinesnap",
+  "fr": "Échine brisée"
+ },
+ "Bread": {
+  "en": "Bread",
+  "fr": "Pain"
+ },
+ "BreadDough": {
+  "en": "Bread Dough",
+  "fr": "Pâte à pain"
+ },
+ "Bronze": {
+  "en": "Bronze",
+  "fr": "Bronze"
+ },
+ "BronzeNails": {
+  "en": "Bronze Nails",
+  "fr": "Clous en bronze"
+ },
+ "BronzeScrap": {
+  "en": "Scrap Bronze",
+  "fr": "Morceau de bronze"
+ },
+ "BugMeat": {
+  "en": "Seeker Meat",
+  "fr": "Viande de fouineur"
+ },
+ "CandleWick": {
+  "en": "Candle Wick",
+  "fr": "Mèche de bougie"
+ },
+ "Candle_resin": {
+  "en": "Resin Candle",
+  "fr": "Bougie en résine"
+ },
+ "Candle_resin_bogwitch": {
+  "en": "Resin Candle",
+  "fr": "Bougie en résine"
+ },
+ "CapeAsh": {
+  "en": "Ashen Cape",
+  "fr": "Cape des cendres"
+ },
+ "CapeAsksvin": {
+  "en": "Asksvin Cloak",
+  "fr": "Manteau en asksvin"
+ },
+ "CapeDeepNorth": {
+  "en": "Moose Hide Cape",
+  "fr": "Cape en peau d'élan"
+ },
+ "CapeDeepNorthMage": {
+  "en": "Cape of the Caller",
+  "fr": "Cape de l'orateur"
+ },
+ "CapeDeerHide": {
+  "en": "Deer Hide Cape",
+  "fr": "Cape en peau de cerf"
+ },
+ "CapeFeather": {
+  "en": "Feather Cape",
+  "fr": "Cape de plumes"
+ },
+ "CapeLinen": {
+  "en": "Linen Cape",
+  "fr": "Cape en tissu"
+ },
+ "CapeLox": {
+  "en": "Lox Cape",
+  "fr": "Cape de Lox"
+ },
+ "CapeOdin": {
+  "en": "Cape of Oden",
+  "fr": "Cape d'Odin"
+ },
+ "CapeTrollHide": {
+  "en": "Troll Hide Cape",
+  "fr": "Cape en peau de troll"
+ },
+ "CapeWolf": {
+  "en": "Wolf Fur Cape",
+  "fr": "Cape en fourrure de loup"
+ },
+ "Carapace": {
+  "en": "Carapace",
+  "fr": "Carapace"
+ },
+ "Carrot": {
+  "en": "Carrot",
+  "fr": "Carotte"
+ },
+ "CarrotSeeds": {
+  "en": "Carrot Seeds",
+  "fr": "Graines de carotte"
+ },
+ "CarrotSoup": {
+  "en": "Carrot Soup",
+  "fr": "Soupe de carottes"
+ },
+ "Cart": {
+  "en": "Cart",
+  "fr": "Charrette"
+ },
+ "Catapult": {
+  "en": "Catapult",
+  "fr": "Catapulte"
+ },
+ "Catapult_Ammo_BloodGold": {
+  "en": "Bloodgold Payload",
+  "fr": "Charge d'or-sang"
+ },
+ "Catapult_ammo": {
+  "en": "Grausten Payload",
+  "fr": "Projectile en grise-pierre"
+ },
+ "CelestialFeather": {
+  "en": "Celestial Feather",
+  "fr": "Plume céleste"
+ },
+ "CeramicPlate": {
+  "en": "Ceramic Plate",
+  "fr": "Plaque en céramique"
+ },
+ "Chain": {
+  "en": "Chain",
+  "fr": "Chaîne"
+ },
+ "CharcoalResin": {
+  "en": "Charcoal Resin",
+  "fr": "Résine de charbon"
+ },
+ "CharredBone": {
+  "en": "Charred Bone",
+  "fr": "Os calciné"
+ },
+ "CharredCogwheel": {
+  "en": "Charred Cogwheel",
+  "fr": "Roue dentée calcinée"
+ },
+ "Charred_Archer": {
+  "en": "Charred Marksman",
+  "fr": "Archer calciné"
+ },
+ "Charred_Archer_Fader": {
+  "en": "Summoned Charred Warrior",
+  "fr": "Guerrier calciné invoqué"
+ },
+ "Charred_Mage": {
+  "en": "Charred Warlock",
+  "fr": "Sorcier calciné"
+ },
+ "Charred_Melee": {
+  "en": "Charred Warrior",
+  "fr": "Guerrier calciné"
+ },
+ "Charred_Melee_Dyrnwyn": {
+  "en": "<color=orange>Lord Reto</color>",
+  "fr": "Seigneur Reto"
+ },
+ "Charred_Melee_Fader": {
+  "en": "Summoned Charred Warrior",
+  "fr": "Guerrier calciné invoqué"
+ },
+ "Charred_Twitcher": {
+  "en": "Charred Twitcher",
+  "fr": "Forcené calciné"
+ },
+ "Charred_Twitcher_Summoned": {
+  "en": "Summoned Twitcher",
+  "fr": "Forcené invoqué"
+ },
+ "Charredskull": {
+  "en": "Charred Skull",
+  "fr": "Crâne calciné"
+ },
+ "Chicken": {
+  "en": "Chicken",
+  "fr": "Poulet"
+ },
+ "ChickenEgg": {
+  "en": "Egg",
+  "fr": "Œuf"
+ },
+ "ChickenMeat": {
+  "en": "Chicken Meat",
+  "fr": "Viande de poulet"
+ },
+ "Chitin": {
+  "en": "Chitin",
+  "fr": "Chitine"
+ },
+ "Cloudberry": {
+  "en": "Cloudberries",
+  "fr": "Plaquebières"
+ },
+ "Club": {
+  "en": "Club",
+  "fr": "Bâton"
+ },
+ "Coal": {
+  "en": "Coal",
+  "fr": "Charbon"
+ },
+ "Coins": {
+  "en": "Coins",
+  "fr": "Piastres"
+ },
+ "CookedAsksvinMeat": {
+  "en": "Cooked Asksvin Tail",
+  "fr": "Queue d'asksvin cuite"
+ },
+ "CookedBjornMeat": {
+  "en": "Cooked Bear Meat",
+  "fr": "Viande d'ours cuite"
+ },
+ "CookedBoneMawSerpentMeat": {
+  "en": "Cooked Bonemaw Meat",
+  "fr": "Viande de gueule-d'os cuite"
+ },
+ "CookedBugMeat": {
+  "en": "Cooked Seeker Meat",
+  "fr": "Viande de fouineur cuite"
+ },
+ "CookedChickenMeat": {
+  "en": "Cooked Chicken Meat",
+  "fr": "Viande de poulet cuite"
+ },
+ "CookedDeerMeat": {
+  "en": "Cooked Deer Meat",
+  "fr": "Viande de cerf cuite"
+ },
+ "CookedEgg": {
+  "en": "Cooked Egg",
+  "fr": "Œuf cuit"
+ },
+ "CookedHareMeat": {
+  "en": "Cooked Hare Meat",
+  "fr": "Viande de lièvre cuite"
+ },
+ "CookedLoxMeat": {
+  "en": "Cooked Lox Meat",
+  "fr": "Viande de Lox cuite"
+ },
+ "CookedMeat": {
+  "en": "Cooked Boar Meat",
+  "fr": "Viande de sanglier cuite"
+ },
+ "CookedMooseMeat": {
+  "en": "Cooked Moose Meat",
+  "fr": "Viande d'élan cuite"
+ },
+ "CookedSealBlubber": {
+  "en": "Cooked Seal Blubber",
+  "fr": "Lard de phoque cuit"
+ },
+ "CookedVoltureMeat": {
+  "en": "Cooked Volture Meat",
+  "fr": "Viande de voltour cuite"
+ },
+ "CookedWolfMeat": {
+  "en": "Cooked Wolf Meat",
+  "fr": "Viande de loup cuite"
+ },
+ "Copper": {
+  "en": "Copper",
+  "fr": "Cuivre"
+ },
+ "CopperOre": {
+  "en": "Copper Ore",
+  "fr": "Minerai de cuivre"
+ },
+ "CopperScrap": {
+  "en": "Copper Scrap",
+  "fr": "Morceau de cuivre"
+ },
+ "CrossbowArbalest": {
+  "en": "Arbalest",
+  "fr": "Arbalète"
+ },
+ "CrossbowGold": {
+  "en": "Nord Crossbow",
+  "fr": "Arbalète nordique"
+ },
+ "CrossbowGoldUncooked": {
+  "en": "Cast: Nord Crossbow",
+  "fr": "Moulage : arbalète nordique"
+ },
+ "CrossbowGold_BloodLightning": {
+  "en": "Thunderblood Crossbow",
+  "fr": "Arbalète de sang-tonnerre"
+ },
+ "CrossbowGold_FrostFire": {
+  "en": "Frostfire Crossbow",
+  "fr": "Arbalète de givrefeu"
+ },
+ "CrossbowRipper": {
+  "en": "Ripper",
+  "fr": "Éventreuse"
+ },
+ "CrossbowRipperBlood": {
+  "en": "Wound Ripper",
+  "fr": "Éventreuse sanglante"
+ },
+ "CrossbowRipperLightning": {
+  "en": "Storm Ripper",
+  "fr": "Éventreuse des tempêtes"
+ },
+ "CrossbowRipperNature": {
+  "en": "Root Ripper",
+  "fr": "Éventreuse sauvage"
+ },
+ "CrownJewel": {
+  "en": "Crown Jewel",
+  "fr": "Joyau de la couronne"
+ },
+ "CryptKey": {
+  "en": "Swamp Key",
+  "fr": "Clé des cryptes"
+ },
+ "Crystal": {
+  "en": "Crystal",
+  "fr": "Cristal"
+ },
+ "Cultivator": {
+  "en": "Cultivator",
+  "fr": "Cultivateur"
+ },
+ "CuredSquirrelHamstring": {
+  "en": "Cured Squirrel Hamstring",
+  "fr": "Tendon d'écureuil séché"
+ },
+ "Dandelion": {
+  "en": "Dandelion",
+  "fr": "Pissenlit"
+ },
+ "Deathsquito": {
+  "en": "Deathsquito",
+  "fr": "Morstique"
+ },
+ "Deer": {
+  "en": "Deer",
+  "fr": "Cerf"
+ },
+ "DeerHide": {
+  "en": "Deer Hide",
+  "fr": "Peau de cerf"
+ },
+ "DeerMeat": {
+  "en": "Deer Meat",
+  "fr": "Viande de cerf"
+ },
+ "DeerStew": {
+  "en": "Deer Stew",
+  "fr": "Ragoût de cerf"
+ },
+ "Demister": {
+  "en": "Wisplight",
+  "fr": "Lumière de feu-follet"
+ },
+ "Dragon": {
+  "en": "Moder",
+  "fr": "Moder"
+ },
+ "DragonEgg": {
+  "en": "Dragon Egg",
+  "fr": "Œuf de dragon"
+ },
+ "DragonTear": {
+  "en": "Dragon Tear",
+  "fr": "Larme de dragon"
+ },
+ "Draugr": {
+  "en": "Draugr",
+  "fr": "Draugr"
+ },
+ "Draugr_Elite": {
+  "en": "Draugr Elite",
+  "fr": "Élite draugr"
+ },
+ "Draugr_Elite_sleeping": {
+  "en": "Draugr Elite",
+  "fr": "Élite draugr"
+ },
+ "Draugr_Ranged": {
+  "en": "Draugr",
+  "fr": "Draugr"
+ },
+ "Draugr_Ranged_sleeping": {
+  "en": "Draugr",
+  "fr": "Draugr"
+ },
+ "Draugr_sleeping": {
+  "en": "Draugr",
+  "fr": "Draugr"
+ },
+ "Dverger": {
+  "en": "Dvergr Rogue",
+  "fr": "Brigand dvergr"
+ },
+ "DvergerArbalest": {
+  "en": "Arbalest",
+  "fr": "Arbalète"
+ },
+ "DvergerArbalest_shoot": {
+  "en": "Arbalest",
+  "fr": "Arbalète"
+ },
+ "DvergerArbalest_shootAshlands": {
+  "en": "Arbalest",
+  "fr": "Arbalète"
+ },
+ "DvergerArbalest_shootDeepNorth": {
+  "en": "Arbalest",
+  "fr": "Arbalète"
+ },
+ "DvergerAshlands": {
+  "en": "Dvergr Rogue",
+  "fr": "Brigand dvergr"
+ },
+ "DvergerDeepNorth": {
+  "en": "Imprisoned Dvergr",
+  "fr": "Dvergr emprisonné"
+ },
+ "DvergerMage": {
+  "en": "Dvergr Mage",
+  "fr": "Mage dvergr"
+ },
+ "DvergerMageFire": {
+  "en": "Dvergr Mage",
+  "fr": "Mage dvergr"
+ },
+ "DvergerMageIce": {
+  "en": "Dvergr Mage",
+  "fr": "Mage dvergr"
+ },
+ "DvergerMageSupport": {
+  "en": "Dvergr Mage",
+  "fr": "Mage dvergr"
+ },
+ "DvergrKey": {
+  "en": "Sealbreaker",
+  "fr": "Brise-sceau"
+ },
+ "DvergrKeyFragment": {
+  "en": "Sealbreaker Fragment",
+  "fr": "Fragment de brise-sceau"
+ },
+ "DvergrNeedle": {
+  "en": "Dvergr Extractor",
+  "fr": "Extracteur dvergr"
+ },
+ "DyrnwynBladeFragment": {
+  "en": "Dyrnwyn Blade Fragment",
+  "fr": "Fragment de lame de Dyrnwyn"
+ },
+ "DyrnwynHiltFragment": {
+  "en": "Dyrnwyn Hilt Fragment",
+  "fr": "Fragment de garde de Dyrnwyn"
+ },
+ "DyrnwynTipFragment": {
+  "en": "Dyrnwyn Tip Fragment",
+  "fr": "Fragment de pointe de Dyrnwyn"
+ },
+ "Ectoplasm": {
+  "en": "Ectoplasm",
+  "fr": "Ectoplasme"
+ },
+ "Eikthyr": {
+  "en": "Eikthyr",
+  "fr": "Eikthyr"
+ },
+ "Eitr": {
+  "en": "Refined Eitr",
+  "fr": "Eitr raffiné"
+ },
+ "Elaking": {
+  "en": "Elaking",
+  "fr": null
+ },
+ "ElakingHairBundle": {
+  "en": "Elaking Hair Bundle",
+  "fr": "Poignée de poils d'elaking"
+ },
+ "ElakingLantern": {
+  "en": "Elaking",
+  "fr": null
+ },
+ "ElakingMole": {
+  "en": "Eyeless One",
+  "fr": "Sans yeux"
+ },
+ "ElderBark": {
+  "en": "Ancient Bark",
+  "fr": "Écorce ancienne"
+ },
+ "Entrails": {
+  "en": "Entrails",
+  "fr": "Entrailles"
+ },
+ "Eyescream": {
+  "en": "Eyescream",
+  "fr": "Sorbœil"
+ },
+ "FW_ArmorBronzeChest": {
+  "en": "Bronze Plate Tunic",
+  "fr": "Cuirasse en plaques de bronze"
+ },
+ "FW_ArmorBronzeLegs": {
+  "en": "Bronze Plate Leggings",
+  "fr": "Jambières en plaques de bronze"
+ },
+ "FW_ArmorFenringChest": {
+  "en": "Fenris Coat",
+  "fr": "Manteau de Fenris"
+ },
+ "FW_ArmorFenringLegs": {
+  "en": "Fenris Leggings",
+  "fr": "Braies de Fenris"
+ },
+ "FW_ArmorMageChest": {
+  "en": "Eitr-weave Robe",
+  "fr": "Robe d'Eitr tissé"
+ },
+ "FW_ArmorMageChest_Ashlands": {
+  "en": "Robes of Embla",
+  "fr": "Robe d'Embla"
+ },
+ "FW_ArmorMageLegs": {
+  "en": "Eitr-weave Trousers",
+  "fr": "Pantalon d'Eitr tissé"
+ },
+ "FW_ArmorMageLegs_Ashlands": {
+  "en": "Trousers of Embla",
+  "fr": "Pantalon d'Embla"
+ },
+ "FW_ArmorPaddedCuirass": {
+  "en": "Padded Cuirass",
+  "fr": "Cuirasse rembourrée"
+ },
+ "FW_ArmorPaddedGreaves": {
+  "en": "Padded Greaves",
+  "fr": "Jambières rembourrées"
+ },
+ "FW_ArmorTrollLeatherChest": {
+  "en": "Troll Leather Tunic",
+  "fr": "Tunique en cuir de troll"
+ },
+ "FW_ArmorTrollLeatherLegs": {
+  "en": "Troll Leather Trousers",
+  "fr": "Pantalon en cuir de troll"
+ },
+ "FW_AxeBronze": {
+  "en": "Bronze Axe",
+  "fr": "Hache en bronze"
+ },
+ "FW_BattleaxeCrystal": {
+  "en": "Crystal Battleaxe",
+  "fr": "Hache de combat en cristal"
+ },
+ "FW_BowDraugrFang": {
+  "en": "Draugr Fang",
+  "fr": "Croc de draugr"
+ },
+ "FW_CapeLinen": {
+  "en": "Linen Cape",
+  "fr": "Cape en tissu"
+ },
+ "FW_CapeTrollHide": {
+  "en": "Troll Hide Cape",
+  "fr": "Cape en peau de troll"
+ },
+ "FW_CapeWolf": {
+  "en": "Wolf Fur Cape",
+  "fr": "Cape en fourrure de loup"
+ },
+ "FW_HelmetBronze": {
+  "en": "Bronze Helmet",
+  "fr": "Casque en bronze"
+ },
+ "FW_KnifeSilver": {
+  "en": "Silver Knife",
+  "fr": "Couteau en argent"
+ },
+ "FW_KnifeSkollAndHati": {
+  "en": "Skoll and Hati",
+  "fr": "Sköll et Hati"
+ },
+ "FW_ShieldBlackmetalTower": {
+  "en": "Black Metal Tower Shield",
+  "fr": "Écu en sombracier"
+ },
+ "FW_StaffFireball": {
+  "en": "Staff of Embers",
+  "fr": "Bâton des braises"
+ },
+ "FW_StaffLightning": {
+  "en": "Dundr",
+  "fr": "Dundr"
+ },
+ "FW_SwordBlackmetal": {
+  "en": "Black Metal Sword",
+  "fr": "Épée en sombracier"
+ },
+ "Fader": {
+  "en": "Fader",
+  "fr": "Fader"
+ },
+ "FaderDrop": {
+  "en": "Kindled Ribs",
+  "fr": "Côtes calcinées"
+ },
+ "FaderEmber": {
+  "en": "Embers",
+  "fr": "Braises"
+ },
+ "FallenValkyrie": {
+  "en": "Fallen Valkyrie",
+  "fr": "Valkyrie déchue"
+ },
+ "FallenWarrior": {
+  "en": "Fallen Warrior",
+  "fr": "Guerrier déchu"
+ },
+ "FeastAshlands": {
+  "en": "Ashlands Gourmet Bowl",
+  "fr": "Bol gourmand des Terres de cendres"
+ },
+ "FeastAshlands_Material": {
+  "en": "Ashlands Gourmet Bowl",
+  "fr": "Bol gourmand des Terres de cendres"
+ },
+ "FeastBlackforest": {
+  "en": "Black Forest Buffet Platter",
+  "fr": "Plateau de la Forêt noire"
+ },
+ "FeastBlackforest_Material": {
+  "en": "Black Forest Buffet Platter",
+  "fr": "Plateau de la Forêt noire"
+ },
+ "FeastDeepNorth": {
+  "en": "Northern Morning Fare",
+  "fr": "Petit-déjeuner nordique"
+ },
+ "FeastDeepNorth_Material": {
+  "en": "Northern Morning Fare",
+  "fr": "Petit-déjeuner nordique"
+ },
+ "FeastMeadows": {
+  "en": "Whole Roasted Meadow Boar",
+  "fr": "Sanglier des champs rôti"
+ },
+ "FeastMeadows_Material": {
+  "en": "Whole Roasted Meadow Boar",
+  "fr": "Sanglier des champs rôti"
+ },
+ "FeastMistlands": {
+  "en": "Mushrooms Galore á la Mistlands",
+  "fr": "Folie de champignons des Terres brumeuses"
+ },
+ "FeastMistlands_Material": {
+  "en": "Mushrooms Galore á la Mistlands",
+  "fr": "Folie de champignons des Terres brumeuses"
+ },
+ "FeastMountains": {
+  "en": "Hearty Mountain Logger's Stew",
+  "fr": "Copieux ragoût de bûcheron des montagnes"
+ },
+ "FeastMountains_Material": {
+  "en": "Hearty Mountain Logger's Stew",
+  "fr": "Copieux ragoût de bûcheron des montagnes"
+ },
+ "FeastOceans": {
+  "en": "Sailor's Bounty",
+  "fr": "Butin du marin"
+ },
+ "FeastOceans_Material": {
+  "en": "Sailor's Bounty",
+  "fr": "Butin du marin"
+ },
+ "FeastPlains": {
+  "en": "Plains Pie Picnic",
+  "fr": "Ensemble de tartes des plaines"
+ },
+ "FeastPlains_Material": {
+  "en": "Plains Pie Picnic",
+  "fr": "Ensemble de tartes des plaines"
+ },
+ "FeastSwamps": {
+  "en": "Swamp Dweller's Delight",
+  "fr": "Délice du marais"
+ },
+ "FeastSwamps_Material": {
+  "en": "Swamp Dweller's Delight",
+  "fr": "Délice du marais"
+ },
+ "Feaster": {
+  "en": "Serving Tray",
+  "fr": "Plateau de service"
+ },
+ "Feathers": {
+  "en": "Feathers",
+  "fr": "Plumes"
+ },
+ "Fenring": {
+  "en": "Fenring",
+  "fr": "Fenring"
+ },
+ "Fenring_Cultist": {
+  "en": "Cultist",
+  "fr": "Cultiste"
+ },
+ "Fenring_Cultist_Hildir": {
+  "en": "<color=orange>Geirrhafa</color>",
+  "fr": "<color=orange>Geirrhafa</color>"
+ },
+ "Fenring_Cultist_Hildir_nochest": {
+  "en": "<color=orange>Geirrhafa</color>",
+  "fr": "<color=orange>Geirrhafa</color>"
+ },
+ "Fiddleheadfern": {
+  "en": "Fiddlehead",
+  "fr": "Torse-tête"
+ },
+ "FierySvinstew": {
+  "en": "Fiery Svinstew",
+  "fr": "Ragoût de svin ardent"
+ },
+ "FineWood": {
+  "en": "Finewood",
+  "fr": "Bois précieux"
+ },
+ "FirCone": {
+  "en": "Fir Cone",
+  "fr": "Pomme de sapin"
+ },
+ "FirConeFrost": {
+  "en": "Timberwood Cone",
+  "fr": "Pomme de sapin nordique"
+ },
+ "FirTree_Sapling": {
+  "en": "Fir Sapling",
+  "fr": "Jeune sapin"
+ },
+ "FirTree_big_Sapling": {
+  "en": "Timberwood Sapling",
+  "fr": "Jeune sapin nordique"
+ },
+ "FireworksRocket_Blue": {
+  "en": "Blue Fireworks",
+  "fr": "Feu d'artifice bleu"
+ },
+ "FireworksRocket_Cyan": {
+  "en": "Cyan Fireworks",
+  "fr": "Feu d'artifice cyan"
+ },
+ "FireworksRocket_Green": {
+  "en": "Green Fireworks",
+  "fr": "Feu d'artifice vert"
+ },
+ "FireworksRocket_Purple": {
+  "en": "Purple Fireworks",
+  "fr": "Feu d'artifice violet"
+ },
+ "FireworksRocket_Red": {
+  "en": "Red Fireworks",
+  "fr": "Feu d'artifice rouge"
+ },
+ "FireworksRocket_White": {
+  "en": "Basic Fireworks",
+  "fr": "Feu d'artifice simple"
+ },
+ "FireworksRocket_Yellow": {
+  "en": "Yellow Fireworks",
+  "fr": "Feu d'artifice jaune"
+ },
+ "Fish1": {
+  "en": "Perch",
+  "fr": "Perche"
+ },
+ "Fish10": {
+  "en": "Northern Salmon",
+  "fr": "Saumon nordique"
+ },
+ "Fish11": {
+  "en": "Magmafish",
+  "fr": "Poisson-magma"
+ },
+ "Fish12": {
+  "en": "Pufferfish",
+  "fr": "Poisson-globe"
+ },
+ "Fish2": {
+  "en": "Pike",
+  "fr": "Brochet"
+ },
+ "Fish3": {
+  "en": "Tuna",
+  "fr": "Thon"
+ },
+ "Fish4_cave": {
+  "en": "Tetra",
+  "fr": "Tétra"
+ },
+ "Fish5": {
+  "en": "Trollfish",
+  "fr": "Poisson-troll"
+ },
+ "Fish6": {
+  "en": "Giant Herring",
+  "fr": "Guinée saumon"
+ },
+ "Fish7": {
+  "en": "Grouper",
+  "fr": "Mérou"
+ },
+ "Fish8": {
+  "en": "Coral Cod",
+  "fr": "Vieille de corail"
+ },
+ "Fish9": {
+  "en": "Anglerfish",
+  "fr": "Poisson-pêcheur"
+ },
+ "FishAndBread": {
+  "en": "Fish 'n' Bread",
+  "fr": "Poisson et pain"
+ },
+ "FishAndBreadUncooked": {
+  "en": "Uncooked Fish 'n' Bread",
+  "fr": "Poisson cru et pain"
+ },
+ "FishAnglerRaw": {
+  "en": "Raw Fish",
+  "fr": "Poisson cru"
+ },
+ "FishCooked": {
+  "en": "Cooked Fish",
+  "fr": "Poisson fumé"
+ },
+ "FishRaw": {
+  "en": "Raw Fish",
+  "fr": "Poisson cru"
+ },
+ "FishSoup": {
+  "en": "Fish Soup",
+  "fr": "Soupe de poisson"
+ },
+ "FishWraps": {
+  "en": "Fish Wraps",
+  "fr": "Friands au poisson"
+ },
+ "FishingBait": {
+  "en": "Fishing Bait",
+  "fr": "Appât de pêche"
+ },
+ "FishingBaitAshlands": {
+  "en": "Hot Fishing Bait",
+  "fr": "Appât de pêche chaud"
+ },
+ "FishingBaitCave": {
+  "en": "Cold Fishing Bait",
+  "fr": "Appât de pêche froid"
+ },
+ "FishingBaitDeepNorth": {
+  "en": "Frosty Fishing Bait",
+  "fr": "Appât de pêche gelé"
+ },
+ "FishingBaitForest": {
+  "en": "Mossy Fishing Bait",
+  "fr": "Appât de pêche moussu"
+ },
+ "FishingBaitMistlands": {
+  "en": "Misty Fishing Bait",
+  "fr": "Appât de pêche brumeux"
+ },
+ "FishingBaitOcean": {
+  "en": "Heavy Fishing Bait",
+  "fr": "Appât de pêche lourd"
+ },
+ "FishingBaitPlains": {
+  "en": "Stingy Fishing Bait",
+  "fr": "Appât de pêche piquant"
+ },
+ "FishingBaitSwamp": {
+  "en": "Sticky Fishing Bait",
+  "fr": "Appât de pêche odorant"
+ },
+ "FishingRod": {
+  "en": "Fishing Rod",
+  "fr": "Canne à pêche"
+ },
+ "FistBjornClaw": {
+  "en": "Paws of the Bear",
+  "fr": "Pattes de l'ours"
+ },
+ "FistBjornUndeadClaw": {
+  "en": "Vilebone Maulclaws",
+  "fr": "Griffes d'ours maudit"
+ },
+ "FistFenrirClaw": {
+  "en": "Flesh Rippers",
+  "fr": "Arracheurs de chair"
+ },
+ "FistGold": {
+  "en": "Nord Knucklechains",
+  "fr": "Chaînes de poing nordiques"
+ },
+ "FistGoldUncooked": {
+  "en": "Cast: Nord Knucklechains",
+  "fr": "Moulage : chaînes de poing nordiques"
+ },
+ "FistGold_BloodLightning": {
+  "en": "Thunderblood Knucklechains",
+  "fr": "Chaînes de poing de sang-tonnerre"
+ },
+ "FistGold_FrostFire": {
+  "en": "Frostfire Knucklechains",
+  "fr": "Chaînes de poing de givrefeu"
+ },
+ "Flametal": {
+  "en": "Ancient Metal",
+  "fr": "Ancien métal"
+ },
+ "FlametalNew": {
+  "en": "Flametal",
+  "fr": "Flametal"
+ },
+ "FlametalOre": {
+  "en": "Glowing Metal Ore",
+  "fr": "Minerai de métal brillant"
+ },
+ "FlametalOreNew": {
+  "en": "Flametal Ore",
+  "fr": "Minerai de Flamétal"
+ },
+ "Flax": {
+  "en": "Flax",
+  "fr": "Lin"
+ },
+ "Flint": {
+  "en": "Flint",
+  "fr": "Silex"
+ },
+ "FragrantBundle": {
+  "en": "Fragrant Bundle",
+  "fr": "Botte parfumée"
+ },
+ "FreezeGland": {
+  "en": "Freeze Gland",
+  "fr": "Glande gelée"
+ },
+ "FreshSeaweed": {
+  "en": "Fresh Seaweed",
+  "fr": "Algues fraîches"
+ },
+ "FrostCore": {
+  "en": "Frostcore",
+  "fr": "Cœur de givre"
+ },
+ "Frostwood": {
+  "en": "Timberwood",
+  "fr": "Sapin nordique"
+ },
+ "FrozenFuel": {
+  "en": "Liquid Frost",
+  "fr": "Givre liquide"
+ },
+ "FrozenKing": {
+  "en": "Kall Fimbulbringer",
+  "fr": "Kall Mandefimbul"
+ },
+ "FrozenKingDrop": {
+  "en": "Sacrificial Blood",
+  "fr": "Sang sacrificiel"
+ },
+ "FrozenKing_p2": {
+  "en": "Kall Fimbulbringer",
+  "fr": "Kall Mandefimbul"
+ },
+ "FrozenKing_p3": {
+  "en": "Kall Fimbulbringer",
+  "fr": "Kall Mandefimbul"
+ },
+ "Frysling": {
+  "en": "Frysling",
+  "fr": null
+ },
+ "GemstoneBlue": {
+  "en": "Iolite",
+  "fr": "Iolite"
+ },
+ "GemstoneGreen": {
+  "en": "Jade",
+  "fr": "Jade"
+ },
+ "GemstoneRed": {
+  "en": "Bloodstone",
+  "fr": "Pierre-de-sang"
+ },
+ "Ghost": {
+  "en": "Ghost",
+  "fr": "Fantôme"
+ },
+ "Ghost_Void": {
+  "en": "The Void",
+  "fr": "Le Vide"
+ },
+ "Ghost_old": {
+  "en": "The Void",
+  "fr": "Le Vide"
+ },
+ "Ghost_sleeping": {
+  "en": "Ghost",
+  "fr": "Fantôme"
+ },
+ "GiantBloodSack": {
+  "en": "Blood Clot",
+  "fr": "Caillot de sang"
+ },
+ "Gjall": {
+  "en": "Gjall",
+  "fr": "Gjall"
+ },
+ "GlowWorm": {
+  "en": "Luminous Larva",
+  "fr": "Larve lumineuse"
+ },
+ "Goblin": {
+  "en": "Fuling",
+  "fr": "Gobelin"
+ },
+ "GoblinArcher": {
+  "en": "Fuling",
+  "fr": "Gobelin"
+ },
+ "GoblinBrute": {
+  "en": "Fuling Berserker",
+  "fr": "Berserker gobelin"
+ },
+ "GoblinBruteBros": {
+  "en": "<color=orange>Zil & Thungr</color>",
+  "fr": "<color=orange>Zil et Thungr</color>"
+ },
+ "GoblinBruteBros_nochest": {
+  "en": "<color=orange>Zil & Thungr</color>",
+  "fr": "<color=orange>Zil et Thungr</color>"
+ },
+ "GoblinBrute_Hildir": {
+  "en": "<color=orange>Thungr</color>",
+  "fr": "<color=orange>Thungr</color>"
+ },
+ "GoblinDeepNorth": {
+  "en": "Captive Fuling",
+  "fr": "Gobelin captif"
+ },
+ "GoblinKing": {
+  "en": "Yagluth",
+  "fr": "Yagluth"
+ },
+ "GoblinShaman": {
+  "en": "Fuling Shaman",
+  "fr": "Chaman gobelin"
+ },
+ "GoblinShaman_Hildir": {
+  "en": "<color=orange>Zil</color>",
+  "fr": "<color=orange>Zil</color>"
+ },
+ "GoblinShaman_Hildir_nochest": {
+  "en": "<color=orange>Zil</color>",
+  "fr": "<color=orange>Zil</color>"
+ },
+ "GoblinTotem": {
+  "en": "Fuling Totem",
+  "fr": "Totem gobelin"
+ },
+ "Goblin_Gem": {
+  "en": "Riktig Fuling",
+  "fr": "Vilain gobelin"
+ },
+ "Gold": {
+  "en": "Bloodgold",
+  "fr": "Or-sang"
+ },
+ "GoldOre": {
+  "en": "Petrified Tissue",
+  "fr": "Tissu pétrifié"
+ },
+ "GrapplingHook": {
+  "en": "Grappling Hook",
+  "fr": "Grappin"
+ },
+ "Grausten": {
+  "en": "Grausten",
+  "fr": "Grise-pierre"
+ },
+ "Greydwarf": {
+  "en": "Greydwarf",
+  "fr": "Naingris"
+ },
+ "GreydwarfEye": {
+  "en": "Greydwarf Eye",
+  "fr": "Œil de naingris"
+ },
+ "Greydwarf_Elite": {
+  "en": "Greydwarf Brute",
+  "fr": "Brute naingris"
+ },
+ "Greydwarf_Frozen": {
+  "en": "Greydwarf",
+  "fr": "Naingris"
+ },
+ "Greydwarf_Shaman": {
+  "en": "Greydwarf Shaman",
+  "fr": "Chaman naingris"
+ },
+ "Greydwarf_Shaman_Frozen": {
+  "en": "Greydwarf Shaman",
+  "fr": "Chaman naingris"
+ },
+ "Greyling": {
+  "en": "Greyling",
+  "fr": "Bourgeon naingris"
+ },
+ "Guck": {
+  "en": "Guck",
+  "fr": "Viscosité"
+ },
+ "Hair1": {
+  "en": "Windswept",
+  "fr": "Queue de cheval 1"
+ },
+ "Hair10": {
+  "en": "Side Swept",
+  "fr": "Raie sur le côté 2"
+ },
+ "Hair10_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair11": {
+  "en": "Long Braid",
+  "fr": "Tressés 2"
+ },
+ "Hair11_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair11_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair12": {
+  "en": "Matronly",
+  "fr": "Tressés 3"
+ },
+ "Hair12_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair13": {
+  "en": "Twin Braids",
+  "fr": "Tressés 4"
+ },
+ "Hair13_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair13_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair14": {
+  "en": "Speed Demon",
+  "fr": "Raie sur le côté 3"
+ },
+ "Hair14_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair15": {
+  "en": "Pulled Back Curls",
+  "fr": "Boucles tirées"
+ },
+ "Hair15_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair15_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair16": {
+  "en": "Gathered Braids",
+  "fr": "Tresses attachées"
+ },
+ "Hair16_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair17": {
+  "en": "Neat Braids",
+  "fr": "Tresses nettes"
+ },
+ "Hair17_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair18": {
+  "en": "Royal Braids",
+  "fr": "Tresses royales"
+ },
+ "Hair18_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair19": {
+  "en": "Painter Curls",
+  "fr": "Boucles 1"
+ },
+ "Hair2": {
+  "en": "High Ponytail",
+  "fr": "Queue de cheval 2"
+ },
+ "Hair20": {
+  "en": "Tidy Curls",
+  "fr": "Boucles 2"
+ },
+ "Hair21": {
+  "en": "Twin Buns",
+  "fr": "Double chignon"
+ },
+ "Hair21_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair22": {
+  "en": "Single Bun",
+  "fr": "Chignon unique"
+ },
+ "Hair22_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair23": {
+  "en": "Short Curls",
+  "fr": "Boucles courtes"
+ },
+ "Hair24": {
+  "en": "Shaved and Braided",
+  "fr": "Rasés et tressés"
+ },
+ "Hair24_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair24_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair25": {
+  "en": "Knot",
+  "fr": "Chignon unique 2"
+ },
+ "Hair26": {
+  "en": "Short Locs",
+  "fr": "Dreadlocks courtes"
+ },
+ "Hair27": {
+  "en": "Strength Braids",
+  "fr": "Tresses de la force"
+ },
+ "Hair27_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair27_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair28": {
+  "en": "Merchant's Braid",
+  "fr": "Tresse de marchand"
+ },
+ "Hair28_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair28_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair29": {
+  "en": "Tucked Back",
+  "fr": "Détachés 2"
+ },
+ "Hair29_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair3": {
+  "en": "Pigtails",
+  "fr": "Tressés 1"
+ },
+ "Hair30": {
+  "en": "Loose Waves",
+  "fr": "Détachés 3"
+ },
+ "Hair30_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair30_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair31": {
+  "en": "Gathered Locs",
+  "fr": "Dreadlocks nouées"
+ },
+ "Hair31_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair31_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair32": {
+  "en": "Mullet",
+  "fr": "Mulet"
+ },
+ "Hair32_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair32_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair33": {
+  "en": "Vinland Shave",
+  "fr": "Coupe du Vinland"
+ },
+ "Hair33_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair34": {
+  "en": "Castellan",
+  "fr": "Châtelain"
+ },
+ "Hair34_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair34_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair35": {
+  "en": "Champion",
+  "fr": "Champion"
+ },
+ "Hair35_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair35_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair36": {
+  "en": "Chronicler",
+  "fr": "Chroniqueur"
+ },
+ "Hair36_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair36_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair37": {
+  "en": "Sunbringer",
+  "fr": "Héraut de l'aube"
+ },
+ "Hair37_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair37_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair38": {
+  "en": "Masculine",
+  "fr": "Masculin"
+ },
+ "Hair38_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair38_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair3_2": {
+  "en": "Pigtails",
+  "fr": "Tressés 1"
+ },
+ "Hair3_3": {
+  "en": "Pigtails",
+  "fr": "Tressés 1"
+ },
+ "Hair4": {
+  "en": "Low Ponytail",
+  "fr": "Queue de cheval 3"
+ },
+ "Hair4_2": {
+  "en": "Pigtails",
+  "fr": "Tressés 1"
+ },
+ "Hair4_3": {
+  "en": "Pigtails",
+  "fr": "Tressés 1"
+ },
+ "Hair5": {
+  "en": "Short",
+  "fr": "Courts 1"
+ },
+ "Hair5_2": {
+  "en": "Pigtails",
+  "fr": "Tressés 1"
+ },
+ "Hair6": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair6_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair6_3": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair7": {
+  "en": "Dragonslayer",
+  "fr": "Queue de cheval 4"
+ },
+ "Hair7_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair8": {
+  "en": "Parted",
+  "fr": "Courts 2"
+ },
+ "Hair8_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "Hair9": {
+  "en": "Old One-Eye",
+  "fr": "Raie sur le côté 1"
+ },
+ "Hair9_2": {
+  "en": "Long and Loose",
+  "fr": "Longue 1"
+ },
+ "HairNone": {
+  "en": "No Hair",
+  "fr": "Pas de cheveux"
+ },
+ "Hammer": {
+  "en": "Hammer",
+  "fr": "Marteau"
+ },
+ "HardAntler": {
+  "en": "Hard Antler",
+  "fr": "Bois dur"
+ },
+ "Hare": {
+  "en": "Hare",
+  "fr": "Lièvre"
+ },
+ "HareMeat": {
+  "en": "Hare Meat",
+  "fr": "Viande de lièvre"
+ },
+ "Hatchling": {
+  "en": "Drake",
+  "fr": "Drac"
+ },
+ "HatefulBlood": {
+  "en": "Malicious Blood",
+  "fr": "Sang malicieux"
+ },
+ "HelmetAshlandsMediumHood": {
+  "en": "Hood of Ask",
+  "fr": "Capuche d'Ask"
+ },
+ "HelmetBerserkerHood": {
+  "en": "Headdress of the Bear",
+  "fr": "Coiffe de l'ours"
+ },
+ "HelmetBerserkerUndead": {
+  "en": "Vilebone Visage",
+  "fr": "Visage d'ours maudit"
+ },
+ "HelmetBronze": {
+  "en": "Bronze Helmet",
+  "fr": "Casque en bronze"
+ },
+ "HelmetCarapace": {
+  "en": "Carapace Helmet",
+  "fr": "Casque en carapace"
+ },
+ "HelmetCelebration": {
+  "en": "Celebratory Cap",
+  "fr": "Bonnet festif"
+ },
+ "HelmetCrownofValheim": {
+  "en": "Crown of Valheim",
+  "fr": "Couronne de Valheim"
+ },
+ "HelmetDNHeavy": {
+  "en": "Helmet of the Protector",
+  "fr": "Casque du courage"
+ },
+ "HelmetDNMage": {
+  "en": "Headdress of the Caller",
+  "fr": "Coiffe de l'orateur"
+ },
+ "HelmetDNMediumHood": {
+  "en": "Hood of the Vanguard",
+  "fr": "Capuche de l'Avant-garde"
+ },
+ "HelmetDrake": {
+  "en": "Drake Helmet",
+  "fr": "Casque de drac"
+ },
+ "HelmetDverger": {
+  "en": "Dverger Circlet",
+  "fr": "Diadème de dverger"
+ },
+ "HelmetFenring": {
+  "en": "Fenris Hood",
+  "fr": "Capuche de Fenris"
+ },
+ "HelmetFishingHat": {
+  "en": "Fishing Hat",
+  "fr": "Chapeau de pêcheur"
+ },
+ "HelmetFlametal": {
+  "en": "Flametal Helmet",
+  "fr": "Casque en flamétal"
+ },
+ "HelmetHat1": {
+  "en": "Blue Tied Headscarf",
+  "fr": "Foulard noué bleu"
+ },
+ "HelmetHat10": {
+  "en": "Simple Purple Cap",
+  "fr": "Bonnet violet simple"
+ },
+ "HelmetHat2": {
+  "en": "Green Twisted Headscarf",
+  "fr": "Foulard torsadé vert"
+ },
+ "HelmetHat3": {
+  "en": "Brown Fur Cap",
+  "fr": "Bonnet en fourrure marron"
+ },
+ "HelmetHat4": {
+  "en": "Extravagant Green Cap",
+  "fr": "Bonnet vert extravagant"
+ },
+ "HelmetHat5": {
+  "en": "Simple Red Cap",
+  "fr": "Bonnet rouge simple"
+ },
+ "HelmetHat6": {
+  "en": "Yellow Tied Headscarf",
+  "fr": "Foulard noué jaune"
+ },
+ "HelmetHat7": {
+  "en": "Red Twisted Headscarf",
+  "fr": "Foulard torsadé rouge"
+ },
+ "HelmetHat8": {
+  "en": "Grey Fur Cap",
+  "fr": "Bonnet en fourrure gris"
+ },
+ "HelmetHat9": {
+  "en": "Extravagant Orange Cap",
+  "fr": "Bonnet orange extravagant"
+ },
+ "HelmetIron": {
+  "en": "Iron Helmet",
+  "fr": "Casque en fer"
+ },
+ "HelmetLeather": {
+  "en": "Leather Helmet",
+  "fr": "Casque en cuir"
+ },
+ "HelmetLox": {
+  "en": "Lox Fur Hood",
+  "fr": "Capuche en fourrure de lox"
+ },
+ "HelmetMage": {
+  "en": "Eitr-weave Hood",
+  "fr": "Capuchon d'Eitr tissé"
+ },
+ "HelmetMage_Ashlands": {
+  "en": "Hood of Embla",
+  "fr": "Capuche d'Embla"
+ },
+ "HelmetMidsummerCrown": {
+  "en": "Midsummer Crown",
+  "fr": "Couronne de la mi-été"
+ },
+ "HelmetOdin": {
+  "en": "Hood of Oden",
+  "fr": "Cagoule d'Odin"
+ },
+ "HelmetPadded": {
+  "en": "Padded Helmet",
+  "fr": "Casque rembourré"
+ },
+ "HelmetPointyHat": {
+  "en": "Pointy Hat",
+  "fr": "Chapeau pointu"
+ },
+ "HelmetRoot": {
+  "en": "Root Mask",
+  "fr": "Casque de racine"
+ },
+ "HelmetRootCrown": {
+  "en": "Crown of Roots",
+  "fr": "Couronne de racines"
+ },
+ "HelmetStrawHat": {
+  "en": "Straw Hat",
+  "fr": "Chapeau de paille"
+ },
+ "HelmetSweatBand": {
+  "en": "Headband",
+  "fr": "Bandeau"
+ },
+ "HelmetTrollLeather": {
+  "en": "Troll Leather Hood",
+  "fr": "Casque en cuir de troll"
+ },
+ "HelmetYule": {
+  "en": "Yule Hat",
+  "fr": "Chapeau de Noël"
+ },
+ "Hen": {
+  "en": "Hen",
+  "fr": "Cocotte"
+ },
+ "HildirKey_forestcrypt": {
+  "en": "Hildir's Brass Key",
+  "fr": "Clé en cuivre d'Hildir"
+ },
+ "HildirKey_mountaincave": {
+  "en": "Hildir's Silver Key",
+  "fr": "Clé en argent d'Hildir"
+ },
+ "HildirKey_plainsfortress": {
+  "en": "Hildir's Bronze Key",
+  "fr": "Clé en bronze d'Hildir"
+ },
+ "Hoe": {
+  "en": "Hoe",
+  "fr": "Houe"
+ },
+ "Honey": {
+  "en": "Honey",
+  "fr": "Miel"
+ },
+ "HoneyGlazedChicken": {
+  "en": "Honey Glazed Chicken",
+  "fr": "Poulet nappé de miel"
+ },
+ "HoneyGlazedChickenUncooked": {
+  "en": "Uncooked Honey Glazed Chicken",
+  "fr": "Poulet cru nappé de miel"
+ },
+ "Hook": {
+  "en": "Hook",
+  "fr": "Crochet"
+ },
+ "Ice": {
+  "en": "Ice",
+  "fr": "Glace"
+ },
+ "Iron": {
+  "en": "Iron",
+  "fr": "Fer"
+ },
+ "IronNails": {
+  "en": "Iron Nails",
+  "fr": "Clous en fer"
+ },
+ "IronOre": {
+  "en": "Iron Ore",
+  "fr": "Minerai de fer"
+ },
+ "IronScrap": {
+  "en": "Scrap Iron",
+  "fr": "Ferraille"
+ },
+ "Ironpit": {
+  "en": "Iron Pit",
+  "fr": "Brasero"
+ },
+ "JotunWarrior": {
+  "en": "Krigen",
+  "fr": null
+ },
+ "JotunWarriorDualWield": {
+  "en": "Krigen",
+  "fr": null
+ },
+ "JotunWitch": {
+  "en": "Hexen",
+  "fr": null
+ },
+ "JuteBlue": {
+  "en": "Blue Jute",
+  "fr": "Jute bleue"
+ },
+ "JuteRed": {
+  "en": "Red Jute",
+  "fr": "Jute rouge"
+ },
+ "Kale": {
+  "en": "Kale",
+  "fr": "Chou kale"
+ },
+ "KaleChips": {
+  "en": "Kale Chips",
+  "fr": "Chips de chou kale"
+ },
+ "KaleChipsUncooked": {
+  "en": "Raw Kale Chips",
+  "fr": "Chips de chou kale crus"
+ },
+ "KaleSeeds": {
+  "en": "Kale Seeds",
+  "fr": "Graines de chou kale"
+ },
+ "Karve": {
+  "en": "Karve",
+  "fr": "Karv"
+ },
+ "KeysGoldUncooked": {
+  "en": "Cast: Intricate Key",
+  "fr": "Moulage : clé délicate"
+ },
+ "KnifeBlackMetal": {
+  "en": "Black Metal Knife",
+  "fr": "Couteau en sombracier"
+ },
+ "KnifeButcher": {
+  "en": "Butcher Knife",
+  "fr": "Couteau de boucher"
+ },
+ "KnifeChitin": {
+  "en": "Abyssal Razor",
+  "fr": "Rasoir abyssal"
+ },
+ "KnifeCopper": {
+  "en": "Copper Knife",
+  "fr": "Couteau en cuivre"
+ },
+ "KnifeFlint": {
+  "en": "Flint Knife",
+  "fr": "Couteau en silex"
+ },
+ "KnifeGold": {
+  "en": "Nord Dagger",
+  "fr": "Dague nordique"
+ },
+ "KnifeGoldUncooked": {
+  "en": "Cast: Nord Dagger",
+  "fr": "Moulage : dague nordique"
+ },
+ "KnifeGold_BloodLightning": {
+  "en": "Thunderblood Dagger",
+  "fr": "Dague de sang-tonnerre"
+ },
+ "KnifeGold_FrostFire": {
+  "en": "Frostfire Dagger",
+  "fr": "Dague de givrefeu"
+ },
+ "KnifeSilver": {
+  "en": "Silver Knife",
+  "fr": "Couteau en argent"
+ },
+ "KnifeSkollAndHati": {
+  "en": "Skoll and Hati",
+  "fr": "Sköll et Hati"
+ },
+ "KnifeVoid": {
+  "en": "Voidcaller",
+  "fr": "Mandevide"
+ },
+ "KnifeWood": {
+  "en": "Wooden Knife",
+  "fr": "Couteau en bois"
+ },
+ "Lantern": {
+  "en": "Dvergr Lantern",
+  "fr": "Lanterne dvergr"
+ },
+ "Lantern_DN": {
+  "en": "Salvaged Lantern",
+  "fr": "Lanterne récupérée"
+ },
+ "Lantern_hooded": {
+  "en": "Hooded Lantern",
+  "fr": "Lanterne couverte"
+ },
+ "LeatherScraps": {
+  "en": "Leather Scraps",
+  "fr": "Bouts de cuir"
+ },
+ "Leatherstraps": {
+  "en": "Leather Straps",
+  "fr": "Lanières de cuir"
+ },
+ "Leech": {
+  "en": "Leech",
+  "fr": "Sangsue"
+ },
+ "Leech_cave": {
+  "en": "Leech",
+  "fr": "Sangsue"
+ },
+ "LinenThread": {
+  "en": "Linen Thread",
+  "fr": "Toile de lin"
+ },
+ "Lingonberry": {
+  "en": "Lingonberries",
+  "fr": "Airelles rouges"
+ },
+ "Lingondricka": {
+  "en": "Lingonberry Juice",
+  "fr": "Jus d'airelles rouges"
+ },
+ "Lox": {
+  "en": "Lox",
+  "fr": "Lox"
+ },
+ "LoxMeat": {
+  "en": "Lox Meat",
+  "fr": "Viande de Lox"
+ },
+ "LoxPelt": {
+  "en": "Lox Pelt",
+  "fr": "Peau de Lox"
+ },
+ "LoxPie": {
+  "en": "Lox Meat Pie",
+  "fr": "Tourte au Lox"
+ },
+ "LoxPieUncooked": {
+  "en": "Unbaked Lox Pie",
+  "fr": "Tourte au lox non cuite"
+ },
+ "Lox_Calf": {
+  "en": "Lox Calf",
+  "fr": "Petit de Lox"
+ },
+ "MaceBronze": {
+  "en": "Bronze Mace",
+  "fr": "Massue de bronze"
+ },
+ "MaceEldner": {
+  "en": "Flametal Mace",
+  "fr": "Massue en flametal"
+ },
+ "MaceEldnerBlood": {
+  "en": "Bloodgeon",
+  "fr": "Masse-sang"
+ },
+ "MaceEldnerLightning": {
+  "en": "Storm Star",
+  "fr": "Étoile des tempêtes"
+ },
+ "MaceEldnerNature": {
+  "en": "Klossen",
+  "fr": "Klossen"
+ },
+ "MaceGold": {
+  "en": "Nord Mace",
+  "fr": "Massue nordique"
+ },
+ "MaceGoldUncooked": {
+  "en": "Cast: Nord Mace",
+  "fr": "Moulage : massue nordique"
+ },
+ "MaceGold_BloodLightning": {
+  "en": "Thunderblood Mace",
+  "fr": "Massue de sang-tonnerre"
+ },
+ "MaceGold_FrostFire": {
+  "en": "Frostfire Mace",
+  "fr": "Massue de givrefeu"
+ },
+ "MaceIron": {
+  "en": "Iron Mace",
+  "fr": "Massue de fer"
+ },
+ "MaceNeedle": {
+  "en": "Porcupine",
+  "fr": "Porc-épic"
+ },
+ "MaceSilver": {
+  "en": "Frostner",
+  "fr": "Argivre"
+ },
+ "MaceWood": {
+  "en": "Wooden Mace",
+  "fr": "Massue en bois"
+ },
+ "MagicallyStuffedShroom": {
+  "en": "Stuffed Mushroom",
+  "fr": "Champignon farci"
+ },
+ "MagicallyStuffedShroomUncooked": {
+  "en": "Uncooked Stuffed Mushroom",
+  "fr": "Champignon farci cru"
+ },
+ "Mandible": {
+  "en": "Mandible",
+  "fr": "Mandibule"
+ },
+ "MarinatedGreens": {
+  "en": "Marinated Greens",
+  "fr": "Légumes marinés"
+ },
+ "MashedMeat": {
+  "en": "Mashed Meat",
+  "fr": "Écrasée de viande"
+ },
+ "MeadBaseBugRepellent": {
+  "en": "Mead Base: Anti-Sting",
+  "fr": "Base d'hydromel : anti-morstique"
+ },
+ "MeadBaseBzerker": {
+  "en": "Mead base: Berserkir",
+  "fr": "Base d'hydromel : berserkir"
+ },
+ "MeadBaseEitrLingering": {
+  "en": "Mead Base: Lingering Eitr",
+  "fr": "Base d'hydromel : Eitr latent"
+ },
+ "MeadBaseEitrMinor": {
+  "en": "Mead Base: Minor Eitr",
+  "fr": "Base d'hydromel : Eitr mineur"
+ },
+ "MeadBaseFrostResist": {
+  "en": "Mead Base: Frost Resistance",
+  "fr": "Base d'hydromel : résistance au givre"
+ },
+ "MeadBaseHasty": {
+  "en": "Mead base: Ratatosk",
+  "fr": "Base d'hydromel : ratatosk"
+ },
+ "MeadBaseHealthLingering": {
+  "en": "Mead Base: Lingering Health",
+  "fr": "Base d'hydromel : vie latente"
+ },
+ "MeadBaseHealthMajor": {
+  "en": "Mead Base: Major Healing",
+  "fr": "Base d'hydromel : extrêmement revigorant"
+ },
+ "MeadBaseHealthMedium": {
+  "en": "Mead Base: Medium Healing",
+  "fr": "Base d'hydromel : très revigorant"
+ },
+ "MeadBaseHealthMinor": {
+  "en": "Mead Base: Minor Healing",
+  "fr": "Base d'hydromel : revigorant"
+ },
+ "MeadBaseLightFoot": {
+  "en": "Mead Base: Lightfoot",
+  "fr": "Base d'hydromel : pied léger"
+ },
+ "MeadBasePoisonResist": {
+  "en": "Mead Base: Poison Resistance",
+  "fr": "Base d'hydromel : résistance au poison"
+ },
+ "MeadBaseStaminaLingering": {
+  "en": "Mead Base: Lingering Stamina",
+  "fr": "Base d'hydromel : endurance latente"
+ },
+ "MeadBaseStaminaMedium": {
+  "en": "Mead Base: Medium Stamina",
+  "fr": "Base d'hydromel : bonne endurance"
+ },
+ "MeadBaseStaminaMinor": {
+  "en": "Mead Base: Minor Stamina",
+  "fr": "Base d'hydromel : endurance"
+ },
+ "MeadBaseStrength": {
+  "en": "Mead Base: Troll Endurance",
+  "fr": "Base d'hydromel : force des trolls"
+ },
+ "MeadBaseSwimmer": {
+  "en": "Mead Base: Vananidir",
+  "fr": "Base d'hydromel : Vananidir"
+ },
+ "MeadBaseTamer": {
+  "en": "Mead Base: Animal Whispers",
+  "fr": "Base d'hydromel : murmures sauvages"
+ },
+ "MeadBaseTasty": {
+  "en": "Mead Base: Tasty",
+  "fr": "Base d'hydromel : savoureux"
+ },
+ "MeadBugRepellent": {
+  "en": "Anti-Sting Concoction",
+  "fr": "Concoction anti-morstique"
+ },
+ "MeadBzerker": {
+  "en": "Berserkir Mead",
+  "fr": "Hydromel des berserkir"
+ },
+ "MeadEitrLingering": {
+  "en": "Lingering Eitr Mead",
+  "fr": "Hydromel d'Eitr latent"
+ },
+ "MeadEitrMinor": {
+  "en": "Minor Eitr Mead",
+  "fr": "Hydromel d'Eitr mineur"
+ },
+ "MeadFrostResist": {
+  "en": "Frost Resistance Mead",
+  "fr": "Hydromel de résistance au gel"
+ },
+ "MeadHasty": {
+  "en": "Tonic of Ratatosk",
+  "fr": "Tonique de ratatosk"
+ },
+ "MeadHealthLingering": {
+  "en": "Lingering Healing Mead",
+  "fr": "Hydromel de vie latente"
+ },
+ "MeadHealthMajor": {
+  "en": "Major Healing Mead",
+  "fr": "Hydromel extrêmement revigorant"
+ },
+ "MeadHealthMedium": {
+  "en": "Medium Healing Mead",
+  "fr": "Hydromel très revigorant"
+ },
+ "MeadHealthMinor": {
+  "en": "Minor Healing Mead",
+  "fr": "Hydromel revigorant"
+ },
+ "MeadLightfoot": {
+  "en": "Lightfoot Mead",
+  "fr": "Hydromel du pied léger"
+ },
+ "MeadPoisonResist": {
+  "en": "Poison Resistance Mead",
+  "fr": "Hydromel de résistance au poison"
+ },
+ "MeadStaminaLingering": {
+  "en": "Lingering Stamina Mead",
+  "fr": "Hydromel d'endurance latente"
+ },
+ "MeadStaminaMedium": {
+  "en": "Medium Stamina Mead",
+  "fr": "Hydromel de bonne endurance"
+ },
+ "MeadStaminaMinor": {
+  "en": "Minor Stamina Mead",
+  "fr": "Hydromel d'endurance"
+ },
+ "MeadStrength": {
+  "en": "Mead of Troll Endurance",
+  "fr": "Hydromel de force des trolls"
+ },
+ "MeadSwimmer": {
+  "en": "Draught of Vananidir",
+  "fr": "Élixir de Vananidir"
+ },
+ "MeadTamer": {
+  "en": "Brew of Animal Whispers",
+  "fr": "Infusion des murmures sauvages"
+ },
+ "MeadTasty": {
+  "en": "Tasty Mead",
+  "fr": "Hydromel savoureux"
+ },
+ "MeadTrollPheromones": {
+  "en": "Love Potion",
+  "fr": "Potion d'amour trolle"
+ },
+ "MeatPlatter": {
+  "en": "Meat Platter",
+  "fr": "Plateau de viande"
+ },
+ "MeatPlatterUncooked": {
+  "en": "Uncooked Meat Platter",
+  "fr": "Plateau de viande crue"
+ },
+ "MeatballsMashedPoteitr": {
+  "en": "Meatballs and Poteitr",
+  "fr": "Boulettes de viande et poteitr"
+ },
+ "MechanicalSpring": {
+  "en": "Mechanical Spring",
+  "fr": "Ressort mécanique"
+ },
+ "MemorialCoal": {
+  "en": "Memorial Coal",
+  "fr": "Charbon du souvenir"
+ },
+ "MinceMeatSauce": {
+  "en": "Minced Meat Sauce",
+  "fr": "Sauce à la viande hachée"
+ },
+ "MisthareSupreme": {
+  "en": "Misthare Supreme",
+  "fr": "Suprême de lièvre des brumes"
+ },
+ "MisthareSupremeUncooked": {
+  "en": "Uncooked Misthare Supreme",
+  "fr": "Suprême de lièvre des brumes cru"
+ },
+ "Mistile": {
+  "en": "Mistile",
+  "fr": "Brumectile"
+ },
+ "MoldArmorGoldChest": {
+  "en": "Mould: Breastplate of the Protector",
+  "fr": "Moule : plastron du courage"
+ },
+ "MoldArmorGoldHelmet": {
+  "en": "Mould: Helmet of the Protector",
+  "fr": "Moule : casque du courage"
+ },
+ "MoldArmorGoldLegs": {
+  "en": "Mould: Trousers of the Protector",
+  "fr": "Moule : pantalon du courage"
+ },
+ "MoldArmorMageChest": {
+  "en": "Mould: Robes of the Caller",
+  "fr": "Moule : robe de l'orateur"
+ },
+ "MoldArmorMageHelmet": {
+  "en": "Mould: Headdress of the Caller",
+  "fr": "Moule : coiffe de l'orateur"
+ },
+ "MoldArmorMageLegs": {
+  "en": "Mould: Trousers of the Caller",
+  "fr": "Moule : pantalon de l'orateur"
+ },
+ "MoldArmorMediumHelmet": {
+  "en": "Mould: Hood of the Vanguard",
+  "fr": "Moule : capuche de l'Avant-garde"
+ },
+ "MoldArmorMediumLegs": {
+  "en": "Mould: Trousers of the Vanguard",
+  "fr": "Moule : pantalon de l'Avant-garde"
+ },
+ "MoldArmormediumChest": {
+  "en": "Mould: Chestpiece of the Vanguard",
+  "fr": "Moule : plastron de cuir de l'Avant-garde"
+ },
+ "MoldAtgeir": {
+  "en": "Mould: Nord Atgeir",
+  "fr": "Moule : atgeir nordique"
+ },
+ "MoldAxe": {
+  "en": "Mould: Nord Axe",
+  "fr": "Moule : hache nordique"
+ },
+ "MoldAxe2H": {
+  "en": "Mould: Nord Greataxe",
+  "fr": "Moule : bardiche nordique"
+ },
+ "MoldBow": {
+  "en": "Mould: Nord Bow",
+  "fr": "Moule : arc nordique"
+ },
+ "MoldCrossbow": {
+  "en": "Mould: Nord Crossbow",
+  "fr": "Moule : arbalète nordique"
+ },
+ "MoldFistweapon": {
+  "en": "Mould: Nord Knucklechains",
+  "fr": "Moule : chaînes de poing nordiques"
+ },
+ "MoldKeys": {
+  "en": "Mould: Intricate Key",
+  "fr": "Moule : clé délicate"
+ },
+ "MoldKnife": {
+  "en": "Mould: Nord Dagger",
+  "fr": "Moule : dague nordique"
+ },
+ "MoldMace": {
+  "en": "Mould: Nord Mace",
+  "fr": "Moule : massue nordique"
+ },
+ "MoldMace2H": {
+  "en": "Mould: Nord Sledge",
+  "fr": "Moule : masse nordique"
+ },
+ "MoldShieldBuckler": {
+  "en": "Mould: Nord Buckler",
+  "fr": "Moule : targe nordique"
+ },
+ "MoldShieldRound": {
+  "en": "Mould: Nord Shield",
+  "fr": "Moule : bouclier nordique"
+ },
+ "MoldShieldTower": {
+  "en": "Mould: Nord Greatshield",
+  "fr": "Moule : grand bouclier nordique"
+ },
+ "MoldSpear": {
+  "en": "Mould: Nord Spear",
+  "fr": "Moule : lance nordique"
+ },
+ "MoldStaffOrbofAhri": {
+  "en": "Mould: Echo Spike",
+  "fr": "Moule : Flèche de l'écho"
+ },
+ "MoldStafffrostorbs": {
+  "en": "Mould: Northern Vengeance",
+  "fr": "Moule : Vengeance nordique"
+ },
+ "MoldStaffspiritcaller": {
+  "en": "Mould: Spirit Caller",
+  "fr": "Moule : Mande-esprits"
+ },
+ "MoldStaffthunderblood": {
+  "en": "Mould: Lightning Strike",
+  "fr": "Moule : Coup de tonnerre"
+ },
+ "MoldSword": {
+  "en": "Mould: Nord Sword",
+  "fr": "Moule : épée nordique"
+ },
+ "MoldSword2H": {
+  "en": "Mould: Nord Greatsword",
+  "fr": "Moule : espadon nordique"
+ },
+ "MoleClaws": {
+  "en": "Long Claws",
+  "fr": "Longues griffes"
+ },
+ "MoltenCore": {
+  "en": "Molten Core",
+  "fr": "Noyau en fusion"
+ },
+ "Moose": {
+  "en": "Moose",
+  "fr": "Élan"
+ },
+ "MooseHide": {
+  "en": "Moose Hide",
+  "fr": "Peau d'élan"
+ },
+ "MooseKebab": {
+  "en": "Meat In Bread",
+  "fr": "Pain et viande"
+ },
+ "MooseMeat": {
+  "en": "Moose Meat",
+  "fr": "Viande d'élan"
+ },
+ "MooseSinew": {
+  "en": "Moose Sinew",
+  "fr": "Tendon d'élan"
+ },
+ "Moose_calf": {
+  "en": "Moose Calf",
+  "fr": "Faon d'élan"
+ },
+ "Morgen": {
+  "en": "Morgen",
+  "fr": "Morgen"
+ },
+ "MorgenHeart": {
+  "en": "Morgen Heart",
+  "fr": "Cœur de morgen"
+ },
+ "MorgenSinew": {
+  "en": "Morgen Sinew",
+  "fr": "Tendon de morgen"
+ },
+ "Morgen_NonSleeping": {
+  "en": "Morgen",
+  "fr": "Morgen"
+ },
+ "Morkhalla_ChestAncient": {
+  "en": "Ancient Chest",
+  "fr": "Coffre ancien"
+ },
+ "Morkhalla_Stonepile": {
+  "en": "Black Marble Pile",
+  "fr": "Pile de marbre noir"
+ },
+ "Morkhalla_firepit": {
+  "en": "Campfire",
+  "fr": "Feu de camp"
+ },
+ "Mushroom": {
+  "en": "Mushroom",
+  "fr": "Champignon"
+ },
+ "MushroomBlue": {
+  "en": "Blue Mushroom",
+  "fr": "Champignon bleu"
+ },
+ "MushroomBzerker": {
+  "en": "Toadstool",
+  "fr": "Amanite"
+ },
+ "MushroomJotunPuffs": {
+  "en": "Jotun Puffs",
+  "fr": "Globes jötnars"
+ },
+ "MushroomMagecap": {
+  "en": "Magecap",
+  "fr": "Coiffe-de-mage"
+ },
+ "MushroomOmelette": {
+  "en": "Mushroom Omelette",
+  "fr": "Omelette aux champignons"
+ },
+ "MushroomSmokePuff": {
+  "en": "Smoke Puff",
+  "fr": "Fume-spore"
+ },
+ "MushroomYellow": {
+  "en": "Yellow Mushroom",
+  "fr": "Champignon jaune"
+ },
+ "Neck": {
+  "en": "Neck",
+  "fr": "Nixe"
+ },
+ "NeckTail": {
+  "en": "Neck Tail",
+  "fr": "Queue de Nixe"
+ },
+ "NeckTailGrilled": {
+  "en": "Grilled Neck Tail",
+  "fr": "Queue de Nixe grillée"
+ },
+ "Needle": {
+  "en": "Needle",
+  "fr": "Aiguille"
+ },
+ "NornThread": {
+  "en": "Nornathread",
+  "fr": "Fils des Nornes"
+ },
+ "Oak_Sapling": {
+  "en": "Oak Sapling",
+  "fr": "Oak Sapling"
+ },
+ "Oat": {
+  "en": "Oats",
+  "fr": "Flocons d'avoine"
+ },
+ "OatFlour": {
+  "en": "Oat Flour",
+  "fr": "Farine d'avoine"
+ },
+ "OatMilk": {
+  "en": "Oat Milk",
+  "fr": "Boisson d'avoine"
+ },
+ "OatSeeds": {
+  "en": "Oat Seeds",
+  "fr": "Graines d'avoine"
+ },
+ "OatmealLingonberryJam": {
+  "en": "Oatmeal",
+  "fr": "Gruau d'avoine"
+ },
+ "Obsidian": {
+  "en": "Obsidian",
+  "fr": "Obsidienne"
+ },
+ "Onion": {
+  "en": "Onion",
+  "fr": "Oignon"
+ },
+ "OnionSeeds": {
+  "en": "Onion Seeds",
+  "fr": "Graines d'oignon"
+ },
+ "OnionSoup": {
+  "en": "Onion Soup",
+  "fr": "Soupe à l'oignon"
+ },
+ "Ooze": {
+  "en": "Ooze",
+  "fr": "Gadoue"
+ },
+ "OozeMork": {
+  "en": "Dead Pulp",
+  "fr": "Pâte inanimée"
+ },
+ "OrbFrostFire": {
+  "en": "Frostfire Essence",
+  "fr": "Essence de givrefeu"
+ },
+ "OrbThunderBlood": {
+  "en": "Thunderblood Essence",
+  "fr": "Essence de sang-tonnerre"
+ },
+ "OvenPancake": {
+  "en": "Oven Pancake",
+  "fr": "Pancake au four"
+ },
+ "OvenPancakeUncooked": {
+  "en": "Oven Pancake Batter",
+  "fr": "Pâte de pancake au four"
+ },
+ "Pancakes": {
+  "en": "Pancakes",
+  "fr": null
+ },
+ "PickaxeAntler": {
+  "en": "Antler Pickaxe",
+  "fr": "Pioche de bois de cerf"
+ },
+ "PickaxeBlackMetal": {
+  "en": "Black Metal Pickaxe",
+  "fr": "Pioche en sombracier"
+ },
+ "PickaxeBronze": {
+  "en": "Bronze Pickaxe",
+  "fr": "Pioche en bronze"
+ },
+ "PickaxeIron": {
+  "en": "Iron Pickaxe",
+  "fr": "Pioche en fer"
+ },
+ "PickaxeStone": {
+  "en": "Stone Pickaxe",
+  "fr": "Pioche en pierre"
+ },
+ "Piece_flametal_beam": {
+  "en": "Flametal Beam",
+  "fr": "Poutre en flametal"
+ },
+ "Piece_flametal_pillar": {
+  "en": "Flametal Pillar",
+  "fr": "Pilier en flametal"
+ },
+ "Piece_grausten_floor_1x1": {
+  "en": "Grausten Floor 1x1",
+  "fr": "Sol en grise-pierre 1x1"
+ },
+ "Piece_grausten_floor_2x2": {
+  "en": "Grausten Floor 2x2",
+  "fr": "Sol en grise-pierre 2x2"
+ },
+ "Piece_grausten_floor_4x4": {
+  "en": "Grausten Floor 4x4",
+  "fr": "Sol en grise-pierre 4x4"
+ },
+ "Piece_grausten_pillar_arch": {
+  "en": "Grausten Medium Arch",
+  "fr": "Arche moyenne en grise-pierre"
+ },
+ "Piece_grausten_pillar_arch_small": {
+  "en": "Grausten Small Arch",
+  "fr": "Petite arche en grise-pierre"
+ },
+ "Piece_grausten_pillarbase_medium": {
+  "en": "Grausten Medium Pillar",
+  "fr": "Pilier moyen en grise-pierre"
+ },
+ "Piece_grausten_pillarbase_small": {
+  "en": "Grausten Small Pillar",
+  "fr": "Petit pilier en grise-pierre"
+ },
+ "Piece_grausten_pillarbase_tapered": {
+  "en": "Grausten Tapered Pillar",
+  "fr": "Pilier fuselé en grise-pierre"
+ },
+ "Piece_grausten_pillarbase_tapered_inverted": {
+  "en": "Grausten Tapered Pillar (Inverted)",
+  "fr": "Pilier fuselé en grise-pierre (inversé)"
+ },
+ "Piece_grausten_pillarbeam_medium": {
+  "en": "Grausten Medium Beam",
+  "fr": "Poutre moyenne en grise-pierre"
+ },
+ "Piece_grausten_pillarbeam_small": {
+  "en": "Grausten Small Beam",
+  "fr": "Petite poutre en grise-pierre"
+ },
+ "Piece_grausten_stone_ladder": {
+  "en": "Grausten Steep Stairs",
+  "fr": "Escalier raide en grise-pierre"
+ },
+ "Piece_grausten_wall_1x2": {
+  "en": "Grausten Wall 1x2",
+  "fr": "Mur en grise-pierre 1x2"
+ },
+ "Piece_grausten_wall_2x2": {
+  "en": "Grausten Wall 2x2",
+  "fr": "Mur en grise-pierre 2x2"
+ },
+ "Piece_grausten_wall_4x2": {
+  "en": "Grausten Wall 4x2",
+  "fr": "Mur en grise-pierre 4x2"
+ },
+ "Piece_grausten_wall_arch": {
+  "en": "Grausten Wall Arch",
+  "fr": "Arche murale en grise-pierre"
+ },
+ "Piece_grausten_wall_arch_inverted": {
+  "en": "Grausten Wall Arch (Inverted)",
+  "fr": "Arche murale inversée en grise-pierre"
+ },
+ "Piece_grausten_window_2x2": {
+  "en": "Grausten Window 2x2",
+  "fr": "Fenêtre en grise-pierre 2x2"
+ },
+ "Piece_grausten_window_4x2": {
+  "en": "Grausten Window 4x2",
+  "fr": "Fenêtre en grise-pierre 4x2"
+ },
+ "PineCone": {
+  "en": "Pine Cone",
+  "fr": "Pomme de pin"
+ },
+ "PineTree_Sapling": {
+  "en": "Pine Sapling",
+  "fr": "Jeune pin"
+ },
+ "PiquantPie": {
+  "en": "Piquant Pie",
+  "fr": "Tarte piquante"
+ },
+ "PiquantPieUncooked": {
+  "en": "Uncooked Piquant Pie",
+  "fr": "Tarte piquante crue"
+ },
+ "Placeable_HardRock": {
+  "en": "Mysterious Rock",
+  "fr": "Pierre mystérieuse"
+ },
+ "Placeable_Stone": {
+  "en": "Stone",
+  "fr": "Pierre"
+ },
+ "Pot_Shard_Green": {
+  "en": "Pot Shard",
+  "fr": "Fragment de pot"
+ },
+ "Poteitr": {
+  "en": "Poteitr",
+  "fr": null
+ },
+ "PoteitrSeeds": {
+  "en": "Seed Poteitr",
+  "fr": "Graine de poteitr"
+ },
+ "PowderedDragonEgg": {
+  "en": "Powdered Dragon Eggshells",
+  "fr": "Coquilles d'œuf de dragon en poudre"
+ },
+ "ProustitePowder": {
+  "en": "Proustite Powder",
+  "fr": "Poudre de proustite"
+ },
+ "Pukeberries": {
+  "en": "Bukeperries",
+  "fr": "Dégobibaies"
+ },
+ "PulledBear": {
+  "en": "Pulled Bear",
+  "fr": "Effiloché d'ours"
+ },
+ "PungentPebbles": {
+  "en": "Pungent Pebbles",
+  "fr": "Cailloux odorants"
+ },
+ "QueenBee": {
+  "en": "Queen Bee",
+  "fr": "Reine abeille"
+ },
+ "QueenDrop": {
+  "en": "Majestic Carapace",
+  "fr": "Carapace majestueuse"
+ },
+ "QueensJam": {
+  "en": "Queen's Jam",
+  "fr": "Confiture de la reine"
+ },
+ "Raft": {
+  "en": "Raft",
+  "fr": "Radeau"
+ },
+ "Raspberry": {
+  "en": "Raspberries",
+  "fr": "Framboises"
+ },
+ "RawMeat": {
+  "en": "Boar Meat",
+  "fr": "Viande de sanglier"
+ },
+ "Resin": {
+  "en": "Resin",
+  "fr": "Résine"
+ },
+ "RoastedCrustPie": {
+  "en": "Roasted Crust Pie",
+  "fr": "Tourte rôtie"
+ },
+ "RoastedCrustPieUncooked": {
+  "en": "Uncooked Roasted Crust Pie",
+  "fr": "Tourte rôtie crue"
+ },
+ "Root": {
+  "en": "Root",
+  "fr": "Racine"
+ },
+ "RottenMeat": {
+  "en": "Rotten Meat",
+  "fr": "Viande avariée"
+ },
+ "RoundLog": {
+  "en": "Corewood",
+  "fr": "Bois robuste"
+ },
+ "RoyalJelly": {
+  "en": "Royal Jelly",
+  "fr": "Gelée royale"
+ },
+ "Ruby": {
+  "en": "Ruby",
+  "fr": "Rubis"
+ },
+ "SP_ArmorBronzeChest": {
+  "en": "Bronze Plate Tunic",
+  "fr": "Cuirasse en plaques de bronze"
+ },
+ "SP_ArmorBronzeLegs": {
+  "en": "Bronze Plate Leggings",
+  "fr": "Jambières en plaques de bronze"
+ },
+ "SP_ArmorDress1": {
+  "en": "Plain Brown Dress",
+  "fr": "Robe marron simple"
+ },
+ "SP_ArmorFenringChest": {
+  "en": "Fenris Coat",
+  "fr": "Manteau de Fenris"
+ },
+ "SP_ArmorFenringLegs": {
+  "en": "Fenris Leggings",
+  "fr": "Braies de Fenris"
+ },
+ "SP_ArmorLeatherLegs": {
+  "en": "Leather Trousers",
+  "fr": "Pantalon en cuir"
+ },
+ "SP_ArmorMageChest": {
+  "en": "Eitr-weave Robe",
+  "fr": "Robe d'Eitr tissé"
+ },
+ "SP_ArmorMageChest_Ashlands": {
+  "en": "Robes of Embla",
+  "fr": "Robe d'Embla"
+ },
+ "SP_ArmorMageLegs": {
+  "en": "Eitr-weave Trousers",
+  "fr": "Pantalon d'Eitr tissé"
+ },
+ "SP_ArmorMageLegs_Ashlands": {
+  "en": "Trousers of Embla",
+  "fr": "Pantalon d'Embla"
+ },
+ "SP_ArmorPaddedCuirass": {
+  "en": "Padded Cuirass",
+  "fr": "Cuirasse rembourrée"
+ },
+ "SP_ArmorPaddedGreaves": {
+  "en": "Padded Greaves",
+  "fr": "Jambières rembourrées"
+ },
+ "SP_ArmorTrollLeatherChest": {
+  "en": "Troll Leather Tunic",
+  "fr": "Tunique en cuir de troll"
+ },
+ "SP_ArmorTrollLeatherLegs": {
+  "en": "Troll Leather Trousers",
+  "fr": "Pantalon en cuir de troll"
+ },
+ "SP_ArmorTunic5": {
+  "en": "Red Tunic with Cape",
+  "fr": "Tunique rouge avec cape"
+ },
+ "SP_AxeBronze": {
+  "en": "Bronze Axe",
+  "fr": "Hache en bronze"
+ },
+ "SP_BattleaxeCrystal": {
+  "en": "Crystal Battleaxe",
+  "fr": "Hache de combat en cristal"
+ },
+ "SP_BowDraugrFang": {
+  "en": "Draugr Fang",
+  "fr": "Croc de draugr"
+ },
+ "SP_CapeLinen": {
+  "en": "Linen Cape",
+  "fr": "Cape en tissu"
+ },
+ "SP_CapeTrollHide": {
+  "en": "Troll Hide Cape",
+  "fr": "Cape en peau de troll"
+ },
+ "SP_CapeWolf": {
+  "en": "Wolf Fur Cape",
+  "fr": "Cape en fourrure de loup"
+ },
+ "SP_HelmetBronze": {
+  "en": "Bronze Helmet",
+  "fr": "Casque en bronze"
+ },
+ "SP_KnifeSilver": {
+  "en": "Silver Knife",
+  "fr": "Couteau en argent"
+ },
+ "SP_KnifeSkollAndHati": {
+  "en": "Skoll and Hati",
+  "fr": "Sköll et Hati"
+ },
+ "SP_ShieldBlackmetalTower": {
+  "en": "Black Metal Tower Shield",
+  "fr": "Écu en sombracier"
+ },
+ "SP_StaffFireball": {
+  "en": "Staff of Embers",
+  "fr": "Bâton des braises"
+ },
+ "SP_StaffLightning": {
+  "en": "Dundr",
+  "fr": "Dundr"
+ },
+ "SP_SwordBlackmetal": {
+  "en": "Black Metal Sword",
+  "fr": "Épée en sombracier"
+ },
+ "SaddleAsksvin": {
+  "en": "Asksvin Saddle",
+  "fr": "Selle d'asksvin"
+ },
+ "SaddleLox": {
+  "en": "Lox Saddle",
+  "fr": "Selle de Lox"
+ },
+ "SaddleMoose": {
+  "en": "Moose Saddle",
+  "fr": "Selle d'élan"
+ },
+ "Salad": {
+  "en": "Salad",
+  "fr": "Salade"
+ },
+ "Sap": {
+  "en": "Sap",
+  "fr": "Sève"
+ },
+ "Sausages": {
+  "en": "Sausages",
+  "fr": "Saucisses"
+ },
+ "ScaleHide": {
+  "en": "Scale Hide",
+  "fr": "Peau écailleuse"
+ },
+ "ScorchingMedley": {
+  "en": "Scorching Medley",
+  "fr": "Mélange brûlant"
+ },
+ "Scythe": {
+  "en": "Scythe",
+  "fr": "Faux"
+ },
+ "ScytheHandle": {
+  "en": "Scythe Handle",
+  "fr": "Manche de faux"
+ },
+ "Seal": {
+  "en": "Seal",
+  "fr": "Phoque"
+ },
+ "SealBlubber": {
+  "en": "Seal Blubber",
+  "fr": "Lard de phoque"
+ },
+ "SealHide": {
+  "en": "Seal Pelt",
+  "fr": "Peau de phoque"
+ },
+ "SealSoup": {
+  "en": "Seal Meat Soup",
+  "fr": "Soupe de viande de phoque"
+ },
+ "Seal_Pup": {
+  "en": "Baby Seal",
+  "fr": "Blanchon"
+ },
+ "Seeker": {
+  "en": "Seeker",
+  "fr": "Fouineur"
+ },
+ "SeekerAspic": {
+  "en": "Seeker Aspic",
+  "fr": "Aspic de fouineur"
+ },
+ "SeekerBrood": {
+  "en": "Seeker Brood",
+  "fr": "Jeune fouineur"
+ },
+ "SeekerBrute": {
+  "en": "Seeker Soldier",
+  "fr": "Soldat fouineur"
+ },
+ "SeekerQueen": {
+  "en": "The Queen",
+  "fr": "La Reine"
+ },
+ "Serpent": {
+  "en": "Serpent",
+  "fr": "Serpent de mer"
+ },
+ "SerpentMeat": {
+  "en": "Serpent Meat",
+  "fr": "Viande de serpent"
+ },
+ "SerpentMeatCooked": {
+  "en": "Cooked Serpent Meat",
+  "fr": "Viande de serpent cuite"
+ },
+ "SerpentScale": {
+  "en": "Serpent Scale",
+  "fr": "Écaille de serpent"
+ },
+ "SerpentStew": {
+  "en": "Serpent Stew",
+  "fr": "Soupe de serpent"
+ },
+ "ShadowPerson": {
+  "en": "Shadow",
+  "fr": "Ombre"
+ },
+ "SharpeningStone": {
+  "en": "Sharpening Stone",
+  "fr": "Roue à aiguiser"
+ },
+ "ShieldBanded": {
+  "en": "Banded Shield",
+  "fr": "Bouclier bandé"
+ },
+ "ShieldBlackmetal": {
+  "en": "Black Metal Shield",
+  "fr": "Bouclier en sombracier"
+ },
+ "ShieldBlackmetalTower": {
+  "en": "Black Metal Tower Shield",
+  "fr": "Écu en sombracier"
+ },
+ "ShieldBoneTower": {
+  "en": "Bone Tower Shield",
+  "fr": "Écu en os"
+ },
+ "ShieldBronzeBuckler": {
+  "en": "Bronze Buckler",
+  "fr": "Bouclier en bronze"
+ },
+ "ShieldBucklerGoldUncooked": {
+  "en": "Cast: Nord Buckler",
+  "fr": "Moulage : targe nordique"
+ },
+ "ShieldCarapace": {
+  "en": "Carapace Shield",
+  "fr": "Bouclier en carapace"
+ },
+ "ShieldCarapaceBuckler": {
+  "en": "Carapace Buckler",
+  "fr": "Targe en carapace"
+ },
+ "ShieldCore": {
+  "en": "Shield Core",
+  "fr": "Noyau de bouclier"
+ },
+ "ShieldFlametal": {
+  "en": "Flametal Shield",
+  "fr": "Bouclier en flametal"
+ },
+ "ShieldFlametalTower": {
+  "en": "Flametal Tower Shield",
+  "fr": "Écu en flametal"
+ },
+ "ShieldGold": {
+  "en": "Nord Shield",
+  "fr": "Bouclier nordique"
+ },
+ "ShieldGoldBuckler": {
+  "en": "Nord Buckler",
+  "fr": "Targe nordique"
+ },
+ "ShieldGoldTower": {
+  "en": "Nord Greatshield",
+  "fr": "Grand bouclier nordique"
+ },
+ "ShieldIronBuckler": {
+  "en": "Iron Buckler",
+  "fr": "Bouclier en fer"
+ },
+ "ShieldIronSquare": {
+  "en": "Iron Shield",
+  "fr": "Bouclier en fer"
+ },
+ "ShieldIronTower": {
+  "en": "Iron Tower Shield",
+  "fr": "Écu en fer"
+ },
+ "ShieldKnight": {
+  "en": "Knight shield UNUSED",
+  "fr": "Bouclier de chevalier INUTILISÉ"
+ },
+ "ShieldRoots": {
+  "en": "Shield of Roots",
+  "fr": "Bouclier des racines"
+ },
+ "ShieldRoundGoldUncooked": {
+  "en": "Cast: Nord Shield",
+  "fr": "Moulage : bouclier nordique"
+ },
+ "ShieldSerpentscale": {
+  "en": "Serpent Scale Shield",
+  "fr": "Bouclier ophidien"
+ },
+ "ShieldSilver": {
+  "en": "Silver Shield",
+  "fr": "Bouclier en argent"
+ },
+ "ShieldTowerGoldUncooked": {
+  "en": "Cast: Nord Greatshield",
+  "fr": "Moulage : grand bouclier nordique"
+ },
+ "ShieldWood": {
+  "en": "Wood Shield",
+  "fr": "Bouclier en bois"
+ },
+ "ShieldWoodTower": {
+  "en": "Wood Tower Shield",
+  "fr": "Écu en bois"
+ },
+ "ShocklateSmoothie": {
+  "en": "Muckshake",
+  "fr": "Gadoue-shake"
+ },
+ "Shovel": {
+  "en": "Snow Shovel",
+  "fr": "Pelle à neige"
+ },
+ "Silver": {
+  "en": "Silver",
+  "fr": "Argent"
+ },
+ "SilverNecklace": {
+  "en": "Silver Necklace",
+  "fr": "Collier en argent"
+ },
+ "SilverOre": {
+  "en": "Silver Ore",
+  "fr": "Minerai d'argent"
+ },
+ "SizzlingBerryBroth": {
+  "en": "Sizzling Berry Broth",
+  "fr": "Bouillon de baies grésillant"
+ },
+ "Skeleton": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "Skeleton_DeepNorth": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "Skeleton_Friendly": {
+  "en": "Skelett",
+  "fr": "Skelett"
+ },
+ "Skeleton_Hildir": {
+  "en": "<color=orange>Brenna</color>",
+  "fr": "<color=orange>Brenna</color>"
+ },
+ "Skeleton_Hildir_nochest": {
+  "en": "<color=orange>Brenna</color>",
+  "fr": "<color=orange>Brenna</color>"
+ },
+ "Skeleton_Meadows": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "Skeleton_Meadows_noarcher": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "Skeleton_Mountains": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "Skeleton_Mountains_noarcher": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "Skeleton_NoArcher": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "Skeleton_Poison": {
+  "en": "Rancid Remains",
+  "fr": "Cadavre rance"
+ },
+ "Skeleton_Swamps": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "Skeleton_Swamps_noarcher": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "Skeleton_aspect": {
+  "en": "Skeleton",
+  "fr": "Squelette"
+ },
+ "SledgeDemolisher": {
+  "en": "Demolisher",
+  "fr": "Démolisseur"
+ },
+ "SledgeGold": {
+  "en": "Nord Sledge",
+  "fr": "Masse nordique"
+ },
+ "SledgeGoldUncooked": {
+  "en": "Cast: Nord Sledge",
+  "fr": "Moulage : masse nordique"
+ },
+ "SledgeGold_BloodLightning": {
+  "en": "Thunderblood Sledge",
+  "fr": "Masse de sang-tonnerre"
+ },
+ "SledgeGold_FrostFire": {
+  "en": "Frostfire Sledge",
+  "fr": "Masse de givrefeu"
+ },
+ "SledgeIron": {
+  "en": "Iron Sledge",
+  "fr": "Masse de fer"
+ },
+ "SledgeStagbreaker": {
+  "en": "Stagbreaker",
+  "fr": "Brise-cerf"
+ },
+ "SledgeWood": {
+  "en": "Wooden Sledge",
+  "fr": "Masse en bois"
+ },
+ "SmokedFish": {
+  "en": "Smoked Fish",
+  "fr": "Poisson fumé"
+ },
+ "SmokedMooseMeat": {
+  "en": "Smoked Moose Meat",
+  "fr": "Viande d'élan fumée"
+ },
+ "Snowball": {
+  "en": "Snowball",
+  "fr": "Boule de neige"
+ },
+ "SnowballBig": {
+  "en": "Big Snowball",
+  "fr": "Big Boule de neige"
+ },
+ "Softtissue": {
+  "en": "Soft Tissue",
+  "fr": "Tissu délicat"
+ },
+ "Sparkler": {
+  "en": "Sparkler",
+  "fr": "Cierge magique"
+ },
+ "SparklingShroomshake": {
+  "en": "Sparkling Shroomshake",
+  "fr": "Velouté de champignon pétillant"
+ },
+ "SpearBronze": {
+  "en": "Bronze Spear",
+  "fr": "Lance en bronze"
+ },
+ "SpearCarapace": {
+  "en": "Carapace Spear",
+  "fr": "Lance en carapace"
+ },
+ "SpearChitin": {
+  "en": "Abyssal Harpoon",
+  "fr": "Harpon abyssal"
+ },
+ "SpearElderbark": {
+  "en": "Ancient Bark Spear",
+  "fr": "Lance en écorce ancienne"
+ },
+ "SpearFlint": {
+  "en": "Flint Spear",
+  "fr": "Lance en silex"
+ },
+ "SpearGold": {
+  "en": "Nord Spear",
+  "fr": "Lance nordique"
+ },
+ "SpearGoldUncooked": {
+  "en": "Cast: Nord Spear",
+  "fr": "Moulage : lance nordique"
+ },
+ "SpearGold_BloodLightning": {
+  "en": "Thunderblood Spear",
+  "fr": "Lance de sang-tonnerre"
+ },
+ "SpearGold_FrostFire": {
+  "en": "Frostfire Spear",
+  "fr": "Lance de givrefeu"
+ },
+ "SpearSplitner": {
+  "en": "Splitnir",
+  "fr": "Pourfendeuse"
+ },
+ "SpearSplitner_Blood": {
+  "en": "Splitnir the Bleeding",
+  "fr": "Pourfendeuse la sanglante"
+ },
+ "SpearSplitner_Lightning": {
+  "en": "Splitnir the Storming",
+  "fr": "Pourfendeuse des tempêtes"
+ },
+ "SpearSplitner_Nature": {
+  "en": "Splitnir the Primal",
+  "fr": "Pourfendeuse la primitive"
+ },
+ "SpearWolfFang": {
+  "en": "Fang Spear",
+  "fr": "Lance en crocs"
+ },
+ "SpearWood": {
+  "en": "Wooden Spear",
+  "fr": "Lance en bois"
+ },
+ "SpiceAshlands": {
+  "en": "Fiery Spice Powder",
+  "fr": "Poudre d'épices fougueuses"
+ },
+ "SpiceDeepNorth": {
+  "en": "Seasoning of the Gourd",
+  "fr": "Assaisonnement de la gourde"
+ },
+ "SpiceForests": {
+  "en": "Woodland Herb Blend",
+  "fr": "Mélange d'herbes des bois"
+ },
+ "SpiceMistlands": {
+  "en": "Herbs of the Hidden Hills",
+  "fr": "Herbes des collines cachées"
+ },
+ "SpiceMountains": {
+  "en": "Mountain Peak Pepper Powder",
+  "fr": "Poivre moulu du col"
+ },
+ "SpiceOceans": {
+  "en": "Seafarer's Herbs",
+  "fr": "Herbes du marinier"
+ },
+ "SpicePlains": {
+  "en": "Grasslands Herbalist Harvest",
+  "fr": "Moisson de l'herboriste"
+ },
+ "SpicyMarmalade": {
+  "en": "Spicy Marmalade",
+  "fr": "Marmelade épicée"
+ },
+ "StaffClusterbomb": {
+  "en": "Staff of Fracturing",
+  "fr": "Bâton de fracture"
+ },
+ "StaffFireball": {
+  "en": "Staff of Embers",
+  "fr": "Bâton des braises"
+ },
+ "StaffFrostOrbs": {
+  "en": "Northern Vengeance",
+  "fr": "Vengeance nordique"
+ },
+ "StaffFrostOrbsUncooked": {
+  "en": "Cast: Northern Vengeance",
+  "fr": "Moulage : Vengeance nordique"
+ },
+ "StaffGreenRoots": {
+  "en": "Staff of the Wild",
+  "fr": "Bâton de la nature"
+ },
+ "StaffIceShards": {
+  "en": "Staff of Frost",
+  "fr": "Bâton de givre"
+ },
+ "StaffLightning": {
+  "en": "Dundr",
+  "fr": "Dundr"
+ },
+ "StaffOrbofAhri": {
+  "en": "Echo Spike",
+  "fr": "Flèche de l'écho"
+ },
+ "StaffOrbofAhriUncooked": {
+  "en": "Cast: Echo Spike",
+  "fr": "Moulage : Flèche de l'écho"
+ },
+ "StaffRedTroll": {
+  "en": "Trollstav",
+  "fr": "Bâton des trolls"
+ },
+ "StaffShield": {
+  "en": "Staff of Protection",
+  "fr": "Bâton de protection"
+ },
+ "StaffSkeleton": {
+  "en": "Dead Raiser",
+  "fr": "Éveil des morts"
+ },
+ "StaffSpiritCaller": {
+  "en": "Spirit Caller",
+  "fr": "Mande-esprits"
+ },
+ "StaffSpiritCallerUncooked": {
+  "en": "Cast: Spirit Caller",
+  "fr": "Moulage : Mande-esprits"
+ },
+ "StaffThunderBlood": {
+  "en": "Lightning Strike",
+  "fr": "Coup de tonnerre"
+ },
+ "StaffThunderbloodUncooked": {
+  "en": "Cast: Lightning Strike",
+  "fr": "Moulage : Coup de tonnerre"
+ },
+ "Stone": {
+  "en": "Stone",
+  "fr": "Pierre"
+ },
+ "StoneGolem": {
+  "en": "Stone Golem",
+  "fr": "Golem de pierre"
+ },
+ "StoneRock": {
+  "en": "Rock",
+  "fr": "Pierre"
+ },
+ "SulfurStone": {
+  "en": "Sulfur",
+  "fr": "Soufre"
+ },
+ "Surtling": {
+  "en": "Surtling",
+  "fr": "Surtling"
+ },
+ "SurtlingCore": {
+  "en": "Surtling Core",
+  "fr": "Cœur de surtling"
+ },
+ "SwordBlackmetal": {
+  "en": "Black Metal Sword",
+  "fr": "Épée en sombracier"
+ },
+ "SwordBronze": {
+  "en": "Bronze Sword",
+  "fr": "Épée en bronze"
+ },
+ "SwordDyrnwyn": {
+  "en": "Dyrnwyn",
+  "fr": "Dyrnwyn"
+ },
+ "SwordGold": {
+  "en": "Nord Sword",
+  "fr": "Épée nordique"
+ },
+ "SwordGoldUncooked": {
+  "en": "Cast: Nord Sword",
+  "fr": "Moulage : épée nordique"
+ },
+ "SwordGold_BloodLightning": {
+  "en": "Thunderblood Sword",
+  "fr": "Épée de sang-tonnerre"
+ },
+ "SwordGold_FrostFire": {
+  "en": "Frostfire Sword",
+  "fr": "Épée de givrefeu"
+ },
+ "SwordIron": {
+  "en": "Iron Sword",
+  "fr": "Épée en fer"
+ },
+ "SwordIronFire": {
+  "en": "Dyrnwyn",
+  "fr": "Dyrnwyn"
+ },
+ "SwordMistwalker": {
+  "en": "Mistwalker",
+  "fr": "Marchebrume"
+ },
+ "SwordNiedhogg": {
+  "en": "Nidhögg",
+  "fr": "Nidhögg"
+ },
+ "SwordNiedhoggBlood": {
+  "en": "Nidhögg the Bleeding",
+  "fr": "Nidhögg le sanglant"
+ },
+ "SwordNiedhoggLightning": {
+  "en": "Nidhögg the Thundering",
+  "fr": "Nidhögg le tonitruant"
+ },
+ "SwordNiedhoggNature": {
+  "en": "Nidhögg the Primal",
+  "fr": "Nidhögg le primitif"
+ },
+ "SwordSilver": {
+  "en": "Silver Sword",
+  "fr": "Épée en argent"
+ },
+ "SwordWood": {
+  "en": "Wooden Sword",
+  "fr": "Épée en bois"
+ },
+ "THSwordGold": {
+  "en": "Nord Greatsword",
+  "fr": "Espadon nordique"
+ },
+ "THSwordGoldUncooked": {
+  "en": "Cast: Nord Greatsword",
+  "fr": "Moulage : espadon nordique"
+ },
+ "THSwordGold_BloodLightning": {
+  "en": "Thunderblood Greatsword",
+  "fr": "Espadon de sang-tonnerre"
+ },
+ "THSwordGold_FrostFire": {
+  "en": "Frostfire Greatsword",
+  "fr": "Espadon de givrefeu"
+ },
+ "THSwordKrom": {
+  "en": "Krom",
+  "fr": "Krom"
+ },
+ "THSwordSlayer": {
+  "en": "Slayer",
+  "fr": "Égorgeuse"
+ },
+ "THSwordSlayerBlood": {
+  "en": "Brutal Slayer",
+  "fr": "Égorgeuse brutale"
+ },
+ "THSwordSlayerLightning": {
+  "en": "Scourging Slayer",
+  "fr": "Égorgeuse flagellante"
+ },
+ "THSwordSlayerNature": {
+  "en": "Primal Slayer",
+  "fr": "Égorgeuse primitive"
+ },
+ "THSwordWood": {
+  "en": "Wooden Greatsword",
+  "fr": "Espadon en bois"
+ },
+ "Tankard": {
+  "en": "Tankard",
+  "fr": "Chope"
+ },
+ "TankardAnniversary": {
+  "en": "Horn of Celebration",
+  "fr": "Corne de la Célébration"
+ },
+ "TankardOdin": {
+  "en": "Mead Horn of Oden",
+  "fr": "Corne d'hydromel d'Odin"
+ },
+ "Tankard_dvergr": {
+  "en": "Dvergr Tankard",
+  "fr": "Chope dvergr"
+ },
+ "Tar": {
+  "en": "Tar",
+  "fr": "Goudron"
+ },
+ "TentaRoot": {
+  "en": "Root",
+  "fr": null
+ },
+ "TentaRoot_wild": {
+  "en": "Root",
+  "fr": null
+ },
+ "Thistle": {
+  "en": "Thistle",
+  "fr": "Chardon"
+ },
+ "Thunderstone": {
+  "en": "Thunder Stone",
+  "fr": "Pierre de tonnerre"
+ },
+ "Tick": {
+  "en": "Tick",
+  "fr": "Tique"
+ },
+ "Tin": {
+  "en": "Tin",
+  "fr": "Étain"
+ },
+ "TinOre": {
+  "en": "Tin Ore",
+  "fr": "Minerai d'étain"
+ },
+ "Torch": {
+  "en": "Torch",
+  "fr": "Torche"
+ },
+ "TreasureChest_charredfortress": {
+  "en": "Charred Chest",
+  "fr": "Coffre calciné"
+ },
+ "TrinketBlackDamageHealth": {
+  "en": "Bracelets of the Brave",
+  "fr": "Peau de fer"
+ },
+ "TrinketBlackStamina": {
+  "en": "Evasion Mantle",
+  "fr": "Voile d'ombre"
+ },
+ "TrinketBloodGoldHealth": {
+  "en": "Neckstabber",
+  "fr": "Perce-cou"
+ },
+ "TrinketBloodGoldStamina": {
+  "en": "Witch Crown",
+  "fr": "Couronne de sorcière"
+ },
+ "TrinketBronzeHealth": {
+  "en": "Heart of the Forest",
+  "fr": "Cœur de la forêt"
+ },
+ "TrinketBronzeStamina": {
+  "en": "Bronze Pendant",
+  "fr": "Pendentif en bronze"
+ },
+ "TrinketCarapaceEitr": {
+  "en": "Pulsating Earrings",
+  "fr": "Boucles d'oreilles palpitantes"
+ },
+ "TrinketChitinSwim": {
+  "en": "Fins of Destiny",
+  "fr": "Aileron du destin"
+ },
+ "TrinketFlametalEitr": {
+  "en": "Jörmundling",
+  "fr": "Jörmundling"
+ },
+ "TrinketFlametalStaminaHealth": {
+  "en": "Brimstone",
+  "fr": "Cœur ardent"
+ },
+ "TrinketIronHealth": {
+  "en": "Iron Brooch",
+  "fr": "Broche en fer"
+ },
+ "TrinketIronStamina": {
+  "en": "Nimble Anklet",
+  "fr": "Bracelet de cheville"
+ },
+ "TrinketScaleStaminaDamage": {
+  "en": "Resounding Shackle",
+  "fr": "Fers retentissants"
+ },
+ "TrinketSilverDamage": {
+  "en": "Wolf Sight",
+  "fr": "Vision du loup"
+ },
+ "TrinketSilverResist": {
+  "en": "Crystal Heart",
+  "fr": "Cœur de cristal"
+ },
+ "Troll": {
+  "en": "Troll",
+  "fr": "Troll"
+ },
+ "TrollFrost": {
+  "en": "Gammeltroll",
+  "fr": null
+ },
+ "TrollHide": {
+  "en": "Troll Hide",
+  "fr": "Peau de troll"
+ },
+ "Troll_Summoned": {
+  "en": "Summoned Troll",
+  "fr": "Troll invoqué"
+ },
+ "Troll_sleeping": {
+  "en": "Troll",
+  "fr": "Troll"
+ },
+ "TrophyAbomination": {
+  "en": "Abomination Trophy",
+  "fr": "Trophée d'abomination"
+ },
+ "TrophyAsksvin": {
+  "en": "Asksvin Trophy",
+  "fr": "Trophée d'asksvin"
+ },
+ "TrophyBarka": {
+  "en": "Barka Trophy",
+  "fr": "Trophée de barka"
+ },
+ "TrophyBjorn": {
+  "en": "Bear Trophy",
+  "fr": "Trophée d'ours"
+ },
+ "TrophyBjornUndead": {
+  "en": "Vile Trophy",
+  "fr": "Trophée d'ours maudit"
+ },
+ "TrophyBlob": {
+  "en": "Blob Trophy",
+  "fr": "Trophée de blob"
+ },
+ "TrophyBlob_Frost": {
+  "en": "Frost Blob Trophy",
+  "fr": "Trophée de blob de givre"
+ },
+ "TrophyBlob_Lava": {
+  "en": "Lava Blob Trophy",
+  "fr": "Trophée de blob de lave"
+ },
+ "TrophyBlob_Morkhalla": {
+  "en": "Pulp Trophy",
+  "fr": "Trophée de blob"
+ },
+ "TrophyBoar": {
+  "en": "Boar Trophy",
+  "fr": "Trophée de sanglier"
+ },
+ "TrophyBonemass": {
+  "en": "Bonemass Trophy",
+  "fr": "Trophée de Masse-d’Os"
+ },
+ "TrophyBonemawSerpent": {
+  "en": "Bonemaw Trophy",
+  "fr": "Trophée de gueule-d'os"
+ },
+ "TrophyCharredArcher": {
+  "en": "Marksman Trophy",
+  "fr": "Trophée d'archer"
+ },
+ "TrophyCharredMage": {
+  "en": "Warlock Trophy",
+  "fr": "Trophée de sorcier"
+ },
+ "TrophyCharredMelee": {
+  "en": "Warrior Trophy",
+  "fr": "Trophée de guerrier"
+ },
+ "TrophyCultist": {
+  "en": "Cultist Trophy",
+  "fr": "Trophée de cultiste"
+ },
+ "TrophyCultist_Hildir": {
+  "en": "Geirrhafa Trophy",
+  "fr": "Trophée de Geirrhafa"
+ },
+ "TrophyDeathsquito": {
+  "en": "Deathsquito Trophy",
+  "fr": "Trophée de morstique"
+ },
+ "TrophyDeer": {
+  "en": "Deer Trophy",
+  "fr": "Trophée de cerf"
+ },
+ "TrophyDragonQueen": {
+  "en": "Moder Trophy",
+  "fr": "Trophée de Moder"
+ },
+ "TrophyDraugr": {
+  "en": "Draugr Trophy",
+  "fr": "Trophée de draugr"
+ },
+ "TrophyDraugrElite": {
+  "en": "Draugr Elite Trophy",
+  "fr": "Trophée de draugr élite"
+ },
+ "TrophyDraugrFem": {
+  "en": "Draugr Trophy",
+  "fr": "Trophée de draugr"
+ },
+ "TrophyDvergr": {
+  "en": "Dvergr Trophy",
+  "fr": "Trophée de dvergr"
+ },
+ "TrophyEikthyr": {
+  "en": "Eikthyr Trophy",
+  "fr": "Trophée d'Eikthyr"
+ },
+ "TrophyElaking": {
+  "en": "Elaking Trophy",
+  "fr": "Trophée d'elaking"
+ },
+ "TrophyFader": {
+  "en": "Fader Trophy",
+  "fr": "Trophée de Fader"
+ },
+ "TrophyFallenValkyrie": {
+  "en": "Fallen Valkyrie Trophy",
+  "fr": "Trophée de valkyrie déchue"
+ },
+ "TrophyFenring": {
+  "en": "Fenring Trophy",
+  "fr": "Trophée de fenring"
+ },
+ "TrophyForestTroll": {
+  "en": "Troll Trophy",
+  "fr": "Trophée de troll"
+ },
+ "TrophyFrostTroll": {
+  "en": "Troll Trophy",
+  "fr": "Trophée de troll"
+ },
+ "TrophyGhost": {
+  "en": "Ghost Trophy",
+  "fr": "Trophée de fantôme"
+ },
+ "TrophyGjall": {
+  "en": "Gjall Trophy",
+  "fr": "Trophée de gjall"
+ },
+ "TrophyGoblin": {
+  "en": "Fuling Trophy",
+  "fr": "Trophée de gobelin"
+ },
+ "TrophyGoblinBrute": {
+  "en": "Fuling Berserker Trophy",
+  "fr": "Trophée de berserker gobelin"
+ },
+ "TrophyGoblinBruteBrosBrute": {
+  "en": "Thungr Trophy",
+  "fr": "Trophée de Thungr"
+ },
+ "TrophyGoblinBruteBrosShaman": {
+  "en": "Zil Trophy",
+  "fr": "Trophée de Zil"
+ },
+ "TrophyGoblinKing": {
+  "en": "Yagluth Trophy",
+  "fr": "Trophée de Yagluth"
+ },
+ "TrophyGoblinShaman": {
+  "en": "Fuling Shaman Trophy",
+  "fr": "Trophée de Chaman Gobelin"
+ },
+ "TrophyGreydwarf": {
+  "en": "Greydwarf Trophy",
+  "fr": "Trophée de naingris"
+ },
+ "TrophyGreydwarfBrute": {
+  "en": "Greydwarf Brute Trophy",
+  "fr": "Trophée de brute naingris"
+ },
+ "TrophyGreydwarfShaman": {
+  "en": "Greydwarf Shaman Trophy",
+  "fr": "Trophée de chaman naingris"
+ },
+ "TrophyGrowth": {
+  "en": "Growth Trophy",
+  "fr": "Trophée d'excroissance"
+ },
+ "TrophyHare": {
+  "en": "Hare Trophy",
+  "fr": "Trophée de lièvre"
+ },
+ "TrophyHatchling": {
+  "en": "Drake Trophy",
+  "fr": "Trophée de drac"
+ },
+ "TrophyJotunWarrior": {
+  "en": "Krigen Trophy",
+  "fr": "Trophée de krigen"
+ },
+ "TrophyJotunWitch": {
+  "en": "Hexen Trophy",
+  "fr": "Trophée d'Hexen"
+ },
+ "TrophyKvastur": {
+  "en": "Kvastur",
+  "fr": "Kvastur"
+ },
+ "TrophyLeech": {
+  "en": "Leech Trophy",
+  "fr": "Trophée de sangsue"
+ },
+ "TrophyLox": {
+  "en": "Lox Trophy",
+  "fr": "Trophée de lox"
+ },
+ "TrophyMole": {
+  "en": "Eyeless One Trophy",
+  "fr": "Trophée de Sans yeux"
+ },
+ "TrophyMoose": {
+  "en": "Moose Trophy",
+  "fr": "Trophée d'élan"
+ },
+ "TrophyMorgen": {
+  "en": "Morgen Trophy",
+  "fr": "Trophée de morgen"
+ },
+ "TrophyNeck": {
+  "en": "Neck Trophy",
+  "fr": "Trophée de Nixe"
+ },
+ "TrophySGolem": {
+  "en": "Stone Golem Trophy",
+  "fr": "Trophée de golem de pierre"
+ },
+ "TrophySeal": {
+  "en": "Seal Trophy",
+  "fr": "Trophée de phoque"
+ },
+ "TrophySeeker": {
+  "en": "Seeker Trophy",
+  "fr": "Trophée de fouineur"
+ },
+ "TrophySeekerBrute": {
+  "en": "Seeker Soldier Trophy",
+  "fr": "Trophée de soldat fouineur"
+ },
+ "TrophySeekerQueen": {
+  "en": "The Queen Trophy",
+  "fr": "Trophée de la Reine"
+ },
+ "TrophySerpent": {
+  "en": "Serpent Trophy",
+  "fr": "Trophée de serpent"
+ },
+ "TrophySkeleton": {
+  "en": "Skeleton Trophy",
+  "fr": "Trophée de squelette"
+ },
+ "TrophySkeletonHildir": {
+  "en": "Brenna Trophy",
+  "fr": "Trophée de Brenna"
+ },
+ "TrophySkeletonPoison": {
+  "en": "Rancid Remains Trophy",
+  "fr": "Trophée de cadavre rance"
+ },
+ "TrophySurtling": {
+  "en": "Surtling Trophy",
+  "fr": "Trophée de surtling"
+ },
+ "TrophyTheElder": {
+  "en": "The Elder Trophy",
+  "fr": "Trophée de l’Aîné"
+ },
+ "TrophyTick": {
+  "en": "Tick Trophy",
+  "fr": "Trophée de tique"
+ },
+ "TrophyUlv": {
+  "en": "Ulv Trophy",
+  "fr": "Trophée de warg"
+ },
+ "TrophyVolture": {
+  "en": "Volture Trophy",
+  "fr": "Trophée de voltour"
+ },
+ "TrophyWolf": {
+  "en": "Wolf Trophy",
+  "fr": "Trophée de loup"
+ },
+ "TrophyWraith": {
+  "en": "Wraith Trophy",
+  "fr": "Trophée de spectre"
+ },
+ "TrophyWrithan": {
+  "en": "Writhan Trophy",
+  "fr": "Trophée de writhan"
+ },
+ "Turnip": {
+  "en": "Turnip",
+  "fr": "Navet"
+ },
+ "TurnipSeeds": {
+  "en": "Turnip Seeds",
+  "fr": "Graines de navet"
+ },
+ "TurnipStew": {
+  "en": "Turnip Stew",
+  "fr": "Soupe de navets"
+ },
+ "TurretBolt": {
+  "en": "Black Metal Missile",
+  "fr": "Projectile en sombracier"
+ },
+ "TurretBoltBloodgold": {
+  "en": "Bloodgold Missile",
+  "fr": "Projectile d'or-sang"
+ },
+ "TurretBoltFlametal": {
+  "en": "Flametal Missile",
+  "fr": "Projectile en flametal"
+ },
+ "TurretBoltWood": {
+  "en": "Wooden Missile",
+  "fr": "Projectile en bois"
+ },
+ "Ulv": {
+  "en": "Ulv",
+  "fr": "Warg"
+ },
+ "Unbjorn": {
+  "en": "Vile",
+  "fr": "Ours maudit"
+ },
+ "UndeadBjornRibcage": {
+  "en": "Vile Ribcage",
+  "fr": "Cage thoracique d'ours maudit"
+ },
+ "Upgrader0Armor": {
+  "en": "Wooden Protection Idol",
+  "fr": null
+ },
+ "Upgrader0Weapon": {
+  "en": "Wooden Battle Idol",
+  "fr": "Bois Combat Idole"
+ },
+ "Upgrader1Armor": {
+  "en": "Bronze Protection Idol",
+  "fr": null
+ },
+ "Upgrader1Weapon": {
+  "en": "Bronze Battle Idol",
+  "fr": null
+ },
+ "Upgrader2Armor": {
+  "en": "Iron Protection Idol",
+  "fr": null
+ },
+ "Upgrader2Weapon": {
+  "en": "Iron Battle Idol",
+  "fr": "Fer Combat Idole"
+ },
+ "Upgrader3Armor": {
+  "en": "Silver Protection Idol",
+  "fr": null
+ },
+ "Upgrader3Weapon": {
+  "en": "Silver Battle Idol",
+  "fr": "Argent Combat Idole"
+ },
+ "Upgrader4Armor": {
+  "en": "Black Metal Protection Idol",
+  "fr": null
+ },
+ "Upgrader4Weapon": {
+  "en": "Black Metal Battle Idol",
+  "fr": "Sombracier Combat Idole"
+ },
+ "Upgrader5Armor": {
+  "en": "Black Marble Protection Idol",
+  "fr": null
+ },
+ "Upgrader5Weapon": {
+  "en": "Black Marble Battle Idol",
+  "fr": "Marbre noir Combat Idole"
+ },
+ "Upgrader6Armor": {
+  "en": "Flametal Protection Idol",
+  "fr": null
+ },
+ "Upgrader6Weapon": {
+  "en": "Flametal Battle Idol",
+  "fr": null
+ },
+ "Upgrader7Armor": {
+  "en": "Bloodgold Protection Idol",
+  "fr": null
+ },
+ "Upgrader7Weapon": {
+  "en": "Bloodgold Battle Idol",
+  "fr": "Or-sang Combat Idole"
+ },
+ "VikingCupcake": {
+  "en": "Frosted Sweetbread",
+  "fr": "Brioche glacée"
+ },
+ "VikingCupcakeUncooked": {
+  "en": "Unbaked Sweetbread",
+  "fr": "Brioche crue"
+ },
+ "VikingShip": {
+  "en": "Longship",
+  "fr": "Long navire"
+ },
+ "VikingShip_Ashlands": {
+  "en": "Drakkar",
+  "fr": "Drakkar"
+ },
+ "VineAsh_sapling": {
+  "en": "Ashvine",
+  "fr": "Lierre des cendres"
+ },
+ "VineGreenSeeds": {
+  "en": "Ivy Seeds",
+  "fr": "Graines de lierre"
+ },
+ "VineGreen_sapling": {
+  "en": "Ivy",
+  "fr": "Lierre"
+ },
+ "Vineberry": {
+  "en": "Vineberry Cluster",
+  "fr": "Grappe de baies-de-lierre"
+ },
+ "VineberrySeeds": {
+  "en": "Vineberry Seeds",
+  "fr": "Graines de lierre des cendres"
+ },
+ "Voidplasm": {
+  "en": "Ectoplasm",
+  "fr": "Ectoplasme"
+ },
+ "Volture": {
+  "en": "Volture",
+  "fr": "Voltour"
+ },
+ "VoltureEgg": {
+  "en": "Volture Egg",
+  "fr": "Œuf de voltour"
+ },
+ "VoltureMeat": {
+  "en": "Volture Meat",
+  "fr": "Viande de voltour"
+ },
+ "Wishbone": {
+  "en": "Wishbone",
+  "fr": "Bréchet"
+ },
+ "Wisp": {
+  "en": "Wisp",
+  "fr": "Feu-follet"
+ },
+ "WitheredBone": {
+  "en": "Withered Bone",
+  "fr": "Os atrophié"
+ },
+ "Wolf": {
+  "en": "Wolf",
+  "fr": "Loup"
+ },
+ "WolfClaw": {
+  "en": "Fenris Claw",
+  "fr": "Griffes de Fenris"
+ },
+ "WolfFang": {
+  "en": "Wolf Fang",
+  "fr": "Croc de loup"
+ },
+ "WolfHairBundle": {
+  "en": "Fenris Hair",
+  "fr": "Fourrure de Fenris"
+ },
+ "WolfJerky": {
+  "en": "Wolf Jerky",
+  "fr": "Viande séchée de loup"
+ },
+ "WolfMeat": {
+  "en": "Wolf Meat",
+  "fr": "Viande de loup"
+ },
+ "WolfMeatSkewer": {
+  "en": "Wolf Skewer",
+  "fr": "Brochette de loup"
+ },
+ "WolfPelt": {
+  "en": "Wolf Pelt",
+  "fr": "Peau de loup"
+ },
+ "Wolf_cub": {
+  "en": "Wolf Cub",
+  "fr": "Louveteau"
+ },
+ "Wood": {
+  "en": "Wood",
+  "fr": "Bois"
+ },
+ "Wraith": {
+  "en": "Wraith",
+  "fr": "Spectre"
+ },
+ "Writhan": {
+  "en": "Writhan",
+  "fr": null
+ },
+ "WrithanRoots": {
+  "en": "Writhan Roots",
+  "fr": "Racines de writhan"
+ },
+ "YagluthDrop": {
+  "en": "Torn Spirit",
+  "fr": "Esprit déchiré"
+ },
+ "YggdrasilPorridge": {
+  "en": "Yggdrasil Porridge",
+  "fr": "Gruau d'Yggdrasil"
+ },
+ "YggdrasilWood": {
+  "en": "Yggdrasil Wood",
+  "fr": "Bois d'Yggdrasil"
+ },
+ "YmirRemains": {
+  "en": "Ymir Flesh",
+  "fr": "Chair d'Ymir"
+ },
+ "artisan_ext1": {
+  "en": "Artisan Press",
+  "fr": "Presse artisanale"
+ },
+ "ashwood_arch_big": {
+  "en": "Ashwood Arch",
+  "fr": "Arche en cendrebois"
+ },
+ "ashwood_arch_bottom": {
+  "en": "Ashwood Bottom Arch",
+  "fr": "Arche en cendrebois (bas)"
+ },
+ "ashwood_arch_top": {
+  "en": "Ashwood Top Arch",
+  "fr": "Arche en cendrebois (haut)"
+ },
+ "ashwood_beam_1m": {
+  "en": "Ashwood Beam 1 m",
+  "fr": "Poutre en cendrebois 1m"
+ },
+ "ashwood_beam_2m": {
+  "en": "Ashwood Beam 2 m",
+  "fr": "Poutre en cendrebois 2m"
+ },
+ "ashwood_bed": {
+  "en": "Ashwood Bed",
+  "fr": "Lit en cendrebois"
+ },
+ "ashwood_deco_floor": {
+  "en": "Ashwood Decorative Floor",
+  "fr": "Sol décoratif en cendrebois"
+ },
+ "ashwood_decowall_2x2": {
+  "en": "Ashwood Decorative Wall",
+  "fr": "Mur décoratif en cendrebois"
+ },
+ "ashwood_decowall_divider": {
+  "en": "Ashwood Divider",
+  "fr": "Séparateur en cendrebois"
+ },
+ "ashwood_decowall_tree": {
+  "en": "Ashwood Decorative Window",
+  "fr": "Fenêtre décorative en cendrebois"
+ },
+ "ashwood_door": {
+  "en": "Ashwood Door",
+  "fr": "Porte en cendrebois"
+ },
+ "ashwood_floor_1x1": {
+  "en": "Ashwood Floor 1x1",
+  "fr": "Sol en cendrebois 1x1"
+ },
+ "ashwood_floor_2x2": {
+  "en": "Ashwood Floor 2x2",
+  "fr": "Sol en cendrebois 2x2"
+ },
+ "ashwood_halfwall_1x2": {
+  "en": "Ashwood Half Wall",
+  "fr": "Demi-mur en cendrebois"
+ },
+ "ashwood_pole_1m": {
+  "en": "Ashwood Pole 1 m",
+  "fr": "Poteau en cendrebois 1m"
+ },
+ "ashwood_pole_2m": {
+  "en": "Ashwood Pole 2 m",
+  "fr": "Poteau en cendrebois 2m"
+ },
+ "ashwood_quarterwall_1x1": {
+  "en": "Ashwood Quarter Wall",
+  "fr": "Quart de mur en cendrebois"
+ },
+ "ashwood_stair": {
+  "en": "Ashwood Stair",
+  "fr": "Escalier en cendrebois"
+ },
+ "ashwood_wall_2x2": {
+  "en": "Ashwood Wall",
+  "fr": "Mur en cendrebois"
+ },
+ "ashwood_wall_arch": {
+  "en": "Ashwood Arched Wall",
+  "fr": "Arche murale en cendrebois"
+ },
+ "ashwood_wall_beam_26": {
+  "en": "Ashwood Beam 26°",
+  "fr": "Poutre en cendrebois 26°"
+ },
+ "ashwood_wall_beam_26_alt": {
+  "en": "Ashwood Beam 26°",
+  "fr": "Poutre en cendrebois 26°"
+ },
+ "ashwood_wall_beam_45": {
+  "en": "Ashwood Beam 45°",
+  "fr": "Poutre en cendrebois 45°"
+ },
+ "ashwood_wall_beam_45_alt": {
+  "en": "Ashwood Beam 45°",
+  "fr": "Poutre en cendrebois 45°"
+ },
+ "ashwood_wall_beam_67": {
+  "en": "Ashwood Beam 67°",
+  "fr": "Poutre en cendrebois 67°"
+ },
+ "ashwood_wall_cross_26": {
+  "en": "Ashwood Roof Cross 26°",
+  "fr": "Croix de toit en cendrebois 26°"
+ },
+ "ashwood_wall_cross_26_alt": {
+  "en": "Ashwood Roof Cross 26°",
+  "fr": "Croix de toit en cendrebois 26°"
+ },
+ "ashwood_wall_cross_45": {
+  "en": "Ashwood Roof Cross 45°",
+  "fr": "Croix de toit en cendrebois 45°"
+ },
+ "ashwood_wall_cross_45_alt": {
+  "en": "Ashwood Roof Cross 45°",
+  "fr": "Croix de toit en cendrebois 45°"
+ },
+ "ashwood_wall_cross_67": {
+  "en": "Ashwood Roof Cross 67°",
+  "fr": "Croix de toit en cendrebois 67°"
+ },
+ "ashwood_wall_roof_26": {
+  "en": "Ashwood Wall 26°",
+  "fr": "Mur en cendrebois 26°"
+ },
+ "ashwood_wall_roof_26_upsidedown": {
+  "en": "Ashwood Wall 26° (Inverted)",
+  "fr": "Mur en cendrebois 26° (inversé)"
+ },
+ "ashwood_wall_roof_45": {
+  "en": "Ashwood Wall 45°",
+  "fr": "Mur en cendrebois 45°"
+ },
+ "ashwood_wall_roof_45_upsidedown": {
+  "en": "Ashwood Wall 45° (Inverted)",
+  "fr": "Mur en cendrebois 45° (inversé)"
+ },
+ "ashwood_wall_roof_67_a": {
+  "en": "Ashwood Wall 67°",
+  "fr": "Mur en cendrebois 67°"
+ },
+ "ashwood_wall_roof_67_upsidedown": {
+  "en": "Ashwood Wall 67° (Inverted)",
+  "fr": "Mur en cendrebois 67° (inversé)"
+ },
+ "bar_blackmetal_stack": {
+  "en": "Black Metal Stack",
+  "fr": "Tas de sombracier"
+ },
+ "bar_bronze_stack": {
+  "en": "Bronze Stack",
+  "fr": "Tas de bronze"
+ },
+ "bar_copper_stack": {
+  "en": "Copper Stack",
+  "fr": "Tas de cuivre"
+ },
+ "bar_flametal_stack": {
+  "en": "Flametal Stack",
+  "fr": "Tas de flametal"
+ },
+ "bar_gold_stack": {
+  "en": "Bloodgold Stack",
+  "fr": "Tas d'or-sang"
+ },
+ "bar_iron_stack": {
+  "en": "Iron Stack",
+  "fr": "Tas de fer"
+ },
+ "bar_silver_stack": {
+  "en": "Silver Stack",
+  "fr": "Tas d'argent"
+ },
+ "bar_tin_stack": {
+  "en": "Tin Stack",
+  "fr": "Tas d'étain"
+ },
+ "bed": {
+  "en": "Bed",
+  "fr": "Lit"
+ },
+ "blackforge": {
+  "en": "Black Forge",
+  "fr": "Forge noire"
+ },
+ "blackforge_ext1": {
+  "en": "Black Forge Cooler",
+  "fr": "Cuve de forge noire"
+ },
+ "blackforge_ext2_vise": {
+  "en": "Vice",
+  "fr": "Étau"
+ },
+ "blackforge_ext3_metalcutter": {
+  "en": "Metal Cutter",
+  "fr": "Coupe-métal"
+ },
+ "blackforge_ext4_gemcutter": {
+  "en": "Gem Cutter",
+  "fr": "Taille-gemme"
+ },
+ "blackforge_ext5_apron": {
+  "en": "Smith's Aprons",
+  "fr": "Tablier de forgeron"
+ },
+ "blackmarble_1x1": {
+  "en": "Black Marble 1x1x1",
+  "fr": "Marbre noir 1x1x1"
+ },
+ "blackmarble_2x1x1": {
+  "en": "Black Marble 2x1x1",
+  "fr": "Marbre noir 2x1x1"
+ },
+ "blackmarble_2x2_enforced": {
+  "en": "Enforced Black Marble",
+  "fr": "Marbre noir renforcé"
+ },
+ "blackmarble_2x2x1": {
+  "en": "Black Marble 2x2x1",
+  "fr": "Marbre noir 2x2x1"
+ },
+ "blackmarble_2x2x2": {
+  "en": "Black Marble 2x2x2",
+  "fr": "Marbre noir 2x2x2"
+ },
+ "blackmarble_arch": {
+  "en": "Black Marble Arch",
+  "fr": "Arche de marbre noir"
+ },
+ "blackmarble_base_1": {
+  "en": "Black Marble Plinth",
+  "fr": "Socle de marbre noir"
+ },
+ "blackmarble_base_2": {
+  "en": "Black Marble Wide Plinth",
+  "fr": "Socle de marbre noir large"
+ },
+ "blackmarble_basecorner": {
+  "en": "Black Marble Plinth Corner",
+  "fr": "Socle de marbre noir, coin"
+ },
+ "blackmarble_column_1": {
+  "en": "Black Marble Column Small",
+  "fr": "Colonne de marbre noir, petite"
+ },
+ "blackmarble_column_2": {
+  "en": "Black Marble Column Wide",
+  "fr": "Colonne de marbre noir, large"
+ },
+ "blackmarble_column_3": {
+  "en": "Black Marble Column Tall",
+  "fr": "Colonne de marbre noir, grande"
+ },
+ "blackmarble_creep_4x1x1": {
+  "en": "Black Marble 2x2x1",
+  "fr": "Marbre noir 2x2x1"
+ },
+ "blackmarble_creep_4x2x1": {
+  "en": "Black Marble 2x2x1",
+  "fr": "Marbre noir 2x2x1"
+ },
+ "blackmarble_creep_slope_inverted_1x1x2": {
+  "en": "Black Marble Cornice",
+  "fr": "Corniche de marbre noir"
+ },
+ "blackmarble_creep_slope_inverted_2x2x1": {
+  "en": "Black Marble Cornice",
+  "fr": "Corniche de marbre noir"
+ },
+ "blackmarble_creep_stair": {
+  "en": "Black Marble Stair",
+  "fr": "Escalier de marbre noir"
+ },
+ "blackmarble_floor": {
+  "en": "Black Marble Floor",
+  "fr": "Sol de marbre noir"
+ },
+ "blackmarble_floor_large": {
+  "en": "Black Marble Floor 4x4",
+  "fr": "Sol de marbre noir, 4x4"
+ },
+ "blackmarble_floor_triangle": {
+  "en": "Black Marble Floor Triangle",
+  "fr": "Sol de marbre noir, triangle"
+ },
+ "blackmarble_head01": {
+  "en": "Bronze Head 1",
+  "fr": "Tête de bronze 1"
+ },
+ "blackmarble_head02": {
+  "en": "Bronze Head 2",
+  "fr": "Tête de bronze 2"
+ },
+ "blackmarble_head_big01": {
+  "en": "Black Marble Large Head 1",
+  "fr": "Grande tête de marbre noir 1"
+ },
+ "blackmarble_head_big02": {
+  "en": "Black Marble Large Head 2",
+  "fr": "Grande tête de marbre noir 2"
+ },
+ "blackmarble_out_1": {
+  "en": "Black Marble Cornice",
+  "fr": "Corniche de marbre noir"
+ },
+ "blackmarble_out_2": {
+  "en": "Black Marble Cornice Wide",
+  "fr": "Corniche de marbre noir, large"
+ },
+ "blackmarble_outcorner": {
+  "en": "Black Marble Cornice Corner",
+  "fr": "Corniche de marbre noir, coin"
+ },
+ "blackmarble_pile": {
+  "en": "Black Marble Pile",
+  "fr": "Pile de marbre noir"
+ },
+ "blackmarble_slope_1x2": {
+  "en": "Black Marble Slope",
+  "fr": "Pente de marbre noir"
+ },
+ "blackmarble_slope_inverted_1x2": {
+  "en": "Black Marble Slope (Inverted)",
+  "fr": "Pente de marbre noir, inversée"
+ },
+ "blackmarble_stair": {
+  "en": "Black Marble Stair",
+  "fr": "Escalier de marbre noir"
+ },
+ "blackmarble_stair_corner": {
+  "en": "Black Marble Stair Right",
+  "fr": "Escalier de marbre noir, droit"
+ },
+ "blackmarble_stair_corner_left": {
+  "en": "Black Marble Stair Left",
+  "fr": "Escalier de marbre noir, gauche"
+ },
+ "blackmarble_tile_floor_1x1": {
+  "en": "Black Marble Floor Tile Small",
+  "fr": "Carreau de sol de marbre noir, petit"
+ },
+ "blackmarble_tile_floor_2x2": {
+  "en": "Black Marble Floor Tile Large",
+  "fr": "Carreau de sol de marbre noir, grand"
+ },
+ "blackmarble_tile_wall_1x1": {
+  "en": "Black Marble Wall Tile Small",
+  "fr": "Carreau de mur de marbre noir, petit"
+ },
+ "blackmarble_tile_wall_2x2": {
+  "en": "Black Marble Wall Tile Large",
+  "fr": "Carreau de mur de marbre noir, grand"
+ },
+ "blackmarble_tile_wall_2x4": {
+  "en": "Black Marble Wall Tile Tall",
+  "fr": "Carreau de mur de marbre noir, large"
+ },
+ "blackmarble_tip": {
+  "en": "Black Marble Quarter Spire",
+  "fr": "Quart de flèche de marbre noir"
+ },
+ "blackwood_stack": {
+  "en": "Ashwood Stack",
+  "fr": "Tas de cendrebois"
+ },
+ "blastfurnace": {
+  "en": "Blast Furnace",
+  "fr": "Haut fourneau"
+ },
+ "bone_stack": {
+  "en": "Bone Stack",
+  "fr": "Tas d'os"
+ },
+ "bonfire": {
+  "en": "Bonfire",
+  "fr": "Feu de joie"
+ },
+ "burn": {
+  "en": "Cultivate",
+  "fr": "Cultiver"
+ },
+ "cauldron_ext1_spice": {
+  "en": "Spice Rack",
+  "fr": "Support à épices"
+ },
+ "cauldron_ext3_butchertable": {
+  "en": "Butcher's Table",
+  "fr": "Table de boucher"
+ },
+ "cauldron_ext4_pots": {
+  "en": "Pots and Pans",
+  "fr": "Pots et casseroles"
+ },
+ "cauldron_ext5_mortarandpestle": {
+  "en": "Mortar and Pestle",
+  "fr": "Mortier et pilon"
+ },
+ "cauldron_ext6_rollingpins": {
+  "en": "Rolling Pins and Cutting Boards",
+  "fr": "Rouleaux à pâtisserie et planches à découper"
+ },
+ "cauldron_ext7_smoker": {
+  "en": "Smoker",
+  "fr": "Fumoir"
+ },
+ "charcoal_kiln": {
+  "en": "Charcoal Kiln",
+  "fr": "Four à charbon"
+ },
+ "charred_shieldgenerator": {
+  "en": "Shield Generator",
+  "fr": "Générateur de bouclier"
+ },
+ "chest_hildir1": {
+  "en": "Hildir's Brass Chest",
+  "fr": "Coffre en cuivre d'Hildir"
+ },
+ "chest_hildir2": {
+  "en": "Hildir's Silver Chest",
+  "fr": "Coffre en argent d'Hildir"
+ },
+ "chest_hildir3": {
+  "en": "Hildir's Bronze Chest",
+  "fr": "Coffre en bronze d'Hildir"
+ },
+ "coal_pile": {
+  "en": "Coal Pile",
+  "fr": "Pile de charbon"
+ },
+ "crystal_wall_1x1": {
+  "en": "Crystal Wall 1x1",
+  "fr": "Mur de cristal 1x1"
+ },
+ "cultivate": {
+  "en": "Cultivate",
+  "fr": "Cultiver"
+ },
+ "cultivate_v2": {
+  "en": "Cultivate",
+  "fr": "Cultiver"
+ },
+ "darkwood_arch": {
+  "en": "Darkwood Arch",
+  "fr": "Arche de bois sombre"
+ },
+ "darkwood_beam": {
+  "en": "Darkwood Beam 2 m",
+  "fr": "Poutre en bois sombre 2m"
+ },
+ "darkwood_beam4x4": {
+  "en": "Darkwood Beam 4 m",
+  "fr": "Poutre en bois sombre 4m"
+ },
+ "darkwood_beam_26": {
+  "en": "Darkwood Beam 26°",
+  "fr": "Poutre en bois sombre 26°"
+ },
+ "darkwood_beam_45": {
+  "en": "Darkwood Beam 45°",
+  "fr": "Poutre en bois sombre 45°"
+ },
+ "darkwood_decowall": {
+  "en": "Carved Darkwood Divider",
+  "fr": "Séparateur en bois sombre sculpté"
+ },
+ "darkwood_gate": {
+  "en": "Darkwood Gate",
+  "fr": "Portail de bois sombre"
+ },
+ "darkwood_pole": {
+  "en": "Darkwood Pole 2m",
+  "fr": "Poteau en bois sombre 2m"
+ },
+ "darkwood_pole4": {
+  "en": "Darkwood Pole 4m",
+  "fr": "Poteau en bois sombre 4m"
+ },
+ "darkwood_raven": {
+  "en": "Raven Adornment",
+  "fr": "Corbeau décoratif"
+ },
+ "darkwood_roof": {
+  "en": "Shingle Roof 26°",
+  "fr": "Toit de bardeaux 26°"
+ },
+ "darkwood_roof_45": {
+  "en": "Shingle Roof 45°",
+  "fr": "Toit de bardeaux 45°"
+ },
+ "darkwood_roof_67": {
+  "en": "Shingle Roof 67°",
+  "fr": "Toit de bardeaux 67°"
+ },
+ "darkwood_roof_icorner": {
+  "en": "Shingle Roof Inner Corner 26°",
+  "fr": "Toit de bardeaux 26° concave"
+ },
+ "darkwood_roof_icorner_45": {
+  "en": "Shingle Roof Inner Corner 45°",
+  "fr": "Toit de bardeaux 45° concave"
+ },
+ "darkwood_roof_icorner_67": {
+  "en": "Shingle Roof Inner Corner 67°",
+  "fr": "Toit de bardeaux 67° concave"
+ },
+ "darkwood_roof_ocorner": {
+  "en": "Shingle Roof Outer Corner 26°",
+  "fr": "Toit de bardeaux 26° convexe"
+ },
+ "darkwood_roof_ocorner_45": {
+  "en": "Shingle Roof Outer Corner 45°",
+  "fr": "Toit de bardeaux 45° convexe"
+ },
+ "darkwood_roof_ocorner_67": {
+  "en": "Shingle Roof Outer Corner 67°",
+  "fr": "Toit de bardeaux 67° convexe"
+ },
+ "darkwood_roof_top": {
+  "en": "Shingle Roof Ridge 26°",
+  "fr": "Faîte de toit de bardeaux 26°"
+ },
+ "darkwood_roof_top_45": {
+  "en": "Shingle Roof Ridge 45°",
+  "fr": "Faîte de toit de bardeaux 45°"
+ },
+ "darkwood_roof_top_67": {
+  "en": "Shingle Roof Ridge 67°",
+  "fr": "Faîte de toit de bardeaux 67°"
+ },
+ "darkwood_wolf": {
+  "en": "Wolf Adornment",
+  "fr": "Loup décoratif"
+ },
+ "dverger_guardstone": {
+  "en": "Ward",
+  "fr": "Balise"
+ },
+ "dvergrprops_wood_floor": {
+  "en": "Wood Floor 2x2",
+  "fr": "Plancher 2x2"
+ },
+ "dvergrprops_wood_stair": {
+  "en": "Wood Stairs",
+  "fr": "Escalier en bois"
+ },
+ "eitrrefinery": {
+  "en": "Eitr Refinery",
+  "fr": "Raffinerie d'Eitr"
+ },
+ "fermenter": {
+  "en": "Fermenter",
+  "fr": "Fermenteur"
+ },
+ "fire_pit": {
+  "en": "Campfire",
+  "fr": "Feu de camp"
+ },
+ "fire_pit_haldor": {
+  "en": "Campfire",
+  "fr": "Feu de camp"
+ },
+ "fire_pit_hildir": {
+  "en": "Campfire",
+  "fr": "Feu de camp"
+ },
+ "fire_pit_iron": {
+  "en": "Iron Fire Pit",
+  "fr": "Brasero en fer"
+ },
+ "flametal_gate": {
+  "en": "Flametal Gate",
+  "fr": "Portail en flametal"
+ },
+ "flint_pile": {
+  "en": "Flint Pile",
+  "fr": "Tas de silex"
+ },
+ "forge": {
+  "en": "Forge",
+  "fr": "Forge"
+ },
+ "forge_ext1": {
+  "en": "Forge Bellows",
+  "fr": "Soufflet de forge"
+ },
+ "forge_ext2": {
+  "en": "Anvils",
+  "fr": "Enclumes"
+ },
+ "forge_ext3": {
+  "en": "Grinding Wheel",
+  "fr": "Meule"
+ },
+ "forge_ext4": {
+  "en": "Smith's Anvil",
+  "fr": "Enclume de forgeron"
+ },
+ "forge_ext5": {
+  "en": "Forge Cooler",
+  "fr": "Seau de forge"
+ },
+ "forge_ext6": {
+  "en": "Forge Tool Rack",
+  "fr": "Râtelier de forge"
+ },
+ "fuling_trap": {
+  "en": "Trap",
+  "fr": "Piège"
+ },
+ "fuling_turret": {
+  "en": "Ballista",
+  "fr": "Baliste"
+ },
+ "gd_king": {
+  "en": "The Elder",
+  "fr": "L'Aîné"
+ },
+ "grausten_pile": {
+  "en": "Grausten Pile",
+  "fr": "Pile de grise-pierre"
+ },
+ "guard_stone": {
+  "en": "Ward",
+  "fr": "Balise"
+ },
+ "hearth": {
+  "en": "Hearth",
+  "fr": "Foyer"
+ },
+ "incinerator": {
+  "en": "Obliterator",
+  "fr": "Oblitérateur"
+ },
+ "iron_floor_1x1": {
+  "en": "Cage Floor 1x1",
+  "fr": "Sol de cage 1x1"
+ },
+ "iron_floor_1x1_v2": {
+  "en": "Cage Floor 1x1",
+  "fr": "Sol de cage 1x1"
+ },
+ "iron_floor_2x2": {
+  "en": "Cage Floor 2x2",
+  "fr": "Sol de cage 2x2"
+ },
+ "iron_grate": {
+  "en": "Iron Gate",
+  "fr": "Portail de fer"
+ },
+ "iron_wall_1x1": {
+  "en": "Cage Wall 1x1",
+  "fr": "Mur de cage 1x1"
+ },
+ "iron_wall_1x1_rusty": {
+  "en": "Cage Wall 1x1",
+  "fr": "Mur de cage 1x1"
+ },
+ "iron_wall_2x2": {
+  "en": "Cage Wall 2x2",
+  "fr": "Mur de cage 2x2"
+ },
+ "itemstand": {
+  "en": "Item Stand",
+  "fr": "Présentoir"
+ },
+ "itemstandh": {
+  "en": "Item Stand",
+  "fr": "Présentoir"
+ },
+ "jute_carpet": {
+  "en": "Red Jute Carpet",
+  "fr": "Tapis de jute rouge"
+ },
+ "jute_carpet_blue": {
+  "en": "Blue Jute Carpet",
+  "fr": "Tapis de jute bleue"
+ },
+ "loot_deepNorth_Granary": {
+  "en": "Barrel",
+  "fr": "Tonneau"
+ },
+ "loot_deepNorth_TimberHall": {
+  "en": "Barrel",
+  "fr": "Tonneau"
+ },
+ "metalbar_1x2": {
+  "en": "Black Marble 1x1x1",
+  "fr": "Marbre noir 1x1x1"
+ },
+ "mud_road": {
+  "en": "Level Ground",
+  "fr": "Aplanir le sol"
+ },
+ "mud_road_v2": {
+  "en": "Level Ground",
+  "fr": "Aplanir le sol"
+ },
+ "obsidian_pile": {
+  "en": "Obsidian Pile",
+  "fr": "Tas d'obsidienne"
+ },
+ "path": {
+  "en": "Pathen",
+  "fr": "Déblayer"
+ },
+ "path_v2": {
+  "en": "Pathen",
+  "fr": "Déblayer"
+ },
+ "paved_road": {
+  "en": "Paved Road",
+  "fr": "Route pavée"
+ },
+ "paved_road_v2": {
+  "en": "Paved Road",
+  "fr": "Route pavée"
+ },
+ "piece_ArcheryTarget": {
+  "en": "Archery Target",
+  "fr": "Cible"
+ },
+ "piece_CelebrationGarland": {
+  "en": "Flower Garland",
+  "fr": "Guirlande de fleurs"
+ },
+ "piece_EternalPyre": {
+  "en": "Eternal Pyre",
+  "fr": "Bûcher éternel"
+ },
+ "piece_FaderEmbers": {
+  "en": "Eternal Pyre",
+  "fr": "Bûcher éternel"
+ },
+ "piece_FairylightGarland": {
+  "en": "Fey Lights",
+  "fr": "Lumières féériques"
+ },
+ "piece_FrostFoundry": {
+  "en": "Frost Foundry",
+  "fr": "Fonderie à givre"
+ },
+ "piece_FrostKiln": {
+  "en": "Frigid Kiln",
+  "fr": "Four frigide"
+ },
+ "piece_Lavalantern": {
+  "en": "Lava Lantern",
+  "fr": "Lanterne de lave"
+ },
+ "piece_MeadCauldron": {
+  "en": "Mead Ketill",
+  "fr": "Chaudron à hydromel"
+ },
+ "piece_TrainingDummy": {
+  "en": "T.W.I.G.",
+  "fr": "Frère d'armes"
+ },
+ "piece_artisanstation": {
+  "en": "Artisan Table",
+  "fr": "Table d'artisan"
+ },
+ "piece_asksvinskeleton": {
+  "en": "Asksvin Skeleton",
+  "fr": "Squelette d'asksvin"
+ },
+ "piece_banner01": {
+  "en": "Black Banner",
+  "fr": "Bannière noire"
+ },
+ "piece_banner02": {
+  "en": "Blue Banner",
+  "fr": "Bannière bleue"
+ },
+ "piece_banner03": {
+  "en": "White and Red Striped Banner",
+  "fr": "Bannière à rayures blanches et rouges"
+ },
+ "piece_banner04": {
+  "en": "Red Banner",
+  "fr": "Bannière rouge"
+ },
+ "piece_banner05": {
+  "en": "Green Banner",
+  "fr": "Bannière verte"
+ },
+ "piece_banner06": {
+  "en": "Blue, Red and White Banner",
+  "fr": "Bleu(e)"
+ },
+ "piece_banner07": {
+  "en": "White and Blue Striped Banner",
+  "fr": "Bannière à rayures blanches et bleues"
+ },
+ "piece_banner08": {
+  "en": "Yellow Banner",
+  "fr": "Bannière jaune"
+ },
+ "piece_banner09": {
+  "en": "Purple Banner",
+  "fr": "Bannière violette"
+ },
+ "piece_banner10": {
+  "en": "Orange Banner",
+  "fr": "Bannière orange"
+ },
+ "piece_banner11": {
+  "en": "White Banner",
+  "fr": "Bannière blanche"
+ },
+ "piece_barber": {
+  "en": "Barber Station",
+  "fr": "Barbier"
+ },
+ "piece_bathtub": {
+  "en": "Hot Tub",
+  "fr": "Baignoire"
+ },
+ "piece_bed02": {
+  "en": "Dragon Bed",
+  "fr": "Lit dragon"
+ },
+ "piece_beehive": {
+  "en": "Beehive",
+  "fr": "Ruche"
+ },
+ "piece_bench01": {
+  "en": "Wood Bench",
+  "fr": "Banc"
+ },
+ "piece_bench_runed": {
+  "en": "Carved Bench",
+  "fr": "Banc sculpté"
+ },
+ "piece_birdnest": {
+  "en": "Birds' Nest",
+  "fr": "Nid d'oiseaux"
+ },
+ "piece_blackmarble_bench": {
+  "en": "Black Marble Bench",
+  "fr": "Banc de marbre noir"
+ },
+ "piece_blackmarble_table": {
+  "en": "Black Marble Table",
+  "fr": "Table de marbre noir"
+ },
+ "piece_blackmarble_throne": {
+  "en": "Black Marble Throne",
+  "fr": "Trône de marbre noir"
+ },
+ "piece_blackwood_bench": {
+  "en": "Wood Bench",
+  "fr": "Banc"
+ },
+ "piece_blackwood_bench01": {
+  "en": "Ashwood Bench",
+  "fr": "Banc en cendrebois"
+ },
+ "piece_bone_throne": {
+  "en": "Bone Throne",
+  "fr": "Trône d'os"
+ },
+ "piece_brazierceiling01": {
+  "en": "Hanging Brazier",
+  "fr": "Brasier suspendu"
+ },
+ "piece_brazierfloor01": {
+  "en": "Standing Brazier",
+  "fr": "Brasero à pied"
+ },
+ "piece_brazierfloor02": {
+  "en": "Blue Standing Brazier",
+  "fr": "Brasero bleu à pied"
+ },
+ "piece_cartographytable": {
+  "en": "Cartography Table",
+  "fr": "Table de cartographie"
+ },
+ "piece_cauldron": {
+  "en": "Cauldron",
+  "fr": "Chaudron"
+ },
+ "piece_chair": {
+  "en": "Stool",
+  "fr": "Tabouret"
+ },
+ "piece_chair02": {
+  "en": "Wood Chair",
+  "fr": "Chaise"
+ },
+ "piece_chair03": {
+  "en": "Darkwood Chair",
+  "fr": "Chaise de bois sombre"
+ },
+ "piece_chair_runed": {
+  "en": "Carved Chair",
+  "fr": "Chaise sculptée"
+ },
+ "piece_chest": {
+  "en": "Reinforced Chest",
+  "fr": "Coffre renforcé"
+ },
+ "piece_chest_barrel": {
+  "en": "Barrel",
+  "fr": "Tonneau"
+ },
+ "piece_chest_blackmetal": {
+  "en": "Black Metal Chest",
+  "fr": "Coffre en sombracier"
+ },
+ "piece_chest_grausten": {
+  "en": "Grausten Chest",
+  "fr": "Coffre en grise-pierre"
+ },
+ "piece_chest_private": {
+  "en": "Personal Chest",
+  "fr": "Coffre personnel"
+ },
+ "piece_chest_treasure": {
+  "en": "Treasure Chest",
+  "fr": "Coffre au trésor"
+ },
+ "piece_chest_warderobe": {
+  "en": "Wardrobe",
+  "fr": "Penderie"
+ },
+ "piece_chest_wood": {
+  "en": "Chest",
+  "fr": "Coffre"
+ },
+ "piece_cloth_hanging_door": {
+  "en": "Red Jute Curtain",
+  "fr": "Rideau de jute rouge"
+ },
+ "piece_cloth_hanging_door_blue": {
+  "en": "Blue Jute Drapes",
+  "fr": "Tentures de jute bleue"
+ },
+ "piece_cloth_hanging_door_blue2": {
+  "en": "Blue Jute Curtain",
+  "fr": "Rideau de jute bleue"
+ },
+ "piece_cookingstation": {
+  "en": "Cooking Station",
+  "fr": "Poste de cuisson"
+ },
+ "piece_cookingstation_iron": {
+  "en": "Iron Cooking Station",
+  "fr": "Cuisine en fer"
+ },
+ "piece_drawbridge": {
+  "en": "Timberwood Drawbridge",
+  "fr": "Pont-levis en sapin nordique"
+ },
+ "piece_drawbridge_log": {
+  "en": "Rustic Drawbridge",
+  "fr": "Pont-levis rustique"
+ },
+ "piece_dvergr_lantern": {
+  "en": "Dvergr Wall Lantern",
+  "fr": "Lanterne murale dvergr"
+ },
+ "piece_dvergr_lantern_pole": {
+  "en": "Dvergr Pole Lantern",
+  "fr": "Lanterne sur pied dvergr"
+ },
+ "piece_dvergr_metal_wall_2x2": {
+  "en": "Dvergr Metal Wall",
+  "fr": "Mur de métal dvergr"
+ },
+ "piece_dvergr_pole": {
+  "en": "Dvergr Pole",
+  "fr": "Poteau dvergr"
+ },
+ "piece_dvergr_sharpstakes": {
+  "en": "Dvergr Sharp Stakes",
+  "fr": "Pieux acérés dvergr"
+ },
+ "piece_dvergr_spiralstair": {
+  "en": "Dvergr Spiral Staircase Left",
+  "fr": "Escalier en spirale gauche dvergr"
+ },
+ "piece_dvergr_spiralstair_right": {
+  "en": "Dvergr Spiral Staircase Right",
+  "fr": "Escalier en spirale droit dvergr"
+ },
+ "piece_dvergr_stake_wall": {
+  "en": "Dvergr Stakewall",
+  "fr": "Palissade dvergr"
+ },
+ "piece_dvergr_wood_door": {
+  "en": "Dvergr Door",
+  "fr": "Porte dvergr"
+ },
+ "piece_dvergr_wood_wall": {
+  "en": "Dvergr Wall",
+  "fr": "Mur dvergr"
+ },
+ "piece_gift1": {
+  "en": "Yuleklapp",
+  "fr": "Yuleklapp"
+ },
+ "piece_gift2": {
+  "en": "Yuleklapp",
+  "fr": "Yuleklapp"
+ },
+ "piece_gift3": {
+  "en": "Yuleklapp",
+  "fr": "Yuleklapp"
+ },
+ "piece_grausten_roof_45": {
+  "en": "Grausten Roof",
+  "fr": "Toit en grise-pierre"
+ },
+ "piece_grausten_roof_45_arch": {
+  "en": "Grausten Arched Roof",
+  "fr": "Arche de toit en grise-pierre"
+ },
+ "piece_grausten_roof_45_arch_corner": {
+  "en": "Grausten Arched Roof Corner",
+  "fr": "Coin d'arche de toit en grise-pierre"
+ },
+ "piece_grausten_roof_45_arch_corner2": {
+  "en": "Grausten Arched Roof Corner",
+  "fr": "Coin d'arche de toit en grise-pierre"
+ },
+ "piece_grausten_roof_45_corner": {
+  "en": "Grausten Roof Corner",
+  "fr": "Coin de toit en grise-pierre"
+ },
+ "piece_grausten_roof_45_corner2": {
+  "en": "Grausten Roof Corner",
+  "fr": "Coin de toit en grise-pierre"
+ },
+ "piece_grausten_stonestair": {
+  "en": "Grausten Stairs",
+  "fr": "Escalier en grise-pierre"
+ },
+ "piece_groundtorch": {
+  "en": "Standing Iron Torch",
+  "fr": "Torche en fer"
+ },
+ "piece_groundtorch_blue": {
+  "en": "Standing Blue-burning Iron Torch",
+  "fr": "Torche en fer à flamme bleue"
+ },
+ "piece_groundtorch_green": {
+  "en": "Standing Green-burning Iron Torch",
+  "fr": "Torche en fer à flamme verte"
+ },
+ "piece_groundtorch_mist": {
+  "en": "Wisp Torch",
+  "fr": "Torche de feu-follet"
+ },
+ "piece_groundtorch_wood": {
+  "en": "Standing Wood Torch",
+  "fr": "Torche en bois"
+ },
+ "piece_hexagonal_door": {
+  "en": "Hexagonal Gate",
+  "fr": "Porte hexagonale"
+ },
+ "piece_hoodedlantern": {
+  "en": "Hooded Lantern",
+  "fr": "Lanterne couverte"
+ },
+ "piece_icecube": {
+  "en": "Ice Block",
+  "fr": "Bloc de glace"
+ },
+ "piece_jackoturnip": {
+  "en": "Jack-o-turnip",
+  "fr": "Lanterne d'Halloween"
+ },
+ "piece_logbench01": {
+  "en": "Sitting Log",
+  "fr": "Siège en rondin"
+ },
+ "piece_magetable": {
+  "en": "Galdr Table",
+  "fr": "Table de galdr"
+ },
+ "piece_magetable_ext": {
+  "en": "Rune Table",
+  "fr": "Table runique"
+ },
+ "piece_magetable_ext2": {
+  "en": "Unfading Candles",
+  "fr": "Bougies éternelles"
+ },
+ "piece_magetable_ext3": {
+  "en": "Feathery Wreath",
+  "fr": "Couronne de plumes"
+ },
+ "piece_magetable_ext4": {
+  "en": "Standing Loom",
+  "fr": "Métier à tisser"
+ },
+ "piece_maypole": {
+  "en": "Maypole",
+  "fr": "Mât de Cocagne"
+ },
+ "piece_mistletoe": {
+  "en": "Mistletoe",
+  "fr": "Gui"
+ },
+ "piece_moose_throne": {
+  "en": "Antler Throne",
+  "fr": "Trône de bois de cerf"
+ },
+ "piece_oven": {
+  "en": "Stone Oven",
+  "fr": "Four en pierre"
+ },
+ "piece_pot1": {
+  "en": "Medium Green Pot",
+  "fr": "Pot vert moyen"
+ },
+ "piece_pot1_cracked": {
+  "en": "Medium Clay Pot",
+  "fr": "Pot en terre cuite moyen"
+ },
+ "piece_pot1_red": {
+  "en": "Medium Red Pot",
+  "fr": "Pot rouge moyen"
+ },
+ "piece_pot2": {
+  "en": "Large Green Pot",
+  "fr": "Grand pot vert"
+ },
+ "piece_pot2_cracked": {
+  "en": "Large Clay Pot",
+  "fr": "Grand pot en terre cuite"
+ },
+ "piece_pot2_red": {
+  "en": "Large Red Pot",
+  "fr": "Grand pot rouge"
+ },
+ "piece_pot3": {
+  "en": "Small Green Pot",
+  "fr": "Petit pot vert"
+ },
+ "piece_pot3_cracked": {
+  "en": "Small Clay Pot",
+  "fr": "Petit pot en terre cuite"
+ },
+ "piece_pot3_red": {
+  "en": "Small Red Pot",
+  "fr": "Petit pot rouge"
+ },
+ "piece_preptable": {
+  "en": "Food Preparation Table",
+  "fr": "Table de préparation culinaire"
+ },
+ "piece_remove_feaster": {
+  "en": "Remove",
+  "fr": "Retirer"
+ },
+ "piece_repair": {
+  "en": "Repair",
+  "fr": "Réparer"
+ },
+ "piece_sapcollector": {
+  "en": "Sap Extractor",
+  "fr": "Extracteur de sève"
+ },
+ "piece_sharpstakes": {
+  "en": "Sharp Stakes",
+  "fr": "Pieux acérés"
+ },
+ "piece_shieldgenerator": {
+  "en": "Shield Generator",
+  "fr": "Générateur de bouclier"
+ },
+ "piece_snowlantern": {
+  "en": "Snow Lantern",
+  "fr": "Lanterne de neige"
+ },
+ "piece_spinningwheel": {
+  "en": "Spinning Wheel",
+  "fr": "Roue"
+ },
+ "piece_stakewall_blackwood": {
+  "en": "Ashwood Stakewall",
+  "fr": "Palissade en cendrebois"
+ },
+ "piece_stonecutter": {
+  "en": "Stonecutter",
+  "fr": "Tailleur de pierre"
+ },
+ "piece_table": {
+  "en": "Table",
+  "fr": "Table"
+ },
+ "piece_table_oak": {
+  "en": "Long Heavy Table",
+  "fr": "Longue table lourde"
+ },
+ "piece_table_round": {
+  "en": "Round Table",
+  "fr": "Table ronde"
+ },
+ "piece_table_runed": {
+  "en": "Long Carved Table",
+  "fr": "Longue table sculptée"
+ },
+ "piece_table_runed_small": {
+  "en": "Square Carved Table",
+  "fr": "Table carrée sculptée"
+ },
+ "piece_throne01": {
+  "en": "Raven Throne",
+  "fr": "Trône corvidé"
+ },
+ "piece_throne02": {
+  "en": "Stone Throne",
+  "fr": "Trône en pierre"
+ },
+ "piece_trap_troll": {
+  "en": "Trap",
+  "fr": "Piège"
+ },
+ "piece_turret": {
+  "en": "Ballista",
+  "fr": "Baliste"
+ },
+ "piece_walltorch": {
+  "en": "Sconce",
+  "fr": "Chandelier"
+ },
+ "piece_wisplure": {
+  "en": "Wisp Fountain",
+  "fr": "Fontaine aux feux-follets"
+ },
+ "piece_workbench": {
+  "en": "Workbench",
+  "fr": "Table de fabrication"
+ },
+ "piece_workbench_ext1": {
+  "en": "Chopping Block",
+  "fr": "Billot"
+ },
+ "piece_workbench_ext2": {
+  "en": "Tanning Rack",
+  "fr": "Support de tannage"
+ },
+ "piece_workbench_ext3": {
+  "en": "Adze",
+  "fr": "Herminette"
+ },
+ "piece_workbench_ext4": {
+  "en": "Tool Shelf",
+  "fr": "Étagère à outils"
+ },
+ "piece_xmascrown": {
+  "en": "Yule Wreath",
+  "fr": "Couronne de fête"
+ },
+ "piece_xmasgarland": {
+  "en": "Yule Garland",
+  "fr": "Guirlande de fête"
+ },
+ "piece_xmastree": {
+  "en": "Yule Tree",
+  "fr": "Arbre de fête"
+ },
+ "placeable_bigrock_01": {
+  "en": "Ornamental Boulder",
+  "fr": "Rocher ornemental"
+ },
+ "placeable_bigrock_02": {
+  "en": "Decorative Boulder",
+  "fr": "Rocher décoratif"
+ },
+ "portal": {
+  "en": "Portal",
+  "fr": "Portail"
+ },
+ "portal_stone": {
+  "en": "Portal – Stone",
+  "fr": "Portal – Pierre"
+ },
+ "portal_wood": {
+  "en": "Portal",
+  "fr": "Portail"
+ },
+ "raise": {
+  "en": "Raise Ground",
+  "fr": "Rehausser le sol"
+ },
+ "raise_v2": {
+  "en": "Raise Ground",
+  "fr": "Rehausser le sol"
+ },
+ "replant": {
+  "en": "Grass",
+  "fr": "Herbe"
+ },
+ "replant_v2": {
+  "en": "Grass",
+  "fr": "Herbe"
+ },
+ "rug_Bjorn": {
+  "en": "Bearskin Rug",
+  "fr": "Tapis en peau d'ours"
+ },
+ "rug_asksvin": {
+  "en": "Asksvin Rug",
+  "fr": "Tapis en asksvin"
+ },
+ "rug_deer": {
+  "en": "Deer Rug",
+  "fr": "Tapis de cerf"
+ },
+ "rug_fur": {
+  "en": "Lox Rug",
+  "fr": "Tapis de Lox"
+ },
+ "rug_hare": {
+  "en": "Hare Rug",
+  "fr": "Tapis de lièvre"
+ },
+ "rug_moose": {
+  "en": "Moose Hide Carpet",
+  "fr": "Tapis en peau d'élan"
+ },
+ "rug_seal": {
+  "en": "Sealskin Rug",
+  "fr": "Tapis en peau de phoque"
+ },
+ "rug_straw": {
+  "en": "Straw",
+  "fr": "Paille"
+ },
+ "rug_wolf": {
+  "en": "Wolf Rug",
+  "fr": "Tapis de loup"
+ },
+ "sapling_Kale": {
+  "en": "Kale",
+  "fr": "Chou kale"
+ },
+ "sapling_barley": {
+  "en": "Barley",
+  "fr": "Orge"
+ },
+ "sapling_carrot": {
+  "en": "Carrot",
+  "fr": "Carotte"
+ },
+ "sapling_flax": {
+  "en": "Flax",
+  "fr": "Lin"
+ },
+ "sapling_jotunpuffs": {
+  "en": "Jotun Puffs",
+  "fr": "Globes jötnars"
+ },
+ "sapling_magecap": {
+  "en": "Magecap",
+  "fr": "Coiffe-de-mage"
+ },
+ "sapling_oat": {
+  "en": "Oat Straw",
+  "fr": "Paille d'avoine"
+ },
+ "sapling_onion": {
+  "en": "Onion",
+  "fr": "Oignon"
+ },
+ "sapling_poteitr": {
+  "en": "Poteitr",
+  "fr": null
+ },
+ "sapling_seedcarrot": {
+  "en": "Seed-carrot",
+  "fr": "Graine de carotte"
+ },
+ "sapling_seedkale": {
+  "en": "Seed Kale",
+  "fr": "Graine de chou kale"
+ },
+ "sapling_seedonion": {
+  "en": "Seed-onion",
+  "fr": "Pousse d'oignon"
+ },
+ "sapling_seedturnip": {
+  "en": "Seed-turnip",
+  "fr": "Graine de navet"
+ },
+ "sapling_turnip": {
+  "en": "Turnip",
+  "fr": "Navet"
+ },
+ "scale_halfwall_1x2": {
+  "en": "Scalewood Half Wall",
+  "fr": "Demi-mur en boidécaille"
+ },
+ "scale_quarterwall_1x1": {
+  "en": "Scalewood Quarter Wall",
+  "fr": "Quart de mur en boidécaille"
+ },
+ "scale_wall_2x2": {
+  "en": "Scalewood Wall",
+  "fr": "Mur en boidécaille"
+ },
+ "scale_wall_roof_26": {
+  "en": "Scalewood Wall 26° Left",
+  "fr": "Mur en boidécaille 26° gauche"
+ },
+ "scale_wall_roof_26_flipped": {
+  "en": "Scalewood Wall 26° Right",
+  "fr": "Mur en boidécaille 26° droite"
+ },
+ "scale_wall_roof_26_upsidedown": {
+  "en": "Scalewood Wall 26° Right (Inverted)",
+  "fr": "Mur en boidécaille 26° droite (inversé)"
+ },
+ "scale_wall_roof_26_upsidedown_flipped": {
+  "en": "Scalewood Wall 26° Left (Inverted)",
+  "fr": "Mur en boidécaille 26° gauche (inversé)"
+ },
+ "scale_wall_roof_45": {
+  "en": "Scalewood Wall 45° Left",
+  "fr": "Mur en boidécaille 45° gauche"
+ },
+ "scale_wall_roof_45_flipped": {
+  "en": "Scalewood Wall 45° Right",
+  "fr": "Mur en boidécaille 45° droite"
+ },
+ "scale_wall_roof_45_upsidedown": {
+  "en": "Scalewood Wall 45° Right (Inverted)",
+  "fr": "Mur en boidécaille 45° droite (inversé)"
+ },
+ "scale_wall_roof_45_upsidedown_flipped": {
+  "en": "Scalewood Wall 45° Left (Inverted)",
+  "fr": "Mur en boidécaille 45° gauche (inversé)"
+ },
+ "scale_wall_roof_67": {
+  "en": "Scalewood Wall 67° Left",
+  "fr": "Mur en boidécaille 67° gauche"
+ },
+ "scale_wall_roof_67_flipped": {
+  "en": "Scalewood Wall 67° Right",
+  "fr": "Mur en boidécaille 67° droite"
+ },
+ "scale_wall_roof_67_upsidedown": {
+  "en": "Scalewood Wall 67° Right (Inverted)",
+  "fr": "Mur en boidécaille 67° droite (inversé)"
+ },
+ "scale_wall_roof_67_upsidedown_flipped": {
+  "en": "Scalewood Wall 67° Left (Inverted)",
+  "fr": "Mur en boidécaille 67° gauche (inversé)"
+ },
+ "sign": {
+  "en": "Sign",
+  "fr": "Pancarte"
+ },
+ "sign_notext": {
+  "en": "Sign",
+  "fr": "Pancarte"
+ },
+ "skull_pile": {
+  "en": "Pile of Skulls",
+  "fr": "Tas de crânes"
+ },
+ "smelter": {
+  "en": "Smelter",
+  "fr": "Fonderie"
+ },
+ "staff_greenroots_tentaroot": {
+  "en": "Summoned Root",
+  "fr": "Racine invoquée"
+ },
+ "stake_wall": {
+  "en": "Stakewall",
+  "fr": "Palissade"
+ },
+ "stave_beam_26": {
+  "en": "Timber Beam 26°",
+  "fr": "Poutre en bois 26°"
+ },
+ "stave_beam_2m": {
+  "en": "Timber Beam 2m",
+  "fr": "Poutre en bois 2 m"
+ },
+ "stave_beam_45": {
+  "en": "Timber Beam 45°",
+  "fr": "Poutre en bois 45°"
+ },
+ "stave_beam_4m": {
+  "en": "Timber Beam 4m",
+  "fr": "Poutre en bois 4 m"
+ },
+ "stave_beam_67": {
+  "en": "Timber Beam 67°",
+  "fr": "Poutre en bois 67°"
+ },
+ "stave_deco_beam_26": {
+  "en": "Decorated Timber Beam 26°",
+  "fr": "Poutre en bois décoré 26°"
+ },
+ "stave_deco_beam_2m": {
+  "en": "Decorated Timber Beam 2m",
+  "fr": "Poutre en bois décoré 2 m"
+ },
+ "stave_deco_beam_45": {
+  "en": "Decorated Timber Beam 45°",
+  "fr": "Poutre en bois décoré 45°"
+ },
+ "stave_deco_beam_67": {
+  "en": "Decorated Timber Beam 67°",
+  "fr": "Poutre en bois décoré 67°"
+ },
+ "stave_deco_pole_2m": {
+  "en": "Decorated Timber Pole 2m",
+  "fr": "Poteau en bois décoré 2 m"
+ },
+ "stave_deco_wall_2x2": {
+  "en": "Lathed Timber Wall",
+  "fr": "Mur en bois latté"
+ },
+ "stave_gate": {
+  "en": "Timberwood Gate",
+  "fr": "Portail de sapin nordique"
+ },
+ "stave_pole_2m": {
+  "en": "Timber Pole 2m",
+  "fr": "Poteau en bois 2 m"
+ },
+ "stave_pole_4m": {
+  "en": "Timber Pole 4m",
+  "fr": "Poteau en bois 4 m"
+ },
+ "stave_wall_2x2": {
+  "en": "Timber Wall",
+  "fr": "Mur en bois"
+ },
+ "stave_wall_cross_26": {
+  "en": "Timber Roof Cross 26°",
+  "fr": "Croix de toit en bois 26°"
+ },
+ "stave_wall_cross_45": {
+  "en": "Timber Roof Cross 45°",
+  "fr": "Croix de toit en bois 45°"
+ },
+ "stave_wall_cross_67": {
+  "en": "Timber Roof Cross 67°",
+  "fr": "Croix de toit en bois 67°"
+ },
+ "stone_arch": {
+  "en": "Stone Arch",
+  "fr": "Arche de pierre"
+ },
+ "stone_fence": {
+  "en": "Stone Fence",
+  "fr": "Clôture en pierre"
+ },
+ "stone_floor": {
+  "en": "Stone Floor 4x4",
+  "fr": "Sol de pierre 4x4"
+ },
+ "stone_floor_2x2": {
+  "en": "Stone Floor 2x2",
+  "fr": "Sol de pierre 2x2"
+ },
+ "stone_pile": {
+  "en": "Stone Pile",
+  "fr": "Pile de pierre"
+ },
+ "stone_pillar": {
+  "en": "Stone Pillar",
+  "fr": "Pilier de pierre"
+ },
+ "stone_stair": {
+  "en": "Stone Stair",
+  "fr": "Escalier de pierre"
+ },
+ "stone_wall_1x1": {
+  "en": "Stone Wall 1x1",
+  "fr": "Mur de pierre 1x1"
+ },
+ "stone_wall_2x1": {
+  "en": "Stone Wall 2x1",
+  "fr": "Mur de pierre 2x1"
+ },
+ "stone_wall_4x2": {
+  "en": "Stone Wall 4x2",
+  "fr": "Mur de pierre 4x2"
+ },
+ "treasure_pile": {
+  "en": "Coin Pile",
+  "fr": "Tas de pièces"
+ },
+ "treasure_stack": {
+  "en": "Coin Stack",
+  "fr": "Pile de pièces"
+ },
+ "windmill": {
+  "en": "Windmill",
+  "fr": "Moulin"
+ },
+ "wood_beam": {
+  "en": "Wood Beam 2 m",
+  "fr": "Poutre en bois 2m"
+ },
+ "wood_beam_1": {
+  "en": "Wood Beam 1 m",
+  "fr": "Poutre en bois 1m"
+ },
+ "wood_beam_26": {
+  "en": "Wood Beam 26°",
+  "fr": "Poutre en bois 26°"
+ },
+ "wood_beam_45": {
+  "en": "Wood Beam 45°",
+  "fr": "Poutre en bois 45°"
+ },
+ "wood_beam_67": {
+  "en": "Wood Beam 67°",
+  "fr": "Poutre en bois 67°"
+ },
+ "wood_core_stack": {
+  "en": "Corewood Stack",
+  "fr": "Pile de bois robuste"
+ },
+ "wood_door": {
+  "en": "Wood Door",
+  "fr": "Porte en bois"
+ },
+ "wood_dragon1": {
+  "en": "Wood Dragon Adornment",
+  "fr": "Dragon décoratif en bois"
+ },
+ "wood_fence": {
+  "en": "Roundpole Fence",
+  "fr": "Clôture de bûches"
+ },
+ "wood_fence_gate": {
+  "en": "Roundpole Gate",
+  "fr": "Portail de bûches"
+ },
+ "wood_fine_stack": {
+  "en": "Finewood Stack",
+  "fr": "Pile de bois précieux"
+ },
+ "wood_floor": {
+  "en": "Wood Floor 2x2",
+  "fr": "Plancher 2x2"
+ },
+ "wood_floor_1x1": {
+  "en": "Wood Floor 1x1",
+  "fr": "Plancher 1x1"
+ },
+ "wood_frost_stack": {
+  "en": "Timberwood Stack",
+  "fr": "Tas de sapin nordique"
+ },
+ "wood_gate": {
+  "en": "Wood Gate",
+  "fr": "Portail en bois"
+ },
+ "wood_ledge": {
+  "en": "Wood Ledge",
+  "fr": "Corniche en bois"
+ },
+ "wood_log_26": {
+  "en": "Log Beam 26°",
+  "fr": "Poutre en bûche 26°"
+ },
+ "wood_log_45": {
+  "en": "Log Beam 45°",
+  "fr": "Poutre en bûche 45°"
+ },
+ "wood_log_67": {
+  "en": "Log Beam 67°",
+  "fr": "Poutre en bûche 67°"
+ },
+ "wood_pole": {
+  "en": "Wood Pole 1 m",
+  "fr": "Poteau en bois 1m"
+ },
+ "wood_pole2": {
+  "en": "Wood Pole 2 m",
+  "fr": "Poteau en bois 2m"
+ },
+ "wood_pole_log": {
+  "en": "Log Pole 2 m",
+  "fr": "Poteau en bûche 2m"
+ },
+ "wood_pole_log_4": {
+  "en": "Log Pole 4 m",
+  "fr": "Poteau en bûche 4m"
+ },
+ "wood_pole_log_4_worn": {
+  "en": "Log Pole 4 m",
+  "fr": "Poteau en bûche 4m"
+ },
+ "wood_roof": {
+  "en": "Thatch Roof 26°",
+  "fr": "Toit de chaume 26°"
+ },
+ "wood_roof_45": {
+  "en": "Thatch Roof 45°",
+  "fr": "Toit de chaume 45°"
+ },
+ "wood_roof_67": {
+  "en": "Thatch Roof 67°",
+  "fr": "Toit de chaume 67°"
+ },
+ "wood_roof_icorner": {
+  "en": "Thatch Roof Inner Corner 26°",
+  "fr": "Toit de chaume 26° concave"
+ },
+ "wood_roof_icorner_45": {
+  "en": "Thatch Roof Inner Corner 45°",
+  "fr": "Toit de chaume 45° concave"
+ },
+ "wood_roof_icorner_67": {
+  "en": "Thatch Roof Inner Corner 67°",
+  "fr": "Toit de chaume 67° concave"
+ },
+ "wood_roof_ocorner": {
+  "en": "Thatch Roof Outer Corner 26°",
+  "fr": "Toit de chaume 26° convexe"
+ },
+ "wood_roof_ocorner_45": {
+  "en": "Thatch Roof Outer Corner 45°",
+  "fr": "Toit de chaume 45° convexe"
+ },
+ "wood_roof_ocorner_67": {
+  "en": "Thatch Roof Outer Corner 67°",
+  "fr": "Toit de chaume 67° convexe"
+ },
+ "wood_roof_top": {
+  "en": "Thatch Roof Ridge 26°",
+  "fr": "Faîte de toit de chaume 26°"
+ },
+ "wood_roof_top_45": {
+  "en": "Thatch Roof Ridge 45°",
+  "fr": "Faîte de toit de chaume 45°"
+ },
+ "wood_roof_top_67": {
+  "en": "Thatch Roof Ridge 67°",
+  "fr": "Faîte de toit de chaume 67°"
+ },
+ "wood_stack": {
+  "en": "Wood Stack",
+  "fr": "Tas de bois"
+ },
+ "wood_stair": {
+  "en": "Wood Stairs",
+  "fr": "Escalier en bois"
+ },
+ "wood_stepladder": {
+  "en": "Wood Ladder",
+  "fr": "Échelle en bois"
+ },
+ "wood_wall_half": {
+  "en": "Wood Wall Half",
+  "fr": "Demi-mur en bois"
+ },
+ "wood_wall_log": {
+  "en": "Log Beam 2 m",
+  "fr": "Poutre en bûche 2m"
+ },
+ "wood_wall_log_4x0.5": {
+  "en": "Log Beam 4 m",
+  "fr": "Poutre en bûche 4m"
+ },
+ "wood_wall_quarter": {
+  "en": "Wood Wall 1x1",
+  "fr": "Mur en bois 1x1"
+ },
+ "wood_wall_roof": {
+  "en": "Wood Wall 26°",
+  "fr": "Mur en bois 26°"
+ },
+ "wood_wall_roof_45": {
+  "en": "Wood Wall 45°",
+  "fr": "Mur en bois 45°"
+ },
+ "wood_wall_roof_45_upsidedown": {
+  "en": "Wood Wall 45° (Inverted)",
+  "fr": "Mur en bois 45° (inversé)"
+ },
+ "wood_wall_roof_67_a": {
+  "en": "Wood Wall 67°",
+  "fr": "Mur en bois 67°"
+ },
+ "wood_wall_roof_67_upsidedown": {
+  "en": "Wood Wall 67° (Inverted)",
+  "fr": "Mur en bois 67° (inversé)"
+ },
+ "wood_wall_roof_a": {
+  "en": "Wood Wall 26°",
+  "fr": "Mur en bois 26°"
+ },
+ "wood_wall_roof_top": {
+  "en": "Wood Roof Cross 26°",
+  "fr": "Croix de toit en bois 26°"
+ },
+ "wood_wall_roof_top_45": {
+  "en": "Wood Roof Cross 45°",
+  "fr": "Croix de toit en bois 45°"
+ },
+ "wood_wall_roof_top_67": {
+  "en": "Wood Roof Cross 67°",
+  "fr": "Croix de toit en bois 67°"
+ },
+ "wood_wall_roof_upsidedown": {
+  "en": "Wood Wall 26° (Inverted)",
+  "fr": "Mur en bois 26° (inversé)"
+ },
+ "wood_window": {
+  "en": "Wood Shutter",
+  "fr": "Volet en bois"
+ },
+ "wood_yggdrasil_stack": {
+  "en": "Yggdrasil Wood Stack",
+  "fr": "Pile de bois d'Yggdrasil"
+ },
+ "woodiron_beam": {
+  "en": "Wood Iron Beam",
+  "fr": "Poutre de fer et bois"
+ },
+ "woodiron_beam_26": {
+  "en": "Wood Iron Beam 26°",
+  "fr": "Poutre de fer et bois 26°"
+ },
+ "woodiron_beam_45": {
+  "en": "Wood Iron Beam 45°",
+  "fr": "Poutre de fer et bois 45°"
+ },
+ "woodiron_beam_67": {
+  "en": "Wood Iron Beam 67°",
+  "fr": "Poutre de fer et bois 67°"
+ },
+ "woodiron_pole": {
+  "en": "Wood Iron Pole",
+  "fr": "Poteau de fer et bois"
+ },
+ "woodwall": {
+  "en": "Wood Wall",
+  "fr": "Mur en bois"
+ }
+}

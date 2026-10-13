@@ -18,6 +18,15 @@ const MapCore = (() => {
 // Absent or partial, the defaults are the mod serving these pages itself -- the
 // API same-origin, the render its own /map.jpg, no brand and no links but its own.
 const XNV = (typeof window !== "undefined" && window.XNV) || {};
+// js/i18n.js, loaded before this file, translates what the pages show; without it (the
+// tests) the English stands, filled in the same way.
+const I18N = (typeof window !== "undefined" && window.I18N) || (() => {
+  const t = (s, v) => v ? String(s).replace(/\{(\w+)\}/g, (m, k) => (k in v ? v[k] : m)) : String(s);
+  const num = (n, o) => typeof n === "number" ? n.toLocaleString("en-GB", o) : String(n);
+  return {lang: "en", t, num, tn: (n, one, many, v) => t(n === 1 ? one : many, Object.assign({n: num(n)}, v || {})), setLang(){}};
+})();
+// a figure written with toFixed, with the decimal comma where the page's language wants one
+const dec = s => I18N.lang === "fr" ? String(s).replace(".", ",") : s;
 const cfg = {
   api:    XNV.api || "",
   base:   XNV.base || "/map.jpg",
@@ -662,7 +671,7 @@ function scaleBar(bar, label, mpp, m = 10){
   while(m/mpp < 60) m *= m.toString()[0] === "1" ? 2.5 : 2;
   while(m/mpp > 150) m /= m.toString()[0] === "2" ? 2 : 2.5;
   bar.style.width = Math.round(m/mpp) + "px";
-  label.textContent = m >= 1000 ? (m/1000) + " km" : Math.round(m) + " m";
+  label.textContent = m >= 1000 ? dec(m/1000) + " km" : Math.round(m) + " m";
 }
 
 // ---------- marker icons ----------
@@ -752,13 +761,13 @@ const BOSSES = {
   prey: new Set(["serpent", "writhan"]),
   // the keys that have fallen, in order, from /stats/players' bosses
   down(list){ return (list || []).map(b => String(b.key || "").replace(/^defeated_/, "")).filter(k => !BOSSES.prey.has(k)); },
-  label(k){ return BOSSES.names[k] || k.replace(/_/g, " ").replace(/\b\w/g, ch => ch.toUpperCase()); },
+  label(k){ return BOSSES.names[k] ? I18N.t(BOSSES.names[k]) : k.replace(/_/g, " ").replace(/\b\w/g, ch => ch.toUpperCase()); },
   icon(k){ return BOSS_ICON["boss-" + k] ? "boss-" + k : "boss-other"; },
   // the board, as the World page and the roster show it: each in the order met, the fallen numbered
   board(list){
     const down = BOSSES.down(list), keys = BOSSES.order.concat(down.filter(k => !BOSSES.order.includes(k)));
     return keys.map(k => { const i = down.indexOf(k), name = BOSSES.label(k);
-      return `<span class="boss ${i >= 0 ? "down" : "up"}" title="${esc(name)}: ${i >= 0 ? `fell ${ord(i + 1)}` : "still standing"}">`
+      return `<span class="boss ${i >= 0 ? "down" : "up"}" title="${i >= 0 ? I18N.t("{name}: fell {nth}", {name: esc(name), nth: ord(i + 1)}) : I18N.t("{name}: still standing", {name: esc(name)})}">`
         + `${i >= 0 ? `<span class="n">${i + 1}</span>` : ""}<svg><use href="#ic-${BOSSES.icon(k)}"></use></svg><span class="bn">${esc(name)}</span></span>`; }).join("");
   },
 };
@@ -817,7 +826,7 @@ function kitchens(stations){
 // the map's own hues for the biomes, beside a name (the name carries the identity)
 const BIOME_INK = {"Meadows": "#c2d69a", "Black Forest": "#a6c48a", "Swamp": "#caa27b", "Mountain": "#ffffff", "Plains": "#e2c98f",
                    "Mistlands": "#c4a4dc", "Ashlands": "#e6907e", "Deep North": "#dde8f2", "Ocean": "#9fd0e6"};
-const ord = n => n + (["st", "nd", "rd"][(n % 100 > 10 && n % 100 < 14) ? 3 : n % 10 - 1] || "th");
+const ord = n => I18N.lang === "fr" ? n + (n === 1 ? "er" : "e") : n + (["st", "nd", "rd"][(n % 100 > 10 && n % 100 < 14) ? 3 : n % 10 - 1] || "th");
 // Danger by biome, a player's or everyone's ([{biome, m, deaths}]): a row per biome walked 500 m in
 // or died in, the deadliest for its km first -- the name in its ink, the km as a bar, the deaths.
 function biomeRows(list){
@@ -825,8 +834,8 @@ function biomeRows(list){
     .sort((a, b) => (num(b.deaths)/(num(b.m) || 1)) - (num(a.deaths)/(num(a.m) || 1)) || num(b.m) - num(a.m));
   const most = Math.max(...rows.map(b => num(b.m)), 1);
   return rows.map(b => { const m = num(b.m), d = num(b.deaths);
-    return `<span class="b"><i style="background:${BIOME_INK[b.biome] || "#9aa093"}"></i>${esc(b.biome)}</span>`
-      + `<span class="bar" style="width:${Math.max(1, 100*m/most).toFixed(1)}%" title="${esc(b.biome)}: ${km(m)} km walked, ${plural(d, "death")}"></span>`
+    return `<span class="b"><i style="background:${BIOME_INK[b.biome] || "#9aa093"}"></i>${esc(I18N.t(b.biome))}</span>`
+      + `<span class="bar" style="width:${Math.max(1, 100*m/most).toFixed(1)}%" title="${I18N.t("{biome}: {km} km walked, {deaths}", {biome: esc(I18N.t(b.biome)), km: km(m), deaths: plural(d, "death")})}"></span>`
       + `<span class="km">${km(m)} km</span>`
       + `<span class="dx${d ? "" : " safe"}"><b>${d ? "× " + d : "✓"}</b> ${d ? per(d, m) : ""}</span>`; }).join("");
 }
@@ -864,31 +873,31 @@ function parsePins(lines){
     return Object.assign({id: f[1], type: f[2], owner: f[3], site: f[0] === "web", text: f.slice(6).join(",").trim(), x, z}, toPx(x, z));
   }).filter(Boolean);
 }
-const plural = (n, w) => n + " " + w + (n === 1 ? "" : "s");
+const plural = (n, w) => I18N.tn(n, "{n} " + w, "{n} " + w + "s");
 // a figure from the server as a number, and nothing as nought: a tally a mod never kept is absent
 const num = v => Number.isFinite(+v) ? +v : 0;
 // metres as km, to three figures or so
-const km = m => { const k = num(m)/1000; return k >= 100 ? Math.round(k) : k >= 10 ? k.toFixed(1) : k.toFixed(2); };
+const km = m => { const k = num(m)/1000; return k >= 100 ? Math.round(k) : dec(k >= 10 ? k.toFixed(1) : k.toFixed(2)); };
 // a length as it reads: metres under a kilometre, then km to one place
-const metres = m => m >= 1000 ? (m/1000).toFixed(1) + " km" : Math.round(m) + " m";
+const metres = m => m >= 1000 ? dec((m/1000).toFixed(1)) + " km" : Math.round(m) + " m";
 // deaths per km reads as "1 per N km": one death every so far, which is what people say
-const per = (deaths, m) => { deaths = num(deaths); const k = num(m)/1000; if(!deaths) return k >= 1 ? "none yet" : "—"; if(k <= 0) return "—"; const n = k/deaths; return "1 per " + (n >= 10 ? Math.round(n) : n >= 1 ? n.toFixed(1) : n.toFixed(2)) + " km"; };
+const per = (deaths, m) => { deaths = num(deaths); const k = num(m)/1000; if(!deaths) return k >= 1 ? I18N.t("none yet") : "—"; if(k <= 0) return "—"; const n = k/deaths; return I18N.t("1 per {n} km", {n: n >= 10 ? Math.round(n) : dec(n >= 1 ? n.toFixed(1) : n.toFixed(2))}); };
 // Coarse on purpose, from unix seconds: how stale a tally is, when a setting was set -- never how
 // long anyone played. fresh: what under a minute and a half reads as.
 function secsAgo(secs, fresh = "just now"){
   const d = Math.max(0, Math.floor(Date.now()/1000) - secs);
-  if(d < 90) return fresh;
-  if(d < 5400) return Math.round(d/60) + " min ago";
-  if(d < 172800) return Math.round(d/3600) + " h ago";
-  return Math.round(d/86400) + " d ago";
+  if(d < 90) return I18N.t(fresh);
+  if(d < 5400) return I18N.t("{n} min ago", {n: Math.round(d/60)});
+  if(d < 172800) return I18N.t("{n} h ago", {n: Math.round(d/3600)});
+  return I18N.t("{n} d ago", {n: Math.round(d/86400)});
 }
 function ago(iso){
   const d = (Date.now() - new Date(iso).getTime())/1000;
   if(!isFinite(d)) return "";
-  if(d < 90) return "just now";
-  if(d < 3600) return Math.round(d/60) + "m ago";
-  if(d < 86400) return Math.round(d/3600) + "h ago";
-  return Math.round(d/86400) + "d ago";
+  if(d < 90) return I18N.t("just now");
+  if(d < 3600) return I18N.t("{n}m ago", {n: Math.round(d/60)});
+  if(d < 86400) return I18N.t("{n}h ago", {n: Math.round(d/3600)});
+  return I18N.t("{n}d ago", {n: Math.round(d/86400)});
 }
 // a page's reads again each minute while it is in sight, and at once when it comes back into sight
 function everyMinute(load){
@@ -909,7 +918,7 @@ function brand(){ return cfg.brand || worldName || "Valheim"; }
 // deployment's brand only until the world has named itself.
 function setTitle(page){
   const row = NAV_PAGES.find(p => p[0] === page), name = worldName || brand();
-  document.title = (!row || page === "index") ? name : name + " \u00b7 " + row[1];
+  document.title = (!row || page === "index") ? name : name + " \u00b7 " + I18N.t(row[1]);
 }
 // The footer credits whoever runs this one; a deployment that names no repo has none.
 function credits(){
@@ -917,7 +926,16 @@ function credits(){
     if(!cfg.repo){ el.style.display = "none"; continue; }
     for(const a of el.querySelectorAll("a.repo")) a.href = cfg.repo;
   }
+  // ForgeMap: who made this viewer, on every page's footer, whatever the deployment says
+  const link = (href, text) => `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
+  for(const f of document.querySelectorAll(".foot")){
+    if(f.querySelector(".fm-credit")) continue;
+    f.insertAdjacentHTML("beforeend", `<span class="fm-credit"> · ${I18N.t("{forgemap} by {forgeserver}, based on {webmap}", {
+      forgemap: "<b>ForgeMap</b>", forgeserver: link("https://forgeserver.fr", "ForgeServer.fr"), webmap: link("https://github.com/hunter-jsb/valheim-webmap", "WebMap")})}</span>`);
+  }
 }
+// ForgeMap: ForgeServer's flame before the world's name in the bar
+const FLAME = '<svg class="flame" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 5-2.47.27.773.5 1.604.5 2.47A7.5 7.5 0 0 1 12 23z"/></svg>';
 // The sidebar, folded or not, is one choice for the whole site, kept in this
 // browser; a phone ignores it and starts with its drawer shut. A toggle fires
 // resize so a stage that fills the rest re-measures itself. The tour folds it without
@@ -979,12 +997,12 @@ function signOut(){
 }
 function renderWho(){
   const el = navEl && navEl.querySelector(".who"); if(!el) return;
-  if(!me){ el.innerHTML = '<a href="#" class="in">Sign in</a>'; el.querySelector(".in").onclick = e => { e.preventDefault(); signIn(); }; return; }
+  if(!me){ el.innerHTML = `<a href="#" class="in">${I18N.t("Sign in")}</a>`; el.querySelector(".in").onclick = e => { e.preventDefault(); signIn(); }; return; }
   const av = me.avatar ? `<img class="av" alt="" src="https://cdn.discordapp.com/avatars/${encodeURIComponent(me.id)}/${encodeURIComponent(me.avatar)}.png?size=64">`
                        : `<span class="av">${esc((me.name || "?").slice(0, 1))}</span>`;
   el.innerHTML = av + `<span class="nm">${esc(me.name || "")}</span>`
-    + (me.admin ? `<a href="settings.html" class="gear" title="Settings (admin)">&#9881;</a>` : "")
-    + `<a href="#" class="out" title="Sign out">&times;</a>`;
+    + (me.admin ? `<a href="settings.html" class="gear" title="${I18N.t("Settings (admin)")}">&#9881;</a>` : "")
+    + `<a href="#" class="out" title="${I18N.t("Sign out")}">&times;</a>`;
   el.querySelector(".out").onclick = e => { e.preventDefault(); signOut(); };
 }
 
@@ -996,13 +1014,17 @@ function nav(current, el){
   navEl = el; navPage = current;
   const side = el.hasAttribute("data-side");
   const mark = p => p === current ? ' class="here" aria-current="page"' : "";
-  el.innerHTML = (side ? '<button class="sidebtn" type="button" title="Show or hide the sidebar" aria-label="Sidebar">&#9776;</button>' : "")
-    + '<span class="brand">' + esc(brand()) + '</span><div class="navlinks">'
-    + NAV_PAGES.map(([p, label]) => `<a${mark(p)} href="${p}.html">${label}</a>`).join("")
+  const langMark = code => code === I18N.lang ? ' class="on" aria-current="true"' : "";
+  el.innerHTML = (side ? `<button class="sidebtn" type="button" title="${I18N.t("Show or hide the sidebar")}" aria-label="${I18N.t("Sidebar")}">&#9776;</button>` : "")
+    + '<span class="brand">' + FLAME + esc(brand()) + '</span><div class="navlinks">'
+    + NAV_PAGES.map(([p, label]) => `<a${mark(p)} href="${p}.html">${I18N.t(label)}</a>`).join("")
     + '<span class="ext">'
-    + cfg.links.map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join("")
-    + '</span><span class="who"></span></div>';
+    + cfg.links.map(l => `<a href="${esc(l.href)}" target="_blank" rel="noopener">${esc(I18N.t(l.label))}</a>`).join("")
+    + '</span><span class="who"></span></div>'
+    + `<span class="lang-switch" role="group" aria-label="${I18N.t("Language")}">`
+    + `<button type="button" data-lang="fr"${langMark("fr")}>FR</button><button type="button" data-lang="en"${langMark("en")}>EN</button></span>`;
   if(side){ el.querySelector(".sidebtn").addEventListener("click", () => toggleSide()); applySide(); }
+  el.querySelectorAll(".lang-switch button").forEach(b => b.addEventListener("click", () => { if(b.dataset.lang !== I18N.lang) I18N.setLang(b.dataset.lang); }));
   // drawn again once /config names the world: the answer already had is drawn, not asked again
   if(!asked) asked = whoami(); else if(signInHere) renderWho();
   setTitle(current);

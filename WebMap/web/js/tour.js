@@ -23,6 +23,11 @@ const beat = ms => sleepT(ms/TOUR.pace);          // the checks run the tour fas
 const pick = a => a[Math.floor(Math.random()*a.length)], within = z => Array.isArray(z) ? z[0] + Math.random()*(z[1] - z[0]) : z;
 const D2R = Math.PI/180, EYE_M = 1.8;
 const whose = n => n + (/s$/i.test(n) ? "'" : "'s");
+// for the page's language: a possessive key carries {whose} (English) and {who} (the bare name); a
+// decimal in the page's locale; "in <place>" or "in the wild" as one phrase
+const poss = (key, who, vars) => I18N.t(key, Object.assign({whose: whose(who), who}, vars || {}));
+const fx = (x, d) => I18N.num(x, {minimumFractionDigits: d, maximumFractionDigits: d});
+const inAt = (x, z) => { const n = nameAt(x, z); return n ? I18N.t("in {place}", {place: n}) : I18N.t("in the wild"); };
 const headingTo = (a, b) => (Math.atan2(b.x - a.x, b.z - a.z)/D2R + 360) % 360;
 function flyTo(px, py, scale, ms){
   ms /= TOUR.pace;
@@ -137,7 +142,7 @@ const LOC = [
 ];
 const BOSS_OF = [[/eikthyr/i, "Eikthyr"], [/gdking/i, "The Elder"], [/bonemass/i, "Bonemass"], [/dragon/i, "Moder"], [/goblin/i, "Yagluth"], [/queen|seeker/i, "The Queen"], [/fader/i, "Fader"]];
 const bossOf = n => (BOSS_OF.find(([re]) => re.test(n)) || [])[1];
-const decamel = n => n.replace(/\d+$/, "").replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim();
+const decamel = n => I18N.name(n) || n.replace(/\d+$/, "").replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim();
 function locKind(prefab){
   const row = LOC.find(([re]) => re.test(prefab));
   if(row) return row[1] ? {group: row[1], one: row[2], many: row[3]} : null;
@@ -156,25 +161,25 @@ function tightDist(info, dflt){
 function tourPool(){
   const pool = new Map(), walked = walkedFn(), F = world.features || [], pic = MapCore.pic, lib = libraryByName();
   const add = (group, s) => { s.group = group; s.key = group + "|" + s.title + "|" + Math.round(s.x/40) + "," + Math.round(s.z/40); (pool.get(group) || pool.set(group, []).get(group)).push(s); };
-  const at = (x, z) => nameAt(x, z) || "the wild";
-  const biome = (x, z) => { const b = chartAt(x, z); return b && b !== "sea" ? [[b, "biome"]] : []; };
+  const at = (x, z) => nameAt(x, z) || I18N.t("the wild");
+  const biome = (x, z) => { const b = chartAt(x, z); return b && b !== "sea" ? [[I18N.t(b), I18N.t("biome")]] : []; };
   for(const p of ((world.players && world.players.players) || []).filter(p => p.x != null && !p.hidden))
-    add("online", {kind: "Online now", title: p.name, who: p.name, line: `in ${at(p.x, p.z)}`, x: p.x, z: p.z, zoom: [34, 46], dist: 80, moves: ["orbit", "crane", "dolly"]});
+    add("online", {kind: I18N.t("Online now"), title: p.name, who: p.name, line: inAt(p.x, p.z), x: p.x, z: p.z, zoom: [34, 46], dist: 80, moves: ["orbit", "crane", "dolly"]});
   // the gates: the hubs, and the one farthest from any other
   const byId = new Map(world.portals.map(p => [p.id, p]));
   cellsOf(world.portals, 160).filter(c => c.n >= 3).slice(0, 3).forEach(c => {
     const linked = c.items.filter(p => p.to && p.to !== p.id && byId.has(p.to));
     const far = linked.map(p => { const a = wOf(p), b = wOf(byId.get(p.to)); return {p, b, d: Math.hypot(a.x - b.x, a.z - b.z)}; }).sort((a, b) => b.d - a.d)[0];
-    add("hub", {kind: "Portal hub", title: nameAt(c.x, c.z) || "A hub", line: `${c.n} gates stand here`, x: c.x, z: c.z, zoom: [22, 34], dist: 140, layer: "portal",
+    add("hub", {kind: I18N.t("Portal hub"), title: nameAt(c.x, c.z) || I18N.t("A hub"), line: I18N.tn(c.n, "{n} gate stands here", "{n} gates stand here"), x: c.x, z: c.z, zoom: [22, 34], dist: 140, layer: "portal",
       gates: c.items.map(wOf), moves: ["gates", "orbit", "dolly"],
-      stats: [[c.n, "gates"], [linked.length, "linked"]].concat(far ? [[`${far.p.name || "unnamed"} to ${at(far.b.x, far.b.z)}`, `the farthest pair, ${metres(far.d)}`]] : [])});
+      stats: [[c.n, I18N.tn(c.n, "gate", "gates")], [linked.length, I18N.t("linked")]].concat(far ? [[I18N.t("{gate} to {place}", {gate: far.p.name || I18N.t("unnamed"), place: at(far.b.x, far.b.z)}), I18N.t("the farthest pair, {d}", {d: metres(far.d)})]] : [])});
   });
   if(world.portals.length > 1){
     const pts = world.portals.map(p => ({p, w: wOf(p)}));
     const lone = pts.map(a => ({a, d: Math.min(...pts.filter(b => b !== a).map(b => Math.hypot(a.w.x - b.w.x, a.w.z - b.w.z)))})).sort((a, b) => b.d - a.d)[0];
-    if(lone.d > 250) add("lonely", {kind: "The loneliest gate", title: lone.a.p.name || "An unnamed gate", line: `${metres(lone.d)} from any other gate, in ${at(lone.a.w.x, lone.a.w.z)}`,
+    if(lone.d > 250) add("lonely", {kind: I18N.t("The loneliest gate"), title: lone.a.p.name || I18N.t("An unnamed gate"), line: I18N.t("{d} from any other gate, {where}", {d: metres(lone.d), where: inAt(lone.a.w.x, lone.a.w.z)}),
       x: lone.a.w.x, z: lone.a.w.z, zoom: [26, 38], dist: 60, layer: "portal", moves: ["dolly", "crane"],
-      stats: [[metres(lone.d), "to the next gate"], [byId.has(lone.a.p.to) ? "linked" : "waiting for a twin", ""]]});
+      stats: [[metres(lone.d), I18N.t("to the next gate")], [byId.has(lone.a.p.to) ? I18N.t("linked") : I18N.t("waiting for a twin"), ""]]});
   }
   // the builds: the biggest stretches, and each builder's densest
   const G = pieceGrid(), PL = world.builders;
@@ -182,51 +187,52 @@ function tourPool(){
     const all = world.pieces.length;
     cellsOf(world.pieces, 128).slice(0, 3).forEach((c, i) => {
       const top = PL.length ? tally(c.items.filter(p => p.by != null), "by")[0] : null, who = top && PL[+top[0]];
-      add("build", {kind: i ? "A great build" : "The biggest build", title: nameAt(c.x, c.z) || "A settlement", line: `${c.n.toLocaleString()} pieces in this one stretch`,
+      add("build", {kind: i ? I18N.t("A great build") : I18N.t("The biggest build"), title: nameAt(c.x, c.z) || I18N.t("A settlement"), line: I18N.tn(c.n, "{n} piece in this one stretch", "{n} pieces in this one stretch"),
         x: c.x, z: c.z, zoom: [PLAN_ZOOM*1.05, PLAN_ZOOM*1.5], drift: true, dist: 170, cell: c, moves: ["flyover", "yard", "walk", "crane", "sweep"],
-        stats: [[c.n.toLocaleString(), "pieces"], [`${(100*c.n/all).toFixed(1)}%`, "of all standing"]].concat(who ? [[`${Math.round(100*top[1]/c.n)}%`, whose(who)]] : []),
-        pic: who ? pic.ring(top[1]/c.n, `of it is ${whose(who)}`) : ""});
+        stats: [[I18N.num(c.n), I18N.tn(c.n, "piece", "pieces")], [`${fx(100*c.n/all, 1)}%`, I18N.t("of all standing")]].concat(who ? [[`${Math.round(100*top[1]/c.n)}%`, poss("{whose}", who)]] : []),
+        pic: who ? pic.ring(top[1]/c.n, poss("of it is {whose}", who)) : ""});
     });
     PL.forEach((name, b) => {
       const mine = world.pieces.filter(p => p.by === b); if(mine.length < 30) return;
       const c = cellsOf(mine, 96)[0], word = c.n >= 1500 ? "stronghold" : c.n >= 600 ? "hall" : c.n >= 200 ? "homestead" : "outpost";
-      add("builder", {kind: "A builder's own", title: `${whose(name)} ${word}`, line: `in ${at(c.x, c.z)}`, x: c.x, z: c.z, zoom: [PLAN_ZOOM*1.05, PLAN_ZOOM*1.5], drift: true, dist: 130, cell: c,
-        moves: ["yard", "walk", "flyover", "crane"], stats: [[c.n.toLocaleString(), "pieces here"], [mine.length.toLocaleString(), "standing in all"]],
-        pic: pic.ring(mine.length/all, `of everything standing is ${whose(name)}`)});
+      add("builder", {kind: I18N.t("A builder's own"), title: poss("{whose} " + word, name), line: inAt(c.x, c.z), x: c.x, z: c.z, zoom: [PLAN_ZOOM*1.05, PLAN_ZOOM*1.5], drift: true, dist: 130, cell: c,
+        moves: ["yard", "walk", "flyover", "crane"], stats: [[I18N.num(c.n), I18N.tn(c.n, "piece here", "pieces here")], [I18N.num(mine.length), I18N.t("standing in all")]],
+        pic: pic.ring(mine.length/all, poss("of everything standing is {whose}", name))});
     });
   }
   // the deaths and what they left
   cellsOf(world.deaths, 96).filter(c => c.n >= 3).slice(0, 3).forEach(c => { const rows = tally(c.items, "name");
-    add("deaths", {kind: "Where people die", title: nameAt(c.x, c.z) || "A bad spot", line: `${c.n} deaths here · ${rows[0][0]} fell ${rows[0][1]} of them`, x: c.x, z: c.z,
-      zoom: [20, 30], dist: 120, detail: "deaths", moves: ["sweep", "orbit"], stats: [[c.n, "deaths"], [rows.length, rows.length === 1 ? "person" : "people"]],
+    add("deaths", {kind: I18N.t("Where people die"), title: nameAt(c.x, c.z) || I18N.t("A bad spot"), line: I18N.t("{total} deaths here · {who} fell {n} of them", {total: I18N.num(c.n), who: rows[0][0], n: I18N.num(rows[0][1])}), x: c.x, z: c.z,
+      zoom: [20, 30], dist: 120, detail: "deaths", moves: ["sweep", "orbit"], stats: [[c.n, I18N.tn(c.n, "death", "deaths")], [rows.length, I18N.tn(rows.length, "person", "people")]],
       pic: pic.bars(rows.slice(0, 3).map(([n, k]) => ({frac: k/c.n, label: `${k} ${n}`})))}); });
   if(world.deaths.length){ const d = world.deaths[world.deaths.length - 1], w = wOf(d);
-    add("latest", {kind: "The latest death", title: d.name, who: d.name, line: `${MapCore.ago(d.t*1000)}, in ${at(w.x, w.z)}`, x: w.x, z: w.z, zoom: [30, 40], dist: 100, detail: "deaths", moves: ["dolly", "orbit"]}); }
+    add("latest", {kind: I18N.t("The latest death"), title: d.name, who: d.name, line: I18N.t("{ago}, {where}", {ago: MapCore.ago(d.t*1000), where: inAt(w.x, w.z)}), x: w.x, z: w.z, zoom: [30, 40], dist: 100, detail: "deaths", moves: ["dolly", "orbit"]}); }
   world.graves.forEach(g => { const w = wOf(g);
-    add("grave", {kind: "A grave", title: `${whose(g.name)} gear`, who: g.name, line: `still lying in ${at(w.x, w.z)}`, x: w.x, z: w.z, zoom: [32, 44], dist: 80, layer: "grave", moves: ["dolly", "sweep"]}); });
+    add("grave", {kind: I18N.t("A grave"), title: poss("{whose} gear", g.name), who: g.name, line: I18N.t("still lying {where}", {where: inAt(w.x, w.z)}), x: w.x, z: w.z, zoom: [32, 44], dist: 80, layer: "grave", moves: ["dolly", "sweep"]}); });
   const old = world.graves.length > 1 ? world.graves.slice().sort((a, b) => num(b.age) - num(a.age))[0] : null;
   if(old){ const w = wOf(old);
-    add("oldgrave", {kind: "The oldest grave", title: `${whose(old.name)} gear`, who: old.name, line: `lying longer than any other, in ${at(w.x, w.z)}`, x: w.x, z: w.z, zoom: [32, 44], dist: 80, layer: "grave", moves: ["sweep", "dolly"],
-      stats: [[world.graves.filter(g => g.name === old.name).length, "of theirs out there"], [world.graves.length, "graves in all"]]}); }
+    add("oldgrave", {kind: I18N.t("The oldest grave"), title: poss("{whose} gear", old.name), who: old.name, line: I18N.t("lying longer than any other, {where}", {where: inAt(w.x, w.z)}), x: w.x, z: w.z, zoom: [32, 44], dist: 80, layer: "grave", moves: ["sweep", "dolly"],
+      stats: [[world.graves.filter(g => g.name === old.name).length, I18N.t("of theirs out there")], [world.graves.length, I18N.t("graves in all")]]}); }
   // the traders at their camps
   const CAMP = {"Haldor": ["Vendor_BlackForest", "his wagon camp"], "Hildir": ["Hildir_camp", "her tent camp"], "Bog Witch": ["BogWitch_Camp", "her hut on stilts"]};
   world.traders.forEach(t => { const w = wOf(t), camp = CAMP[t.name] || [null, "a camp"];
-    add("trader", {kind: "A trader", title: t.name, line: `keeps shop in ${at(w.x, w.z)}`, x: w.x, z: w.z, zoom: [28, 40], dist: tightDist(lib.get(camp[0]), 90), layer: "trader",
-      moves: ["orbit", "crane", "sweep"], stats: [[t.name, "keeps shop"], [camp[1], ""]].concat(biome(w.x, w.z))}); });
+    add("trader", {kind: I18N.t("A trader"), title: t.name, line: I18N.t("keeps shop {where}", {where: inAt(w.x, w.z)}), x: w.x, z: w.z, zoom: [28, 40], dist: tightDist(lib.get(camp[0]), 90), layer: "trader",
+      moves: ["orbit", "crane", "sweep"], stats: [[t.name, I18N.t("keeps shop")], [I18N.t(camp[1]), ""]].concat(biome(w.x, w.z))}); });
   // every boat and every cart
   const boats = (world.vehicles || []).filter(v => v.kind === "boat"), carts = (world.vehicles || []).filter(v => v.kind === "cart");
   boats.forEach(b => { const w = wOf(b), st = MapCore.vehicleStyle(b), same = boats.filter(o => MapCore.vehicleStyle(o).label === st.label).length;
-    add("boat", {kind: "Afloat", title: st.label, line: `lies at ${nameAt(w.x, w.z) || "sea"}`, x: w.x, z: w.z, zoom: [40, 52], dist: 70, layer: "vehicles", moves: ["sweep", "orbit"],
-      stats: [[boats.length, boats.length === 1 ? "boat afloat" : "boats afloat"], [same, `${st.label.toLowerCase()}${same === 1 ? "" : "s"}`]]}); });
+    const port = nameAt(w.x, w.z);
+    add("boat", {kind: I18N.t("Afloat"), title: I18N.t(st.label), line: port ? I18N.t("lies at {place}", {place: port}) : I18N.t("lies at sea"), x: w.x, z: w.z, zoom: [40, 52], dist: 70, layer: "vehicles", moves: ["sweep", "orbit"],
+      stats: [[boats.length, I18N.tn(boats.length, "boat afloat", "boats afloat")], [same, I18N.t(`${st.label.toLowerCase()}${same === 1 ? "" : "s"}`)]]}); });
   carts.forEach(c => { const w = wOf(c);
-    add("cart", {kind: "A cart", title: nameAt(w.x, w.z) || "A cart", line: "left standing where the last load came off", x: w.x, z: w.z, zoom: [40, 52], dist: 45, layer: "vehicles", moves: ["orbit", "sweep"],
-      stats: [[carts.length, carts.length === 1 ? "cart" : "carts"]]}); });
+    add("cart", {kind: I18N.t("A cart"), title: nameAt(w.x, w.z) || I18N.t("A cart"), line: I18N.t("left standing where the last load came off"), x: w.x, z: w.z, zoom: [40, 52], dist: 45, layer: "vehicles", moves: ["orbit", "sweep"],
+      stats: [[carts.length, I18N.tn(carts.length, "cart", "carts")]]}); });
   // the busiest kitchen, from a mod that counts meals
   const K = world.stats && world.stats.kitchen, kitchen = K ? MapCore.kitchens(K.stations)[0] : null;
   if(kitchen && kitchen.cooked > 0){ const c = kitchen;
-    add("kitchen", {kind: "The busiest kitchen", title: nameAt(c.x, c.z) || "A kitchen", line: `${c.cooked.toLocaleString()} meals cooked here`, x: c.x, z: c.z, zoom: [34, 46], dist: 45, detail: "fires",
-      moves: ["yard", "orbit"], stats: [[c.cooked.toLocaleString(), "meals cooked"], [c.stations, c.stations === 1 ? "station" : "stations"]].concat(c.brewed ? [[c.brewed.toLocaleString(), "meads brewed"]] : []),
-      pic: num(K.cooked) ? pic.ring(c.cooked/num(K.cooked), "of every meal cooked") : ""});
+    add("kitchen", {kind: I18N.t("The busiest kitchen"), title: nameAt(c.x, c.z) || I18N.t("A kitchen"), line: I18N.tn(c.cooked, "{n} meal cooked here", "{n} meals cooked here"), x: c.x, z: c.z, zoom: [34, 46], dist: 45, detail: "fires",
+      moves: ["yard", "orbit"], stats: [[I18N.num(c.cooked), I18N.tn(c.cooked, "meal cooked", "meals cooked")], [c.stations, I18N.tn(c.stations, "station", "stations")]].concat(c.brewed ? [[I18N.num(c.brewed), I18N.tn(c.brewed, "mead brewed", "meads brewed")]] : []),
+      pic: num(K.cooked) ? pic.ring(c.cooked/num(K.cooked), I18N.t("of every meal cooked")) : ""});
   }
   if(walked){
     // the lands from far up, circled about the middle of what is walked of each
@@ -236,41 +242,42 @@ function tourPool(){
     const box = f => ({w: f.w, h: f.h, cx: f.x, cz: f.z}), area = f => f.area || f.w*f.h/1e6;
     F.filter(f => (f.kind === "continent" || f.kind === "island") && f.w).sort((a, b) => b.w*b.h - a.w*a.h).slice(0, 4).forEach(f => {
       const m = middle(f); if(m.share < 0.08) return;
-      add("land", {kind: f.kind === "continent" ? "A continent" : "An island", title: f.name, line: `${area(f).toFixed(1)} km² · ${Math.round(100*m.share)}% of it walked`,
+      add("land", {kind: f.kind === "continent" ? I18N.t("A continent") : I18N.t("An island"), title: f.name, line: I18N.t("{a} km² · {p}% of it walked", {a: fx(area(f), 1), p: Math.round(100*m.share)}),
         x: m.x, z: m.z, fit: box(f), dist: Math.min(2600, Math.max(700, Math.sqrt(m.share)*Math.max(f.w, f.h)*1.1)), detail: "names", far: true, moves: ["tilt"],
-        stats: [[area(f).toFixed(1), "km²"], [`${Math.round(100*m.share)}%`, "walked"]], pic: pic.ring(m.share, "of it walked")}); });
+        stats: [[fx(area(f), 1), "km²"], [`${Math.round(100*m.share)}%`, I18N.t("walked")]], pic: pic.ring(m.share, I18N.t("of it walked"))}); });
     // the records among what anyone has seen: the tallest peak climbed, the biggest lake known, the longest river known
     const peak = F.filter(f => f.kind === "range" && f.peak && walked(f.peak.x, f.peak.z)).sort((a, b) => b.peak.y - a.peak.y)[0];
-    if(peak) add("peak", {kind: "The tallest peak climbed", title: peak.name, line: `${Math.round(peak.peak.y - 30)} m above the sea`, x: peak.peak.x, z: peak.peak.z, zoom: [18, 26], dist: 340, far: true, detail: "names",
-      moves: ["peakdown", "orbit"], stats: [[`${Math.round(peak.peak.y - 30)} m`, "above the sea"]].concat(biome(peak.peak.x, peak.peak.z))});
+    if(peak) add("peak", {kind: I18N.t("The tallest peak climbed"), title: peak.name, line: I18N.t("{h} m above the sea", {h: Math.round(peak.peak.y - 30)}), x: peak.peak.x, z: peak.peak.z, zoom: [18, 26], dist: 340, far: true, detail: "names",
+      moves: ["peakdown", "orbit"], stats: [[`${Math.round(peak.peak.y - 30)} m`, I18N.t("above the sea")]].concat(biome(peak.peak.x, peak.peak.z))});
     F.filter(f => f.kind === "range" && f.w && f.peak && walked(f.peak.x, f.peak.z) && Math.max(f.w, f.h) >= 600).forEach(f =>
-      add("ridge", {kind: "Along the ridge", title: f.name, line: `the peak line, ${Math.round(f.peak.y - 30)} m at its top`, x: f.peak.x, z: f.peak.z, fit: box(f), dist: Math.max(500, Math.max(f.w, f.h)*0.8), far: true, detail: "names",
-        range: f, moves: ["ridge"], need3d: true, stats: [[metres(Math.max(f.w, f.h)), "end to end"], [`${Math.round(f.peak.y - 30)} m`, "at the top"]]}));
+      add("ridge", {kind: I18N.t("Along the ridge"), title: f.name, line: I18N.t("the peak line, {h} m at its top", {h: Math.round(f.peak.y - 30)}), x: f.peak.x, z: f.peak.z, fit: box(f), dist: Math.max(500, Math.max(f.w, f.h)*0.8), far: true, detail: "names",
+        range: f, moves: ["ridge"], need3d: true, stats: [[metres(Math.max(f.w, f.h)), I18N.t("end to end")], [`${Math.round(f.peak.y - 30)} m`, I18N.t("at the top")]]}));
     const lake = F.filter(f => f.kind === "lake" && f.w).map(f => ({f, m: middle(f)})).filter(r => r.m.share >= 0.08).sort((a, b) => b.f.area - a.f.area)[0];
-    if(lake) add("lake", {kind: "The biggest lake known", title: lake.f.name, line: `${lake.f.area.toFixed(2)} km²`, x: lake.m.x, z: lake.m.z, fit: box(lake.f), dist: Math.max(500, Math.max(lake.f.w, lake.f.h)*0.8), far: true, detail: "names",
-      moves: ["tilt"], stats: [[lake.f.area.toFixed(2), "km²"], [`${Math.round(100*lake.m.share)}%`, "of its shores walked"]]});
+    if(lake) add("lake", {kind: I18N.t("The biggest lake known"), title: lake.f.name, line: `${fx(lake.f.area, 2)} km²`, x: lake.m.x, z: lake.m.z, fit: box(lake.f), dist: Math.max(500, Math.max(lake.f.w, lake.f.h)*0.8), far: true, detail: "names",
+      moves: ["tilt"], stats: [[fx(lake.f.area, 2), "km²"], [`${Math.round(100*lake.m.share)}%`, I18N.t("of its shores walked")]]});
     const riverLen = f => f.line.reduce((t, p, i) => i ? t + Math.hypot(p[0] - f.line[i-1][0], p[1] - f.line[i-1][1]) : 0, 0);
     const river = F.filter(f => f.kind === "river" && f.line && f.line.length > 2 && f.line.some(p => walked(p[0], p[1]))).sort((a, b) => riverLen(b) - riverLen(a))[0];
     if(river){   // flown along the stretch someone has seen: from its first walked point to its last
       const seen = river.line.map(p => walked(p[0], p[1])), i0 = seen.indexOf(true), i1 = seen.lastIndexOf(true), path = river.line.slice(i0, i1 + 1);
-      if(path.length > 1) add("river", {kind: "The longest river known", title: river.name, line: `${(riverLen(river)/1000).toFixed(1)} km from source to sea`, x: path[0][0], z: path[0][1], path, zoom: 14, detail: "names",
-        stats: [[metres(riverLen(river)), "source to sea"]]});
+      if(path.length > 1) add("river", {kind: I18N.t("The longest river known"), title: river.name, line: I18N.t("{d} km from source to sea", {d: fx(riverLen(river)/1000, 1)}), x: path[0][0], z: path[0][1], path, zoom: 14, detail: "names",
+        stats: [[metres(riverLen(river)), I18N.t("source to sea")]]});
     }
     // what players themselves marked, and named
-    world.pins.filter(p => p.text && p.x != null).forEach(p => add("pin", {kind: "A pin", title: p.text, line: `${p.type === "dot" ? "a" : p.type} pin${p.owner ? ` by ${p.owner}` : ""}, in ${at(p.x, p.z)}`,
-      x: p.x, z: p.z, zoom: [30, 40], dist: 90, layer: "pin", moves: ["dolly", "orbit", "sweep"], stats: p.owner ? [[p.owner, "pinned it"]] : []}));
+    world.pins.filter(p => p.text && p.x != null).forEach(p => { const pin = p.type === "dot" ? I18N.t("a pin") : I18N.t(`${p.type} pin`), where = inAt(p.x, p.z);
+      add("pin", {kind: I18N.t("A pin"), title: p.text, line: p.owner ? I18N.t("{pin} by {owner}, {where}", {pin, owner: p.owner, where}) : I18N.t("{pin}, {where}", {pin, where}),
+      x: p.x, z: p.z, zoom: [30, 40], dist: 90, layer: "pin", moves: ["dolly", "orbit", "sweep"], stats: p.owner ? [[p.owner, I18N.t("pinned it")]] : []}); });
     F.filter(f => f.by && f.w && f.kind !== "river" && f.kind !== "continent" && f.kind !== "island").forEach(f => { const m = middle(f); if(m.share < 0.08) return;
-      add("named", {kind: "A named place", title: f.name, line: `named by ${f.by} · ${area(f).toFixed(1)} km²`, x: m.x, z: m.z, fit: box(f), dist: Math.min(2000, Math.max(400, Math.max(f.w, f.h)*0.7)), far: true, detail: "names",
-        moves: ["tilt"], stats: [[f.by, "named it"], [`${Math.round(100*m.share)}%`, "walked"]]}); });
+      add("named", {kind: I18N.t("A named place"), title: f.name, line: I18N.t("named by {who} · {a} km²", {who: f.by, a: fx(area(f), 1)}), x: m.x, z: m.z, fit: box(f), dist: Math.min(2000, Math.max(400, Math.max(f.w, f.h)*0.7)), far: true, detail: "names",
+        moves: ["tilt"], stats: [[f.by, I18N.t("named it")], [`${Math.round(100*m.share)}%`, I18N.t("walked")]]}); });
     F.filter(f => f.kind === "range" && f.w && Math.max(f.w, f.h) >= 400).map(f => ({f, m: middle(f)})).filter(r => r.m.share >= 0.08).forEach(({f, m}) =>
-      add("range", {kind: "A mountain", title: f.name, line: `${Math.round((f.peak ? f.peak.y : f.elev.max) - 30)} m at its top`, x: m.x, z: m.z, fit: box(f), dist: Math.max(400, Math.max(f.w, f.h)*0.9), far: true, detail: "names",
-        moves: ["tilt"], stats: [[area(f).toFixed(1), "km²"], [`${Math.round(100*m.share)}%`, "walked"]]}));
+      add("range", {kind: I18N.t("A mountain"), title: f.name, line: I18N.t("{h} m at its top", {h: Math.round((f.peak ? f.peak.y : f.elev.max) - 30)}), x: m.x, z: m.z, fit: box(f), dist: Math.max(400, Math.max(f.w, f.h)*0.9), far: true, detail: "names",
+        moves: ["tilt"], stats: [[fx(area(f), 1), "km²"], [`${Math.round(100*m.share)}%`, I18N.t("walked")]]}));
     // the bays: from above, and flown along their shore
     F.filter(f => f.kind === "bay" && f.w && f.area >= 0.15).map(f => ({f, m: middle(f)})).filter(r => r.m.share >= 0.08).forEach(({f, m}) => {
-      add("bay", {kind: "A bay", title: f.name, line: `${f.area.toFixed(2)} km² of sheltered water`, x: m.x, z: m.z, fit: box(f), dist: Math.max(400, Math.max(f.w, f.h)*0.8), far: true, detail: "names",
-        moves: ["tilt"], stats: [[f.area.toFixed(2), "km²"], [`${Math.round(100*m.share)}%`, "of its shores walked"]]});
-      add("coast", {kind: "Along the shore", title: f.name, line: "its coast from the water", x: m.x, z: m.z, fit: box(f), dist: 400, far: true, detail: "names", bay: f, moves: ["coast"], need3d: true,
-        stats: [[f.area.toFixed(2), "km² of water"]]});
+      add("bay", {kind: I18N.t("A bay"), title: f.name, line: I18N.t("{a} km² of sheltered water", {a: fx(f.area, 2)}), x: m.x, z: m.z, fit: box(f), dist: Math.max(400, Math.max(f.w, f.h)*0.8), far: true, detail: "names",
+        moves: ["tilt"], stats: [[fx(f.area, 2), "km²"], [`${Math.round(100*m.share)}%`, I18N.t("of its shores walked")]]});
+      add("coast", {kind: I18N.t("Along the shore"), title: f.name, line: I18N.t("its coast from the water"), x: m.x, z: m.z, fit: box(f), dist: 400, far: true, detail: "names", bay: f, moves: ["coast"], need3d: true,
+        stats: [[fx(f.area, 2), I18N.t("km² of water")]]});
     });
     // the shore: out to sea from a dock, or from any walked beach of a bay
     const docks = [];
@@ -280,14 +287,15 @@ function tourPool(){
     }
     for(const f of F.filter(f => f.kind === "bay" && f.w).sort(() => Math.random() - .5).slice(0, 3)){
       const s = shoreIn(f.x - f.w/2, f.z - f.h/2, f.x + f.w/2, f.z + f.h/2, walked, 36); if(s.length) docks.push({s: pick(s)}); }
-    docks.forEach(({s, dock}) => add("shore", {kind: dock ? "From the dock" : "From the shore", title: nameAt(s.x, s.z) || "The water's edge", line: `looking out over ${nameAt(s.x + Math.sin(s.sea*D2R)*120, s.z + Math.cos(s.sea*D2R)*120) || "the sea"}`,
-      x: s.x, z: s.z, zoom: [34, 46], dist: 70, shore: s, moves: ["seaward", "shorewalk"], stats: biome(s.x, s.z)}));
+    docks.forEach(({s, dock}) => { const over = nameAt(s.x + Math.sin(s.sea*D2R)*120, s.z + Math.cos(s.sea*D2R)*120);
+      add("shore", {kind: dock ? I18N.t("From the dock") : I18N.t("From the shore"), title: nameAt(s.x, s.z) || I18N.t("The water's edge"), line: over ? I18N.t("looking out over {place}", {place: over}) : I18N.t("looking out over the sea"),
+      x: s.x, z: s.z, zoom: [34, 46], dist: 70, shore: s, moves: ["seaward", "shorewalk"], stats: biome(s.x, s.z)}); });
     // somewhere walked and left alone: no build within 300 m
     const built = (world.pieces || []).map(wOf);
     for(let k = 0, found = 0; k < 200 && found < 3; k++){ const x = (Math.random()*2 - 1)*9000, z = (Math.random()*2 - 1)*9000;
       if(!walked(x, z) || chartAt(x, z) === "sea" || built.some(b => Math.abs(b.x - x) < 300 && Math.abs(b.z - z) < 300)) continue;
-      found++; add("quiet", {kind: "The quiet wild", title: nameAt(x, z) || "Nowhere in particular", line: "walked once, and left alone", x, z, zoom: [20, 28], dist: 150, moves: ["sweep", "crane"],
-        stats: [["300 m", "and more to the nearest build"]].concat(biome(x, z))}); }
+      found++; add("quiet", {kind: I18N.t("The quiet wild"), title: nameAt(x, z) || I18N.t("Nowhere in particular"), line: I18N.t("walked once, and left alone"), x, z, zoom: [20, 28], dist: 150, moves: ["sweep", "crane"],
+        stats: [["300 m", I18N.t("and more to the nearest build")]].concat(biome(x, z))}); }
     // the world's own locations, a few of each kind; a location with a model is circled as tightly as it allows
     const byGroup = new Map();
     for(const l of LOCATIONS){ const k = locKind(l.kind); if(!k || !walked(l.x, l.z)) continue; const g = byGroup.get(k.group) || byGroup.set(k.group, []).get(k.group); g.push({l, k}); }
@@ -295,10 +303,11 @@ function tourPool(){
       const kinds = new Set(list.map(r => r.k.one));
       list.slice().sort(() => Math.random() - .5).slice(0, 8).forEach(({l, k}) => {
         const info = lib.get(l.kind), boss = g === "altar" || g === "runestone" ? bossOf(l.kind) : null;
-        const title = g === "altar" && boss ? `${whose(boss)} altar` : nameAt(l.x, l.z) || k.one;
-        const line = g === "runestone" && boss ? `it points the way to ${boss}` : g === "altar" ? `in ${at(l.x, l.z)}` : `one of ${list.length} ${kinds.size > 1 ? "such places" : k.many} walked so far`;
-        add("loc:" + g, {kind: k.one, title, line, x: l.x, z: l.z, zoom: [22, 34], dist: tightDist(info, 90), moves: info && info.m ? ["orbit", "crane", "sweep"] : ["crane", "dolly", "sweep"],
-          stats: [[decamel(l.kind), "kind"]].concat(biome(l.x, l.z), [[list.length, "walked"]])});
+        const title = g === "altar" && boss ? I18N.t("{whose} altar", {whose: whose(boss), who: I18N.t(boss)}) : nameAt(l.x, l.z) || I18N.t(k.one);
+        const line = g === "runestone" && boss ? I18N.t("it points the way to {boss}", {boss: I18N.t(boss)}) : g === "altar" ? inAt(l.x, l.z)
+          : kinds.size > 1 ? I18N.t("one of {n} such places walked so far", {n: I18N.num(list.length)}) : I18N.t("one of {n} {many} walked so far", {n: I18N.num(list.length), many: I18N.t(k.many)});
+        add("loc:" + g, {kind: I18N.t(k.one), title, line, x: l.x, z: l.z, zoom: [22, 34], dist: tightDist(info, 90), moves: info && info.m ? ["orbit", "crane", "sweep"] : ["crane", "dolly", "sweep"],
+          stats: [[decamel(l.kind), I18N.t("kind")]].concat(biome(l.x, l.z), [[list.length, I18N.t("walked")]])});
       });
     }
     // where people go: the trails over the whole walked world
@@ -306,12 +315,12 @@ function tourPool(){
     if(walkedM > 0){ const by = {}; P.forEach(q => (q.biomes || []).forEach(b => { by[b.biome] = (by[b.biome] || 0) + num(b.m); }));
       // the ground under a walk has been kept for less long than the walk itself: shares of what it covers
       const rows = Object.entries(by).sort((a, b) => b[1] - a[1]), placed = rows.reduce((t, r) => t + r[1], 0);
-      add("trails", {kind: "Where people go", title: "Every path walked", line: "the trails over the whole walked world", x: 0, z: 0, wide: true, far: true, detail: "trails",
-        stats: [[metres(walkedM), "walked, all told"]].concat(placed ? [[`${Math.round(100*rows[0][1]/placed)}%`, `of it in the ${rows[0][0] === "Ocean" ? "sea" : rows[0][0]}`]] : []),
-        pic: placed ? pic.bars(rows.slice(0, 3).map(([b, m]) => ({frac: m/placed, label: `${Math.round(100*m/placed)}% ${b === "Ocean" ? "sea" : b}`, colour: MapCore.BIOME_INK[b]}))) : ""}); }
+      add("trails", {kind: I18N.t("Where people go"), title: I18N.t("Every path walked"), line: I18N.t("the trails over the whole walked world"), x: 0, z: 0, wide: true, far: true, detail: "trails",
+        stats: [[metres(walkedM), I18N.t("walked, all told")]].concat(placed ? [[`${Math.round(100*rows[0][1]/placed)}%`, rows[0][0] === "Ocean" ? I18N.t("of it in the sea") : I18N.t("of it in the {biome}", {biome: I18N.t(rows[0][0])})]] : []),
+        pic: placed ? pic.bars(rows.slice(0, 3).map(([b, m]) => ({frac: m/placed, label: `${Math.round(100*m/placed)}% ${b === "Ocean" ? I18N.t("sea") : I18N.t(b)}`, colour: MapCore.BIOME_INK[b]}))) : ""}); }
   }
-  add("centre", {kind: "Where it all began", title: "The sacrificial stones", line: "the centre of the world", x: 0, z: 0, zoom: [24, 34], dist: 130, moves: ["crane", "orbit"],
-    stats: world.explored != null ? [[`${(world.explored*100).toFixed(1)}%`, "of the world walked since"]] : []});
+  add("centre", {kind: I18N.t("Where it all began"), title: I18N.t("The sacrificial stones"), line: I18N.t("the centre of the world"), x: 0, z: 0, zoom: [24, 34], dist: 130, moves: ["crane", "orbit"],
+    stats: world.explored != null ? [[`${fx(world.explored*100, 1)}%`, I18N.t("of the world walked since")]] : []});
   return pool;
 }
 
@@ -553,7 +562,7 @@ function showPlayerCard(name){
   if(!p) return dropPlayerCard();
   const C = PlayerCard, live = ((world.players && world.players.players) || []).find(q => q.name === name);
   C.rim(P);
-  const line = live ? "online now" + (live.x != null && !live.hidden ? ` · in ${nameAt(live.x, live.z) || "the wild"}` : "") : C.seen(num(p.last_seen));
+  const line = live ? (live.x != null && !live.hidden ? I18N.t("online now · {where}", {where: inAt(live.x, live.z)}) : I18N.t("online now")) : C.seen(num(p.last_seen));
   pcard.innerHTML = `<div class="ph"><span class="dot"></span><span class="nm">${esc(p.name)}</span>${C.pill(C.classify(p, P))}</div><div class="pl">${esc(line)}</div>`
     + `<div class="pb"><i id="pvslot" hidden></i><div class="pr">${C.radar(p, 112, false)}${C.figures(p)}</div></div>`;
   pcard.classList.toggle("ok", !!live);
@@ -666,7 +675,7 @@ async function tourFigure(run, next){
   const f = list[TOUR.fig++ % list.length];
   if(street.view) street.view.prefetch(viewsOf(next));
   tourCap.classList.remove("show");
-  tourFig.innerHTML = `<div class="eyebrow"><span>The world in numbers</span><span class="n">${esc(f.k)}</span></div><div class="v">${f.v}</div><div class="c">${f.c}</div>${f.svg}`;
+  tourFig.innerHTML = `<div class="eyebrow"><span>${I18N.t("The world in numbers")}</span><span class="n">${esc(I18N.t(f.k))}</span></div><div class="v">${f.v}</div><div class="c">${f.c}</div>${f.svg}`;
   tourFig.hidden = false; tourFig.classList.remove("show"); void tourFig.offsetWidth; tourFig.classList.add("show");
   try{
     const W = stage.clientWidth, H = stage.clientHeight, b = world.box || {x: 0, y: 0, w: GEOM.size, h: GEOM.size}, k = Math.min(W/(b.w*1.2), H/(b.h*1.2));
@@ -698,7 +707,7 @@ function startTour(){
   if(TOUR.on) return;
   TOUR.on = true;
   TOUR.keep = {details: new Set(legend.details), off: new Set(legend.off), hidden: new Set(legend.hidden), side: document.body.classList.contains("side-open")};
-  document.body.classList.add("tour"); tourBtn.classList.add("on"); tourBtn.innerHTML = "&#9632;"; tourBtn.title = "Stop the tour";
+  document.body.classList.add("tour"); tourBtn.classList.add("on"); tourBtn.innerHTML = "&#9632;"; tourBtn.title = I18N.t("Stop the tour");
   closeCard(); street.armPeg(false); legend.close(); MapCore.toggleSide(false, false);
   runTour();
 }
@@ -720,7 +729,7 @@ function stopTour(){
   tourCap.classList.remove("show"); setTimeout(() => { if(!TOUR.on) tourCap.hidden = true; }, 700);
   hideFigure();
   dropPlayerCard();
-  document.body.classList.remove("tour"); tourBtn.classList.remove("on"); tourBtn.innerHTML = "&#9654;"; tourBtn.title = "Cinematic: a tour of the world's places, in 3D where the ground is walked. Any touch ends it.";
+  document.body.classList.remove("tour"); tourBtn.classList.remove("on"); tourBtn.innerHTML = "&#9654;"; tourBtn.title = I18N.t("Cinematic: a tour of the world's places, in 3D where the ground is walked. Any touch ends it.");
 }
 
 function init(o){

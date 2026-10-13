@@ -10,7 +10,7 @@ const esc = MapCore.esc, num = MapCore.num, km = MapCore.km, per = MapCore.per;
 
 // last_seen 0 is a name the sweep found on a grave or a build without ever
 // seeing its owner online: no session behind it, so no elapsed time to show.
-function seen(t){ return t ? "last seen " + MapCore.secsAgo(t, "moments ago") : "not seen since the tally began"; }
+function seen(t){ return t ? I18N.t("last seen {ago}", {ago: MapCore.secsAgo(t, I18N.t("moments ago"))}) : I18N.t("not seen since the tally began"); }
 
 // ---------- the pentagon ----------
 // Five sides, each the player's share of the roster's best, square-rooted: a
@@ -20,6 +20,8 @@ function seen(t){ return t ? "last seen " + MapCore.secsAgo(t, "moments ago") : 
 const sea = p => num(((p.biomes || []).find(b => b.biome === "Ocean") || {}).m);
 const kpd = p => num(p.dist_m) >= 1000 ? num(p.dist_m)/1000/Math.max(1, num(p.deaths)) : 0;
 const kit = p => p.kitchen || {};   // none from a mod that counts no kitchen
+// km per death as shown: whole from ten up, else one decimal, in the page's locale
+const kpdText = v => v >= 10 ? I18N.num(Math.round(v)) : I18N.num(+v.toFixed(1), {minimumFractionDigits: 1, maximumFractionDigits: 1});
 const PARTS = {km: p => num(p.dist_m), hops: p => num(p.hops), sea, pieces: p => num(p.pieces), kpd, kills: p => num(p.kills), trees: p => num(p.trees), rocks: p => num(p.rocks),
   cooked: p => num(kit(p).cooked), smelted: p => num(kit(p).smelted)};
 const BEST = {};
@@ -27,11 +29,11 @@ const BEST = {};
 function rim(roster){ for(const k in PARTS) BEST[k] = Math.max(0, ...roster.map(PARTS[k])); }
 const share = (p, keys) => { const has = keys.filter(k => BEST[k] > 0); return has.length ? has.reduce((t, k) => t + Math.min(1, PARTS[k](p)/BEST[k]), 0)/has.length : 0; };
 const AXES = [
-  ["Explorer", ["km", "hops", "sea"], p => `${km(p.dist_m)} km · ${num(p.hops)} hops${BEST.sea > 0 ? ` · ${km(sea(p))} at sea` : ""}`],
-  ["Builder", ["pieces"], p => `${num(p.pieces)} pieces`],
-  ["Survivor", ["kpd"], p => `${kpd(p) >= 10 ? Math.round(kpd(p)) : kpd(p).toFixed(1)} km per death`],
-  ["Slayer", ["kills"], p => `${num(p.kills)} kills`],
-  ["Harvester", ["trees", "rocks", "cooked", "smelted"], p => `${num(p.trees)} trees · ${num(p.rocks)} rocks${BEST.cooked > 0 || BEST.smelted > 0 ? ` · ${num(kit(p).cooked) + num(kit(p).smelted)} made` : ""}`],
+  ["Explorer", ["km", "hops", "sea"], p => `${km(p.dist_m)} km · ${I18N.tn(num(p.hops), "{n} hop", "{n} hops")}${BEST.sea > 0 ? ` · ${I18N.t("{n} at sea", {n: km(sea(p))})}` : ""}`],
+  ["Builder", ["pieces"], p => I18N.tn(num(p.pieces), "{n} piece", "{n} pieces")],
+  ["Survivor", ["kpd"], p => I18N.t("{n} km per death", {n: kpdText(kpd(p))})],
+  ["Slayer", ["kills"], p => I18N.tn(num(p.kills), "{n} kill", "{n} kills")],
+  ["Harvester", ["trees", "rocks", "cooked", "smelted"], p => `${I18N.tn(num(p.trees), "{n} tree", "{n} trees")} · ${I18N.tn(num(p.rocks), "{n} rock", "{n} rocks")}${BEST.cooked > 0 || BEST.smelted > 0 ? ` · ${I18N.t("{n} made", {n: I18N.num(num(kit(p).cooked) + num(kit(p).smelted))})}` : ""}`],
 ];
 function radar(p, size, big){
   const c = size/2, R = big ? c - 30 : c - 3, pts = [];
@@ -49,7 +51,7 @@ function radar(p, size, big){
     AXES.forEach(([name, , text], i) => {
       const a = -Math.PI/2 + i*2*Math.PI/5, lx = c + (R + 14)*Math.cos(a), ly = c + (R + 14)*Math.sin(a);
       const anchor = Math.abs(Math.cos(a)) < .2 ? "middle" : Math.cos(a) > 0 ? "start" : "end";
-      out += `<text class="lb" x="${lx.toFixed(1)}" y="${(ly + (Math.sin(a) > .5 ? 6 : Math.sin(a) < -.5 ? -4 : 0)).toFixed(1)}" text-anchor="${anchor}">${name}</text>`
+      out += `<text class="lb" x="${lx.toFixed(1)}" y="${(ly + (Math.sin(a) > .5 ? 6 : Math.sin(a) < -.5 ? -4 : 0)).toFixed(1)}" text-anchor="${anchor}">${I18N.t(name)}</text>`
         + `<text class="lv" x="${lx.toFixed(1)}" y="${(ly + (Math.sin(a) > .5 ? 17 : Math.sin(a) < -.5 ? 7 : 11)).toFixed(1)}" text-anchor="${anchor}">${esc(text(p))}</text>`;
     });
   }
@@ -88,6 +90,8 @@ function familyOf(name){
 const FIGHT = {staff: "magic", bow: "ranged", crossbow: "ranged", shield: "shield", knife: "knife", sword: "melee", axe: "melee", mace: "melee", spear: "melee", polearm: "melee"};
 const twoHander = n => /^(thsword|battleaxe|sledge|atgeir)/i.test(String(n || ""));
 const seaShare = p => { const b = p.biomes || [], all = b.reduce((t, x) => t + num(x.m), 0); return all ? num((b.find(x => x.biome === "Ocean") || {}).m)/all : 0; };
+// a list as it reads: "a and b", "a and b and c"
+const and = list => list.reduce((a, b) => I18N.t("{a} and {b}", {a, b}));
 // the compound, by the body (rows) and what it fights with (columns)
 const TITLE = {
   mage:    {none: "Mage", spell: "Mage", battle: "Battlemage", blade: "Spellsword", shield: "Spellguard", bow: "Arcane Archer", knife: "Nightblade"},
@@ -110,8 +114,8 @@ function classify(p, roster){
   const D = fedTotal && fedTotal >= num(diet.none) ? fed.sort((a, b) => num(b[1]) - num(a[1]))[0][0] : null;   // unfed more often than not says nothing
   const root = A === "mage" || (D === "eitr" && A !== "heavy") ? "mage" : A === "heavy" ? "knight" : A === "medium" ? (D === "quick" ? "rogue" : "warrior")
     : A === "light" ? (D === "hearty" ? "warrior" : "rogue") : D === "hearty" ? "brute" : "none";
-  const food = g.food || null, fedWords = food ? [num(food.hp) && `${Math.round(num(food.hp))} health`, num(food.st) && `${Math.round(num(food.st))} stamina`, num(food.eitr) && `${Math.round(num(food.eitr))} eitr`].filter(Boolean) : [];
-  const bodyWhy = [armTotal && (ARMOUR_WORD[A] || A), D && DIET_WORD[D], fedWords.length ? "fed for " + fedWords.join(", ") : food && !D && "unfed"].filter(Boolean);
+  const food = g.food || null, fedWords = food ? [num(food.hp) && I18N.t("{n} health", {n: Math.round(num(food.hp))}), num(food.st) && I18N.t("{n} stamina", {n: Math.round(num(food.st))}), num(food.eitr) && I18N.t("{n} eitr", {n: Math.round(num(food.eitr))})].filter(Boolean) : [];
+  const bodyWhy = [armTotal && I18N.t(ARMOUR_WORD[A] || A), D && DIET_WORD[D] && I18N.t(DIET_WORD[D]), fedWords.length ? I18N.t("fed for {what}", {what: fedWords.join(", ")}) : food && !D && I18N.t("unfed")].filter(Boolean);
   // 2. the weapons: a minute of fighting gear in hand decides; before that, what is carried
   const hand = g.hand || {}, held = Object.entries(hand).filter(([k]) => k !== "none" && k !== "twohanded"), heldTotal = held.reduce((t, [, v]) => t + num(v), 0);
   const fought = held.filter(([k]) => FIGHT[k]), fightTotal = fought.reduce((t, [, v]) => t + num(v), 0);
@@ -121,17 +125,18 @@ function classify(p, roster){
   if(fightTotal >= 60){
     for(const [k, v] of fought){ FS[k] = num(v)/fightTotal; F[FIGHT[k]] += FS[k]*(k === "axe" ? .5 : 1); }   // an axe is half a tool
     twoh = num(hand.twohanded)/fightTotal;
-    armsWhy.push(fought.slice().sort((a, b) => num(b[1]) - num(a[1])).slice(0, 2).map(([k, v]) => `${FAMILY_WORD[k] || k} ${Math.round(100*num(v)/heldTotal)}%`).join(" and ") + " of the time in hand" + (twoh >= .5 ? ", two-handed" : ""));
+    armsWhy.push(I18N.t(twoh >= .5 ? "{what} of the time in hand, two-handed" : "{what} of the time in hand",
+      {what: and(fought.slice().sort((a, b) => num(b[1]) - num(a[1])).slice(0, 2).map(([k, v]) => I18N.t("{what} {pct}%", {what: I18N.t(FAMILY_WORD[k] || k), pct: Math.round(100*num(v)/heldTotal)})))}));
   } else if(carried.length){
     for(const k of carried){ FS[k] = 1; F[FIGHT[k]] += 1; }
     twoh = carriedNames.some(twoHander) ? 1 : 0;
-    armsWhy.push(`carries ${carried.map(k => FAMILY_WORD[k]).join(" and ")}`);
+    armsWhy.push(I18N.t("carries {what}", {what: and(carried.map(k => I18N.t(FAMILY_WORD[k])))}));
   }
   const hits = g.hits || {}, hitTotal = num(hits.melee) + num(hits.ranged) + num(hits.magic);
   if(hitTotal >= 10){
     F.magic += num(hits.magic)/hitTotal*.5; F.ranged += num(hits.ranged)/hitTotal*.5; F.melee += num(hits.melee)/hitTotal*.3; F.knife += num(hits.backstab)/hitTotal*.5;
-    const kind = [["ranged", "shots"], ["magic", "spells"], ["backstab", "backstabs"], ["melee", "blows"]].sort((a, b) => num(hits[b[0]]) - num(hits[a[0]]))[0];
-    armsWhy.push(`${num(hits[kind[0]])} ${kind[1]} landed`);
+    const kind = [["ranged", "{n} shots landed"], ["magic", "{n} spells landed"], ["backstab", "{n} backstabs landed"], ["melee", "{n} blows landed"]].sort((a, b) => num(hits[b[0]]) - num(hits[a[0]]))[0];
+    armsWhy.push(I18N.t(kind[1], {n: num(hits[kind[0]])}));
   }
   // a quarter of the fighting counts as a way of fighting; a mage's staff is already in the root, so the rest names the prefix
   const facets = Object.entries(F).filter(([, v]) => v >= .25).sort((a, b) => b[1] - a[1]), has = k => facets.some(f => f[0] === k);
@@ -152,7 +157,7 @@ function classify(p, roster){
   if(prefix === "knife" && num(hits.backstab) >= 10 && num(hits.backstab)*2 >= hitTotal) fighter = "Assassin";
   // nothing seen in hand yet: dying more often than half the roster says something too
   const perDeath = q => num(q.deaths) ? num(q.dist_m)/num(q.deaths) : Infinity, pers = roster.map(perDeath).filter(isFinite).sort((a, b) => a - b), median = pers.length ? pers[Math.floor(pers.length/2)] : 0;
-  if(!fighter && !hasGear && num(p.deaths) >= 20 && perDeath(p) <= median){ fighter = "Berserker"; armsWhy.push(`${num(p.deaths)} deaths, one every ${(perDeath(p)/1000).toFixed(1)} km`); }
+  if(!fighter && !hasGear && num(p.deaths) >= 20 && perDeath(p) <= median){ fighter = "Berserker"; armsWhy.push(I18N.t("{n} deaths, one every {km} km", {n: num(p.deaths), km: I18N.num(+(perDeath(p)/1000).toFixed(1), {minimumFractionDigits: 1, maximumFractionDigits: 1})})); }
   // 3. the trade, from the deeds: building against the roster's best, the rest in plain numbers
   const best = k => Math.max(1, ...roster.map(q => num(q[k])));
   const pieces = num(p.pieces), bestPieces = best("pieces"), trees = num(p.trees), rocks = num(p.rocks), taken = trees + rocks, roam = num(p.dist_m)/best("dist_m"), kills = num(p.kills), hops = num(p.hops);
@@ -176,30 +181,34 @@ function classify(p, roster){
     : roaming ? (sea >= .3 ? "Seafarer" : "Explorer")
     : fish >= .1 ? "Angler"
     : hops >= 200 && hops >= .8*best("hops") ? "Wayfarer" : null;
-  const dishWhy = {Cook: `${cooked} dishes`, Baker: `${baked} from the oven`, Brewer: `${brewed} meads brewed`, Smith: `${smelted} bars smelted`}[trade];
-  const deedsWhy = [dishWhy, dishWhy && burnt && (trade === "Cook" || trade === "Baker") && `${burnt} burnt`,
-    building && `${pieces.toLocaleString()} pieces built`, trees >= 10 && `${trees} trees felled`, rocks >= 10 && `${rocks} rocks broken`,
-    trade === "Slayer" && `${kills} kills`, (trade === "Homesteader" || trade === "Farmer") && `the hoe and cultivator ${Math.round(farm*100)}% of the time in hand`,
-    (trade === "Seafarer" || trade === "Explorer") && `${Math.round(num(p.dist_m)/1000)} km travelled`, trade === "Seafarer" && `${Math.round(sea*100)}% of it at sea`,
-    trade === "Angler" && `a fishing rod ${Math.round(fish*100)}% of the time in hand`, trade === "Wayfarer" && `${hops.toLocaleString()} portal hops`].filter(Boolean);
+  const dishWhy = {Cook: I18N.t("{n} dishes", {n: cooked}), Baker: I18N.t("{n} from the oven", {n: baked}), Brewer: I18N.t("{n} meads brewed", {n: brewed}), Smith: I18N.t("{n} bars smelted", {n: smelted})}[trade];
+  const deedsWhy = [dishWhy, dishWhy && burnt && (trade === "Cook" || trade === "Baker") && I18N.t("{n} burnt", {n: burnt}),
+    building && I18N.t("{n} pieces built", {n: I18N.num(pieces)}), trees >= 10 && I18N.t("{n} trees felled", {n: trees}), rocks >= 10 && I18N.t("{n} rocks broken", {n: rocks}),
+    trade === "Slayer" && I18N.t("{n} kills", {n: kills}), (trade === "Homesteader" || trade === "Farmer") && I18N.t("the hoe and cultivator {pct}% of the time in hand", {pct: Math.round(farm*100)}),
+    (trade === "Seafarer" || trade === "Explorer") && I18N.t("{n} km travelled", {n: Math.round(num(p.dist_m)/1000)}), trade === "Seafarer" && I18N.t("{pct}% of it at sea", {pct: Math.round(sea*100)}),
+    trade === "Angler" && I18N.t("a fishing rod {pct}% of the time in hand", {pct: Math.round(fish*100)}), trade === "Wayfarer" && I18N.t("{n} portal hops", {n: I18N.num(hops)})].filter(Boolean);
   const name = [fighter, trade].filter(Boolean).join(" ") || (hasGear ? "Wanderer" : "");
   if(!name) return null;
+  // the title as shown: English as named; French puts the trade first and the fighter after it as
+  // its qualifier ("Architecte rôdeur"), each part translated whole
+  const low = s => s.charAt(0).toLowerCase() + s.slice(1);
+  const title = I18N.lang === "fr" ? (fighter && trade ? I18N.t(trade) + " " + low(I18N.t(fighter)) : I18N.t(fighter || trade || "Wanderer")) : name;
   // the reason names the three parts: prefix (weapons), root (body), trade (deeds)
-  const part = (label, words) => words.length ? (label ? `${label}: ` : "") + words.join(", ") : null;
-  const why = [part(fighter && prefix !== "none" ? prefix : null, armsWhy), part(fighter && root !== "none" ? root : null, bodyWhy), part(trade && trade.toLowerCase(), deedsWhy)].filter(Boolean);
+  const part = (label, words) => words.length ? (label ? I18N.t("{part}: {why}", {part: label, why: words.join(", ")}) : words.join(", ")) : null;
+  const why = [part(fighter && prefix !== "none" ? I18N.t(prefix) : null, armsWhy), part(fighter && root !== "none" ? I18N.t(root) : null, bodyWhy), part(trade && I18N.t(trade).toLowerCase(), deedsWhy)].filter(Boolean);
   // faint until ten minutes have had something in hand or the hits have come in
   const early = !hasGear || (heldTotal < 600 && hitTotal < 10);
-  return {name, early, why: why.join(" \u00b7 ") || "nothing to go on yet", top: heldTotal ? held.slice().sort((a, b) => num(b[1]) - num(a[1])).slice(0, 3).map(([k, v]) => ({fam: k, share: num(v)/heldTotal})) : []};
+  return {name, title, early, why: why.join(" \u00b7 ") || I18N.t("nothing to go on yet"), top: heldTotal ? held.slice().sort((a, b) => num(b[1]) - num(a[1])).slice(0, 3).map(([k, v]) => ({fam: k, share: num(v)/heldTotal})) : []};
 }
 // the class as its pill, the reason under the pointer
-const pill = c => c ? `<span class="cls${c.early ? " early" : ""}" title="${esc(c.why)}">${c.name}</span>` : "";
+const pill = c => c ? `<span class="cls${c.early ? " early" : ""}" title="${esc(c.why)}">${c.title}</span>` : "";
 const mini = (v, k, cls) => `<span class="m${cls ? " " + cls : ""}"><span class="v">${v}</span><span class="k">${k}</span></span>`;
 // the four figures people compare
 function figures(p){
   const d = num(p.deaths), m = num(p.dist_m);
-  return `<span class="mini">` + mini(d, "deaths", d ? "" : "nil") + mini(km(m), "km", m ? "" : "nil")
-    + mini(per(d, m).replace("1 per ", ""), "per death", d && m ? "" : "nil")
-    + mini(num(p.pieces), "pieces", num(p.pieces) ? "" : "nil") + `</span>`;
+  return `<span class="mini">` + mini(d, I18N.t("deaths"), d ? "" : "nil") + mini(km(m), "km", m ? "" : "nil")
+    + mini(per(d, m).replace(/^1\D*?(?=\d)/, ""), I18N.t("per death"), d && m ? "" : "nil")
+    + mini(num(p.pieces), I18N.t("pieces"), num(p.pieces) ? "" : "nil") + `</span>`;
 }
 // ---------- the Viking ----------
 // The player as the 3D view draws them, on a slow turntable on the map's ground colour
@@ -246,7 +255,7 @@ function viking(api){
     if(VK.want !== me) return;
     const key = v.rig.lookKey(look);
     el.classList.toggle("ok", !!online);
-    el.querySelector("figcaption").textContent = online ? "online now" : "as last seen";
+    el.querySelector("figcaption").textContent = online ? I18N.t("online now") : I18N.t("as last seen");
     if(name !== VK.name) still();                  // never someone else's rig under this name
     // the index again only when the library moved and this look may have gained a part
     if(!VK.lib || (VK.lib.rev !== models && (key !== VK.key || VK.missing))){

@@ -83,7 +83,7 @@ function drawThumb(cv, ground){
 function drawThumbs(){
   const next = GROUNDS[(GROUNDS.findIndex(x => x[0] === GROUND) + 1) % GROUNDS.length];
   drawThumb(document.getElementById("lthumb"), next[0]);
-  document.getElementById("lcard").title = `Switch to ${next[1]} (L)`;
+  document.getElementById("lcard").title = I18N.t("Switch to {ground} (L)", {ground: I18N.t(next[1])});
   groundsEl.querySelectorAll(".gcard").forEach(el => {
     el.classList.toggle("on", el.dataset.ground === GROUND);
     drawThumb(el.querySelector("canvas"), el.dataset.ground);
@@ -93,7 +93,7 @@ function drawThumbs(){
 function applyGround(){
   const atlas = GROUND === "atlas";
   document.body.classList.toggle("atlas", atlas);
-  document.querySelectorAll('.legend [data-layer="forest"]').forEach(el => el.title = atlas ? "not drawn on the atlas" : "");
+  document.querySelectorAll('.legend [data-layer="forest"]').forEach(el => el.title = atlas ? I18N.t("not drawn on the atlas") : "");
 }
 function setGround(g){
   GROUND = g;
@@ -117,7 +117,7 @@ function init(o){
   try{ const saved = localStorage.getItem("xnv.hidden");
        if(saved !== null){ HIDDEN.clear(); JSON.parse(saved).forEach(k=>HIDDEN.add(k)); } }catch(e){}
   document.getElementById("presets").innerHTML =
-    PRESETS.map(([n]) => `<button class="chip">${n}</button>`).join("");
+    PRESETS.map(([n]) => `<button class="chip">${I18N.t(n)}</button>`).join("");
   document.getElementById("presets").addEventListener("click", e => {
     const el = e.target.closest(".chip"); if(!el) return;
     HIDDEN.clear(); PRESETS[[...el.parentNode.children].indexOf(el)][1].forEach(k => HIDDEN.add(k));
@@ -127,8 +127,8 @@ function init(o){
   try{ (JSON.parse(localStorage.getItem("xnv.off") || "[]")).forEach(k => OFF.add(k)); }catch(e){}
   try{ (JSON.parse(localStorage.getItem("xnv.names.off") || "[]")).forEach(k => NAMES_OFF.add(k)); }catch(e){}
   namesMenu = document.getElementById("namesMenu"); namesFly = document.getElementById("namesFly");
-  namesMenu.innerHTML = NAME_GROUPS.map(([title, rows]) => `<b class="eyebrow">${title}</b>` + rows.map(([key, label, , ink]) =>
-    `<div class="frow" data-group="${key}"><span class="sw" style="background:${ink}"></span>${label}</div>`).join("")).join("");
+  namesMenu.innerHTML = NAME_GROUPS.map(([title, rows]) => `<b class="eyebrow">${I18N.t(title)}</b>` + rows.map(([key, label, , ink]) =>
+    `<div class="frow" data-group="${key}"><span class="sw" style="background:${ink}"></span>${I18N.t(label)}</div>`).join("")).join("");
   namesMenu.addEventListener("click", e => {
     const el = e.target.closest(".frow"); if(!el) return;
     const k = el.dataset.group;
@@ -151,7 +151,7 @@ function init(o){
   try{ const g = localStorage.getItem("xnv.ground"); if(GROUNDS.some(x => x[0] === g)) GROUND = g; }catch(e){}
   groundsEl = document.getElementById("grounds");
   groundsEl.innerHTML = GROUNDS.map(([k, n]) =>
-    `<button class="gcard" data-ground="${k}"><canvas></canvas><span>${n}</span></button>`).join("");
+    `<button class="gcard" data-ground="${k}"><canvas></canvas><span>${I18N.t(n)}</span></button>`).join("");
   applyGround();
   groundsEl.addEventListener("click", e => { const el = e.target.closest(".gcard"); if(el) setGround(el.dataset.ground); });
   // with a pointer that hovers the tray is already open, so the card itself is the

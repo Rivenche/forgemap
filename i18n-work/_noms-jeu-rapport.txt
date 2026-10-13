@@ -1,0 +1,82 @@
+Noms officiels Valheim (prefab -> en/fr) extraits de l'installation locale
+Source : C:\Program Files (x86)\Steam\steamapps\common\Valheim\valheim_Data (lecture seule), outil UnityPy 1.25.4
+
+Total prefabs : 1743  (objets : 1087, creatures : 149, pieces de construction : 507)
+Prefabs sans traduction francaise (fr = null ; colonne French vide dans le jeu, contenu Deep North recent : le jeu affiche l'anglais) : 29 ['Barka', 'TentaRoot_wild', 'JotunWarriorDualWield', 'Poteitr', 'AncientGemstonePurple', 'AncientGemstoneBlack', 'AncientGemstoneGreen', 'ElakingLantern', 'Upgrader4Armor', 'Elaking', 'Upgrader6Weapon', 'Upgrader6Armor', 'Upgrader3Armor', 'JotunWitch', 'Aspect_TentaRoot', 'Frysling', 'Upgrader0Armor', 'Pancakes', 'Upgrader1Armor', 'TentaRoot']
+Prefabs ecartes (m_name sans jeton $ = attaques/armures internes des creatures, ou jeton absent des traductions) : 506
+
+Methode
+1. Traductions : TextAssets 'localization*' de resources.assets (CSV, une colonne par langue).
+   Fichiers lus (jetons ajoutes) : {'localization.csv': 5570, 'localization_ashlands.csv': 0, 'localization_captions.csv': 142, 'localization_celebrationupdate.csv': 0, 'localization_combatupdate.csv': 0, 'localization_deepnorth.csv': 0, 'localization_extra.csv': 15, 'localization_warriortitles.csv': 202, 'localization_witch.csv': 0} ; variantes consoles (xbox/ps/switch/platformspecific) ignorees. Fichier principal prioritaire.
+   5929 jetons au total.
+2. Prefab -> jeton : 799 bundles de StreamingAssets/SoftRef/Bundles (typetrees embarques).
+   MonoBehaviour avec m_itemData (ItemDrop) -> m_itemData.m_shared.m_name ;
+   avec m_faction+m_boss+m_name (Character/Humanoid) -> m_name ; avec m_resources+m_category+m_name (Piece) -> m_name.
+   Nom du prefab = m_Name du GameObject ; seuls les objets racines (Transform sans parent) sont gardes,
+   ce qui ecarte les copies placees dans les lieux (ex. 'wood_beam (3)').
+   Si un prefab a plusieurs composants : priorite objet > creature > piece (ex. MeadHealthMedium = objet).
+
+Limites
+- Seuls ItemDrop, Character et Piece sont couverts (pas Pickable, MineRock, Destructible, lieux...).
+- Quelques prefabs internes/de test peuvent figurer (tout objet racine portant ces composants).
+- Noms composes (Upgrader*, SnowballBig...) : jetons remplaces un par un comme le fait le jeu, d'ou un francais parfois maladroit (ex. 'Big Boule de neige', 'Argent Combat Idole').
+- Les textes peuvent contenir des balises de mise en forme du jeu telles quelles.
+
+Echantillon (15 lignes)
+  ArmorIronChest               en='Iron Scale Mail'                        fr="Armure d'écailles de fer"
+  HelmetIron                   en='Iron Helmet'                            fr='Casque en fer'
+  CapeDeerHide                 en='Deer Hide Cape'                         fr='Cape en peau de cerf'
+  Hammer                       en='Hammer'                                 fr='Marteau'
+  MeadHealthMedium             en='Medium Healing Mead'                    fr='Hydromel très revigorant'
+  CookedBjornMeat              en='Cooked Bear Meat'                       fr="Viande d'ours cuite"
+  Coal                         en='Coal'                                   fr='Charbon'
+  Iron                         en='Iron'                                   fr='Fer'
+  BowFineWood                  en='Finewood Bow'                           fr='Arc de bois noble'
+  Greydwarf_Shaman             en='Greydwarf Shaman'                       fr='Chaman naingris'
+  Troll                        en='Troll'                                  fr='Troll'
+  Eikthyr                      en='Eikthyr'                                fr='Eikthyr'
+  CapeAsh                      en='Ashen Cape'                             fr='Cape des cendres'
+  TrophyFader                  en='Fader Trophy'                           fr='Trophée de Fader'
+  stave_beam_67                en='Timber Beam 67°'                        fr='Poutre en bois 67°'
+
+Ecartes (extrait)
+  ('item', 'Elaking_AttackJump', 'Charred Sword')
+  ('item', 'ElakingMole_AttackClaw2', 'jaws')
+  ('item', 'unbjorn_swipe_r', 'bjorn bite')
+  ('item', 'DvergerSuitSupport', 'Iron plate armor')
+  ('item', 'Fader_WallOfFire', 'Fader Wall of Fire')
+  ('item', 'Abomination_attack1', 'Swing attack')
+  ('item', 'skeleton_bow_mountains', 'Bow')
+  ('item', 'moose_horns', 'moose horns')
+  ('item', 'GoblinBrute_LegBones', 'Iron plate armor')
+  ('piece', 'snow_increase_treesmall', 'Snow Increase')
+  ('item', 'troll_summoned_log_swing_h', 'LOG')
+  ('item', 'SpiritWolf_Attack3', 'WolfAttack3')
+  ('item', 'GoblinBrute_HipCloth', 'Iron plate armor')
+  ('item', 'JotunWarrior2HSword_attack_charge', 'Charred Sword')
+  ('item', 'FrozenKing_ChainRush', 'FrozenKing ChainRush')
+  ('item', 'Greydwarf_shaman_heal_frozen', 'heal')
+  ('creature', 'Hive', '$enemy_hive')
+  ('item', 'FrozenKing_P2_Summon_Moder', 'Fader Roar')
+  ('piece', 'goblin_bed', '')
+  ('item', 'FrozenKing_ChainWhirl', 'FrozenKing ChainWhirl')
+  ('item', 'hive_attack_ranged', 'dragon breath')
+  ('item', 'fallenvalkyrie_taunt', 'Fallen Valkyrie Claws')
+  ('item', 'Serpent_taunt', 'Serpent Taunt')
+  ('item', 'fallenvalkyrie_wingspin', 'Fallen Valkyrie Wingspin')
+  ('item', 'blob_frost_attack_aoe', 'fart')
+  ('item', 'aspect_Eikthyr_antler', 'StagAttack1')
+  ('item', 'JotunWitch_attack_dodge', 'Charred Sword')
+  ('piece', 'loot_chest_wood', 'Chest')
+  ('item', 'JotunWarrior2HAxe_attack_charge', 'Charred Sword')
+  ('item', 'Fader_Claw_Right', 'Fader Claw Right')
+  ('item', 'Morgen_swipe_6', 'Dragon claw left')
+  ('item', 'spiritboar_base_attack', 'boar attack1')
+  ('item', 'BonemawSerpent_ram', 'Serpent bite')
+  ('item', 'GoblinLoin', 'Iron plate armor')
+  ('item', 'dragon_taunt', 'scream')
+  ('item', 'Fader_Roar', 'Fader Roar')
+  ('item', 'blob_attack_aoe', 'fart')
+  ('item', 'FrozenKing_P2_Summon_Fader', 'Fader Roar')
+  ('item', 'DvergerStaffHeal_heal', 'Club')
+  ('piece', 'OLD_wood_wall_roof', 'Wood wall roof')

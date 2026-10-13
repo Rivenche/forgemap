@@ -277,3 +277,9 @@ body:not(.side-open) .sidebar{display:none}
     justify-content:center;margin:-.3rem -.3rem 0 .5rem;border:1px solid var(--line);border-radius:var(--r);
     background:var(--card);color:var(--ink);font-size:1.2rem;line-height:1;cursor:pointer;z-index:1}
 }
+
+/* ---------- ForgeMap ---------- */
+/* ForgeServer's flame before the world's name, the credit at each page's foot */
+.brand{display:inline-flex;align-items:center;gap:.45rem}
+.brand .flame{width:1.05em;height:1.05em;flex:0 0 auto;color:var(--gold)}
+.fm-credit b{color:var(--ink-2);font-weight:600}

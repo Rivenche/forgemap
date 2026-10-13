@@ -966,13 +966,15 @@ if (uFogOn > 0.5) {
       e.preventDefault();
       this.setFov(this.camera.fov * Math.exp(e.deltaY * 0.0012));
     }, { passive: false });
-    // keys: WASD or the arrows walk, Q E turn, Shift runs
+    // keys: WASD or the arrows walk, Q E turn, Shift runs. ForgeMap: the letters are read by
+    // where they sit (e.code), so an AZERTY keyboard walks on Z Q S D as a QWERTY one on W A S D
+    const keyOf = (e) => (/^Key[A-Z]$/.test(e.code || '') ? e.code.slice(3).toLowerCase() : e.key.length === 1 ? e.key.toLowerCase() : e.key);
     addEventListener('keydown', (e) => {
       if (!this.running || /INPUT|SELECT|TEXTAREA/.test(e.target.tagName) || e.metaKey || e.ctrlKey || e.altKey) return;
-      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      const k = keyOf(e);
       if (KEYS.has(k)) { this.keys.add(k); e.preventDefault(); }
     });
-    addEventListener('keyup', (e) => { this.keys.delete(e.key.length === 1 ? e.key.toLowerCase() : e.key); if (!this.keys.size) this.settle(); });
+    addEventListener('keyup', (e) => { this.keys.delete(keyOf(e)); if (!this.keys.size) this.settle(); });
     addEventListener('blur', () => this.keys.clear());
   }
 

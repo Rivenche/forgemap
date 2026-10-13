@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="site.css">
 <script src="js/i18n.js"></script>
 <script src="js/lang/fr.js"></script>
+<script src="js/lang/noms.js"></script>
 <script src="site-config.js"></script>
 <script src="map-core.js"></script>
 <script src="js/card.js"></script>
@@ -155,23 +156,23 @@
     <details class="how">
       <summary class="eyebrow">How these are counted</summary>
       <ul>
-        <li><b>Deaths</b> — every time you have died in this world.</li>
-        <li><b>Joins</b> — sessions started, one per connection to the server.</li>
-        <li><b>Chat</b> — lines you have said in chat.</li>
-        <li><b>km</b> — metres covered on foot and by boat, with teleports excluded.</li>
-        <li><b>Hops</b> — portal trips and respawns: jumps over 100 m between one-second samples.</li>
-        <li><b>Pins</b> — map pins you have placed.</li>
-        <li><b>Pieces</b>, <b>portals</b> and <b>ships</b> — what is standing in the world right now with your name on it.</li>
-        <li><b>Graves</b> — your tombstones still out there holding gear.</li>
-        <li><b>Deaths per km</b> — deaths divided by km walked, overall and by the biome you were in: the biome is read off the ground under you every second.</li>
-        <li><b>Close calls</b> — health under a tenth and back over three tenths without dying; the lowest shows the closest anyone came.</li>
-        <li><b>Streak</b> — the longest walk between two deaths, and how far you have come since the last one.</li>
-        <li><b>Corpse runs</b> — <b>recovered</b> means you got back to where you died; <b>failed</b> means you died again within 200 m of it first; <b>rescued</b> means the grave was emptied by someone else before you got there; <b>out there</b> is a death you have not returned to.</li>
-        <li><b>Bosses</b> — the world's own record of which have fallen, in the order they did.</li>
-        <li><b>Kills</b>, <b>trees</b> and <b>rocks</b> — creatures that fell, trees felled and rock areas broken with you as the last to hit them, or, when your own game was running the fight, with you standing there; a creature that despawns is nobody's kill.</li>
-        <li><b>Kitchen</b> — what came out of the stations: <b>dishes cooked</b> on a fire or in the oven, for whoever put them on (<b>burnt</b> instead if left there too long); <b>meads brewed</b>, counted at the tap for whoever filled the fermenter; <b>honey taken</b> from a hive; and <b>smelted</b>, each bar, coal, flour or thread a smelter, kiln, windmill, spinning wheel or refinery made, for whoever loaded it. The server sees the stations, never the bag: the cauldron and the preparation table are invisible, so of bread and pies only the oven's step shows. At a fermenter, a hive or a smelter the player standing within 8 m is the one credited, and a slot filled before the count began counts for nobody.</li>
-        <li><b>Class</b> — a title in three parts. The first word is a compound: what you fight with gives the prefix (battle for a two-hander, blade, shield, bow, knife, spell) and what your body is gives the root (mage, knight, warrior, rogue, brute), read from what you wear and from the food behind your bars, so a two-hander in eitr-weave is a Battlemage and a shield in heavy armour a Paladin; a few weapons colour it (a crossbow an Arbalist, an atgeir a Vanguard, axe and shield a Huscarl). The second word is your trade, from what you have done: the roster's top builder is the Architect, a builder who also mines an Engineer, who also fells a Carpenter, who also farms a Homesteader; a Cook, Baker, Brewer or Smith from fifty things made; the Slayer; Builders, Miners, Lumberjacks, Farmers, Explorers, Seafarers, Anglers and Wayfarers. Time in hand is the evidence: the server sees hands and back slots, never the bag, and blows only on creatures another player's game runs; skills never leave your character file. Dashed until ten minutes have had something in hand.</li>
-        <li><b>The pentagon</b> — five sides, each your share of the roster's best, square-rooted so one giant does not flatten everyone: Explorer is km, portal hops and km at sea taken together; Builder pieces standing; Survivor km per death; Slayer kills; Harvester trees, rocks, dishes cooked and things smelted together.</li>
+        <li data-i18n><b>Deaths</b> — every time you have died in this world.</li>
+        <li data-i18n><b>Joins</b> — sessions started, one per connection to the server.</li>
+        <li data-i18n><b>Chat</b> — lines you have said in chat.</li>
+        <li data-i18n><b>km</b> — metres covered on foot and by boat, with teleports excluded.</li>
+        <li data-i18n><b>Hops</b> — portal trips and respawns: jumps over 100 m between one-second samples.</li>
+        <li data-i18n><b>Pins</b> — map pins you have placed.</li>
+        <li data-i18n><b>Pieces</b>, <b>portals</b> and <b>ships</b> — what is standing in the world right now with your name on it.</li>
+        <li data-i18n><b>Graves</b> — your tombstones still out there holding gear.</li>
+        <li data-i18n><b>Deaths per km</b> — deaths divided by km walked, overall and by the biome you were in: the biome is read off the ground under you every second.</li>
+        <li data-i18n><b>Close calls</b> — health under a tenth and back over three tenths without dying; the lowest shows the closest anyone came.</li>
+        <li data-i18n><b>Streak</b> — the longest walk between two deaths, and how far you have come since the last one.</li>
+        <li data-i18n><b>Corpse runs</b> — <b>recovered</b> means you got back to where you died; <b>failed</b> means you died again within 200 m of it first; <b>rescued</b> means the grave was emptied by someone else before you got there; <b>out there</b> is a death you have not returned to.</li>
+        <li data-i18n><b>Bosses</b> — the world's own record of which have fallen, in the order they did.</li>
+        <li data-i18n><b>Kills</b>, <b>trees</b> and <b>rocks</b> — creatures that fell, trees felled and rock areas broken with you as the last to hit them, or, when your own game was running the fight, with you standing there; a creature that despawns is nobody's kill.</li>
+        <li data-i18n><b>Kitchen</b> — what came out of the stations: <b>dishes cooked</b> on a fire or in the oven, for whoever put them on (<b>burnt</b> instead if left there too long); <b>meads brewed</b>, counted at the tap for whoever filled the fermenter; <b>honey taken</b> from a hive; and <b>smelted</b>, each bar, coal, flour or thread a smelter, kiln, windmill, spinning wheel or refinery made, for whoever loaded it. The server sees the stations, never the bag: the cauldron and the preparation table are invisible, so of bread and pies only the oven's step shows. At a fermenter, a hive or a smelter the player standing within 8 m is the one credited, and a slot filled before the count began counts for nobody.</li>
+        <li data-i18n><b>Class</b> — a title in three parts. The first word is a compound: what you fight with gives the prefix (battle for a two-hander, blade, shield, bow, knife, spell) and what your body is gives the root (mage, knight, warrior, rogue, brute), read from what you wear and from the food behind your bars, so a two-hander in eitr-weave is a Battlemage and a shield in heavy armour a Paladin; a few weapons colour it (a crossbow an Arbalist, an atgeir a Vanguard, axe and shield a Huscarl). The second word is your trade, from what you have done: the roster's top builder is the Architect, a builder who also mines an Engineer, who also fells a Carpenter, who also farms a Homesteader; a Cook, Baker, Brewer or Smith from fifty things made; the Slayer; Builders, Miners, Lumberjacks, Farmers, Explorers, Seafarers, Anglers and Wayfarers. Time in hand is the evidence: the server sees hands and back slots, never the bag, and blows only on creatures another player's game runs; skills never leave your character file. Dashed until ten minutes have had something in hand.</li>
+        <li data-i18n><b>The pentagon</b> — five sides, each your share of the roster's best, square-rooted so one giant does not flatten everyone: Explorer is km, portal hops and km at sea taken together; Builder pieces standing; Survivor km per death; Slayer kills; Harvester trees, rocks, dishes cooked and things smelted together.</li>
         <li>Anything built before the tally started counts for nobody, so a builder who has not logged in since shows zero.</li>
         <li>Time played is not tracked, and no figure here is a stand-in for it. Distances are the yardstick.</li>
       </ul>
@@ -223,18 +224,19 @@ const SHOWS = {
 };
 // the class reads the roster: its best, and the pace of its deaths
 const classify = p => PlayerCard.classify(p, DATA);
-const itemWord = n => String(n || "").replace(/^(Armor|Helmet|Cape)/, "").replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim();
+// ForgeMap: the game's own name for it (js/lang/noms.js), else the prefab spelled out as before
+const itemWord = n => I18N.name(n) || String(n || "").replace(/^(Armor|Helmet|Cape)/, "").replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim();
 function gearGroup(p){
   const w = p.gear && p.gear.worn; if(!w || !Object.keys(w).length) return "";
   const slots = [["right", "right hand"], ["left", "left hand"], ["rightBack", "on the back"], ["leftBack", "on the back"], ["chest", "chest"], ["helmet", "head"], ["legs", "legs"], ["shoulder", "cape"]];
-  return `<section class="group"><h3 class="eyebrow">Gear <small>last seen wearing</small></h3><div class="figs">`
-    + slots.filter(([k]) => w[k]).map(([k, label]) => `<div class="stat fig txt" title="${esc(w[k])}"><div class="v">${esc(itemWord(w[k]))}</div><div class="k">${label}</div></div>`).join("") + `</div></section>`;
+  return `<section class="group"><h3 class="eyebrow">${I18N.t("Gear")} <small>${I18N.t("last seen wearing")}</small></h3><div class="figs">`
+    + slots.filter(([k]) => w[k]).map(([k, label]) => `<div class="stat fig txt" title="${esc(w[k])}"><div class="v">${esc(itemWord(w[k]))}</div><div class="k">${I18N.t(label)}</div></div>`).join("") + `</div></section>`;
 }
 function row(p){
   const on = !!p.online;
   return `<button class="player${on ? " ok" : ""}${PICK === p.name ? " pick" : ""}" type="button" data-name="${esc(p.name || "")}">`
-    + `<span class="rh"><span class="dot"></span><span class="nm">${esc(p.name || "unnamed")}</span>${PlayerCard.pill(classify(p))}`
-    + `<span class="seen">${on ? "online now" : seen(num(p.last_seen))}</span></span>`
+    + `<span class="rh"><span class="dot"></span><span class="nm">${esc(p.name || I18N.t("unnamed"))}</span>${PlayerCard.pill(classify(p))}`
+    + `<span class="seen">${on ? I18N.t("online now") : seen(num(p.last_seen))}</span></span>`
     + PlayerCard.figures(p) + radar(p, 58, false) + `</button>`;
 }
 function render(){
@@ -245,14 +247,14 @@ function render(){
     || String(a.name || "").localeCompare(String(b.name || "")));
 
   const on = DATA.filter(p => p.online).length;
-  document.getElementById("count").innerHTML = `<b>${plural(DATA.length, "player")}</b>`
-    + (on ? ` · ${on} online now` : "")
-    + (SINCE ? ` · tallied since ${new Date(SINCE*1000).toLocaleDateString(undefined, {month:"short", day:"numeric", year:"numeric"})}` : "");
+  document.getElementById("count").innerHTML = `<b>${I18N.tn(DATA.length, "{n} player", "{n} players")}</b>`
+    + (on ? ` · ${I18N.t("{n} online now", {n: on})}` : "")
+    + (SINCE ? ` · ${I18N.t("tallied since {date}", {date: I18N.date(SINCE*1000, {month:"short", day:"numeric", year:"numeric"})})}` : "");
   renderBosses(BOSSES);
 
   const html = rows.length ? rows.map(row).join("")
-    : DATA.length ? `<p class="empty">Nobody fits that. Show everyone instead.</p>`
-    : `<p class="empty">No tallies yet — nobody has been seen since the count started.</p>`;
+    : DATA.length ? `<p class="empty">${I18N.t("Nobody fits that. Show everyone instead.")}</p>`
+    : `<p class="empty">${I18N.t("No tallies yet — nobody has been seen since the count started.")}</p>`;
   const el = document.getElementById("list");
   if(html !== LAST){ el.innerHTML = html; LAST = html; }   // untouched DOM, so no flicker on the minute
   if(PICK) renderDetail();
@@ -264,13 +266,13 @@ function fig(v, k, cls, title){
 }
 function danger(p){
   const rows = MapCore.biomeRows(p.biomes);
-  return rows ? `<div class="sect"><div class="eyebrow"><span>Danger by biome</span><a href="${mapLink(p.name)}">deaths on the map</a></div><div class="biomes">${rows}</div></div>` : "";
+  return rows ? `<div class="sect"><div class="eyebrow"><span>${I18N.t("Danger by biome")}</span><a href="${mapLink(p.name)}">${I18N.t("deaths on the map")}</a></div><div class="biomes">${rows}</div></div>` : "";
 }
 let DLAST = "", WHERE = null;    // WHERE: {name, text} once the ground under an online player has answered
 function renderDetail(){
   const p = DATA.find(x => x.name === PICK);
   const head = document.getElementById("dhead"), body = document.getElementById("dbody");
-  if(!p){ head.innerHTML = `<button class="btn quiet sm back" id="back">&larr; Players</button><h2>${esc(PICK)}</h2>`; body.innerHTML = `<p class="empty">No tally under that name.</p>`; DLAST = ""; return; }
+  if(!p){ head.innerHTML = `<button class="btn quiet sm back" id="back">&larr; ${I18N.t("Players")}</button><h2>${esc(PICK)}</h2>`; body.innerHTML = `<p class="empty">${I18N.t("No tally under that name.")}</p>`; DLAST = ""; return; }
   const on = !!p.online, graves = num(p.graves), runs = p.runs || {}, streak = p.streak_m || {}, runm = p.run_m || {};
   const nil = n => n ? "" : "nil";
   const calls = num(p.close_calls), lowest = num(p.lowest_hp);
@@ -279,56 +281,56 @@ function renderDetail(){
   const here = ONLINE.find(q => q.name === p.name), cls = classify(p);
   const where = on && WHERE && WHERE.name === p.name ? ` <i>· ${esc(WHERE.text)}</i>` : "";
   head.className = "dhead" + (on ? " ok" : "");
-  head.innerHTML = `<button class="btn quiet sm back" id="back">&larr; Players</button>`
+  head.innerHTML = `<button class="btn quiet sm back" id="back">&larr; ${I18N.t("Players")}</button>`
     + `<h2><span class="dot${on ? " ok" : ""}"></span>${esc(p.name)}${PlayerCard.pill(cls)}</h2>`
-    + `<span class="state">${on ? "online now" : seen(num(p.last_seen))}${where}${cls ? ` <i>· ${esc(cls.why)}</i>` : ""}</span>`
+    + `<span class="state">${on ? I18N.t("online now") : seen(num(p.last_seen))}${where}${cls ? ` <i>· ${esc(cls.why)}</i>` : ""}</span>`
     + `<span class="links">`
-    + (here ? `<a class="btn quiet sm" href="index.html#at=${Math.round(here.x)},${Math.round(here.z)},20" title="Where they stand now">On the map</a>` : "")
-    + (num(p.deaths) ? `<a class="btn quiet sm" href="${mapLink(p.name)}">Deaths</a>` : "")
-    + (lastLink ? `<a class="btn quiet sm" href="${lastLink}" title="Where they last died">Last death</a>` : "")
+    + (here ? `<a class="btn quiet sm" href="index.html#at=${Math.round(here.x)},${Math.round(here.z)},20" title="${esc(I18N.t("Where they stand now"))}">${I18N.t("On the map")}</a>` : "")
+    + (num(p.deaths) ? `<a class="btn quiet sm" href="${mapLink(p.name)}">${I18N.t("Deaths")}</a>` : "")
+    + (lastLink ? `<a class="btn quiet sm" href="${lastLink}" title="${esc(I18N.t("Where they last died"))}">${I18N.t("Last death")}</a>` : "")
     + `</span>`;
   const streakLine = streak.best != null
-    ? `<div class="line"><b>Streak</b> best ${km(streak.best)} km without dying &#183; ${km(streak.now)} km since the last`
-      + (lastLink ? ` (<a href="${lastLink}">where</a>)` : "") + `</div>` : "";
+    ? `<div class="line">${I18N.t("<b>Streak</b> best {best} km without dying &#183; {now} km since the last", {best: km(streak.best), now: km(streak.now)})}`
+      + (lastLink ? ` (<a href="${lastLink}">${I18N.t("where")}</a>)` : "") + `</div>` : "";
   const runLine = runs.ok != null
-    ? `<div class="line"><b>Corpse runs</b> ${num(runs.ok)} recovered${num(runs.failed) ? ` &#183; <span class="bad">${num(runs.failed)} failed</span>` : ""}`
-      + `${num(runs.rescued) ? ` &#183; ${num(runs.rescued)} rescued by others` : ""}`
-      + `${num(runs.open) ? ` &#183; <a href="index.html#layers=grave" class="bad">${num(runs.open)} out there</a>` : ""}`
-      + `${num(runm.best) ? ` &#183; longest run ${km(runm.best)} km` : ""}</div>` : "";
+    ? `<div class="line">${I18N.t("<b>Corpse runs</b> {n} recovered", {n: num(runs.ok)})}${num(runs.failed) ? ` &#183; <span class="bad">${I18N.t("{n} failed", {n: num(runs.failed)})}</span>` : ""}`
+      + `${num(runs.rescued) ? ` &#183; ${I18N.t("{n} rescued by others", {n: num(runs.rescued)})}` : ""}`
+      + `${num(runs.open) ? ` &#183; <a href="index.html#layers=grave" class="bad">${I18N.t("{n} out there", {n: num(runs.open)})}</a>` : ""}`
+      + `${num(runm.best) ? ` &#183; ${I18N.t("longest run {n} km", {n: km(runm.best)})}` : ""}</div>` : "";
   const group = (name, figs, more) => `<section class="group"><h3 class="eyebrow">${name}</h3><div class="figs">${figs}</div>${more || ""}</section>`;
   const K = p.kitchen, dishes = K ? Object.entries(K.dishes || {}).sort((a, b) => num(b[1]) - num(a[1])).slice(0, 3) : [];   // none from a mod without a kitchen
-  const kitchen = K ? group("Kitchen",
-        fig(num(K.cooked), "dishes cooked", nil(num(K.cooked)))
-        + fig(num(K.burnt), "burnt", num(K.burnt) ? "warn" : "nil")
-        + fig(num(K.brewed), "meads brewed", nil(num(K.brewed)))
-        + fig(num(K.honey), "honey taken", nil(num(K.honey)))
-        + fig(num(K.smelted), "smelted", nil(num(K.smelted))),
-        dishes.length ? `<div class="line"><b>Most made</b> ${dishes.map(([k, n]) => `${num(n)} ${esc(itemWord(k))}`).join(" &#183; ")}</div>` : "") : "";
+  const kitchen = K ? group(I18N.t("Kitchen"),
+        fig(num(K.cooked), I18N.t("dishes cooked"), nil(num(K.cooked)))
+        + fig(num(K.burnt), I18N.t("burnt"), num(K.burnt) ? "warn" : "nil")
+        + fig(num(K.brewed), I18N.t("meads brewed"), nil(num(K.brewed)))
+        + fig(num(K.honey), I18N.t("honey taken"), nil(num(K.honey)))
+        + fig(num(K.smelted), I18N.t("smelted"), nil(num(K.smelted))),
+        dishes.length ? `<div class="line"><b>${I18N.t("Most made")}</b> ${dishes.map(([k, n]) => `${num(n)} ${esc(itemWord(k))}`).join(" &#183; ")}</div>` : "") : "";
   // the spotlight leads the groups as a strip of fixed height: the pentagon column ends where it ends, and a turn never reflows the page
-  const html = `<div class="top"><div class="groups"><div class="card spot wide" id="spot" title="Next"></div>`
-    + group("Survival",
-        fig(num(p.deaths), "deaths", nil(num(p.deaths)))
-        + fig(per(p.deaths, p.dist_m).replace("1 per ", ""), "km per death", num(p.deaths) && num(p.dist_m) ? "" : "nil", "one death every so many km walked")
-        + fig(calls, "close calls", calls ? "warn" : "nil", calls ? "lowest survived: " + Math.round(lowest*100) + "% health" : "")
-        + fig(graves, graves ? "gear still out" : "graves", graves ? "warn" : "nil"),
+  const html = `<div class="top"><div class="groups"><div class="card spot wide" id="spot" title="${esc(I18N.t("Next"))}"></div>`
+    + group(I18N.t("Survival"),
+        fig(num(p.deaths), I18N.t("deaths"), nil(num(p.deaths)))
+        + fig(per(p.deaths, p.dist_m).replace(/^1\D*?(?=\d)/, ""), I18N.t("km per death"), num(p.deaths) && num(p.dist_m) ? "" : "nil", I18N.t("one death every so many km walked"))
+        + fig(calls, I18N.t("close calls"), calls ? "warn" : "nil", calls ? I18N.t("lowest survived: {pct}% health", {pct: Math.round(lowest*100)}) : "")
+        + fig(graves, graves ? I18N.t("gear still out") : I18N.t("graves"), graves ? "warn" : "nil"),
         streakLine + runLine)
-    + group("Journeys",
+    + group(I18N.t("Journeys"),
         fig(km(p.dist_m), "km", num(p.dist_m) ? "" : "nil")
-        + fig(num(p.hops), "hops", nil(num(p.hops)))
-        + (BEST.sea > 0 ? fig(km(sea(p)), "km at sea", sea(p) ? "" : "nil") : ""))
-    + group("Deeds",
-        fig(num(p.kills), "kills", nil(num(p.kills)))
-        + fig(num(p.trees), "trees felled", nil(num(p.trees)))
-        + fig(num(p.rocks), "rocks broken", nil(num(p.rocks))))
+        + fig(num(p.hops), I18N.t("hops"), nil(num(p.hops)))
+        + (BEST.sea > 0 ? fig(km(sea(p)), I18N.t("km at sea"), sea(p) ? "" : "nil") : ""))
+    + group(I18N.t("Deeds"),
+        fig(num(p.kills), I18N.t("kills"), nil(num(p.kills)))
+        + fig(num(p.trees), I18N.t("trees felled"), nil(num(p.trees)))
+        + fig(num(p.rocks), I18N.t("rocks broken"), nil(num(p.rocks))))
     + kitchen
-    + group("Building",
-        fig(num(p.pieces), "pieces", nil(num(p.pieces)))
-        + fig(num(p.portals), "portals", nil(num(p.portals)))
-        + fig(num(p.ships), "ships", nil(num(p.ships)))
-        + fig(num(p.pins), "pins", nil(num(p.pins))))
-    + group("Presence",
-        fig(num(p.joins), "joins", nil(num(p.joins)))
-        + fig(num(p.chat), "chat lines", nil(num(p.chat))))
+    + group(I18N.t("Building"),
+        fig(num(p.pieces), I18N.t("pieces"), nil(num(p.pieces)))
+        + fig(num(p.portals), I18N.t("portals"), nil(num(p.portals)))
+        + fig(num(p.ships), I18N.t("ships"), nil(num(p.ships)))
+        + fig(num(p.pins), I18N.t("pins"), nil(num(p.pins))))
+    + group(I18N.t("Presence"),
+        fig(num(p.joins), I18N.t("joins"), nil(num(p.joins)))
+        + fig(num(p.chat), I18N.t("chat lines"), nil(num(p.chat))))
     + gearGroup(p)
     + `</div><div class="portrait"><i id="vslot" hidden></i>` + radar(p, 232, true) + `</div></div>` + danger(p);
   if(html !== DLAST){ body.innerHTML = html; DLAST = html; Spot.render(); }
@@ -340,8 +342,9 @@ async function whereIs(name, at){
   try{
     const j = await MapCore.fetchJSON(API, `/at?x=${Math.round(at.x)}&z=${Math.round(at.z)}`);
     const place = (j.here || [])[0];
-    WHERE = {name, text: place ? `in ${place.name}${j.biome && place.kind !== j.biome.toLowerCase() ? `, ${j.biome}` : ""}` : j.biome ? `in the ${j.biome}` : "at sea"};
-  }catch(e){ WHERE = {name, text: `at ${Math.round(at.x)}, ${Math.round(at.z)}`}; }
+    WHERE = {name, text: place ? (j.biome && place.kind !== j.biome.toLowerCase() ? I18N.t("in {place}, {biome}", {place: place.name, biome: I18N.t(j.biome)}) : I18N.t("in {place}", {place: place.name}))
+      : j.biome ? I18N.t("in the {biome}", {biome: I18N.t(j.biome)}) : I18N.t("at sea")};
+  }catch(e){ WHERE = {name, text: I18N.t("at {x}, {z}", {x: Math.round(at.x), z: Math.round(at.z)})}; }
   if(PICK === name) renderDetail();
 }
 
@@ -353,38 +356,40 @@ async function whereIs(name, at){
 const ord = MapCore.ord, strip = (p, get) => MapCore.pic.strip(DATA, p, get), ring = MapCore.pic.ring, bars = MapCore.pic.bars;
 function rankLine(p, get, top, bottom, desc = true){
   const v = get(p), better = DATA.filter(q => desc ? get(q) > v : get(q) < v).length, of = DATA.length;
-  return better === 0 ? top : of > 1 && better === of - 1 ? bottom : `${ord(better + 1)} of ${of} on the roster`;
+  // the rank as an ordinal in the page's language: 2nd, 3rd / 2e, 3e
+  const rank = better + 1, nth = I18N.lang === "fr" ? (rank === 1 ? "1er" : rank + "e") : ord(rank);
+  return better === 0 ? top : of > 1 && better === of - 1 ? bottom : I18N.t("{rank} of {n} on the roster", {rank: nth, n: of});
 }
 const slice = (p, get) => { const all = DATA.reduce((t, q) => t + get(q), 0); return all ? get(p)/all : 0; };   // of everyone's together
 const SPOTS = [
-  p => { const c = classify(p); return c && c.top && c.top.length ? {k: "Class", v: c.name, c: c.why, svg: bars(c.top.map(t => ({frac: t.share, label: `${Math.round(t.share*100)}% ${t.fam}`})))} : null; },
-  p => num(p.deaths) ? {k: "Deaths", v: `${num(p.deaths)}`, c: rankLine(p, q => num(q.deaths), "most on the roster", "fewest on the roster"), svg: strip(p, q => num(q.deaths))} : null,
-  p => num(p.dist_m) ? {k: "Distance", v: `${km(p.dist_m)} <small>km</small>`, c: rankLine(p, q => num(q.dist_m), "farthest on the roster", "least on the roster"), svg: strip(p, q => num(q.dist_m))} : null,
-  p => kpd(p) ? {k: "Survivor", v: `${kpd(p) >= 10 ? Math.round(kpd(p)) : kpd(p).toFixed(1)} <small>km per death</small>`, c: rankLine(p, kpd, "safest on the roster", "deadliest on the roster"), svg: strip(p, kpd)} : null,
-  p => num(p.close_calls) ? {k: "Closest call", v: `${Math.round(num(p.lowest_hp)*100)}% <small>health</small>`, c: `${plural(num(p.close_calls), "close call")}: under a tenth and back`, svg: bars([{frac: num(p.lowest_hp), label: "and lived", colour: "var(--off)"}])} : null,
-  p => (p.streak_m || {}).best ? {k: "Best streak", v: `${km(p.streak_m.best)} <small>km without dying</small>`, c: `${km(p.streak_m.now)} km since the last death`, svg: bars([{frac: 1, label: "best"}, {frac: num(p.streak_m.now)/num(p.streak_m.best), label: "since the last"}])} : null,
+  p => { const c = classify(p); return c && c.top && c.top.length ? {k: "Class", v: c.title, c: c.why, svg: bars(c.top.map(t => ({frac: t.share, label: I18N.t("{pct}% {what}", {pct: Math.round(t.share*100), what: I18N.t(t.fam)})})))} : null; },
+  p => num(p.deaths) ? {k: "Deaths", v: `${num(p.deaths)}`, c: rankLine(p, q => num(q.deaths), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(q.deaths))} : null,
+  p => num(p.dist_m) ? {k: "Distance", v: `${km(p.dist_m)} <small>km</small>`, c: rankLine(p, q => num(q.dist_m), I18N.t("farthest on the roster"), I18N.t("least on the roster")), svg: strip(p, q => num(q.dist_m))} : null,
+  p => kpd(p) ? {k: "Survivor", v: `${kpd(p) >= 10 ? I18N.num(Math.round(kpd(p))) : I18N.num(+kpd(p).toFixed(1), {minimumFractionDigits: 1, maximumFractionDigits: 1})} <small>${I18N.t("km per death")}</small>`, c: rankLine(p, kpd, I18N.t("safest on the roster"), I18N.t("deadliest on the roster")), svg: strip(p, kpd)} : null,
+  p => num(p.close_calls) ? {k: "Closest call", v: I18N.t("{pct}% <small>health</small>", {pct: Math.round(num(p.lowest_hp)*100)}), c: I18N.tn(num(p.close_calls), "{n} close call: under a tenth and back", "{n} close calls: under a tenth and back"), svg: bars([{frac: num(p.lowest_hp), label: I18N.t("and lived"), colour: "var(--off)"}])} : null,
+  p => (p.streak_m || {}).best ? {k: "Best streak", v: `${km(p.streak_m.best)} <small>${I18N.t("km without dying")}</small>`, c: I18N.t("{n} km since the last death", {n: km(p.streak_m.now)}), svg: bars([{frac: 1, label: I18N.t("best")}, {frac: num(p.streak_m.now)/num(p.streak_m.best), label: I18N.t("since the last")}])} : null,
   p => { const b = (p.biomes || []).filter(r => num(r.deaths) > 0 && num(r.m) > 0).sort((a, c) => num(c.deaths)/num(c.m) - num(a.deaths)/num(a.m))[0];
-         return b ? {k: "Deadliest ground", v: esc(b.biome), c: `${per(b.deaths, b.m)} there, ${plural(num(b.deaths), "death")} in ${km(b.m)} km`, svg: bars([{frac: num(b.deaths)/Math.max(1, num(p.deaths)), label: "of all deaths", colour: INK[b.biome]}])} : null; },
+         return b ? {k: "Deadliest ground", v: esc(I18N.t(b.biome)), c: I18N.tn(num(b.deaths), "{per} there, {n} death in {km} km", "{per} there, {n} deaths in {km} km", {per: per(b.deaths, b.m), km: km(b.m)}), svg: bars([{frac: num(b.deaths)/Math.max(1, num(p.deaths)), label: I18N.t("of all deaths"), colour: INK[b.biome]}])} : null; },
   p => { const b = (p.biomes || []).filter(r => num(r.deaths) === 0 && num(r.m) >= 1000).sort((a, c) => num(c.m) - num(a.m))[0];
-         return b ? {k: "Safest ground", v: esc(b.biome), c: `${km(b.m)} km there without a death`, svg: bars([{frac: num(b.m)/Math.max(1, num(p.dist_m)), label: "of all km", colour: INK[b.biome]}])} : null; },
-  p => num(p.pieces) ? {k: "Builder", v: `${num(p.pieces)} <small>pieces</small>`, c: rankLine(p, q => num(q.pieces), "most on the roster", "fewest on the roster"), svg: ring(slice(p, q => num(q.pieces)), "of everything standing")} : null,
-  p => num(p.portals) ? {k: "Gates", v: `${num(p.portals)} <small>portals</small>`, c: rankLine(p, q => num(q.portals), "most on the roster", "fewest on the roster"), svg: ring(slice(p, q => num(q.portals)), "of the world's gates")} : null,
-  p => num(p.ships) ? {k: "Fleet", v: `${num(p.ships)} <small>${num(p.ships) === 1 ? "ship" : "ships"} afloat</small>`, c: rankLine(p, q => num(q.ships), "the roster's biggest fleet", "smallest"), svg: ring(slice(p, q => num(q.ships)), "of every hull")} : null,
-  p => num(p.hops) ? {k: "Hops", v: `${num(p.hops)} <small>portal trips</small>`, c: rankLine(p, q => num(q.hops), "most on the roster", "fewest on the roster"), svg: strip(p, q => num(q.hops))} : null,
-  p => num(p.kills) ? {k: "Slayer", v: `${num(p.kills)} <small>kills</small>`, c: rankLine(p, q => num(q.kills), "most on the roster", "fewest on the roster"), svg: strip(p, q => num(q.kills))} : null,
-  p => num(p.trees) + num(p.rocks) ? {k: "Harvester", v: `${num(p.trees)} <small>trees</small> · ${num(p.rocks)} <small>rocks</small>`, c: rankLine(p, q => num(q.trees) + num(q.rocks), "most on the roster", "fewest on the roster"), svg: strip(p, q => num(q.trees) + num(q.rocks))} : null,
-  p => { const k = kit(p), c = num(k.cooked), b = num(k.burnt); return c + b ? {k: "Cooked", v: `${c} <small>dishes</small>`, c: b ? `burnt ${b} of ${c + b} cooked` : "nothing burnt yet",
-         svg: ring(slice(p, q => num(kit(q).cooked)), "of the roster's cooking")} : null; },
+         return b ? {k: "Safest ground", v: esc(I18N.t(b.biome)), c: I18N.t("{n} km there without a death", {n: km(b.m)}), svg: bars([{frac: num(b.m)/Math.max(1, num(p.dist_m)), label: I18N.t("of all km"), colour: INK[b.biome]}])} : null; },
+  p => num(p.pieces) ? {k: "Builder", v: I18N.tn(num(p.pieces), "{n} <small>piece</small>", "{n} <small>pieces</small>"), c: rankLine(p, q => num(q.pieces), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: ring(slice(p, q => num(q.pieces)), I18N.t("of everything standing"))} : null,
+  p => num(p.portals) ? {k: "Gates", v: I18N.tn(num(p.portals), "{n} <small>portal</small>", "{n} <small>portals</small>"), c: rankLine(p, q => num(q.portals), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: ring(slice(p, q => num(q.portals)), I18N.t("of the world's gates"))} : null,
+  p => num(p.ships) ? {k: "Fleet", v: I18N.tn(num(p.ships), "{n} <small>ship afloat</small>", "{n} <small>ships afloat</small>"), c: rankLine(p, q => num(q.ships), I18N.t("the roster's biggest fleet"), I18N.t("smallest")), svg: ring(slice(p, q => num(q.ships)), I18N.t("of every hull"))} : null,
+  p => num(p.hops) ? {k: "Hops", v: I18N.tn(num(p.hops), "{n} <small>portal trip</small>", "{n} <small>portal trips</small>"), c: rankLine(p, q => num(q.hops), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(q.hops))} : null,
+  p => num(p.kills) ? {k: "Slayer", v: I18N.tn(num(p.kills), "{n} <small>kill</small>", "{n} <small>kills</small>"), c: rankLine(p, q => num(q.kills), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(q.kills))} : null,
+  p => num(p.trees) + num(p.rocks) ? {k: "Harvester", v: `${I18N.tn(num(p.trees), "{n} <small>tree</small>", "{n} <small>trees</small>")} · ${I18N.tn(num(p.rocks), "{n} <small>rock</small>", "{n} <small>rocks</small>")}`, c: rankLine(p, q => num(q.trees) + num(q.rocks), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(q.trees) + num(q.rocks))} : null,
+  p => { const k = kit(p), c = num(k.cooked), b = num(k.burnt); return c + b ? {k: "Cooked", v: I18N.tn(c, "{n} <small>dish</small>", "{n} <small>dishes</small>"), c: b ? I18N.t("burnt {b} of {n} cooked", {b, n: c + b}) : I18N.t("nothing burnt yet"),
+         svg: ring(slice(p, q => num(kit(q).cooked)), I18N.t("of the roster's cooking"))} : null; },
   p => { const d = Object.entries(kit(p).dishes || {}).sort((a, b) => num(b[1]) - num(a[1])); if(!d.length) return null; const most = num(d[0][1]);
-         return {k: "Top dish", v: esc(itemWord(d[0][0])), c: `${most} made`, svg: bars(d.slice(0, 3).map(([k, n]) => ({frac: num(n)/most, label: `${num(n)} ${itemWord(k)}`})))}; },
-  p => num(kit(p).brewed) ? {k: "Brewed", v: `${num(kit(p).brewed)} <small>meads</small>`, c: rankLine(p, q => num(kit(q).brewed), "most on the roster", "fewest on the roster"), svg: strip(p, q => num(kit(q).brewed))} : null,
-  p => num(kit(p).smelted) ? {k: "Smelted", v: `${num(kit(p).smelted)}`, c: rankLine(p, q => num(kit(q).smelted), "most on the roster", "fewest on the roster"), svg: strip(p, q => num(kit(q).smelted))} : null,
-  p => num(p.pins) ? {k: "Pins", v: `${num(p.pins)}`, c: rankLine(p, q => num(q.pins), "most on the roster", "fewest on the roster"), svg: ring(slice(p, q => num(q.pins)), "of the map's pins")} : null,
-  p => num(p.chat) ? {k: "Chat", v: `${num(p.chat)} <small>lines</small>`, c: rankLine(p, q => num(q.chat), "the roster's loudest", "the roster's quietest"), svg: ring(slice(p, q => num(q.chat)), "of everything said")} : null,
-  p => num(p.joins) ? {k: "Joins", v: `${num(p.joins)}`, c: rankLine(p, q => num(q.joins), "most on the roster", "fewest on the roster"), svg: strip(p, q => num(q.joins))} : null,
+         return {k: "Top dish", v: esc(itemWord(d[0][0])), c: I18N.t("{n} made", {n: most}), svg: bars(d.slice(0, 3).map(([k, n]) => ({frac: num(n)/most, label: `${num(n)} ${itemWord(k)}`})))}; },
+  p => num(kit(p).brewed) ? {k: "Brewed", v: I18N.tn(num(kit(p).brewed), "{n} <small>mead</small>", "{n} <small>meads</small>"), c: rankLine(p, q => num(kit(q).brewed), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(kit(q).brewed))} : null,
+  p => num(kit(p).smelted) ? {k: "Smelted", v: `${num(kit(p).smelted)}`, c: rankLine(p, q => num(kit(q).smelted), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(kit(q).smelted))} : null,
+  p => num(p.pins) ? {k: "Pins", v: `${num(p.pins)}`, c: rankLine(p, q => num(q.pins), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: ring(slice(p, q => num(q.pins)), I18N.t("of the map's pins"))} : null,
+  p => num(p.chat) ? {k: "Chat", v: I18N.tn(num(p.chat), "{n} <small>line</small>", "{n} <small>lines</small>"), c: rankLine(p, q => num(q.chat), I18N.t("the roster's loudest"), I18N.t("the roster's quietest")), svg: ring(slice(p, q => num(q.chat)), I18N.t("of everything said"))} : null,
+  p => num(p.joins) ? {k: "Joins", v: `${num(p.joins)}`, c: rankLine(p, q => num(q.joins), I18N.t("most on the roster"), I18N.t("fewest on the roster")), svg: strip(p, q => num(q.joins))} : null,
   p => { const r = p.runs || {}, n = num(r.ok) + num(r.failed) + num(r.rescued) + num(r.open); if(!n) return null;
-         return {k: "Corpse runs", v: `${num(r.ok)} <small>recovered</small>`, c: [num(r.failed) && `${num(r.failed)} failed`, num(r.rescued) && `${num(r.rescued)} rescued by others`, num(r.open) && `${num(r.open)} still out there`].filter(Boolean).join(" · ") || "every grave reclaimed",
-                 svg: bars([{frac: num(r.ok)/n, label: `${Math.round(100*num(r.ok)/n)}% got back`, colour: "var(--ok)"}])}; },
+         return {k: "Corpse runs", v: I18N.t("{n} <small>recovered</small>", {n: num(r.ok)}), c: [num(r.failed) && I18N.t("{n} failed", {n: num(r.failed)}), num(r.rescued) && I18N.t("{n} rescued by others", {n: num(r.rescued)}), num(r.open) && I18N.t("{n} still out there", {n: num(r.open)})].filter(Boolean).join(" · ") || I18N.t("every grave reclaimed"),
+                 svg: bars([{frac: num(r.ok)/n, label: I18N.t("{pct}% got back", {pct: Math.round(100*num(r.ok)/n)}), colour: "var(--ok)"}])}; },
 ];
 // the figures of the one picked, in the order they turn
 const spots = () => { const p = DATA.find(x => x.name === PICK); return p ? SPOTS.map(f => f(p)).filter(Boolean) : []; };
@@ -442,14 +447,14 @@ async function load(){
     if(!LOADED){ LOADED = true; applyHash(); }
     render();
     document.getElementById("note").textContent = "";
-    document.getElementById("stamp").textContent = "updated " + new Date().toLocaleTimeString();
+    document.getElementById("stamp").textContent = I18N.t("updated {time}", {time: I18N.time()});
   }catch(e){
     // keep whatever is on screen: a stale tally beats an empty page
     if(LOADED){
-      document.getElementById("note").textContent = "stats unavailable — these tallies may be out of date";
+      document.getElementById("note").textContent = I18N.t("stats unavailable — these tallies may be out of date");
     }else{
-      document.getElementById("count").textContent = "stats unavailable";
-      document.getElementById("list").innerHTML = `<p class="empty">The server is not answering right now. This page retries every minute.</p>`;
+      document.getElementById("count").textContent = I18N.t("stats unavailable");
+      document.getElementById("list").innerHTML = `<p class="empty">${I18N.t("The server is not answering right now. This page retries every minute.")}</p>`;
     }
   }
 }

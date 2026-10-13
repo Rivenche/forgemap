@@ -8,7 +8,10 @@ const src = f => readFileSync(new URL(`../../WebMap/web/${f}`, import.meta.url),
 const browser = {window: {}, document: {readyState: "complete", addEventListener(){}, querySelector: () => null, querySelectorAll: () => []},
   localStorage: {getItem: () => null, setItem(){}}, matchMedia: () => ({matches: false, addEventListener(){}}), location: {hash: "", pathname: "/", search: ""}};
 const MapCore = new Function(...Object.keys(browser), src("map-core.js") + "\nreturn MapCore;")(...Object.values(browser));
-const Spot = new Function("MapCore", src("js/spot.js") + "\nreturn Spot;")(MapCore);
+// ForgeMap: the pages' language, in English here (the page loads js/i18n.js before everything)
+const I18N = new Function("window", "document", "location", "navigator", "localStorage", src("js/i18n.js") + "\nreturn window.I18N;")(
+  {}, {documentElement: {}, addEventListener(){}}, {search: "", href: "http://x/"}, {language: "en-GB", languages: ["en-GB"]}, browser.localStorage);
+const Spot = new Function("MapCore", "I18N", src("js/spot.js") + "\nreturn Spot;")(MapCore, I18N);
 // the page before its first tick: empty lists, nothing fetched
 const bare = {stats: null, explored: null, pieces: null, forest: {}, vehicles: null, portals: [], graves: [], features: null, deaths: []};
 

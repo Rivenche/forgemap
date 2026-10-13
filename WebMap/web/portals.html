@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="site.css">
 <script src="js/i18n.js"></script>
 <script src="js/lang/fr.js"></script>
+<script src="js/lang/noms.js"></script>
 <script src="site-config.js"></script>
 <script src="map-core.js"></script>
 <style>
@@ -170,7 +171,7 @@
     <h1 class="title">Portals</h1>
     <p class="sub" id="count">reading the world&#8230;</p>
     <p class="note bad" id="note"></p>
-    <p class="key"><span class="k"></span> a standing link &#183; <span class="k dash"></span> one retag away
+    <p class="key" data-i18n><span class="k"></span> a standing link &#183; <span class="k dash"></span> one retag away
       &#183; drag to pan, scroll or pinch to zoom</p>
     <div class="btnrow" id="hubs" hidden></div>
     <div class="list" id="list"></div>
@@ -218,13 +219,13 @@ const plural = MapCore.plural, metres = MapCore.metres;
 const DIRS = ["north","north-east","east","south-east","south","south-west","west","north-west"];
 const ABBR = ["N","NE","E","SE","S","SW","W","NW"];
 function deg(dx, dz){ return (Math.atan2(dx, dz)*180/Math.PI + 360) % 360; }
-function bearing(dx, dz){ return DIRS[Math.round(deg(dx, dz)/45) % 8]; }
-function abbr(dx, dz){ return ABBR[Math.round(deg(dx, dz)/45) % 8]; }
+function bearing(dx, dz){ return I18N.t(DIRS[Math.round(deg(dx, dz)/45) % 8]); }
+function abbr(dx, dz){ return I18N.t(ABBR[Math.round(deg(dx, dz)/45) % 8]); }
 function where(p){
   const d = Math.hypot(p.x, p.z), xz = `${Math.round(p.x)}, ${Math.round(p.z)}`;
-  return `<span class="xz">${xz}</span> &#183; ` + (d < 50 ? "the world centre" : `${bearing(p.x, p.z)}, ${metres(d)}`);
+  return `<span class="xz">${xz}</span> &#183; ` + (d < 50 ? I18N.t("the world centre") : `${bearing(p.x, p.z)}, ${metres(d)}`);
 }
-function nameOf(p){ return p.name ? esc(p.name) : `<span class="un">unnamed</span>`; }
+function nameOf(p){ return p.name ? esc(p.name) : `<span class="un">${I18N.t("unnamed")}</span>`; }
 function link(id){ return `index.html#portal=${encodeURIComponent(id)}`; }
 // Either end serves as the link target: the map fits the whole pair anyway.
 function row(ends){
@@ -275,7 +276,7 @@ function siteName(portals){
     }
   }
   if(best) return {pin: best.text, label: best.text, given: null, by: null, tags};
-  return {pin: null, label: tags.length ? tags.join(" · ") : "unnamed site", given: null, by: null, tags};
+  return {pin: null, label: tags.length ? tags.join(" · ") : I18N.t("unnamed site"), given: null, by: null, tags};
 }
 
 // ---------- the diagram ----------
@@ -531,17 +532,17 @@ function fillInside(site){
   const siteOfId = id => SITES.find(x => x.portals.some(p => p.id === id));
   const free = site.portals.filter(p => !twin(p)).length, spot = (IN.at && by.get(IN.at)) || site;
   document.getElementById("inName").textContent = site.label;
-  document.getElementById("inMeta").textContent = `${plural(site.portals.length, "gate")}${free ? ` · ${free} free` : ""} · ${Math.round(site.x)}, ${Math.round(site.z)}`;
+  document.getElementById("inMeta").textContent = `${I18N.tn(site.portals.length, "{n} gate", "{n} gates")}${free ? ` · ${I18N.t("{n} free", {n: free})}` : ""} · ${Math.round(site.x)}, ${Math.round(site.z)}`;
   document.getElementById("inMap").href = `index.html#at=${Math.round(site.x)},${Math.round(site.z)},48`;
   document.getElementById("in3d").href = `index.html#3d=${Math.round(spot.x)},${Math.round(spot.z)}`;
   const marks = [], chips = [];
   for(const p of site.portals.slice().sort((a, b) => (a.name || "").localeCompare(b.name || ""))){
     const q = twin(p), k = MapCore.toPx(p.x, p.z), cls = q ? "on" : p.name ? "dial" : "free", dst = q && siteOfId(q.id);
-    const on = dst ? ` data-go="${siteKey(dst)}" data-at="${esc(q.id)}" title="Through to ${esc(dst.label)}"` : "";
+    const on = dst ? ` data-go="${siteKey(dst)}" data-at="${esc(q.id)}" title="${I18N.t("Through to {name}", {name: esc(dst.label)})}"` : "";
     marks.push(`<div class="mk ${cls}${IN.at === p.id ? " here" : ""}" data-id="${esc(p.id)}" data-px="${k.px}" data-py="${k.py}">`
-      + `<svg class="ic"${on}><use href="#ic-portal"></use></svg><span class="lb"${on}>${esc(p.name || "free")}</span></div>`);
+      + `<svg class="ic"${on}><use href="#ic-portal"></use></svg><span class="lb"${on}>${esc(p.name || I18N.t("free"))}</span></div>`);
     chips.push(`<a class="gate ${q ? "on" : "free"}${IN.at === p.id ? " hl" : ""}" href="#" data-find="${esc(p.id)}"`
-      + ` title="${dst ? `leads to ${esc(dst.label)}` : p.name ? "tagged, nothing answers" : "no tag"}">${esc(p.name || "free")}</a>`);
+      + ` title="${dst ? I18N.t("leads to {name}", {name: esc(dst.label)}) : p.name ? I18N.t("tagged, nothing answers") : I18N.t("no tag")}">${esc(p.name || I18N.t("free"))}</a>`);
   }
   for(const pin of PINS){
     if(!pin.text || Math.hypot(pin.x - site.x, pin.z - site.z) > 160) continue;
@@ -607,15 +608,15 @@ function panel(site, sps){
   const chip = g => {
     const s = sps.find(x => x.gate === g);
     return `<a class="gate ${s ? "on" : "free"}" href="${link(g.id)}" tabindex="-1"`
-      + (s ? ` data-s="${s.k}" data-go="${siteKey(s.dst)}" data-at="${esc(s.at)}" title="Through to ${esc(s.dst.label)}"` : "")
-      + `>${esc(g.name || (s ? "untagged" : "free"))}</a>`;
+      + (s ? ` data-s="${s.k}" data-go="${siteKey(s.dst)}" data-at="${esc(s.at)}" title="${I18N.t("Through to {name}", {name: esc(s.dst.label)})}"` : "")
+      + `>${esc(g.name || (s ? I18N.t("untagged") : I18N.t("free")))}</a>`;
   };
   const gates = site.portals.slice().sort((a, b) => rank(a) - rank(b));
   const linked = gates.filter(g => sps.some(x => x.gate === g)).length, big = gates.length > 6;
-  const sum = big ? `<a class="gate sum" tabindex="-1" title="Show or hide the linked gates">${linked} linked</a>` : "";
+  const sum = big ? `<a class="gate sum" tabindex="-1" title="${I18N.t("Show or hide the linked gates")}">${I18N.t("{n} linked", {n: linked})}</a>` : "";
   return `<div class="panel${big ? " big" : ""}"><div class="ttl">`
-    + `<a href="${link(site.portals[0].id)}" data-go="${siteKey(site)}" tabindex="-1" title="Close up">${site.pin ? esc(site.pin) : "Hub"}</a>`
-    + `<span class="n">${plural(site.portals.length, "gate")}</span></div>`
+    + `<a href="${link(site.portals[0].id)}" data-go="${siteKey(site)}" tabindex="-1" title="${I18N.t("Close up")}">${site.pin ? esc(site.pin) : I18N.t("Hub")}</a>`
+    + `<span class="n">${I18N.tn(site.portals.length, "{n} gate", "{n} gates")}</span></div>`
     + `<div class="gates">${gates.filter(g => !sps.some(x => x.gate === g)).map(chip).join("")}${sum}${gates.filter(g => sps.some(x => x.gate === g)).map(chip).join("")}</div></div>`;
 }
 // A hub's card: its name (a pencil renames it, signed in), where it stands, then
@@ -623,29 +624,29 @@ function panel(site, sps){
 function hubCard(hub, sps){
   const d = Math.hypot(hub.x, hub.z), id = hubId(hub), me = MapCore.user();
   const free = hub.portals.filter(p => !p.to).length;
-  const meta = `${plural(hub.portals.length, "gate")}${free ? ` (${free} free)` : ""} &#183; `
+  const meta = `${I18N.tn(hub.portals.length, "{n} gate", "{n} gates")}${free ? ` (${I18N.t("{n} free", {n: free})})` : ""} &#183; `
     + `<span class="xz">${Math.round(hub.x)}, ${Math.round(hub.z)}</span> &#183; `
-    + (d < 50 ? "the world centre" : `${bearing(hub.x, hub.z)}, ${metres(d)} out`);
+    + (d < 50 ? I18N.t("the world centre") : I18N.t("{dir}, {dist} out", {dir: bearing(hub.x, hub.z), dist: metres(d)}));
   const one = sps.filter(s => s.kind === "link").length === 1;
-  const li = s => `<li data-q="${esc((s.tag + " " + s.dst.label).toLowerCase())}"><a class="go" href="${link(s.target)}" data-go="${siteKey(s.dst)}" data-at="${esc(s.at)}" title="Through to ${esc(s.dst.label)}">`
-    + `<span class="g">${s.kind === "dial" ? "dial " : ""}${esc(s.tag)}</span><span class="arr">&#8594;</span>`
+  const li = s => `<li data-q="${esc((s.tag + " " + s.dst.label).toLowerCase())}"><a class="go" href="${link(s.target)}" data-go="${siteKey(s.dst)}" data-at="${esc(s.at)}" title="${I18N.t("Through to {name}", {name: esc(s.dst.label)})}">`
+    + `<span class="g">${s.kind === "dial" ? I18N.t("dial") + " " : ""}${esc(s.tag)}</span><span class="arr">&#8594;</span>`
     + `<span class="to">${esc(s.dst.label)}</span> <span>&#183; ${metres(s.d)} ${s.ab}</span>`
     + `<span class="st ${s.kind === "dial" ? "dial" : "on"}">`
-    + (s.kind === "dial" ? "one retag away" : one ? "dialled now" : "linked") + `</span></a>`
-    + `<a class="mp" href="${link(s.target)}" title="See this gate on the map">&#8982;</a></li>`;
+    + (s.kind === "dial" ? I18N.t("one retag away") : one ? I18N.t("dialled now") : I18N.t("linked")) + `</span></a>`
+    + `<a class="mp" href="${link(s.target)}" title="${I18N.t("See this gate on the map")}">&#8982;</a></li>`;
   const bySector = new Map();
   for(const s of sps){ const k = Math.round(s.br/45) % 8; (bySector.get(k) || bySector.set(k, []).get(k)).push(s); }
   const groups = [...bySector.keys()].sort((a, b) => a - b).map(k =>
-    `<li class="sector"><b>${ABBR[k]}</b>${DIRS[k]} &#183; ${bySector.get(k).length}</li>` + bySector.get(k).map(li).join("")).join("");
+    `<li class="sector"><b>${I18N.t(ABBR[k])}</b>${I18N.t(DIRS[k])} &#183; ${bySector.get(k).length}</li>` + bySector.get(k).map(li).join("")).join("");
   const title = EDITING === id
-    ? `<form class="rename" data-hub="${esc(id)}"><input class="field" name="name" maxlength="40" value="${esc(hub.given || "")}" placeholder="${esc(hub.pin || "name this hub")}" autocomplete="off">`
-      + `<div class="btnrow"><button class="btn" type="submit">Save</button>${hub.given ? '<button class="btn quiet" type="button" data-clear>Back to its gates</button>' : ""}<button class="btn quiet" type="button" data-cancel>Cancel</button></div></form>`
-    : `<h3><svg class="ic"><use href="#ic-portal"></use></svg><span><a class="open" href="${link(hub.portals[0].id)}" data-go="${siteKey(hub)}" title="Close up">${esc(hub.label)}</a>`
-      + (me ? ` <a href="#" class="edit" data-rename="${esc(id)}" title="Rename this hub">&#9998;</a>` : "")
+    ? `<form class="rename" data-hub="${esc(id)}"><input class="field" name="name" maxlength="40" value="${esc(hub.given || "")}" placeholder="${esc(hub.pin || I18N.t("name this hub"))}" autocomplete="off">`
+      + `<div class="btnrow"><button class="btn" type="submit">${I18N.t("Save")}</button>${hub.given ? `<button class="btn quiet" type="button" data-clear>${I18N.t("Back to its gates")}</button>` : ""}<button class="btn quiet" type="button" data-cancel>${I18N.t("Cancel")}</button></div></form>`
+    : `<h3><svg class="ic"><use href="#ic-portal"></use></svg><span><a class="open" href="${link(hub.portals[0].id)}" data-go="${siteKey(hub)}" title="${I18N.t("Close up")}">${esc(hub.label)}</a>`
+      + (me ? ` <a href="#" class="edit" data-rename="${esc(id)}" title="${I18N.t("Rename this hub")}">&#9998;</a>` : "")
       + (hub.given && hub.tags.length ? `<span class="tags">${esc(hub.tags.join(" · "))}</span>` : "") + `</span></h3>`;
-  const find = sps.length > 10 ? `<div class="find"><input class="field" type="search" data-find="${esc(id)}" placeholder="find a gate&#8230;" value="${esc(FILTER.get(id) || "")}" autocomplete="off"></div>` : "";
-  return `<section class="card" data-hub="${esc(id)}">${title}<p class="meta">${meta}${hub.by ? ` &#183; named by ${esc(hub.by)}` : ""}</p>${find}`
-    + (sps.length ? `<ul class="spokes">${groups}</ul>` : `<p class="empty">No gate here reaches anywhere yet.</p>`)
+  const find = sps.length > 10 ? `<div class="find"><input class="field" type="search" data-find="${esc(id)}" placeholder="${I18N.t("find a gate&#8230;")}" value="${esc(FILTER.get(id) || "")}" autocomplete="off"></div>` : "";
+  return `<section class="card" data-hub="${esc(id)}">${title}<p class="meta">${meta}${hub.by ? ` &#183; ${I18N.t("named by {name}", {name: esc(hub.by)})}` : ""}</p>${find}`
+    + (sps.length ? `<ul class="spokes">${groups}</ul>` : `<p class="empty">${I18N.t("No gate here reaches anywhere yet.")}</p>`)
     + `</section>`;
 }
 function applyFilter(card){
@@ -681,7 +682,7 @@ async function saveHubName(id, name){
     await MapCore.post(API, "/names", {id, name});
     EDITING = null; note.textContent = "";
     await load();
-  }catch(err){ note.textContent = err.message || "could not save the name"; }
+  }catch(err){ note.textContent = err.message || I18N.t("could not save the name"); }
 }
 
 // ---------- the picked hub ----------
@@ -752,8 +753,8 @@ function render(list){
   const elsewhere = pairs.filter(([a, b]) => !atHub(a) && !atHub(b));
   const loose = list.filter(p => !twin(p) && (!p.name || !hubs.length));
 
-  const head = (WORLD ? `<b>${esc(WORLD)}</b> &#183; ` : "") + plural(list.length, "portal")
-    + ` &#183; ${plural(hubs.length, "hub")} &#183; ${plural(pairs.length, "pair")} &#183; ${loose.length} loose`;
+  const head = (WORLD ? `<b>${esc(WORLD)}</b> &#183; ` : "") + I18N.tn(list.length, "{n} portal", "{n} portals")
+    + ` &#183; ${I18N.tn(hubs.length, "{n} hub", "{n} hubs")} &#183; ${I18N.tn(pairs.length, "{n} pair", "{n} pairs")} &#183; ${I18N.t("{n} loose", {n: loose.length})}`;
   if(head !== LAST_HEAD){ document.getElementById("count").innerHTML = head; LAST_HEAD = head; }
   renderHubChips(hubs);
 
@@ -768,7 +769,7 @@ function render(list){
     for(const g of hub.portals){
       const q = twin(g); if(!q) continue;
       const dst = siteOf.get(q.id); if(dst === hub) continue;
-      sps.push({kind: "link", tag: g.name || "untagged", gate: g, dst, target: g.id, at: q.id});
+      sps.push({kind: "link", tag: g.name || I18N.t("untagged"), gate: g, dst, target: g.id, at: q.id});
     }
     for(const p of dials){
       const dst = siteOf.get(p.id); if(dst === hub || dialHub(p) !== hub) continue;
@@ -787,7 +788,7 @@ function render(list){
   for(const [a, b] of elsewhere){
     const A = siteOf.get(a.id), B = siteOf.get(b.id); if(A === B) continue;
     const dx = B.x - A.x, dz = B.z - A.z;
-    add({kind: "pair", tag: a.name || b.name || "untagged", a: A, b: B,
+    add({kind: "pair", tag: a.name || b.name || I18N.t("untagged"), a: A, b: B,
          d: Math.hypot(dx, dz), br: deg(dx, dz), ab: abbr(dx, dz), target: a.id});
   }
 
@@ -802,15 +803,15 @@ function render(list){
     const ico = `<svg class="ic"><use href="#ic-portal"></use></svg>`;
     if(!sps.length){
       nodes.push({site, kind: "loose", pri: 3, d: Math.hypot(site.x, site.z), keys: [],
-                  href: link(p0.id), title: p0.name || "untagged", html: ico});
+                  href: link(p0.id), title: p0.name || I18N.t("untagged"), html: ico});
       continue;
     }
     const dial = sps.every(s => s.kind === "dial");
     const o = sps[0].a === site ? sps[0].b : sps[0].a;
     const d = Math.hypot(site.x-o.x, site.z-o.z), ab = abbr(site.x-o.x, site.z-o.z);
     nodes.push({site, kind: dial ? "dial" : "rem", pri: dial ? 2 : 1, d, go: siteKey(site), at: p0.id,
-      keys: sps.map(s => s.k), href: link(p0.id), title: `${site.pin || p0.name || "untagged"} · close up`,
-      html: ico + `<span class="lb"><span class="t">${dial ? `<span class="dl">dial </span>` : ""}`
+      keys: sps.map(s => s.k), href: link(p0.id), title: I18N.t("{name} · close up", {name: site.pin || p0.name || I18N.t("untagged")}),
+      html: ico + `<span class="lb"><span class="t">${dial ? `<span class="dl">${I18N.t("dial")} </span>` : ""}`
         + `${esc(p0.name || sps[0].tag)}</span><span class="d">${metres(d)} ${ab}</span></span>`});
   }
   nodes.sort((a, b) => a.pri - b.pri || a.d - b.d);
@@ -849,10 +850,10 @@ function render(list){
 
   let html = "";
   for(const hub of hubs) html += hubCard(hub, hubSpokes.get(hub) || []);
-  if(hubs.length) html = `<h2 class="eyebrow section">${hubs.length === 1 ? "Hub" : "Hubs"}</h2>` + html;
-  if(elsewhere.length) html += `<h2 class="eyebrow section">Elsewhere</h2><div class="rows">${elsewhere.map(row).join("")}</div>`;
-  if(loose.length) html += `<h2 class="eyebrow section">Loose</h2><div class="rows">${loose.map(p => row([p])).join("")}</div>`;
-  if(!list.length) html = `<p class="empty">No portals standing in this world yet.</p>`;
+  if(hubs.length) html = `<h2 class="eyebrow section">${hubs.length === 1 ? I18N.t("Hub") : I18N.t("Hubs")}</h2>` + html;
+  if(elsewhere.length) html += `<h2 class="eyebrow section">${I18N.t("Elsewhere")}</h2><div class="rows">${elsewhere.map(row).join("")}</div>`;
+  if(loose.length) html += `<h2 class="eyebrow section">${I18N.t("Loose")}</h2><div class="rows">${loose.map(p => row([p])).join("")}</div>`;
+  if(!list.length) html = `<p class="empty">${I18N.t("No portals standing in this world yet.")}</p>`;
   // untouched DOM on the minute, so no flicker; and never under someone's typing
   if(html !== LAST && !(EDITING && LAST && listEl.querySelector(".rename"))){ listEl.innerHTML = html; LAST = html; listEl.querySelectorAll(".card[data-hub]").forEach(applyFilter); }
   if(IN){ const s = SITES.find(x => siteKey(x) === IN.key); if(s) fillInside(s); else closeInside(); }
@@ -875,10 +876,10 @@ async function load(){
     if(IN) loadPieces();
     render(((s.portals || {}).portals) || []);
     document.getElementById("note").textContent = "";
-    document.getElementById("stamp").textContent = "updated " + new Date().toLocaleTimeString();
+    document.getElementById("stamp").textContent = I18N.t("updated {time}", {time: I18N.time()});
   }catch(e){
     // keep whatever is on screen: a stale atlas beats an empty one
-    document.getElementById("note").textContent = "server unreachable — this atlas may be out of date";
+    document.getElementById("note").textContent = I18N.t("server unreachable — this atlas may be out of date");
   }
 }
 
