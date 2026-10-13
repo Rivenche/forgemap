@@ -44,9 +44,11 @@
     return t(single ? one : many, v);
   }
   function num(n, opts){ return typeof n === "number" ? n.toLocaleString(locale, opts) : String(n); }
-  function date(d, opts){ return new Date(d).toLocaleDateString(locale, opts); }
-  function time(d){ return new Date(d === undefined ? Date.now() : d).toLocaleTimeString(locale, {hour: "2-digit", minute: "2-digit", second: "2-digit"}); }
-  function datetime(d){ return new Date(d).toLocaleString(locale); }
+  // dates and times: French as France writes them; in English, the browser's own way (12 or 24 h, day/month order)
+  const when = lang === "fr" ? locale : undefined;
+  function date(d, opts){ return new Date(d).toLocaleDateString(when, opts); }
+  function time(d){ const t = new Date(d === undefined ? Date.now() : d); return lang === "fr" ? t.toLocaleTimeString(when, {hour: "2-digit", minute: "2-digit", second: "2-digit"}) : t.toLocaleTimeString(); }
+  function datetime(d){ return new Date(d).toLocaleString(when); }
 
   function add(code, table){ TABLES[code] = Object.assign(TABLES[code] || {}, table); }
   // the game's own names for a prefab (js/lang/noms.js): "ArmorIronChest" -> "Iron Scale Mail" /

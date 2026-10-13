@@ -631,7 +631,7 @@ document.getElementById("clearBtn").onclick = () => {
 document.getElementById("newBtn").onclick = () => {
   if(doc.items.length && !confirm(I18N.t("Clear the title, notes and every drawing?"))) return;
   doc = newDoc(); RO = false; undoStack.length = 0;
-  history.replaceState(null, "", location.pathname);
+  history.replaceState(null, "", location.pathname + location.search);
   document.getElementById("roBanner").hidden = true;
   syncFields(); save(); redraw(); renderCount(); setRO(false);
 };
@@ -800,13 +800,13 @@ document.getElementById("copyPlanBtn").onclick = () => {
   const mine = storedPlan();
   if(mine && (mine.items || []).length && !confirm(I18N.t("Replace your own saved plan with this one?"))) return;
   setRO(false);
-  history.replaceState(null, "", location.pathname);
+  history.replaceState(null, "", location.pathname + location.search);
   document.getElementById("roBanner").hidden = true;
   save(); renderCount();
 };
 document.getElementById("dismissBtn").onclick = () => {
   const mine = storedPlan();
-  history.replaceState(null, "", location.pathname);
+  history.replaceState(null, "", location.pathname + location.search);
   document.getElementById("roBanner").hidden = true;
   doc = mine && mine.v === 1 ? mine : newDoc();
   doc.layers = Object.assign({}, DEFAULT_LAYERS, doc.layers || {});
