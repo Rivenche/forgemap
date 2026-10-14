@@ -297,3 +297,11 @@ body:not(.side-open) .sidebar{display:none}
 .fm-ad a:hover .go{filter:brightness(1.1)}
 .fm-ad .x{position:absolute;top:.4rem;right:.4rem;width:1.5rem;height:1.5rem;border:0;border-radius:50%;background:rgba(12,10,9,.65);color:var(--ink-2);font-size:.95rem;line-height:1;cursor:pointer}
 .fm-ad .x:hover{color:var(--bright)}
+
+/* ---------- ForgeMap: the Viking turned by hand, the shareable card ---------- */
+/* a drag across the figure turns it (js/card.js); a vertical swipe on a phone stays the page's scroll */
+.viking canvas{cursor:grab;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.viking.drag canvas{cursor:grabbing}
+/* the small square button with an icon only: the card's "download image" */
+.btn.icon{width:30px;height:30px;min-width:0;padding:0}
+.btn.icon svg{width:15px;height:15px}

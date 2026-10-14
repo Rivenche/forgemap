@@ -928,12 +928,19 @@ function esc(t){ return String(t).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&l
 const NAV_PAGES = [["index", "Map"], ["world", "World"], ["portals", "Portals"], ["players", "Players"], ["plan", "Plan"]];
 let navEl = null, navPage = "";
 // Nameless until the world names itself, and "Valheim" until even that arrives.
-function brand(){ return cfg.brand || worldName || "Valheim"; }
+function brand(){ return cfg.brand || worldName || "ForgeMap"; }   // ForgeMap: our name until the world names itself
 // The tab is the world's name -- the map plain, the rest "<world> · <page>" -- and the
 // deployment's brand only until the world has named itself.
 function setTitle(page){
-  const row = NAV_PAGES.find(p => p[0] === page), name = worldName || brand();
-  document.title = (!row || page === "index") ? name : name + " \u00b7 " + I18N.t(row[1]);
+  // ForgeMap: "<page> \u00b7 <world> \u00b7 ForgeMap" (the map page: "<world> \u00b7 ForgeMap"), and ForgeServer's flame as the tab icon
+  const row = NAV_PAGES.find(p => p[0] === page), world = worldName || cfg.brand;
+  document.title = [row && page !== "index" ? I18N.t(row[1]) : "", world, "ForgeMap"].filter(Boolean).join(" \u00b7 ");
+  if(!document.querySelector('link[rel="icon"][data-forgemap]')){
+    for(const l of document.querySelectorAll('link[rel="icon"]')) l.remove();
+    const l = document.createElement("link"); l.rel = "icon"; l.type = "image/svg+xml"; l.setAttribute("data-forgemap", "");
+    l.href = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#f97316" d="M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 5-2.47.27.773.5 1.604.5 2.47A7.5 7.5 0 0 1 12 23z"/></svg>');
+    document.head.appendChild(l);
+  }
 }
 // The footer credits whoever runs this one; a deployment that names no repo has none.
 function credits(){

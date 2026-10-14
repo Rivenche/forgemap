@@ -37,8 +37,9 @@ const AXES = [
 ];
 // ForgeMap: in French the longer words of a side figure run off the card, so its parts stand one under the other
 const lines = (t, anchor, lx) => I18N.lang === "fr" && anchor !== "middle" ? t.split(" · ").map((s, j) => j ? `<tspan x="${lx.toFixed(1)}" dy="10">${esc(s)}</tspan>` : esc(s)).join("") : esc(t);
-function radar(p, size, big){
-  const c = size/2, R = big ? c - 30 : c - 3, pts = [];
+// bare: the corners named without their figures (a player's shareable card, where room is short)
+function radar(p, size, big, bare){
+  const c = size/2, R = big ? c - (bare ? 18 : 30) : c - 3, pts = [];
   AXES.forEach(([, keys], i) => {
     const a = -Math.PI/2 + i*2*Math.PI/5, r = R*Math.sqrt(share(p, keys));
     pts.push([c + r*Math.cos(a), c + r*Math.sin(a), a]);
@@ -53,6 +54,7 @@ function radar(p, size, big){
     AXES.forEach(([name, , text], i) => {
       const a = -Math.PI/2 + i*2*Math.PI/5, lx = c + (R + 14)*Math.cos(a), ly = c + (R + 14)*Math.sin(a);
       const anchor = Math.abs(Math.cos(a)) < .2 ? "middle" : Math.cos(a) > 0 ? "start" : "end";
+      if(bare){ out += `<text class="lb" x="${lx.toFixed(1)}" y="${(ly + (Math.sin(a) > .5 ? 8 : Math.sin(a) < -.5 ? -2 : 3)).toFixed(1)}" text-anchor="${anchor}">${I18N.t(name)}</text>`; return; }
       out += `<text class="lb" x="${lx.toFixed(1)}" y="${(ly + (Math.sin(a) > .5 ? 6 : Math.sin(a) < -.5 ? -4 : 0)).toFixed(1)}" text-anchor="${anchor}">${I18N.t(name)}</text>`
         + `<text class="lv" x="${lx.toFixed(1)}" y="${(ly + (Math.sin(a) > .5 ? 17 : Math.sin(a) < -.5 ? 7 : 11)).toFixed(1)}" text-anchor="${anchor}">${lines(text(p), anchor, lx)}</text>`;
     });
@@ -220,9 +222,12 @@ function figures(p){
 const STILL = matchMedia("(prefers-reduced-motion: reduce)");
 function viking(api){
   // lib: the library's index as fetched, {rev, p}; gen counts the fetches that moved a rig part, built the one the rig is from
-  const VK = {el: document.createElement("figure"), ready: null, v: null, lib: null, gen: 0, built: -1, key: undefined, name: null, rig: null, missing: 0, want: null, raf: 0, w: 0, h: 0};
+  // ang: the turntable's angle; tilt: the camera raised or lowered by a drag; auto: the slow turn's
+  // speed, 0..1, eased back in after a drag; hold: until when (rAF time) the turn waits after one
+  const VK = {el: document.createElement("figure"), ready: null, v: null, lib: null, gen: 0, built: -1, key: undefined, name: null, rig: null, missing: 0, want: null, raf: 0, w: 0, h: 0,
+    ang: 0.5, tilt: 0, auto: 1, hold: 0, drag: null, last: 0};
   VK.el.className = "card viking"; VK.el.hidden = true;
-  VK.el.innerHTML = `<canvas aria-hidden="true"></canvas><figcaption></figcaption>`;
+  VK.el.innerHTML = `<canvas aria-hidden="true" title="${esc(I18N.t("Drag to turn"))}"></canvas><figcaption></figcaption>`;
   function load(){
     if(!VK.ready) VK.ready = Promise.all([import("three"), import("three/addons/loaders/GLTFLoader.js"), import("./rig.js")]).then(([THREE, {GLTFLoader}, rig]) => {
       const renderer = new THREE.WebGLRenderer({canvas: VK.el.querySelector("canvas"), antialias: true, alpha: true});
@@ -230,7 +235,7 @@ function viking(api){
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
       const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(30, 232/300, 0.1, 50);
-      camera.position.set(0, 1.2, 5); camera.lookAt(0, 0.9, 0);    // room for a cape to swing past
+      camera.position.set(0, 1.2, 5); camera.lookAt(0, 0.9, 0);    // room for a cape to swing past (aim() moves it with the tilt)
       // a warm key high on the left, the sky's cool fill, a rim off the dark behind
       const key = new THREE.DirectionalLight(0xfff0dc, 2.8); key.position.set(-2.2, 3.4, 3); scene.add(key);
       const rim = new THREE.DirectionalLight(0xa8bcd8, 1.4); rim.position.set(1.6, 2.4, -3); scene.add(rim);
@@ -289,21 +294,168 @@ function viking(api){
     if(VK.v) VK.v.builder.dispose();
     VK.rig = null; VK.key = undefined; VK.name = null;
   };
-  function turning(){ VK.el.hidden = false; if(!VK.raf) VK.raf = requestAnimationFrame(spin); }
-  function still(){ VK.el.hidden = true; cancelAnimationFrame(VK.raf); VK.raf = 0; }
-  // a turn every 25 s; with reduced motion, one still from a little to the side
+  function turning(){ VK.el.hidden = false; wake(); }
+  function still(){ VK.el.hidden = true; cancelAnimationFrame(VK.raf); VK.raf = 0; VK.last = 0; }
+  function wake(){ if(VK.v && !VK.el.hidden && !VK.raf) VK.raf = requestAnimationFrame(spin); }
+  // the camera on its circle round the figure's middle, raised by the tilt
+  const EL0 = Math.atan2(0.3, 5), DIST = Math.hypot(0.3, 5);
+  function aim(cam){ const e = EL0 + VK.tilt; cam.position.set(0, 0.9 + DIST*Math.sin(e), DIST*Math.cos(e)); cam.lookAt(0, 0.9, 0); }
+  // a turn every 25 s; with reduced motion, one still from a little to the side that only a drag turns.
+  // A drag holds the turn, and three seconds after it the turn picks up again from where the hand left it.
   function spin(t){
     VK.raf = 0;
     const v = VK.v, c = v.renderer.domElement, w = c.clientWidth, h = c.clientHeight;
-    if(VK.el.hidden || !w || !h) return;
+    if(VK.el.hidden || !w || !h){ VK.last = 0; return; }
     if(w !== VK.w || h !== VK.h){ VK.w = w; VK.h = h; v.renderer.setSize(w, h, false); v.camera.aspect = w/h; v.camera.updateProjectionMatrix(); }
-    v.turn.rotation.y = STILL.matches ? 0.5 : 0.5 + t*0.00025;
+    const dt = VK.last ? Math.min(100, t - VK.last) : 0, moving = !STILL.matches;
+    VK.last = t;
+    if(moving && !VK.drag && t >= VK.hold){
+      VK.ang += dt*0.00025*VK.auto;
+      VK.auto = Math.min(1, VK.auto + dt/1500);                       // back up to speed over a second and a half
+      if(VK.tilt){ VK.tilt *= Math.pow(0.5, dt/450); if(Math.abs(VK.tilt) < 1e-3) VK.tilt = 0; }   // and the eye back to its height
+    }
+    v.turn.rotation.y = VK.ang; aim(v.camera);
     v.renderer.render(v.scene, v.camera);
-    if(!STILL.matches) VK.raf = requestAnimationFrame(spin);
+    if(moving || VK.drag) VK.raf = requestAnimationFrame(spin);
+    else VK.last = 0;
   }
-  addEventListener("resize", () => { if(!VK.el.hidden && !VK.raf) VK.raf = requestAnimationFrame(spin); });
+  addEventListener("resize", wake);
+  // ---------- turned by hand ----------
+  // A drag across the figure turns it, up and down tilts the eye a little (a mouse or a pen: on a
+  // touch screen an upward swipe is the page's scroll, which touch-action: pan-y leaves to it).
+  const cv = VK.el.querySelector("canvas");
+  cv.addEventListener("pointerdown", e => {
+    if(e.pointerType === "mouse" && e.button !== 0) return;
+    VK.drag = {id: e.pointerId, x: e.clientX, y: e.clientY};
+    try{ cv.setPointerCapture(e.pointerId); }catch(err){}
+    VK.el.classList.add("drag"); VK.auto = 0; wake();
+    if(e.pointerType === "mouse") e.preventDefault();                 // no text selected on the way
+  });
+  cv.addEventListener("pointermove", e => {
+    const d = VK.drag; if(!d || d.id !== e.pointerId) return;
+    const dx = e.clientX - d.x, dy = e.clientY - d.y;
+    d.x = e.clientX; d.y = e.clientY;
+    VK.ang += dx*0.012;
+    if(e.pointerType !== "touch") VK.tilt = Math.max(-0.1, Math.min(0.4, VK.tilt + dy*0.004));
+    wake();
+  });
+  const letGo = e => {
+    if(!VK.drag || VK.drag.id !== e.pointerId) return;
+    VK.drag = null; VK.el.classList.remove("drag");
+    VK.hold = performance.now() + 3000; VK.auto = 0; wake();
+  };
+  for(const ev of ["pointerup", "pointercancel", "lostpointercapture"]) cv.addEventListener(ev, letGo);
+  // ---------- a picture of it ----------
+  // The figure as it stands now, drawn at w x h onto a 2D context: rendered at that size for the
+  // occasion and put back, all in one task, so the drawing buffer is still whole when it is copied
+  // and nothing on screen moves. false when there is no figure to draw.
+  VK.paint = (ctx, x, y, w, h) => {
+    const v = VK.v; if(!v || !VK.rig || VK.el.hidden) return false;
+    const r = v.renderer, pr = r.getPixelRatio();
+    r.setPixelRatio(1); r.setSize(w, h, false);
+    v.camera.aspect = w/h; v.camera.updateProjectionMatrix();
+    v.turn.rotation.y = VK.ang; aim(v.camera);
+    r.render(v.scene, v.camera);
+    ctx.drawImage(r.domElement, x, y, w, h);
+    r.setPixelRatio(pr); VK.w = VK.h = 0;                              // the next frame sizes it back to its box
+    if(!VK.raf) spin(performance.now());
+    return true;
+  };
   return VK;
 }
 
-return {seen, sea, kpd, kit, BEST, rim, radar, classify, pill, figures, viking};
+// ---------- the card as a picture ----------
+// A PNG of one player, 360 x 520 drawn at twice that: the figure, the name and class, six figures,
+// the pentagon and the credit, in the site's dark and ember. o: {vk, world, online}. A Blob.
+const INKS = {bg: "#141110", bg2: "#1b1715", well: "#100d0c", stage: "#0c0a09", card: "#221d1a", line: "#3a2f28", ink: "#f3ede4", ink2: "#d6cbbd", muted: "#a89c92", faint: "#75685e",
+  bright: "#fff", gold: "#f97316", ok: "#6faf68", nil: "#5e534b"};
+const FLAME_PATH = "M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 5-2.47.27.773.5 1.604.5 2.47A7.5 7.5 0 0 1 12 23z";
+const MONO = '"JetBrains Mono", ui-monospace, Consolas, monospace', SANS = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+// the six figures a card shows, [value, label, nothing?]
+function sixFigures(p){
+  const d = num(p.deaths), m = num(p.dist_m), k = num(p.kills), pc = num(p.pieces), h = num(p.hops);
+  return [[I18N.num(d), lab(d, "death", "deaths"), !d], [km(m), "km", !m], [per(d, m).replace(/^1\D*?(?=\d)/, ""), I18N.t("km per death"), !(d && m)],
+    [I18N.num(k), lab(k, "kill", "kills"), !k], [I18N.num(pc), lab(pc, "piece", "pieces"), !pc], [I18N.num(h), lab(h, "hop", "hops"), !h]];
+}
+async function picture(p, roster, o){
+  o = o || {};
+  rim(roster);
+  const S = 2, W = 360, H = 520, C = INKS;
+  const cv = document.createElement("canvas"); cv.width = W*S; cv.height = H*S;
+  const x = cv.getContext("2d"); x.scale(S, S);
+  try{ await Promise.all([document.fonts.load(`700 24px ${MONO}`), document.fonts.load(`400 12px ${MONO}`)]); }catch(e){}
+  const spaced = v => { if("letterSpacing" in x) x.letterSpacing = v; };
+  const fit = (t, w) => { t = String(t); if(x.measureText(t).width <= w) return t; while(t.length > 1 && x.measureText(t + "…").width > w) t = t.slice(0, -1); return t + "…"; };
+  const box = (bx, by, bw, bh, r) => { x.beginPath(); x.roundRect ? x.roundRect(bx, by, bw, bh, r) : x.rect(bx, by, bw, bh); };
+  // the card
+  const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, C.bg2); g.addColorStop(1, C.well);
+  box(.5, .5, W - 1, H - 1, 14); x.fillStyle = g; x.fill(); x.strokeStyle = C.line; x.lineWidth = 1; x.stroke();
+  x.fillStyle = C.gold; x.fillRect(16, 0, 44, 2);                       // an ember mark along the top edge
+  // the strip: ForgeMap's flame and name, the world at the right
+  x.save(); x.translate(16, 15); x.scale(12/24, 12/24); x.fillStyle = C.gold; x.fill(new Path2D(FLAME_PATH)); x.restore();
+  x.textBaseline = "alphabetic"; x.font = `700 10px ${MONO}`; spaced("1.5px"); x.fillStyle = C.gold; x.textAlign = "left"; x.fillText("FORGEMAP", 32, 25);
+  if(o.world){ x.font = `400 10px ${MONO}`; spaced("0px"); x.fillStyle = C.muted; x.textAlign = "right"; x.fillText(fit(o.world, 200), W - 16, 25); }
+  // the name, the class, online or when last seen
+  x.textAlign = "left"; spaced("0px"); x.font = `700 24px ${MONO}`; x.fillStyle = C.bright; x.fillText(fit(p.name || "", W - 32), 16, 62);
+  const c = classify(p, roster);
+  let sx = 16;
+  if(c){
+    x.font = `600 9.5px ${SANS}`; spaced("1px");
+    const t = fit(c.title.toUpperCase(), 200), tw = x.measureText(t).width + 16;
+    box(16, 72, tw, 19, 9.5); x.fillStyle = "rgba(255,255,255,.035)"; x.fill(); x.strokeStyle = C.line; if(c.early) x.setLineDash([3, 2]); x.stroke(); x.setLineDash([]);
+    x.fillStyle = c.early ? C.muted : C.gold; x.fillText(t, 24, 85); sx = 16 + tw + 10;
+  }
+  spaced("0px"); x.font = `500 11px ${SANS}`;
+  if(o.online){ x.beginPath(); x.arc(sx + 4, 81.5, 3.5, 0, 7); x.fillStyle = C.ok; x.fill(); sx += 12; }
+  x.fillStyle = o.online ? C.ok : C.muted; x.fillText(fit(o.online ? I18N.t("online now") : seen(num(p.last_seen)), W - 16 - sx), sx, 85.5);
+  // the figure, on the map's ground
+  const FX = 16, FY = 104, FW = 150, FH = 236;
+  box(FX, FY, FW, FH, 10); x.fillStyle = C.stage; x.fill();
+  x.save(); box(FX, FY, FW, FH, 10); x.clip();
+  const drawn = o.vk && o.vk.paint ? o.vk.paint(x, FX, FY, FW, FH) : false;
+  if(!drawn){ x.save(); x.translate(FX + FW/2 - 24, FY + FH/2 - 30); x.scale(2, 2); x.fillStyle = C.line; x.fill(new Path2D(FLAME_PATH)); x.restore(); }
+  x.restore();
+  box(FX, FY, FW, FH, 10); x.strokeStyle = C.line; x.stroke();
+  // six figures, two by three, beside it
+  const six = sixFigures(p), GX = 178, GW = (W - 16 - GX)/2, GH = FH/3;
+  six.forEach(([v, k, nil], i) => {
+    const cx = GX + (i % 2)*GW, cy = FY + Math.floor(i/2)*GH;
+    box(cx + (i % 2 ? 4 : 0), cy + (i > 1 ? 4 : 0), GW - 4, GH - 4, 8); x.fillStyle = C.card; x.fill(); x.strokeStyle = C.line; x.stroke();
+    const ix = cx + (i % 2 ? 4 : 0) + 10, iy = cy + (i > 1 ? 4 : 0);
+    x.font = `700 20px ${MONO}`; spaced("0px"); x.fillStyle = nil ? C.nil : C.bright; x.fillText(fit(v, GW - 22), ix, iy + 36);
+    x.font = `600 8.5px ${SANS}`; spaced(".6px"); x.fillStyle = C.muted; x.fillText(fit(String(k).toUpperCase(), GW - 22), ix, iy + 53);
+  });
+  // the pentagon, its corners named
+  const PC = {x: W/2, y: 418}, R = 44;
+  const corner = (i, r) => { const a = -Math.PI/2 + i*2*Math.PI/5; return [PC.x + r*Math.cos(a), PC.y + r*Math.sin(a), a]; };
+  x.strokeStyle = C.line; x.lineWidth = 1;
+  for(const k of [.25, .5, .75, 1]){ x.beginPath(); for(let i = 0; i < 5; i++){ const [px, py] = corner(i, R*k); i ? x.lineTo(px, py) : x.moveTo(px, py); } x.closePath(); x.stroke(); }
+  x.beginPath(); AXES.forEach(([, keys], i) => { const [px, py] = corner(i, R*Math.sqrt(share(p, keys))); i ? x.lineTo(px, py) : x.moveTo(px, py); }); x.closePath();
+  x.fillStyle = "rgba(249,115,22,.22)"; x.fill(); x.strokeStyle = C.gold; x.lineWidth = 1.6; x.lineJoin = "round"; x.stroke(); x.lineWidth = 1;
+  AXES.forEach(([, keys], i) => { const [px, py] = corner(i, R*Math.sqrt(share(p, keys))); x.beginPath(); x.arc(px, py, 2.4, 0, 7); x.fillStyle = C.gold; x.fill(); });
+  x.font = `600 9px ${SANS}`; spaced(".8px"); x.fillStyle = C.muted;
+  AXES.forEach(([name], i) => {
+    const [lx, ly, a] = corner(i, R + 10), cos = Math.cos(a), sin = Math.sin(a);
+    x.textAlign = Math.abs(cos) < .2 ? "center" : cos > 0 ? "left" : "right";
+    x.fillText(I18N.t(name).toUpperCase(), lx, ly + (sin > .5 ? 9 : sin < -.5 ? -3 : 3));
+  });
+  // the credit
+  x.textAlign = "left"; spaced("0px"); x.strokeStyle = C.line; x.beginPath(); x.moveTo(16, 488.5); x.lineTo(W - 16, 488.5); x.stroke();
+  x.font = `400 9.5px ${MONO}`; x.fillStyle = C.faint; x.fillText(I18N.date(Date.now(), {day: "numeric", month: "short", year: "numeric"}), 16, 507);
+  x.textAlign = "right"; x.font = `700 9.5px ${MONO}`; x.fillStyle = C.ink2;
+  const tail = "ForgeServer.fr", tw = x.measureText(tail).width; x.fillText(tail, W - 16, 507);
+  x.fillStyle = C.gold; x.fillText("ForgeMap · ", W - 16 - tw, 507);
+  return new Promise((ok, no) => cv.toBlob(b => b ? ok(b) : no(new Error("toBlob")), "image/png"));
+}
+// hand a Blob to the browser as a file, by a link with download
+function save(blob, file){
+  const url = URL.createObjectURL(blob), a = document.createElement("a");
+  a.href = url; a.download = file; a.rel = "noopener"; a.style.display = "none";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+// a file name from a player's name: letters and digits kept, the rest a dash
+const fileName = name => "forgemap-" + (String(name || "player").normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^\w-]+/g, "-").replace(/^-+|-+$/g, "") || "player") + ".png";
+
+return {seen, sea, kpd, kit, BEST, rim, radar, classify, pill, figures, sixFigures, viking, picture, save, fileName};
 })();

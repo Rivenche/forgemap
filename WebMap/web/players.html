@@ -121,6 +121,17 @@
     .figs{grid-template-columns:repeat(3,minmax(0,1fr))}
   }
   @keyframes slidein{from{opacity:0;transform:translateX(24px)}}
+  /* ForgeMap: the share panel under the player's heading -- the card's link, its embed code, a picture */
+  .share{margin-top:.8rem;display:grid;gap:.7rem;max-width:620px}
+  .share .sh-row{display:grid;gap:.3rem}
+  .share .sh-f{display:flex;gap:.4rem;align-items:flex-start}
+  .share .sh-f .field{flex:1 1 auto;min-width:0;font-family:var(--mono);font-size:.72rem}
+  .share textarea.field{min-height:64px;resize:none}
+  .share .sh-act{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+  .share .sh-msg{font-size:.72rem;color:var(--muted)}
+  .share .sh-msg.ok{color:var(--ok)}
+  .share .sh-msg.bad{color:var(--off)}
+  .share .sh-hint{font-size:.72rem;color:var(--muted);line-height:1.45}
 </style>
 </head>
 <body>
@@ -184,6 +195,7 @@
 
   <section class="detail" id="detail">
     <div class="dhead" id="dhead"></div>
+    <div class="share card" id="share" hidden></div>
     <div id="dbody"></div>
   </section>
 </div>
@@ -292,6 +304,7 @@ function renderDetail(){
     + (here ? `<a class="btn quiet sm" href="index.html#at=${Math.round(here.x)},${Math.round(here.z)},20" title="${esc(I18N.t("Where they stand now"))}">${I18N.t("On the map")}</a>` : "")
     + (num(p.deaths) ? `<a class="btn quiet sm" href="${mapLink(p.name)}">${I18N.t("Deaths")}</a>` : "")
     + (lastLink ? `<a class="btn quiet sm" href="${lastLink}" title="${esc(I18N.t("Where they last died"))}">${I18N.t("Last death")}</a>` : "")
+    + `<button class="btn quiet sm${SHARE === p.name ? " on" : ""}" type="button" id="share-btn" aria-expanded="${SHARE === p.name}" aria-controls="share" title="${esc(I18N.t("A card of this player for your site, or as an image"))}">${I18N.t("Share")}</button>`
     + `</span>`;
   const streakLine = streak.best != null
     ? `<div class="line">${I18N.t("<b>Streak</b> best {best} km without dying &#183; {now} km since the last", {best: km(streak.best), now: km(streak.now)})}`
@@ -411,7 +424,63 @@ function showViking(p, here){
   VK.show(p.name, (p.online && here && here.look) || p.look, !!p.online, MODELS);
 }
 
+// ---------- sharing ----------
+// ForgeMap: a player's card (fiche.html) to link to or put in an iframe on another site, and the
+// same card as a PNG. The panel sits outside the heading the minute redraws, so it stays open.
+let SHARE = null;   // the name whose panel is open
+function ficheURL(name){
+  const u = new URL("fiche.html", location.href), q = new URLSearchParams(location.search).get("lang");
+  u.search = ""; u.hash = "";
+  u.searchParams.set("p", name);
+  if(q) u.searchParams.set("lang", q);
+  return u.href;
+}
+function embedCode(name){
+  return `<iframe src="${esc(ficheURL(name))}" width="360" height="520" style="border:0" loading="lazy" title="${esc(I18N.t("{name} on ForgeMap", {name}))}"></iframe>`;
+}
+function openShare(name){
+  SHARE = name || null;
+  const el = document.getElementById("share");
+  el.hidden = !SHARE;
+  if(!SHARE){ el.innerHTML = ""; return; }
+  el.innerHTML = `<div class="sh-row"><label class="eyebrow" for="sh-link">${I18N.t("Link to the card")}</label>`
+    + `<div class="sh-f"><input class="field" id="sh-link" readonly value="${esc(ficheURL(name))}"><button class="btn sm" type="button" data-copy="sh-link">${I18N.t("Copy")}</button></div></div>`
+    + `<div class="sh-row"><label class="eyebrow" for="sh-code">${I18N.t("Embed on your site")}</label>`
+    + `<div class="sh-f"><textarea class="field" id="sh-code" readonly rows="3" spellcheck="false">${esc(embedCode(name))}</textarea><button class="btn sm" type="button" data-copy="sh-code">${I18N.t("Copy")}</button></div>`
+    + `<p class="sh-hint">${I18N.t("Paste this code into a page of your site: the card stays live and updates every minute.")}</p></div>`
+    + `<div class="sh-act"><button class="btn sm" type="button" id="sh-png">${I18N.t("Download image (PNG)")}</button>`
+    + `<a class="btn quiet sm" href="${esc(ficheURL(name))}" target="_blank" rel="noopener">${I18N.t("Open the card")}</a>`
+    + `<span class="sh-msg" id="sh-msg" role="status"></span></div>`;
+}
+function shareMsg(text, kind){ const m = document.getElementById("sh-msg"); if(m){ m.textContent = text; m.className = "sh-msg" + (kind ? " " + kind : ""); } }
+// the clipboard when the page may use it, else the old copy command, else the text selected for Ctrl+C
+async function copyField(id){
+  const f = document.getElementById(id); if(!f) return;
+  let ok = false;
+  try{ await navigator.clipboard.writeText(f.value); ok = true; }catch(e){}
+  f.focus(); f.select();
+  if(!ok){ try{ ok = document.execCommand("copy"); }catch(e){} }
+  shareMsg(ok ? I18N.t("Copied") : I18N.t("Selected: press Ctrl+C to copy"), ok ? "ok" : "");
+}
+async function sharePng(){
+  const p = DATA.find(x => x.name === SHARE); if(!p) return;
+  const b = document.getElementById("sh-png"); if(b) b.disabled = true;
+  shareMsg(I18N.t("Preparing the image…"));
+  try{
+    const blob = await PlayerCard.picture(p, DATA, {vk: VK.name === p.name ? VK : null, world: MapCore.geom.world !== "Mothership" ? MapCore.geom.world : "", online: !!p.online});
+    PlayerCard.save(blob, PlayerCard.fileName(p.name));
+    shareMsg(I18N.t("Image ready"), "ok");
+  }catch(e){ shareMsg(I18N.t("The image could not be made here."), "bad"); }
+  if(b) b.disabled = false;
+}
+document.getElementById("share").addEventListener("click", e => {
+  const c = e.target.closest("[data-copy]");
+  if(c) copyField(c.dataset.copy);
+  else if(e.target.closest("#sh-png")) sharePng();
+});
+
 function pick(name){
+  if(SHARE && SHARE !== name) openShare(null);
   PICK = name || null; DLAST = ""; Spot.reset();
   if(!PICK) VK.hide();
   document.getElementById("app").classList.toggle("picked", !!PICK);
@@ -429,6 +498,7 @@ document.getElementById("list").addEventListener("click", e => {
 });
 document.getElementById("detail").addEventListener("click", e => {
   if(e.target.closest("#back")) history.length > 1 ? history.back() : (location.hash = "");
+  else if(e.target.closest("#share-btn")){ openShare(SHARE === PICK ? null : PICK); DLAST = ""; renderDetail(); }
 });
 addEventListener("hashchange", applyHash);
 document.getElementById("sort").addEventListener("change", e => { SORT = e.target.value; if(LOADED) render(); });

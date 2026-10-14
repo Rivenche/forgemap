@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ForgeMap</title>
+<meta name="description" content="A Valheim player's card: their figure, class and tallies, live from the server.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23f97316%22%20d%3D%22M12%2023a7.5%207.5%200%200%201-5.138-12.963C8.204%208.774%2011.5%206.5%2011%201.5c6%204%209%208%203%2014%201%200%202.5%200%205-2.47.27.773.5%201.604.5%202.47A7.5%207.5%200%200%201%2012%2023z%22%2F%3E%3C%2Fsvg%3E">
+<link rel="stylesheet" href="site.css">
+<script src="js/i18n.js"></script>
+<script src="js/lang/fr.js"></script>
+<script src="site-config.js"></script>
+<script src="map-core.js"></script>
+<script src="js/card.js"></script>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/addons/" } }
+</script>
+<style>
+  /* ForgeMap: one player's card, made to sit in an iframe on another site (360 x 520 by default)
+     and to fill whatever box it is given. No bar, no sidebar. ?theme=transparent drops the page's
+     own background so the host's shows round the card. */
+  html,body{height:100%;overflow:hidden}
+  body{background:var(--bg);padding:0}
+  html.clear,html.clear body{background:transparent}
+  .fc{position:relative;height:100%;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto auto;gap:10px;padding:14px 16px 10px;
+    background:linear-gradient(180deg,var(--bg-2),var(--well));border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .fc::before{content:"";position:absolute;left:16px;top:0;width:44px;height:2px;background:var(--gold)}   /* the ember mark */
+  .clear .fc{background:rgba(20,17,16,.86)}
+
+  .fc .strip{display:flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.62rem;min-width:0}
+  .fc .strip .flame{width:12px;height:12px;color:var(--gold);flex:0 0 auto}
+  .fc .strip b{color:var(--gold);letter-spacing:.15em;font-weight:700}
+  .fc .strip .world{margin-left:auto;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .fc .strip .btn.icon{margin:-4px -6px -4px .3rem;flex:0 0 auto;width:26px;height:26px}
+  .fc .who{display:grid;gap:.35rem;min-width:0;margin-top:2px}
+  .fc .nm{font-family:var(--mono);font-weight:700;font-size:1.45rem;line-height:1.1;color:var(--bright);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fc .nm a{color:inherit}
+  .fc .sub2{display:flex;align-items:center;gap:.5rem;min-width:0;font-size:.72rem;color:var(--muted)}
+  .fc .sub2 .seen{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .fc.ok .sub2 .seen{color:var(--ok)}
+  .fc .sub2 .cls{font-size:.6rem;padding:.12rem .5rem}
+  .fc .head{display:grid;gap:8px;min-width:0}
+
+  /* the figure and six figures beside it */
+  .fc .mid{display:grid;grid-template-columns:42% minmax(0,1fr);gap:8px;min-height:0}
+  .fc .fig3d{position:relative;min-height:0;border:1px solid var(--line);border-radius:10px;background:var(--stage);overflow:hidden}
+  .fc .fig3d .viking{position:absolute;inset:0;border:0;border-radius:0;display:flex;flex-direction:column;background:transparent;box-shadow:none}
+  .fc .fig3d .viking[hidden]{display:none}
+  .fc .fig3d .viking canvas{flex:1 1 auto;min-height:0;height:auto}
+  .fc .fig3d .viking figcaption{display:none}   /* the line under the name says it already */
+  .fc .fig3d .none{position:absolute;inset:0;display:grid;place-items:center;color:var(--line)}
+  .fc .fig3d .none svg{width:48px;height:48px}
+  .fc .six{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,minmax(0,1fr));gap:4px;min-height:0}
+  .fc .six .stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 9px;display:flex;flex-direction:column;justify-content:center;min-width:0;min-height:0}
+  .fc .six .v{font-family:var(--mono);font-size:1.15rem;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fc .six .k{font-size:.54rem;letter-spacing:.05em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .fc .six .nil .v{color:var(--nil)}
+
+  /* the pentagon, its corners named */
+  .fc .pent{display:flex;justify-content:center;height:112px}
+  .fc .pent .radar{width:112px;height:112px;overflow:visible}
+  .fc .pent .radar .lb{font-size:8.5px}
+
+  .fc .foot2{display:flex;align-items:center;gap:.5rem;border-top:1px solid var(--line);padding-top:7px;font-family:var(--mono);font-size:.62rem;color:var(--faint)}
+  .fc .foot2 a{margin-left:auto;font-weight:700;color:var(--ink-2);white-space:nowrap}
+  .fc .foot2 a span{color:var(--gold)}
+  .fc .foot2 a:hover{text-decoration:none;color:var(--bright)}
+
+  .fc .foot2{grid-row:-2 / -1}
+  .fc .msg{grid-row:2 / 5;align-self:center;text-align:center;color:var(--muted);font-size:.85rem;line-height:1.5;padding:0 .5rem}
+  .fc .msg b{display:block;color:var(--ink);font-size:.95rem;margin-bottom:.3rem}
+
+  /* a short box keeps the figure and the figures; a very short one the figures alone */
+  @media (max-height:470px){ .fc .pent{display:none} }
+  @media (max-height:300px){ .fc .fig3d{display:none} .fc .mid{grid-template-columns:1fr} }
+  /* a wide box puts the pentagon beside the rest */
+  @media (min-width:560px){
+    .fc{grid-template-columns:minmax(0,1fr) 180px;grid-template-rows:auto auto minmax(0,1fr) auto;column-gap:18px}
+    .fc .strip,.fc .head,.fc .foot2{grid-column:1 / -1}
+    .fc .msg{grid-column:1 / -1;grid-row:2 / 4}
+    .fc .mid{grid-column:1;grid-row:3}
+    .fc .pent{display:flex;grid-column:2;grid-row:3;height:auto;align-items:center}
+  }
+</style>
+</head>
+<body>
+<main class="fc" id="card">
+  <div class="strip"><svg class="flame" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 5-2.47.27.773.5 1.604.5 2.47A7.5 7.5 0 0 1 12 23z"/></svg><b>FORGEMAP</b><span class="world" id="world"></span>
+    <button class="btn quiet icon" type="button" id="png" hidden title="Download image (PNG)" aria-label="Download image (PNG)"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m-5-5 5 5 5-5M5 20h14"/></svg></button></div>
+  <div id="body" style="display:contents"><p class="msg">loading…</p></div>
+  <div class="foot2"><span id="stamp"></span><a href="https://forgeserver.fr/?utm_source=forgemap&amp;utm_medium=fiche" target="_blank" rel="noopener"><span>ForgeMap</span> · ForgeServer.fr</a></div>
+</main>
+<script src="js/fiche.js"></script>
+</body>
+</html>

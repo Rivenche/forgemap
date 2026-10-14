@@ -1,7 +1,27 @@
 {
+ "A Valheim player's card: their figure, class and tallies, live from the server.": "La fiche d'un joueur Valheim : son personnage, sa classe et ses chiffres, en direct du serveur.",
+ "A card of this player for your site, or as an image": "Une fiche de ce joueur pour ton site, ou en image",
+ "Add ?p= and a player's name to the address.": "Ajoute ?p= suivi du nom d'un joueur à l'adresse.",
+ "Copied": "Copié",
+ "Copy": "Copier",
+ "Download image (PNG)": "Télécharger l'image (PNG)",
+ "Drag to turn": "Fais glisser pour le tourner",
+ "Embed on your site": "À intégrer sur ton site",
+ "Image ready": "Image prête",
+ "Link to the card": "Lien vers la fiche",
+ "Names are spelled as in the game. A player shows here once the server has seen them.": "Le nom s'écrit comme dans le jeu. Un joueur apparaît ici dès que le serveur l'a vu.",
+ "No player called {name} here yet": "Aucun joueur nommé {name} ici pour l'instant",
  "Now click a walked spot on the map to stand there in 3D": "Clique maintenant sur un endroit déjà exploré de la carte pour t'y retrouver en 3D",
+ "Open the card": "Ouvrir la fiche",
+ "Open their full page": "Ouvrir sa page complète",
+ "Paste this code into a page of your site: the card stays live and updates every minute.": "Colle ce code dans une page de ton site : la fiche reste en direct et se met à jour chaque minute.",
+ "Preparing the image…": "Préparation de l'image…",
  "Ready in 5 minutes, mods in one click, a backup every night.": "Prêt en 5 minutes, mods en un clic, une sauvegarde chaque nuit.",
  "Rent yours": "Loue le tien",
+ "Selected: press Ctrl+C to copy": "Sélectionné : fais Ctrl+C pour copier",
+ "The image could not be made here.": "L'image n'a pas pu être créée ici.",
+ "Which player?": "Quel joueur ?",
  "Your own Valheim server": "Ton serveur Valheim à toi",
- "{forgemap} by {forgeserver}, based on {webmap}": "{forgemap} par {forgeserver}, d'après {webmap}"
+ "{forgemap} by {forgeserver}, based on {webmap}": "{forgemap} par {forgeserver}, d'après {webmap}",
+ "{name} on ForgeMap": "{name} sur ForgeMap"
 }
