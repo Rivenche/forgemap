@@ -251,6 +251,20 @@ function explored(fogImg){
     return d[(y*FOGN + x)*4] > 40;
   };
 }
+// ForgeMap: the walked spot nearest to (px, py), in map pixels, ring by ring over the fog's
+// 512 grid; the spot itself when it is walked, null when nothing is walked yet (or no fog yet)
+function nearestExplored(fogImg, px, py){
+  const walked = explored(fogImg); if(!walked) return null;
+  if(walked(px, py)) return {px, py};
+  const step = geom.size/FOGN;
+  for(let r = 1; r < FOGN; r++)
+    for(let i = -r; i <= r; i++)
+      for(const [dx, dy] of [[i, -r], [i, r], [-r, i], [r, i]]){
+        const x = px + dx*step, y = py + dy*step;
+        if(x >= 0 && y >= 0 && x < geom.size && y < geom.size && walked(x, y)) return {px: x, py: y};
+      }
+  return null;
+}
 // A build in ground nobody has walked is not drawn. Until the fog has decoded,
 // nothing is dropped rather than everything.
 function filterExplored(pieces, fogImg){
@@ -1037,7 +1051,7 @@ function nav(current, el){
 return {cfg, nav, toggleSide, user, authHeaders, whoami,
         geom, setGeom, toPx, toWorld, PLAN_ZOOM, MAX_ZOOM,
         fetchJSON, fetchBytes, fetchState, fetchConfig, post, layers,
-        drawRasters, parsePieces, explored, filterExplored, walked, drawPieces, drawFires, drawDeaths, drawNames, hitName,
+        drawRasters, parsePieces, explored, nearestExplored, filterExplored, walked, drawPieces, drawFires, drawDeaths, drawNames, hitName,
         clamp, view, viewCache, fitCanvas, scaleBar,
         ICONS, spriteSVG, injectSprite, iconPaths, vehicleStyle, PIN_ICON, BOSSES, BOSS_ICON, kitchens, pic, BIOME_INK, biomeRows,
         parsePins, plural, ord, num, km, metres, per, ago, secsAgo, everyMinute, esc};

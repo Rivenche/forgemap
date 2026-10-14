@@ -108,7 +108,16 @@ function hint3D(orbit){
 // The pegman: dragged from the column and dropped on the map, or on a touch screen
 // armed by a tap and dropped by the next tap on the map. Only onto walked ground.
 let PEG_ARMED = false, pegDrag = null;
-function armPeg(on){ PEG_ARMED = on; pegEl.classList.toggle("on", on); stage.classList.toggle("dropping", on); }
+function armPeg(on){
+  PEG_ARMED = on; pegEl.classList.toggle("on", on); stage.classList.toggle("dropping", on);
+  // ForgeMap: say what the tap did, the figure alone turning orange told no one
+  const old = stage.querySelector(".dropnote.peghint"); if(old) old.remove();
+  if(!on) return;
+  const n = document.createElement("div");
+  n.className = "dropnote glass peghint"; n.textContent = I18N.t("Now click a walked spot on the map to stand there in 3D");
+  n.style.left = "50%"; n.style.top = "4.5rem"; n.style.transform = "translateX(-50%)";
+  stage.appendChild(n); setTimeout(() => n.remove(), 6000);
+}
 
 function dropPeg(x, y){
   armPeg(false);
@@ -175,7 +184,8 @@ function init(o){
   document.getElementById("viewsw").addEventListener("click", e => {
     const el = e.target.closest(".chip"); if(!el) return;
     if(el.dataset.view === "map") return leave3D();
-    const q = V.at(stage.clientWidth/2, stage.clientHeight/2), w = MapCore.toWorld(q.px, q.py);
+    // ForgeMap: the middle of the map is often sea nobody sailed: stand on the walked spot nearest to it
+    const c = V.at(stage.clientWidth/2, stage.clientHeight/2), q = MapCore.nearestExplored(LAYERS.imgs.fog, c.px, c.py) || c, w = MapCore.toWorld(q.px, q.py);
     location.hash = `#3d=${Math.round(w.x)},${Math.round(w.z)}`;
   });
   pegEl.addEventListener("pointerdown", e => {
