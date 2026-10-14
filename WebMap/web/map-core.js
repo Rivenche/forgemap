@@ -34,6 +34,7 @@ const cfg = {
   links:  Array.isArray(XNV.links) ? XNV.links
           : [{label: "Map mod", href: "https://github.com/hunter-jsb/valheim-webmap"}],
   status: XNV.status || null,
+  promo:  XNV.promo !== false,   // ForgeMap: the "rent your server" ribbon; site-config.js can set promo: false
   repo:   XNV.repo || null,
 };
 
@@ -948,6 +949,18 @@ function credits(){
       forgemap: "<b>ForgeMap</b>", forgeserver: link("https://forgeserver.fr", "ForgeServer.fr"), webmap: link("https://github.com/hunter-jsb/valheim-webmap", "WebMap")})}</span>`);
   }
 }
+// ForgeMap: a small "rent your own server" ribbon at the foot of every page, closed by its x for
+// the rest of the visit (sessionStorage, when the page may use it). Off with promo: false in site-config.js.
+function promo(){
+  if(!cfg.promo || document.querySelector(".fm-promo")) return;
+  try{ if(sessionStorage.getItem("forgemap.promo") === "closed") return; }catch(e){}
+  const el = document.createElement("div");
+  el.className = "fm-promo glass";
+  el.innerHTML = `<a href="https://forgeserver.fr/?utm_source=forgemap&amp;utm_medium=carte" target="_blank" rel="noopener">${FLAME}<span>${I18N.t("Your own Valheim server, ready in 5 minutes")}</span><b>${I18N.t("Rent yours on ForgeServer.fr")}</b></a>`
+    + `<button type="button" aria-label="${I18N.t("Close")}" title="${I18N.t("Close")}">&#215;</button>`;
+  el.querySelector("button").addEventListener("click", () => { el.remove(); try{ sessionStorage.setItem("forgemap.promo", "closed"); }catch(e){} });
+  document.body.appendChild(el);
+}
 // ForgeMap: ForgeServer's flame before the world's name in the bar
 const FLAME = '<svg class="flame" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 5-2.47.27.773.5 1.604.5 2.47A7.5 7.5 0 0 1 12 23z"/></svg>';
 // The sidebar, folded or not, is one choice for the whole site, kept in this
@@ -1042,8 +1055,8 @@ function nav(current, el){
   // drawn again once /config names the world: the answer already had is drawn, not asked again
   if(!asked) asked = whoami(); else if(signInHere) renderWho();
   setTitle(current);
-  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", credits, {once: true});
-  else credits();
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => { credits(); promo(); }, {once: true});
+  else{ credits(); promo(); }
   return el;
 }
 

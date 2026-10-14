@@ -283,3 +283,15 @@ body:not(.side-open) .sidebar{display:none}
 .brand{display:inline-flex;align-items:center;gap:.45rem}
 .brand .flame{width:1.05em;height:1.05em;flex:0 0 auto;color:var(--gold)}
 .fm-credit b{color:var(--ink-2);font-weight:600}
+/* the "rent your own server" ribbon: a pill at the foot of the page, over whatever is there */
+.fm-promo{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:.2rem;
+  padding:.3rem .35rem .3rem .75rem;border-radius:var(--pill);border-color:var(--gold-dim);box-shadow:var(--shadow);font-size:.8rem;max-width:calc(100vw - 32px)}
+.fm-promo a{display:flex;align-items:center;gap:.55rem;color:var(--ink-2);white-space:nowrap;min-width:0}
+.fm-promo a:hover{text-decoration:none;color:var(--ink)}
+.fm-promo a span{overflow:hidden;text-overflow:ellipsis}
+.fm-promo .flame{width:1.1em;height:1.1em;flex:0 0 auto;color:var(--gold)}
+.fm-promo b{font-family:var(--mono);font-size:.74rem;font-weight:700;color:var(--gold-ink);background:var(--gold);border-radius:var(--pill);padding:.22rem .65rem;flex:0 0 auto}
+.fm-promo a:hover b{filter:brightness(1.1)}
+.fm-promo button{background:none;border:0;color:var(--muted);font-size:1.05rem;line-height:1;padding:.15rem .4rem;cursor:pointer;border-radius:var(--pill)}
+.fm-promo button:hover{color:var(--ink)}
+@media (max-width:760px){ .fm-promo{bottom:10px;font-size:.74rem} .fm-promo a span{display:none} }
