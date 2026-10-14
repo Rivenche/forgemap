@@ -1,5 +1,10 @@
 # Changelog
 
+## ForgeMap 1.3.1
+
+* README (French and English) brought up to date with everything since 1.1: the Players page
+  (3D figure, gear panel, favourite weapon, shareable card), ping, names from the game.
+
 ## ForgeMap 1.3.0
 
 * **A figure you can look at.** A button opens a player's figure big in the middle of the screen

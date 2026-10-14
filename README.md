@@ -18,15 +18,31 @@ ForgeServer's look and a full French translation. Free, for the whole community.
 ### Ce que tu vois sur la carte
 
 * La carte du monde avec le **brouillard partagé** : seulement ce que les joueurs ont exploré.
-* Les **joueurs en direct**, leurs constructions, les portails, les bateaux, les chariots,
-  les tombes et les marchands.
+* Les **joueurs en direct** avec leur **ping** (vert, orange, rouge), leurs constructions,
+  les portails, les bateaux, les charrettes, les tombes et les marchands.
 * Les **noms des lieux** (îles, montagnes, lacs, rivières) et les chemins les plus pratiqués.
 * **Le monde en 3D** : pose le petit bonhomme sur un endroit déjà parcouru, comme dans
-  Street View.
+  Street View ; Z Q S D sur un clavier français.
 * Les pages **Monde** (records, terres, boss), **Portails** (l'atlas des portails),
-  **Joueurs** (statistiques, classe, et le personnage en 3D avec son équipement) et **Plan**
-  (dessiner et partager des itinéraires).
+  **Joueurs** et **Plan** (dessiner et partager des itinéraires).
 * Le bouton **FR / EN** en haut à droite change la langue ; par défaut, celle du navigateur.
+  Les objets, créatures et boss portent leurs **noms officiels du jeu** (« Armure d'écailles
+  de fer », « L'Aîné », « Masse-d'Os »…).
+
+### La page Joueurs
+
+* Le **personnage en 3D** avec son équipement, éclairé comme dans le jeu : tourne-le à la
+  souris, **agrandis-le** en plein écran (molette pour s'approcher du visage).
+* Le **panneau d'équipement** façon inventaire : pour chaque emplacement, un rendu 3D de
+  l'objet, son nom et ses statistiques (armure, dégâts, blocage, poids, gain par niveau). Les
+  **étoiles de niveau réelles** des armes, des objets dans le dos et de la cape (le jeu ne
+  transmet pas le niveau des autres pièces au serveur).
+* L'**arme favorite** et le temps passé en main, la **classe** du joueur (« Architecte
+  rôdeur »…), le pentagone (explorateur, bâtisseur, survivant, tueur, récolteur) et des
+  dizaines de statistiques : morts, distance, cuisine, constructions, danger par biome…
+* La **fiche joueur à partager** : bouton **Partager** → un lien, le code pour l'intégrer à
+  ton site (iframe) et une **image PNG** à télécharger. La fiche s'adapte aux petits cadres
+  comme aux grands écrans.
 
 ### Installation
 
@@ -64,7 +80,7 @@ gardent les textures légères. Rien n'est livré avec le mod (les textures appa
 Iron Gate) ; sans ce dossier, la carte fonctionne exactement comme avant. Mode d'emploi
 détaillé (en anglais) : `README-WebMap.md`, section « Full-quality textures ».
 
-### Nouveautés de la 1.1.0
+### Pour l'admin du serveur
 
 * **Ping des joueurs** : la carte reçoit le temps d'aller-retour de chaque joueur connecté
   vers le serveur, en millisecondes, moyenné sur une minute.
@@ -92,12 +108,27 @@ détaillé (en anglais) : `README-WebMap.md`, section « Full-quality textures �
 ### What the map shows
 
 * The world map with a **shared fog of war**: only what players have explored.
-* **Live players**, their builds, portals, ships, carts, graves and traders.
+* **Live players** with their **ping** (green, orange, red), their builds, portals, ships,
+  carts, graves and traders.
 * **Place names** (islands, ranges, lakes, rivers) and the most walked trails.
 * **The world in 3D**: drop the little figure on any walked spot, as in Street View.
-* The **World** (records, lands, bosses), **Portals** (the portal atlas), **Players** (stats,
-  class, and the player in 3D with their gear) and **Plan** (draw and share routes) pages.
+* The **World** (records, lands, bosses), **Portals** (the portal atlas), **Players** and
+  **Plan** (draw and share routes) pages.
 * The **FR / EN** switch at the top right changes the language; the browser's by default.
+  Items, creatures and bosses carry the **game's own names** in both languages.
+
+### The Players page
+
+* The **player in 3D** with their gear, lit like the game: turn it with the mouse, **enlarge**
+  it full screen (wheel to come closer).
+* The **gear panel**, like an inventory: for each slot, a 3D picture of the item, its name
+  and its stats (armour, damage, block, weight, gain per level), with the **real star
+  level** of weapons, back items and cape (the game doesn't send the other pieces' level to
+  the server).
+* The **favourite weapon** and its share of hand time, the player's **class**, the pentagon
+  (explorer, builder, survivor, slayer, harvester) and dozens of stats.
+* A **shareable player card**: **Share** gives a link, the code to embed it in your site
+  (iframe) and a **PNG picture**. The card fits small frames and big screens alike.
 
 ### Install
 
@@ -120,7 +151,7 @@ editing it: BepInEx rewrites it on shutdown).
 > `WebMap.dll`: both together would fight over the port (the log warns you while it is
 > still there).
 
-### New in 1.1.0
+### For the server admin
 
 * **Player ping**: the map gets each connected player's round trip to the server, in
   milliseconds, averaged over a minute.
@@ -145,7 +176,9 @@ The full documentation of every feature, route and setting (English) is in
 
 ## Credits / Crédits
 
-* **ForgeMap** — French translation, ForgeServer look: [ForgeServer.fr](https://forgeserver.fr)
+* **ForgeMap** — French translation, ForgeServer look, player cards, gear, ping, light mode:
+  [ForgeServer.fr](https://forgeserver.fr). Developed with the help of an AI (Claude, by
+  Anthropic) / développé avec l'aide d'une IA.
 * Based on **WebMap** — 1.0 update, structures, forest, portals, 3D and much more by
   [Hunter Boyd](https://github.com/hunterjsb); maintained upstream by
   [Jeff Clark](https://github.com/h0tw1r3); original work by
