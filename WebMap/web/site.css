@@ -295,3 +295,4 @@ body:not(.side-open) .sidebar{display:none}
 .fm-promo button{background:none;border:0;color:var(--muted);font-size:1.05rem;line-height:1;padding:.15rem .4rem;cursor:pointer;border-radius:var(--pill)}
 .fm-promo button:hover{color:var(--ink)}
 @media (max-width:760px){ .fm-promo{bottom:10px;font-size:.74rem} .fm-promo a span{display:none} }
+@media (min-width:761px){ body.side-open .fm-promo{left:calc(50% + var(--side)/2)} }
