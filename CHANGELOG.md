@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+* **The game's own textures, optionally.** `tools/textures-hd.py` reads a server owner's own
+  Valheim install and writes the normal, metal / roughness and glow maps the dedicated server
+  never exports (`map_data/models/hd/`, nothing shipped: the textures are Iron Gate's). The
+  server streams them as `/models/hd/<file>` from disk, never cached in memory; the figure,
+  the item pictures and the 3D view use them on a computer, phones keep the light textures,
+  and without the folder nothing changes.
+
 ## ForgeMap 1.2.0
 
 * **What each item is, from the game itself.** `GET /items?ids=SwordIron,ArmorWolfChest`

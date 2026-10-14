@@ -63,6 +63,7 @@ namespace WebMap.Models
         public static int Unreadable { get; private set; }
 
         public static string Root => root;
+        internal static void SetRootForTests(string dir) => root = dir;
         public static int Rev => rev;
         public static string PrefabsJson => prefabsJson;
         public static int QueueLength { get { lock (queue) return queue.Count; } }

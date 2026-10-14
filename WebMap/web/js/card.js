@@ -306,6 +306,9 @@ function viking(api){
       const shelfCam = new THREE.PerspectiveCamera(24, 1, 0.01, 50);
       VK.v = {THREE, rig, renderer, scene, camera, turn, shelf, shelfCam,
         builder: new rig.RigBuilder(THREE, new GLTFLoader(), {api, shadows: true, aniso: renderer.capabilities.getMaxAnisotropy(), anisoCap: 16, surfaces: true})};
+      // the game's own normal, metal and glow maps when the server has them and this is no phone:
+      // they replace the guesses from the names; else the light textures, as before
+      VK.v.builder.useHd(rig.loadHd(api));
       return VK.v;
     });
     return VK.ready;

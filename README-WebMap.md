@@ -238,6 +238,51 @@ extracted meshes. On our world that is about 73 MB -- 57 MB of models, 14 MB of 
 textures are served to the 3D view; the meshes are game data and never leave the server.
 Delete the folder to export everything again.
 
+### Full-quality textures (optional)
+
+The dedicated server exports each material's base colour only: no normal map, no metal or
+gloss, no glow, so the viewer guesses metal from a material's name. A server owner who owns
+the game can add the real maps, read from **their own** Valheim install by
+`tools/textures-hd.py`. Nothing of the game ships with the mod (the textures are Iron
+Gate's); each owner makes them from their copy, and without them the viewer works exactly as
+before.
+
+1. On a computer with the game installed (Steam's client install is fine, it is only read),
+   install Python 3.9+ and UnityPy: `pip install UnityPy` (Pillow comes with it).
+2. Copy the server's `BepInEx/plugins/ForgeMap/map_data/models/` folder to that computer --
+   `textures.json` is enough, the `tex_*.png` beside it help (they settle a texture name the
+   game uses twice, and tell whether the game holds a bigger base colour).
+3. Run, from this repository:
+
+   ```
+   python tools/textures-hd.py --game "C:/Program Files (x86)/Steam/steamapps/common/Valheim" --models path/to/models --out hd
+   ```
+
+   About a minute; it prints what it found, for example
+   `165 of 171 textures with full-quality maps: 164 normal, 29 metal/roughness, 20 glow, 0
+   bigger base colours` and `hd: 9.4 MB`.
+4. Copy `hd/` to the server as `map_data/models/hd/` (owned by the user the server runs as).
+   No restart: the next page load uses it. Run it again after a game update.
+
+What it writes, per texture the library uses (`tex_<name>.png`, the same name as the light
+texture, so each map matches its texture one to one): `tex_<name>_n.png`, the normal map
+(tangent space, +Y up, Z rebuilt from Unity's two-channel form); `tex_<name>_mr.png`, metal
+and roughness as glTF reads them (G roughness, B metal; gloss from the material's own
+`_Glossiness` / `_MetalGloss`); `tex_<name>_e<k>.png`, a glow, listed under the material that
+glows (a burning skeleton glows, the plain one shares its texture and does not); and
+`tex_<name>.png` again only when the game's base colour is bigger than the library's. Maps
+are capped at `--max` (1024) px. `index.json` lists them:
+`{"format": 1, "maps": {"tex_<name>.png": {"n", "mr", "ns", "rf", "mf", "c", "m": {"<material>": {"e", "ei"}}, "v"}}}`.
+Most of Valheim's textures are small by design (an iron helmet is 64 px): the gain is the
+relief, the metal and the glow, not the resolution.
+
+The server streams these files from disk 64 KB at a time and never keeps them in memory
+(the static files' memory cache takes nothing over 256 KB nor anything under `hd/`). The
+viewer asks for `hd/index.json` once per page and uses the maps on a computer or a tablet;
+a phone (screen's short side under 600 px) or a device reporting under 4 GB of memory keeps
+the light textures. A body garment's maps are laid over the skin's where its paint covers,
+as the game's player shader does.
+
 ### Chat commands
 
 * `!pin` (French: `!repère`) — a dot where you stand. `!pin some text` labels it.
@@ -427,6 +472,7 @@ Under `[Performance]`:
 | `/objects` | `?cx=&cz=`, every visible object in the chunk as `OBJ2`, little-endian: `'OBJ2'`, u32 count, u32 prefab count, i32 prefab hashes, then 44 bytes an object -- u16 prefab index, u8 flags (1 = player-built, 2 = pieces mined off), u8 pad, f32 x y z, f32 rotation quaternion x y z w, f32 scale x y z (Unity's frame, y up, z north) -- then the mined rocks: u32 count, and per rock u32 object index, u16 bit count, bits/8 bytes, bit i set when its hit area i is gone. (`OBJ1`, the first cut, was the same without the flag and the table; the page reads both.) 404 for a chunk nobody has walked; its revision in `X-Rev` |
 | `/prefabs` | the model library's index: per prefab hash, its name `n`, category `c`, whether it has a model `m` and its version `v`, bounds `b`, and for foliage the canopy bounds `k`, leaf texture `kt` and tint `kc`; for a rock mined in pieces its kind `rk` (5 MineRock5, 1 MineRock) and `pa`, the hit area of each glTF primitive in order (-1 none, -2 MineRock's whole-rock model); for a live player's part (category `rig`, named as a look's `parts`) the chest and legs paint it lays over the skin, `ct` and `lt` (JSON) |
 | `/models/<file>` | a model (`<hash>.glb`, the hash as eight hex digits) or a texture (`tex_<name>.png`) from the library; cacheable for a day, `ETag` the file's time |
+| `/models/hd/<file>` | the optional full-quality maps (see "Full-quality textures"): `index.json` (cacheable five minutes) and `tex_*.png` (a week, immutable: the viewer adds `?v=`), streamed from `map_data/models/hd/`, `ETag` the file's time and size; 404 when the folder or the file is not there |
 | `/announce` | POST, see above |
 
 The structure sweep walks every ZDO on the game thread, a few thousand per frame;

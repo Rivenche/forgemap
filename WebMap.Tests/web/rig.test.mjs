@@ -43,3 +43,46 @@ test("metal, leather and skin read apart by their names", async () => {
   assert.equal(surfaceOf("webmap:skin").metalness, 0);
   assert.ok(surfaceOf("webmap:hair").roughness < 0.7);
 });
+
+// ---- the optional full-quality maps (map_data/models/hd/, from tools/textures-hd.py) ----
+import { hdFor, wantsHd, loadHd } from "../../WebMap/web/js/rig.js";
+
+const HD = {
+  "tex_helmet_iron_d.png": { n: "tex_helmet_iron_d_n.png", mr: "tex_helmet_iron_d_mr.png", ns: 0.8, v: "19b37160" },
+  "tex_PlayerCharacter_01.png": { n: "tex_PlayerCharacter_01_n.png", rf: 0.8, mf: 0, v: "9db6b21e" },
+  "tex_Skeleton_d.png": { n: "tex_Skeleton_d_n.png", rf: 0.56, mf: 0, e: 1, m: { Skeleton_burned: { e: "tex_Skeleton_d_e.png", ei: 6.422 } }, v: "bcc6fc24" },
+};
+
+test("a material takes the maps of its base colour's file, and a glow only under its own name", () => {
+  const helm = hdFor(HD, "tex_helmet_iron_d.png", "helmet_iron_mat");
+  assert.deepEqual([helm.n, helm.mr, helm.ns, helm.e, helm.rf], ["tex_helmet_iron_d_n.png", "tex_helmet_iron_d_mr.png", 0.8, null, undefined]);
+  const body = hdFor(HD, "tex_PlayerCharacter_01.png", "webmap:skin");
+  assert.deepEqual([body.mr, body.rf, body.mf, body.ns], [null, 0.8, 0, 1]);      // no metal map: the material's numbers
+  assert.equal(hdFor(HD, "tex_Skeleton_d.png", "Skeleton").e, null);               // the plain skeleton does not burn
+  assert.deepEqual([hdFor(HD, "tex_Skeleton_d.png", "Skeleton_burned").e, hdFor(HD, "tex_Skeleton_d.png", "Skeleton_burned").ei], ["tex_Skeleton_d_e.png", 6.422]);
+  assert.equal(hdFor(HD, "tex_wood.png", "wood"), null);                            // nothing for it: the light texture as before
+  assert.equal(hdFor(null, "tex_helmet_iron_d.png"), null);                         // no hd folder on the server
+  assert.equal(hdFor(HD, undefined), null);                                         // a material without a texture
+});
+
+test("a computer loads the full-quality maps; a phone or a small-memory device keeps the light ones", () => {
+  assert.equal(wantsHd({ deviceMemory: 8 }, { width: 1920, height: 1080 }), true);
+  assert.equal(wantsHd({}, { width: 1440, height: 900 }), true);                    // Firefox and Safari say nothing of memory
+  assert.equal(wantsHd({ deviceMemory: 8 }, { width: 390, height: 844 }), false);   // a phone, however strong
+  assert.equal(wantsHd({ deviceMemory: 2 }, { width: 1366, height: 768 }), false);  // a weak laptop
+  assert.equal(wantsHd({}, { width: 820, height: 1180 }), true);                    // a tablet
+});
+
+test("the index is one request, and anything but a good answer means the light textures", async () => {
+  const pc = { nav: { deviceMemory: 8 }, scr: { width: 1920, height: 1080 } };
+  const asked = [];
+  const answer = (status, body) => async (url) => { asked.push(url); return { ok: status === 200, status, json: async () => body }; };
+  assert.deepEqual(await loadHd("/carte", { ...pc, fetch: answer(200, { format: 1, maps: HD }) }), HD);
+  assert.deepEqual(asked, ["/carte/models/hd/index.json"]);
+  assert.equal(await loadHd("", { ...pc, fetch: answer(404, { error: "no such map" }) }), null);   // no folder, or an older mod
+  assert.equal(await loadHd("", { ...pc, fetch: answer(200, { format: 2, maps: HD }) }), null);   // a format this viewer does not know
+  assert.equal(await loadHd("", { ...pc, fetch: async () => { throw new Error("offline"); } }), null);
+  asked.length = 0;
+  assert.equal(await loadHd("", { nav: {}, scr: { width: 390, height: 844 }, fetch: answer(200, { format: 1, maps: HD }) }), null);
+  assert.deepEqual(asked, []);                                                      // a phone does not even ask
+});

@@ -13,7 +13,7 @@ import * as THREE from 'three';
 import { MapControls } from 'three/addons/controls/MapControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { HAZE, Lighting } from './sky.js';
-import { lookKey, RigBuilder } from './rig.js';
+import { loadHd, lookKey, RigBuilder } from './rig.js';
 
 const CHUNK = 256;                       // a chunk's edge in metres
 const MAX_GROUND = 1600, MAX_OBJECTS = 120;   // chunks held at once: ground, and objects
@@ -75,6 +75,8 @@ export class View3D {
     this.rev = {};               // the server's content revisions, from /state
     this.gltf = new GLTFLoader();
     this.rigs = new RigBuilder(THREE, this.gltf, { api, shadows: !phone, aniso: this.maxAniso });
+    // the game's own normal, metal and glow maps when the server has them (never on a phone)
+    if (!phone) this.rigs.useHd(loadHd(api));
     this.loader = new THREE.TextureLoader();
     this.loader.setCrossOrigin('anonymous');
     this.matCache = new Map();
@@ -452,8 +454,8 @@ if (uFogOn > 0.5) {
     const info = this.prefabs.get(hash);
     if (!info || !info.m) { const p = Promise.resolve(null); this.models.set(hash, p); return p; }
     const file = (hash >>> 0).toString(16).padStart(8, '0');
-    const p = this.gltf.loadAsync(this.url(`/models/${file}.glb?v=${info.v || 0}`)).then((g) => {
-      const parts = [];
+    const p = Promise.all([this.gltf.loadAsync(this.url(`/models/${file}.glb?v=${info.v || 0}`)), this.rigs.hdReady]).then(async ([g]) => {
+      const parts = [], dressing = [];
       g.scene.updateMatrixWorld(true);
       g.scene.traverse((o) => {
         if (!o.isMesh) return;
@@ -461,9 +463,13 @@ if (uFogOn > 0.5) {
         if (!o.matrixWorld.equals(IDENTITY)) geo.applyMatrix4(o.matrixWorld);
         if (!geo.attributes.normal) geo.computeVertexNormals();
         const mats = Array.isArray(o.material) ? o.material : [o.material];
-        for (const m of mats) { m.side = THREE.DoubleSide; if (m.map) m.map.anisotropy = Math.min(4, this.maxAniso); m.metalness = 0; m.roughness = Math.max(0.7, m.roughness); this.lighting.haze(m); }
+        for (const m of mats) {
+          m.side = THREE.DoubleSide; if (m.map) m.map.anisotropy = Math.min(4, this.maxAniso); m.metalness = 0; m.roughness = Math.max(0.7, m.roughness); this.lighting.haze(m);
+          if (this.rigs.hd) dressing.push(this.rigs.dress(m));
+        }
         parts.push({ geometry: geo, material: o.material });
       });
+      await Promise.all(dressing);
       return parts.length ? parts : null;
     }).catch((e) => { console.warn('model', file, e.message || e); return null; });
     this.models.set(hash, p);

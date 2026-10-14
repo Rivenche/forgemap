@@ -340,3 +340,8 @@ announce.token
 # thunderstore service account token, local only
 .env
 
+
+# Textures extracted from a game install by tools/textures-hd.py: Iron Gate's, never committed
+hd/
+**/map_data/
+tex_*.png

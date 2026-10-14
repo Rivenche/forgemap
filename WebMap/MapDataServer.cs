@@ -368,7 +368,7 @@ namespace WebMap
                     try
                     {
                         requestedFileBytes = File.ReadAllBytes(filePath);
-                        if (CACHE_SERVER_FILES) { fileCache[requestedFile] = requestedFileBytes; fileStamp[requestedFile] = stamp; }
+                        if (CACHE_SERVER_FILES && Cacheable(requestedFile, requestedFileBytes.Length)) { fileCache[requestedFile] = requestedFileBytes; fileStamp[requestedFile] = stamp; }
                     }
                     catch (Exception ex)
                     {
@@ -916,13 +916,22 @@ namespace WebMap
             res.Close(body, true);
         }
 
+        // What the static files' memory cache may hold: small files only (the viewer's own
+        // pages and scripts), never a big one and never anything under an hd/ folder, so the
+        // optional full-quality textures cost the server disk, not RAM.
+        internal const long CacheMax = 256 * 1024;
+        internal static bool Cacheable(string requestedFile, long length) =>
+            length <= CacheMax && Array.IndexOf((requestedFile ?? "").Split('/'), Models.HdMaps.Dir) < 0;
+
         // /models/<file>: a model (<hash>.glb) or a texture (tex_<name>.png) from the
         // library, by name only. The mesh cache beside them is game data and never served.
+        // /models/hd/<file>: the full-quality maps, see ServeHd.
         private static readonly System.Text.RegularExpressions.Regex ModelFile =
             new System.Text.RegularExpressions.Regex(@"^([0-9a-f]{8}\.glb|tex_[A-Za-z0-9_-]{1,120}\.png)$");
         private static void ServeModel(HttpListenerRequest req, HttpListenerResponse res, string name)
         {
             string root = Models.ModelStore.Root;
+            if (name.StartsWith(Models.HdMaps.Dir + "/", StringComparison.Ordinal)) { ServeHd(req, res, Models.HdMaps.PathOf(root, name.Substring(Models.HdMaps.Dir.Length + 1))); return; }
             string path = root != null && ModelFile.IsMatch(name) ? Path.Combine(root, name) : null;
             byte[] body = null;
             DateTime stamp = DateTime.MinValue;
@@ -935,6 +944,34 @@ namespace WebMap
             if (req.Headers["If-None-Match"] == etag) { res.StatusCode = 304; res.Close(); return; }
             bool glb = name.EndsWith(".glb", StringComparison.Ordinal);
             SendBytes(req, res, body, glb ? "model/gltf-binary" : "image/png", compressible: glb);
+        }
+
+        // A full-quality map (or the folder's index.json), streamed from disk a piece at a time:
+        // never read whole, never cached, never gzipped (PNG is compressed already). The viewer
+        // asks for each map with ?v=<its version from index.json>, so a map is kept a week; the
+        // index itself a few minutes, so a new run of the tool shows soon. No folder: 404.
+        internal static void ServeHd(HttpListenerRequest req, HttpListenerResponse res, string path)
+        {
+            FileInfo fi = null;
+            try { if (path != null) { fi = new FileInfo(path); if (!fi.Exists) fi = null; } } catch { fi = null; }
+            if (fi == null) { Answer(res, 404, "{\"error\":\"no such map\"}"); return; }
+            bool index = path.EndsWith(".json", StringComparison.Ordinal);
+            string etag = "\"" + fi.LastWriteTimeUtc.Ticks.ToString("x", CultureInfo.InvariantCulture) + "-" + fi.Length.ToString("x", CultureInfo.InvariantCulture) + "\"";
+            res.Headers.Add(HttpResponseHeader.CacheControl, index ? "public, max-age=300" : "public, max-age=604800, immutable");
+            res.Headers.Add(HttpResponseHeader.ETag, etag);
+            if (req.Headers["If-None-Match"] == etag) { res.StatusCode = 304; res.Close(); return; }
+            try
+            {
+                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete, Models.HdMaps.Chunk))
+                {
+                    res.ContentType = index ? "application/json" : "image/png";
+                    res.StatusCode = 200;
+                    res.SendChunked = true;           // websocket-sharp sends a chunked body as it is flushed, a fixed-length one only whole
+                    Models.HdMaps.Copy(fs, res.OutputStream);
+                }
+            }
+            catch (Exception e) { if (WebMapConfig.DEBUG) ZLog.LogWarning("WebMap: hd map " + Path.GetFileName(path) + ": " + e.Message); }
+            try { res.Close(); } catch { }
         }
 
         // [{"id","name"}, ...] for the settings picker's two Discord lookups.

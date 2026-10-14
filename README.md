@@ -53,6 +53,17 @@ un clic depuis L'Atelier (onglet Mods, « Carte en direct »).
 > `WebMap.dll` : les deux ensemble se disputeraient le port (le journal t'avertit s'il est
 > encore là).
 
+### Textures haute qualité (facultatif)
+
+Le serveur dédié n'exporte que la couleur des objets. Si tu possèdes le jeu, l'outil
+`tools/textures-hd.py` lit **ta propre installation de Valheim** (sans rien y modifier) et
+fabrique les vraies cartes du jeu : relief (normal maps), métal et brillance, lueurs. Copie
+le dossier obtenu sur le serveur dans `map_data/models/hd/` : les ordinateurs affichent alors
+le personnage, les vignettes d'équipement et le monde 3D avec ces textures ; les téléphones
+gardent les textures légères. Rien n'est livré avec le mod (les textures appartiennent à
+Iron Gate) ; sans ce dossier, la carte fonctionne exactement comme avant. Mode d'emploi
+détaillé (en anglais) : `README-WebMap.md`, section « Full-quality textures ».
+
 ### Nouveautés de la 1.1.0
 
 * **Ping des joueurs** : la carte reçoit le temps d'aller-retour de chaque joueur connecté
