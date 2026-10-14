@@ -151,13 +151,13 @@ function byKind(g){
   const total = held.reduce((t, [, v]) => t + num(v), 0); if(!total) return null;
   const best = held.filter(([k]) => KIND[k]).sort((a, b) => num(b[1]) - num(a[1]))[0]; if(!best) return null;
   const [k, v] = best, worn = Object.values(g.worn || {}).find(n => KIND[k][0].test(String(n || "")));
-  return {top: {item: worn || ""}, weapon: true, kind: KIND[k][1], list: [{item: worn || "", share: num(v)/total}]};
+  return {top: {item: worn || ""}, weapon: true, kind: KIND[k][1], pre: String(KIND[k][0].source).replace(/^\^/, ""), list: [{item: worn || "", share: num(v)/total}]};
 }
 function favBlock(p){
   const F = favourites(p); if(!F) return "";
   const it = F.top.item, name = it ? word(it) : I18N.t(F.kind), f = it ? figures(statsOf(it), level(p, "right", it) || level(p, "left", it)) : null;
   const share = F.list.find(x => x.item === it).share;
-  return `<div class="eq fav" tabindex="0">${pic(it, "right", "right")}<span class="eq-txt">`
+  return `<div class="eq fav" tabindex="0">${pic(it || (F.pre ? "kind:" + F.pre : ""), "right", "right")}<span class="eq-txt">`
     + `<span class="eq-k">${F.weapon ? I18N.t("Favourite weapon") : I18N.t("Most in hand")}</span>`
     + `<span class="eq-n">${esc(name)}</span>`
     + `<span class="eq-s">${I18N.t("{pct}% of the time in hand", {pct: Math.max(1, Math.round(share*100))})}${f && f.lead.length ? " · " + leadLine(f) : ""}</span>`

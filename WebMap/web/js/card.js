@@ -454,7 +454,15 @@ function viking(api){
   // once with the figure's renderer and kept as a data URL; null when no player has worn it yet
   // where the server could see it. kind: the slot, which says how it is turned to the eye.
   const THUMBS = new Map(), WORN = {helmet: 1, chest: 1, legs: 1, shoulder: 1, utility: 1, trinket: 1};
-  VK.thumb = (item, kind, models) => {
+  VK.thumb = async (item, kind, models) => {
+    // ForgeMap: "kind:Bow" = any bow the library holds (the server timed the kind before it timed each
+    // item): a picture of that kind of weapon, the first of them by name, never a particular one's name
+    if(String(item).startsWith("kind:")){
+      let v; try{ v = await load(); }catch(e){ return null; }
+      await library(v, models);
+      const pre = String(item).slice(5), hit = [...v.builder.names.keys()].map(n => n.split("@")[0]).filter(n => n.startsWith(pre)).sort()[0];
+      return hit ? VK.thumb(hit, kind, models) : null;
+    }
     const k = `${item}|${kind}|${VK.gen}`;
     if(!THUMBS.has(k)) THUMBS.set(k, (async () => {
       let v; try{ v = await load(); }catch(e){ return null; }
