@@ -39,19 +39,26 @@ function render(){
   const html = `<div class="head"><div class="nm"><a href="${esc(full)}" target="_blank" rel="noopener" title="${esc(I18N.t("Open their full page"))}">${esc(p.name)}</a></div>`
     + `<div class="sub2">${PlayerCard.pill(cls)}${on ? `<span class="dot ok"></span>` : ""}<span class="seen">${on ? I18N.t("online now") + PlayerCard.ping(here && here.ping) : PlayerCard.seen(num(p.last_seen))}</span></div></div>`
     + `<div class="mid"><div class="fig3d" id="fig"><span class="none">${FLAME}</span></div><div class="six">${six}</div></div>`
+    + Gear.strip(p, lookOf(p, here))
     + `<div class="pent">${PlayerCard.radar(p, 112, true, true)}</div>`;
   card.classList.toggle("ok", on);
   if(html !== LAST){ body.innerHTML = html; LAST = html; document.getElementById("fig").appendChild(VK.el); }   // untouched DOM, so no flicker on the minute
   btn.hidden = false;
   document.title = `${p.name} · ForgeMap`;
-  VK.show(p.name, (on && here && here.look) || p.look, on, MODELS);
+  VK.show(p.name, lookOf(p, here), on, MODELS);
+  // the gear's pictures, and its figures once for the frames' titles (a server without /items: the names alone)
+  Gear.fill(body, VK, MODELS);
+  Gear.want(API, Gear.ids(p, lookOf(p, here))).then(got => { if(got && P === p) render(); });
 }
+// the look a player is drawn in: /state's while they are online, the one the server remembers after
+const lookOf = (p, here) => (p.online && here && here.look) || p.look || null;
 
 btn.addEventListener("click", async () => {
   if(!P) return;
   btn.disabled = true;
   try{
-    const blob = await PlayerCard.picture(P, DATA, {vk: VK.name === P.name ? VK : null, world: WORLD, online: !!P.online});
+    const here = ONLINE.find(q => q.name === P.name), thumbs = await Gear.pictures(P, lookOf(P, here), VK, MODELS).catch(() => []);
+    const blob = await PlayerCard.picture(P, DATA, {vk: VK.name === P.name ? VK : null, world: WORLD, online: !!P.online, thumbs});
     PlayerCard.save(blob, PlayerCard.fileName(P.name));
   }catch(e){ console.warn("png", e.message || e); }
   btn.disabled = false;

@@ -15,6 +15,7 @@
 <script src="site-config.js"></script>
 <script src="map-core.js"></script>
 <script src="js/card.js"></script>
+<script src="js/gear.js"></script>
 <script src="js/spot.js"></script>
 <script type="importmap">
 { "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/addons/" } }
@@ -104,6 +105,8 @@
   .how ul{list-style:none;margin-top:.5rem;display:grid;gap:.22rem;font-size:.73rem;color:var(--muted)}
   .how b{color:var(--ink-2);font-weight:600}
   .foot{border-top:0;padding-top:0;margin-top:1.2rem}
+  /* ForgeMap: the gear under the figures, the whole width of the page */
+  .detail .group.gear{margin-top:1rem;padding-top:.75rem}
 
   /* a phone shows one or the other; the page scrolls as a whole */
   @media (max-width:760px){
@@ -186,6 +189,7 @@
         <li data-i18n><b>Kills</b>, <b>trees</b> and <b>rocks</b> — creatures that fell, trees felled and rock areas broken with you as the last to hit them, or, when your own game was running the fight, with you standing there; a creature that despawns is nobody's kill.</li>
         <li data-i18n><b>Kitchen</b> — what came out of the stations: <b>dishes cooked</b> on a fire or in the oven, for whoever put them on (<b>burnt</b> instead if left there too long); <b>meads brewed</b>, counted at the tap for whoever filled the fermenter; <b>honey taken</b> from a hive; and <b>smelted</b>, each bar, coal, flour or thread a smelter, kiln, windmill, spinning wheel or refinery made, for whoever loaded it. The server sees the stations, never the bag: the cauldron and the preparation table are invisible, so of bread and pies only the oven's step shows. At a fermenter, a hive or a smelter the player standing within 8 m is the one credited, and a slot filled before the count began counts for nobody.</li>
         <li data-i18n><b>Class</b> — a title in three parts. The first word is a compound: what you fight with gives the prefix (battle for a two-hander, blade, shield, bow, knife, spell) and what your body is gives the root (mage, knight, warrior, rogue, brute), read from what you wear and from the food behind your bars, so a two-hander in eitr-weave is a Battlemage and a shield in heavy armour a Paladin; a few weapons colour it (a crossbow an Arbalist, an atgeir a Vanguard, axe and shield a Huscarl). The second word is your trade, from what you have done: the roster's top builder is the Architect, a builder who also mines an Engineer, who also fells a Carpenter, who also farms a Homesteader; a Cook, Baker, Brewer or Smith from fifty things made; the Slayer; Builders, Miners, Lumberjacks, Farmers, Explorers, Seafarers, Anglers and Wayfarers. Time in hand is the evidence: the server sees hands and back slots, never the bag, and blows only on creatures another player's game runs; skills never leave your character file. Dashed until ten minutes have had something in hand.</li>
+        <li data-i18n><b>Gear</b> — what you were last seen wearing, each item drawn from its own 3D model with the game's figures for it. The game tells the server the star level only of what is in your hands, on your back and your cape; the rest shows at level 1 with what each level adds. The <b>favourite weapon</b> is the one held the longest.</li>
         <li data-i18n><b>The pentagon</b> — five sides, each your share of the roster's best, square-rooted so one giant does not flatten everyone: Explorer is km, portal hops and km at sea taken together; Builder pieces standing; Survivor km per death; Slayer kills; Harvester trees, rocks, dishes cooked and things smelted together.</li>
         <li>Anything built before the tally started counts for nobody, so a builder who has not logged in since shows zero.</li>
         <li>Time played is not tracked, and no figure here is a stand-in for it. Distances are the yardstick.</li>
@@ -240,13 +244,9 @@ const SHOWS = {
 // the class reads the roster: its best, and the pace of its deaths
 const classify = p => PlayerCard.classify(p, DATA);
 // ForgeMap: the game's own name for it (js/lang/noms.js), else the prefab spelled out as before
-const itemWord = n => I18N.name(n) || String(n || "").replace(/^(Armor|Helmet|Cape)/, "").replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim();
-function gearGroup(p){
-  const w = p.gear && p.gear.worn; if(!w || !Object.keys(w).length) return "";
-  const slots = [["right", "right hand"], ["left", "left hand"], ["rightBack", "on the back"], ["leftBack", "on the back"], ["chest", "chest"], ["helmet", "head"], ["legs", "legs"], ["shoulder", "cape"]];
-  return `<section class="group"><h3 class="eyebrow">${I18N.t("Gear")} <small>${I18N.t("last seen wearing")}</small></h3><div class="figs">`
-    + slots.filter(([k]) => w[k]).map(([k, label]) => `<div class="stat fig txt" title="${esc(itemWord(w[k]))}"><div class="v">${esc(itemWord(w[k]))}</div><div class="k">${I18N.t(label)}</div></div>`).join("") + `</div></section>`;
-}
+const itemWord = Gear.word;
+// the look a player is drawn in: /state's while they are online, the one the server remembers after
+const lookOf = (p, here) => (p.online && here && here.look) || p.look || null;
 function row(p){
   const on = !!p.online, here = on ? ONLINE.find(q => q.name === p.name) : null;
   return `<button class="player${on ? " ok" : ""}${PICK === p.name ? " pick" : ""}" type="button" data-name="${esc(p.name || "")}">`
@@ -349,10 +349,12 @@ function renderDetail(){
     + group(I18N.t("Presence"),
         fig(cnt(p.joins), lab(p.joins, "join", "joins"), nil(num(p.joins)))
         + fig(cnt(p.chat), lab(p.chat, "chat line", "chat lines"), nil(num(p.chat))))
-    + gearGroup(p)
-    + `</div><div class="portrait"><i id="vslot" hidden></i>` + radar(p, 232, true) + `</div></div>` + danger(p);
+    + `</div><div class="portrait"><i id="vslot" hidden></i>` + radar(p, 232, true) + `</div></div>` + Gear.panel(p, lookOf(p, here)) + danger(p);
   if(html !== DLAST){ body.innerHTML = html; DLAST = html; Spot.render(); }
   showViking(p, here);
+  // the gear's pictures, and its figures once (a server without /items: the names alone)
+  Gear.fill(body, VK, MODELS);
+  Gear.want(API, Gear.ids(p, lookOf(p, here))).then(got => { if(got && PICK === p.name) renderDetail(); });
   if(on && here && !(WHERE && WHERE.name === p.name)) whereIs(p.name, here);
 }
 // the ground under an online player, in the world's own names: "in Homeplains, Meadows"
@@ -422,7 +424,7 @@ let MODELS = 0;   // the library's revision, from /state
 function showViking(p, here){
   const slot = document.getElementById("vslot");
   if(slot) slot.replaceWith(VK.el);
-  VK.show(p.name, (p.online && here && here.look) || p.look, !!p.online, MODELS);
+  VK.show(p.name, lookOf(p, here), !!p.online, MODELS);
 }
 
 // ---------- sharing ----------
@@ -468,7 +470,8 @@ async function sharePng(){
   const b = document.getElementById("sh-png"); if(b) b.disabled = true;
   shareMsg(I18N.t("Preparing the image…"));
   try{
-    const blob = await PlayerCard.picture(p, DATA, {vk: VK.name === p.name ? VK : null, world: MapCore.geom.world !== "Mothership" ? MapCore.geom.world : "", online: !!p.online});
+    const here = ONLINE.find(q => q.name === p.name), thumbs = await Gear.pictures(p, lookOf(p, here), VK, MODELS).catch(() => []);
+    const blob = await PlayerCard.picture(p, DATA, {vk: VK.name === p.name ? VK : null, world: MapCore.geom.world !== "Mothership" ? MapCore.geom.world : "", online: !!p.online, thumbs});
     PlayerCard.save(blob, PlayerCard.fileName(p.name));
     shareMsg(I18N.t("Image ready"), "ok");
   }catch(e){ shareMsg(I18N.t("The image could not be made here."), "bad"); }

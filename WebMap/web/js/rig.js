@@ -25,9 +25,12 @@ export function paintOf(entries) {
 // shared by every rig that wears it; a skin is painted once per colour and paint.
 // THREE: the three.js module; gltf: a GLTFLoader; api: the server ("" for the mod's own).
 export class RigBuilder {
-  constructor(THREE, gltf, { api = '', shadows = true, aniso = 1 } = {}) {
+  // anisoCap: the most texture anisotropy wanted (4 for a world of rigs, the GPU's best for one
+  // figure); surfaces: metal, leather and cloth told apart by their names (for a scene lit by an
+  // environment map: without one a metal surface reads black)
+  constructor(THREE, gltf, { api = '', shadows = true, aniso = 1, anisoCap = 4, surfaces = false } = {}) {
     this.THREE = THREE; this.gltf = gltf; this.api = api;
-    this.shadows = shadows; this.aniso = Math.min(4, aniso);
+    this.shadows = shadows; this.aniso = Math.min(anisoCap, aniso); this.surfaces = surfaces;
     this.index = new Map();    // prefab hash -> the library's entry
     this.names = new Map();    // rig part name -> hash
     this.parts = new Map();    // rig part hash -> Promise<pieces[] | null>, baked in the standing pose
@@ -48,6 +51,12 @@ export class RigBuilder {
     }
     this.index = index; this.names = names;
     return moved;
+  }
+
+  // The library's part that draws an item on its own, for a picture of it: the one a hand holds,
+  // else the helmet's, the armour's, then any back joint's; null when no player has worn it yet.
+  partFor(item) {
+    return partOf(item, this.names);
   }
 
   // A look's parts stood together at the origin, facing +z; null while the library lacks the
@@ -89,6 +98,12 @@ export class RigBuilder {
         if (!geometry.attributes.normal) geometry.computeVertexNormals();
         const m = o.material;
         m.side = T.DoubleSide; m.metalness = 0; m.roughness = Math.max(0.7, m.roughness);
+        if (this.surfaces) {
+          const sf = surfaceOf(m.name, m.map && m.map.name);
+          Object.assign(m, sf);
+          // metal shines only where its texture is grey: the leather and the paint on it stay matte
+          if (sf.metalness > 0.3 && m.map && m.map.image) this.metalMap(m, m.map.image, null, sf);
+        }
         if (m.map) m.map.anisotropy = this.aniso;
         pieces.push({ geometry, material: m, role: m.name === 'webmap:skin' ? 'skin' : m.name === 'webmap:hair' ? 'hair' : null });
       });
@@ -117,6 +132,11 @@ export class RigBuilder {
     const t = new T.CanvasTexture(c);
     t.flipY = false; t.colorSpace = T.SRGBColorSpace; t.anisotropy = this.aniso;
     const mat = base.clone(); mat.map = t; mat.color.set(0xffffff);
+    // a metal garment's paint (a mail, a cuirass) shines where it is grey, over the matte skin
+    if (this.surfaces) {
+      const metal = [[legs, paint.legs], [chest, paint.chest]].filter(([im, f]) => im && METAL.test(f || '')).map(([im]) => im);
+      if (metal.length) this.metalMap(mat, null, { size: S, layers: metal }, surfaceOf('webmap:skin'));
+    }
     this.mats.set(key, mat);
     return mat;
   }
@@ -132,6 +152,32 @@ export class RigBuilder {
     return this.mats.get(key);
   }
 
+  // A metalness / roughness map (three reads roughness from green, metalness from blue): from img's
+  // own pixels, metal where they are grey and opaque; or, with o.layers, the base's figures under
+  // body paints laid over it, metal where a paint covers and is grey.
+  metalMap(mat, img, o, base) {
+    const T = this.THREE, S = Math.min(256, o ? o.size : img.width || 256);
+    const c = document.createElement('canvas'); c.width = c.height = S;
+    const x = c.getContext('2d', { willReadFrequently: true });
+    const out = x.createImageData(S, S), d = out.data;
+    for (let i = 0; i < d.length; i += 4) { d[i] = 0; d[i + 1] = base.roughness * 255; d[i + 2] = base.metalness * 255; d[i + 3] = 255; }
+    for (const im of o ? o.layers : [img]) {
+      x.clearRect(0, 0, S, S); x.drawImage(im, 0, 0, S, S);
+      const px = x.getImageData(0, 0, S, S).data;
+      for (let i = 0; i < px.length; i += 4) {
+        const a = px[i + 3] / 255; if (a < 0.05) continue;
+        const hi = Math.max(px[i], px[i + 1], px[i + 2]), lo = Math.min(px[i], px[i + 1], px[i + 2]);
+        const sat = hi ? (hi - lo) / hi : 0, k = Math.max(0, Math.min(1, (0.34 - sat) / 0.2)) * (hi > 40 ? 1 : 0.4);
+        const metal = 0.7 * k, rough = 0.42 + (0.82 - 0.42) * (1 - k);
+        d[i + 1] = d[i + 1] * (1 - a) + rough * 255 * a; d[i + 2] = d[i + 2] * (1 - a) + metal * 255 * a;
+      }
+    }
+    x.putImageData(out, 0, 0);
+    const t = new T.CanvasTexture(c);
+    t.flipY = false; t.colorSpace = T.NoColorSpace; t.anisotropy = this.aniso;
+    mat.metalnessMap = mat.roughnessMap = t; mat.metalness = 1; mat.roughness = 1; mat.needsUpdate = true;
+  }
+
   image(file) {
     if (!file) return Promise.resolve(null);
     if (!this.images.has(file)) this.images.set(file, new Promise((resolve) => {
@@ -144,12 +190,37 @@ export class RigBuilder {
 
   // Everything baked, loaded and painted, freed; the rigs built from it draw no more.
   dispose() {
-    const free = (m) => { if (m.map) m.map.dispose(); m.dispose(); };
+    const free = (m) => { if (m.map) m.map.dispose(); if (m.metalnessMap) m.metalnessMap.dispose(); m.dispose(); };
     for (const p of this.parts.values())
       p.then((pieces) => { for (const pc of pieces || []) { pc.geometry.dispose(); free(pc.material); } });
     for (const m of this.mats.values()) free(m);
     this.parts.clear(); this.mats.clear(); this.images.clear();
   }
+}
+
+// a body paint whose garment is metal, by its texture's name
+const METAL = /iron|bronze|steel|metal|silver|chain|mail|padded|carapace|flametal/i;
+
+// See RigBuilder.partFor. names: rig part name -> hash.
+const JOINT_ORDER = ['RightHand_Attach', 'LeftHand_Attach', 'Helmet_attach', 'armor'];
+export function partOf(item, names) {
+  if (!item || !names) return null;
+  for (const j of JOINT_ORDER) { const h = names.get(item + '@' + j); if (h !== undefined) return h; }
+  for (const [n, h] of names) if (n.startsWith(item + '@')) return h;
+  return null;
+}
+
+// What a material is made of, read off its name and its texture's: Valheim's own shaders
+// keep their metal and gloss in maps the export leaves behind, so the names stand in for them.
+// The figures are three.js's metalness / roughness for the game's look: dull iron, worn leather.
+export function surfaceOf(name, tex) {
+  const n = `${name || ''} ${tex || ''}`.toLowerCase();
+  if (/hair|beard/.test(n)) return { metalness: 0, roughness: 0.62 };
+  if (/webmap:skin|body|skin/.test(n)) return { metalness: 0, roughness: 0.72 };
+  if (/iron|bronze|steel|metal|silver|copper|blackmetal|flametal|chain|mail|blade|sword|axe|mace|knife|spear|atgeir|pickaxe|helmet_(iron|bronze|drake|padded|carapace|fenris)|padded/.test(n))
+    return { metalness: 0.55, roughness: 0.42 };
+  if (/leather|hide|troll|deer|wolf|lox|fur|cloth|cape|linen|rag|feather|wood|bow|shield/.test(n)) return { metalness: 0, roughness: 0.82 };
+  return { metalness: 0.05, roughness: 0.7 };
 }
 
 // A skinned mesh as its skeleton stands it, as plain geometry in the scene's frame: the

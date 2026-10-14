@@ -7,6 +7,9 @@
 const PlayerCard = (() => {
 "use strict";
 const esc = MapCore.esc, num = MapCore.num, km = MapCore.km, per = MapCore.per;
+// the build's stamp on this file (?v=...), carried to the module it imports, so a browser never pairs
+// this card.js with a rig.js it kept from an older build
+const VER = (() => { try{ return new URL(document.currentScript.src).search; }catch(e){ return ""; } })();
 
 // last_seen 0 is a name the sweep found on a grave or a build without ever
 // seeing its owner online: no session behind it, so no elapsed time to show.
@@ -216,43 +219,106 @@ function figures(p){
     + mini(I18N.num(num(p.pieces)), lab(num(p.pieces), "piece", "pieces"), num(p.pieces) ? "" : "nil") + `</span>`;
 }
 // ---------- the Viking ----------
-// The player as the 3D view draws them, on a slow turntable on the map's ground colour
-// under a key light. three.js and the rig load with the first look shown, one renderer
+// The player as the 3D view draws them, on a slow turntable, lit the way the game lights a
+// figure: a warm sun casting a soft shadow, the sky's cool fill and, for ForgeServer, an ember
+// rim from behind; an image-based light (a small room of glowing panels, prefiltered once)
+// gives the metal its sheen. three.js and the rig load with the first look shown, one renderer
 // for the page; a rig is built again only when the look's key changes.
 const STILL = matchMedia("(prefers-reduced-motion: reduce)");
+// Valheim's grade over ACES: a little less colour, warm highlights, cool shadows. In the shader's
+// tone mapping, so the PNG export carries it too; only renderers asking for CustomToneMapping use it.
+function grade(T){
+  const k = "vec3 CustomToneMapping( vec3 color ) { return color; }", c = T.ShaderChunk.tonemapping_pars_fragment;
+  if(!c.includes(k)) return;
+  T.ShaderChunk.tonemapping_pars_fragment = c.replace(k, `vec3 CustomToneMapping( vec3 color ) {
+    vec3 c = ACESFilmicToneMapping( color );
+    float l = dot( c, vec3( 0.2126, 0.7152, 0.0722 ) );
+    c = mix( vec3( l ), c, 0.86 );
+    c *= mix( vec3( 0.92, 0.97, 1.07 ), vec3( 1.05, 1.0, 0.91 ), smoothstep( 0.04, 0.7, l ) );
+    return saturate( c );
+  }`);
+}
+// The room the image-based light is taken from: dark warm walls, a cool sky overhead, a warm
+// panel where the sun is, an ember one behind; colours past 1 are light, not paint.
+function room(T){
+  const sc = new T.Scene(), box = new T.BoxGeometry(1, 1, 1);
+  const wall = new T.Mesh(box, new T.MeshBasicMaterial({side: T.BackSide, color: new T.Color(0.07, 0.06, 0.055)}));
+  wall.scale.set(12, 8, 12); wall.position.y = 3; sc.add(wall);
+  const panel = (r, g, b, x, y, z, sx, sy) => {
+    const m = new T.Mesh(box, new T.MeshBasicMaterial({color: new T.Color(r, g, b)}));
+    m.position.set(x, y, z); m.lookAt(0, 1, 0); m.scale.set(sx, sy, 0.1); sc.add(m);
+  };
+  panel(1.1, 1.25, 1.45, 0, 6.8, 0, 7, 7);          // the sky
+  panel(5.5, 4.4, 3.2, -4, 5, 4.5, 3, 3);           // the sun, high on the left
+  panel(0.5, 0.62, 0.85, 5.5, 2.4, 3, 2.5, 3);      // the cool fill
+  panel(6, 2.2, 0.55, 2.5, 3, -5.5, 3, 4);          // the ember rim
+  panel(0.14, 0.1, 0.075, 0, -0.95, 0, 12, 12);     // the ground's bounce
+  return sc;
+}
 function viking(api){
   // lib: the library's index as fetched, {rev, p}; gen counts the fetches that moved a rig part, built the one the rig is from
   // ang: the turntable's angle; tilt: the camera raised or lowered by a drag; auto: the slow turn's
-  // speed, 0..1, eased back in after a drag; hold: until when (rAF time) the turn waits after one
+  // speed, 0..1, eased back in after a drag; hold: until when (rAF time) the turn waits after one;
+  // fit: the rig's height and reach, for the framing
   const VK = {el: document.createElement("figure"), ready: null, v: null, lib: null, gen: 0, built: -1, key: undefined, name: null, rig: null, missing: 0, want: null, raf: 0, w: 0, h: 0,
-    ang: 0.5, tilt: 0, auto: 1, hold: 0, drag: null, last: 0};
+    ang: 0.5, tilt: 0, auto: 1, hold: 0, drag: null, last: 0, fit: null};
   VK.el.className = "card viking"; VK.el.hidden = true;
   VK.el.innerHTML = `<canvas aria-hidden="true" title="${esc(I18N.t("Drag to turn"))}"></canvas><figcaption></figcaption>`;
   function load(){
-    if(!VK.ready) VK.ready = Promise.all([import("three"), import("three/addons/loaders/GLTFLoader.js"), import("./rig.js")]).then(([THREE, {GLTFLoader}, rig]) => {
+    if(!VK.ready) VK.ready = Promise.all([import("three"), import("three/addons/loaders/GLTFLoader.js"), import("./rig.js" + VER)]).then(([THREE, {GLTFLoader}, rig]) => {
       const renderer = new THREE.WebGLRenderer({canvas: VK.el.querySelector("canvas"), antialias: true, alpha: true});
-      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
       renderer.outputColorSpace = THREE.SRGBColorSpace;
-      renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
-      const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(30, 232/300, 0.1, 50);
-      camera.position.set(0, 1.2, 5); camera.lookAt(0, 0.9, 0);    // room for a cape to swing past (aim() moves it with the tilt)
-      // a warm key high on the left, the sky's cool fill, a rim off the dark behind
-      const key = new THREE.DirectionalLight(0xfff0dc, 2.8); key.position.set(-2.2, 3.4, 3); scene.add(key);
-      const rim = new THREE.DirectionalLight(0xa8bcd8, 1.4); rim.position.set(1.6, 2.4, -3); scene.add(rim);
-      scene.add(new THREE.HemisphereLight(0xd0d8e0, 0x3a3326, 1.7));
-      // the spot they stand on, a soft pool of light
+      grade(THREE);
+      renderer.toneMapping = THREE.CustomToneMapping; renderer.toneMappingExposure = 0.95;
+      renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      const pm = new THREE.PMREMGenerator(renderer), env = pm.fromScene(room(THREE), 0.03).texture;
+      pm.dispose();
+      const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(28, 232/300, 0.1, 50);
+      scene.environment = env; scene.environmentIntensity = 0.5;
+      // the sun, warm and high on the left, the one light that casts a shadow (one 1024 map)
+      const key = new THREE.DirectionalLight(0xffdcb4, 2.15); key.position.set(-2.7, 3.6, 1.5); key.target.position.set(0, 0.9, 0);
+      key.castShadow = true; key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.025;
+      Object.assign(key.shadow.camera, {left: -1.3, right: 1.3, top: 1.6, bottom: -1.3, near: 0.5, far: 9});
+      scene.add(key, key.target);
+      const fill = new THREE.DirectionalLight(0xa9bede, 0.5); fill.position.set(2.8, 1.4, 2.4); scene.add(fill);
+      // the ember rim from behind, one each side, so a turning figure keeps an edge of fire
+      const rim = new THREE.DirectionalLight(0xff7a2a, 3.0); rim.position.set(1.8, 2.4, -3); scene.add(rim);
+      const rim2 = new THREE.DirectionalLight(0xff9548, 1.5); rim2.position.set(-2, 1.6, -2.6); scene.add(rim2);
+      scene.add(new THREE.HemisphereLight(0xc4d2e6, 0x2c2118, 0.35));
+      // the ground: invisible but for the shadow on it, and the soft pool of light they stand in
+      const catcher = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.ShadowMaterial({opacity: 0.62}));
+      catcher.rotation.x = -Math.PI/2; catcher.receiveShadow = true; scene.add(catcher);
       const c = document.createElement("canvas"); c.width = c.height = 64;
       const x = c.getContext("2d"), grad = x.createRadialGradient(32, 32, 0, 32, 32, 32);
-      grad.addColorStop(0, "rgba(201,161,90,.22)"); grad.addColorStop(1, "rgba(201,161,90,0)");
+      grad.addColorStop(0, "rgba(232,150,80,.28)"); grad.addColorStop(.55, "rgba(201,120,60,.1)"); grad.addColorStop(1, "rgba(201,120,60,0)");
       x.fillStyle = grad; x.fillRect(0, 0, 64, 64);
       const glow = new THREE.CanvasTexture(c); glow.colorSpace = THREE.SRGBColorSpace;
-      const pool = new THREE.Mesh(new THREE.CircleGeometry(0.75, 48), new THREE.MeshBasicMaterial({map: glow, transparent: true, depthWrite: false}));
+      const pool = new THREE.Mesh(new THREE.CircleGeometry(0.85, 48), new THREE.MeshBasicMaterial({map: glow, transparent: true, depthWrite: false, toneMapped: false}));
       pool.rotation.x = -Math.PI/2; pool.position.y = 0.002; scene.add(pool);
       const turn = new THREE.Group(); scene.add(turn);
-      VK.v = {rig, renderer, scene, camera, turn, builder: new rig.RigBuilder(THREE, new GLTFLoader(), {api, shadows: false, aniso: renderer.capabilities.getMaxAnisotropy()})};
+      // the items' pictures: their own small scene under the same light, without the ground
+      const shelf = new THREE.Scene(); shelf.environment = env; shelf.environmentIntensity = 0.7;
+      const sk = new THREE.DirectionalLight(0xffe0bc, 2.4); sk.position.set(-2, 3, 3); shelf.add(sk);
+      const sf = new THREE.DirectionalLight(0xa9bede, 0.6); sf.position.set(3, 0.5, 2); shelf.add(sf);
+      const sr = new THREE.DirectionalLight(0xff7a2a, 2.4); sr.position.set(2, 1.5, -3); shelf.add(sr);
+      shelf.add(new THREE.HemisphereLight(0xc4d2e6, 0x2c2118, 0.4));
+      const shelfCam = new THREE.PerspectiveCamera(24, 1, 0.01, 50);
+      VK.v = {THREE, rig, renderer, scene, camera, turn, shelf, shelfCam,
+        builder: new rig.RigBuilder(THREE, new GLTFLoader(), {api, shadows: true, aniso: renderer.capabilities.getMaxAnisotropy(), anisoCap: 16, surfaces: true})};
       return VK.v;
     });
     return VK.ready;
+  }
+  // the library's index, fetched again only when asked to (the library moved and a look may have gained a part)
+  function library(v, models, again){
+    if(!VK.lib || again){
+      const lib = VK.lib = {rev: models};
+      lib.p = MapCore.fetchJSON(api, `/prefabs?v=${models}`)
+        .then(j => { if(v.builder.setLibrary(new Map(Object.entries(j.prefabs || {}).map(([h, e]) => [+h, e])))) VK.gen++; })
+        .catch(() => { if(VK.lib === lib) VK.lib = null; });
+    }
+    return VK.lib.p;
   }
   // name's rig in look, captioned "online now" or "as last seen"; models: the library's revision, from /state
   VK.show = async (name, look, online, models) => {
@@ -266,13 +332,7 @@ function viking(api){
     el.querySelector("figcaption").textContent = online ? I18N.t("online now") : I18N.t("as last seen");
     if(name !== VK.name) still();                  // never someone else's rig under this name
     // the index again only when the library moved and this look may have gained a part
-    if(!VK.lib || (VK.lib.rev !== models && (key !== VK.key || VK.missing))){
-      const lib = VK.lib = {rev: models};
-      lib.p = MapCore.fetchJSON(api, `/prefabs?v=${models}`)
-        .then(j => { if(v.builder.setLibrary(new Map(Object.entries(j.prefabs || {}).map(([h, e]) => [+h, e])))) VK.gen++; })
-        .catch(() => { if(VK.lib === lib) VK.lib = null; });
-    }
-    await VK.lib.p;
+    await library(v, models, !!VK.lib && VK.lib.rev !== models && (key !== VK.key || !!VK.missing));
     if(VK.want !== me) return;
     VK.name = name;
     if(key === VK.key && VK.built === VK.gen){ if(VK.rig) turning(); return; }
@@ -283,6 +343,9 @@ function viking(api){
     if(VK.rig) v.turn.remove(VK.rig);
     VK.rig = g; VK.key = key; VK.built = gen; VK.missing = g ? g.userData.missing : 1;
     if(!g){ still(); return; }                     // the library has no body yet
+    // the framing: the top of the head (or helmet), and how far out from the axis it reaches
+    const b = new v.THREE.Box3().setFromObject(g);
+    VK.fit = {top: Math.max(1.6, b.max.y), r: Math.min(0.8, Math.max(0.45, ...[b.min.x, b.max.x].flatMap(px => [b.min.z, b.max.z].map(pz => Math.hypot(px, pz)))))};
     v.turn.add(g); turning();
   };
   // put away; a rig still being built is not shown
@@ -297,9 +360,15 @@ function viking(api){
   function turning(){ VK.el.hidden = false; wake(); }
   function still(){ VK.el.hidden = true; cancelAnimationFrame(VK.raf); VK.raf = 0; VK.last = 0; }
   function wake(){ if(VK.v && !VK.el.hidden && !VK.raf) VK.raf = requestAnimationFrame(spin); }
-  // the camera on its circle round the figure's middle, raised by the tilt
-  const EL0 = Math.atan2(0.3, 5), DIST = Math.hypot(0.3, 5);
-  function aim(cam){ const e = EL0 + VK.tilt; cam.position.set(0, 0.9 + DIST*Math.sin(e), DIST*Math.cos(e)); cam.lookAt(0, 0.9, 0); }
+  // The camera on its circle round the figure's middle, a little below it (a hero's angle), raised
+  // by the tilt; as close as the whole body allows, head to feet, with room for a cape to swing past.
+  const EL0 = -0.05;
+  function aim(cam){
+    const f = VK.fit || {top: 1.85, r: 0.55}, t = Math.tan(cam.fov*Math.PI/360), mid = f.top*0.5 - 0.04;
+    const dist = Math.max(2.4, (f.top + 0.38)/2/t, (f.r + 0.12)/(t*cam.aspect));
+    const e = EL0 + VK.tilt;
+    cam.position.set(0, mid + dist*Math.sin(e), dist*Math.cos(e)); cam.lookAt(0, mid, 0);
+  }
   // a turn every 25 s; with reduced motion, one still from a little to the side that only a drag turns.
   // A drag holds the turn, and three seconds after it the turn picks up again from where the hand left it.
   function spin(t){
@@ -315,6 +384,8 @@ function viking(api){
       if(VK.tilt){ VK.tilt *= Math.pow(0.5, dt/450); if(Math.abs(VK.tilt) < 1e-3) VK.tilt = 0; }   // and the eye back to its height
     }
     v.turn.rotation.y = VK.ang; aim(v.camera);
+    // a breath: the figure sways a hair from the feet up
+    if(VK.rig) VK.rig.rotation.z = moving ? 0.008*Math.sin(t/1900) : 0;
     v.renderer.render(v.scene, v.camera);
     if(moving || VK.drag) VK.raf = requestAnimationFrame(spin);
     else VK.last = 0;
@@ -345,6 +416,90 @@ function viking(api){
     VK.hold = performance.now() + 3000; VK.auto = 0; wake();
   };
   for(const ev of ["pointerup", "pointercancel", "lostpointercapture"]) cv.addEventListener(ev, letGo);
+  // ---------- the items, one at a time ----------
+  // A small picture of an item as the library draws it (the part a player wore it as), rendered
+  // once with the figure's renderer and kept as a data URL; null when no player has worn it yet
+  // where the server could see it. kind: the slot, which says how it is turned to the eye.
+  const THUMBS = new Map(), WORN = {helmet: 1, chest: 1, legs: 1, shoulder: 1, utility: 1, trinket: 1};
+  VK.thumb = (item, kind, models) => {
+    const k = `${item}|${kind}|${VK.gen}`;
+    if(!THUMBS.has(k)) THUMBS.set(k, (async () => {
+      let v; try{ v = await load(); }catch(e){ return null; }
+      await library(v, models);
+      const h = v.builder.partFor(item); if(h == null) return null;
+      const entry = v.builder.index.get(h) || {}, worn = !!WORN[kind];
+      // a garment that paints the body is shown on it: the body and the garment, its chest or its legs
+      if(worn && (kind === "chest" || kind === "legs") && (entry.ct || entry.lt) && v.builder.names.has("Player@body0")){
+        const g = await v.builder.build({model: 0, skin: [0.78, 0.68, 0.6], hair: [0.3, 0.25, 0.2], parts: ["Player@body0", entry.n]});
+        return g ? shoot(v, g, kind === "chest" ? [0.86, 1.62] : [0.02, 1.08], 0.42) : null;
+      }
+      const pieces = await v.builder.part(h);
+      if(!pieces || !pieces.length) return null;
+      const g = new v.THREE.Group();
+      for(const pc of pieces){ const m = new v.THREE.Mesh(pc.geometry, pc.material); m.rotation.y = Math.PI; g.add(m); }
+      if(worn) return shoot(v, g, null, kind === "shoulder" ? 0.5 : 0.45);
+      turnToEye(v.THREE, g);
+      return shoot(v, g, null, null);
+    })().catch(e => { console.warn("item picture", item, e.message || e); return null; }));
+    return THUMBS.get(k);
+  };
+  // A held item turned as the game's icons draw them: its length along the diagonal, head up and
+  // to the right, its flat side to the eye. The axes are the item's own (its points' spread).
+  function turnToEye(T, g){
+    g.updateMatrixWorld(true);
+    const pts = [], v3 = new T.Vector3();
+    g.traverse(o => {
+      if(!o.isMesh) return;
+      const p = o.geometry.attributes.position, step = Math.max(1, Math.floor(p.count/1500));
+      for(let i = 0; i < p.count; i += step) pts.push(new T.Vector3().fromBufferAttribute(p, i).applyMatrix4(o.matrixWorld));
+    });
+    if(pts.length < 4) return;
+    const c = pts.reduce((a, p) => a.add(p), new T.Vector3()).multiplyScalar(1/pts.length), C = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for(const p of pts){ const d = [p.x - c.x, p.y - c.y, p.z - c.z]; for(let i = 0; i < 3; i++) for(let j = 0; j < 3; j++) C[i*3 + j] += d[i]*d[j]; }
+    const mul = v => new T.Vector3(C[0]*v.x + C[1]*v.y + C[2]*v.z, C[3]*v.x + C[4]*v.y + C[5]*v.z, C[6]*v.x + C[7]*v.y + C[8]*v.z);
+    const power = (v, not) => { for(let i = 0; i < 40; i++){ v = mul(v); if(not) v.addScaledVector(not, -v.dot(not)); if(v.lengthSq() < 1e-12) break; v.normalize(); } return v; };
+    const a1 = power(new T.Vector3(0.3, 1, 0.2).normalize()), a2 = power(new T.Vector3(1, 0.1, 0.3).normalize(), a1);
+    if(a1.lengthSq() < 0.5 || a2.lengthSq() < 0.5) return;
+    const spread = a => { let lo = Infinity, hi = -Infinity, sum = 0; for(const p of pts){ const t = v3.subVectors(p, c).dot(a); lo = Math.min(lo, t); hi = Math.max(hi, t); sum += t; } return {lo, hi, len: hi - lo, mean: sum/pts.length}; };
+    const s1 = spread(a1), s2 = spread(a2);
+    // the heavier end (a head, a blade) up: the points crowd towards it
+    if(s1.hi > -s1.lo) a1.negate();
+    const a3 = new T.Vector3().crossVectors(a1, a2);
+    const long = s1.len >= 1.8*s2.len, up = long ? new T.Vector3(0.62, 0.78, 0).normalize() : new T.Vector3(0, 1, 0), z = new T.Vector3(0, 0, 1);
+    const side = new T.Vector3().crossVectors(up, z).negate();
+    const from = new T.Matrix4().makeBasis(a1, a2, a3), to = new T.Matrix4().makeBasis(up, side, z);
+    const r = to.multiply(from.transpose());
+    const q = new T.Quaternion().setFromRotationMatrix(r).premultiply(new T.Quaternion().setFromAxisAngle(new T.Vector3(0, 1, 0), 0.35));
+    const wrap = new T.Group();
+    while(g.children.length) wrap.add(g.children[0]);
+    wrap.position.copy(c).negate().applyQuaternion(q);
+    wrap.quaternion.copy(q); g.add(wrap);
+  }
+  // g framed and drawn at 128 x 128 onto a data URL. band: the heights kept, for a garment on the
+  // body; yaw: the turn to give it (null when already turned). The figure's canvas is borrowed for
+  // the moment and its figure drawn again.
+  const SH = 128;
+  function shoot(v, g, band, yaw){
+    const T = v.THREE, r = v.renderer, cam = v.shelfCam;
+    if(yaw != null) g.rotation.y = yaw;
+    g.updateMatrixWorld(true);
+    const b = new T.Box3().setFromObject(g);
+    if(band){ b.min.y = Math.max(b.min.y, band[0]); b.max.y = Math.min(b.max.y, band[1]); }
+    if(b.isEmpty()) return null;
+    const ctr = b.getCenter(new T.Vector3()), size = b.getSize(new T.Vector3());
+    const half = Math.max(size.y, size.x)/2*1.1, t = Math.tan(cam.fov*Math.PI/360), dist = half/t + size.z/2, el = 0.16;
+    cam.position.set(ctr.x, ctr.y + dist*Math.sin(el), ctr.z + dist*Math.cos(el)); cam.lookAt(ctr);
+    v.shelf.add(g);
+    const pr = r.getPixelRatio();
+    r.setPixelRatio(1); r.setSize(SH, SH, false);
+    r.render(v.shelf, cam);
+    const c = document.createElement("canvas"); c.width = c.height = SH;
+    c.getContext("2d").drawImage(r.domElement, 0, 0, SH, SH);
+    v.shelf.remove(g);
+    r.setPixelRatio(pr); VK.w = VK.h = 0;
+    if(!VK.raf && VK.rig && !VK.el.hidden) spin(performance.now());
+    return c.toDataURL("image/png");
+  }
   // ---------- a picture of it ----------
   // The figure as it stands now, drawn at w x h onto a 2D context: rendered at that size for the
   // occasion and put back, all in one task, so the drawing buffer is still whole when it is copied
@@ -366,7 +521,8 @@ function viking(api){
 
 // ---------- the card as a picture ----------
 // A PNG of one player, 360 x 520 drawn at twice that: the figure, the name and class, six figures,
-// the pentagon and the credit, in the site's dark and ember. o: {vk, world, online}. A Blob.
+// the pentagon and the credit, in the site's dark and ember; with o.thumbs, a row of what they wear
+// under the figure (the card then 46 px taller). o: {vk, world, online, thumbs: [{src, label}]}. A Blob.
 const INKS = {bg: "#141110", bg2: "#1b1715", well: "#100d0c", stage: "#0c0a09", card: "#221d1a", line: "#3a2f28", ink: "#f3ede4", ink2: "#d6cbbd", muted: "#a89c92", faint: "#75685e",
   bright: "#fff", gold: "#f97316", ok: "#6faf68", nil: "#5e534b"};
 const FLAME_PATH = "M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 5-2.47.27.773.5 1.604.5 2.47A7.5 7.5 0 0 1 12 23z";
@@ -380,7 +536,13 @@ function sixFigures(p){
 async function picture(p, roster, o){
   o = o || {};
   rim(roster);
-  const S = 2, W = 360, H = 520, C = INKS;
+  // the gear's pictures, decoded before the drawing starts (a picture that fails is left out)
+  const thumbs = (await Promise.all((o.thumbs || []).slice(0, 10).map(t => new Promise(ok => {
+    if(!t || !t.src){ ok(null); return; }
+    const im = new Image(); im.onload = () => ok({im, label: t.label || ""}); im.onerror = () => ok(null); im.src = t.src;
+  })))).filter(Boolean);
+  const off = thumbs.length ? 46 : 0;
+  const S = 2, W = 360, H = 520 + off, C = INKS;
   const cv = document.createElement("canvas"); cv.width = W*S; cv.height = H*S;
   const x = cv.getContext("2d"); x.scale(S, S);
   try{ await Promise.all([document.fonts.load(`700 24px ${MONO}`), document.fonts.load(`400 12px ${MONO}`)]); }catch(e){}
@@ -410,7 +572,10 @@ async function picture(p, roster, o){
   x.fillStyle = o.online ? C.ok : C.muted; x.fillText(fit(o.online ? I18N.t("online now") : seen(num(p.last_seen)), W - 16 - sx), sx, 85.5);
   // the figure, on the map's ground
   const FX = 16, FY = 104, FW = 150, FH = 236;
-  box(FX, FY, FW, FH, 10); x.fillStyle = C.stage; x.fill();
+  // the stage: a warm dark vignette round the figure, as on the page
+  const vg = x.createRadialGradient(FX + FW/2, FY + FH*0.56, 8, FX + FW/2, FY + FH*0.56, FH*0.62);
+  vg.addColorStop(0, "#2b1c13"); vg.addColorStop(.55, "#181210"); vg.addColorStop(1, C.stage);
+  box(FX, FY, FW, FH, 10); x.fillStyle = vg; x.fill();
   x.save(); box(FX, FY, FW, FH, 10); x.clip();
   const drawn = o.vk && o.vk.paint ? o.vk.paint(x, FX, FY, FW, FH) : false;
   if(!drawn){ x.save(); x.translate(FX + FW/2 - 24, FY + FH/2 - 30); x.scale(2, 2); x.fillStyle = C.line; x.fill(new Path2D(FLAME_PATH)); x.restore(); }
@@ -425,8 +590,17 @@ async function picture(p, roster, o){
     x.font = `700 20px ${MONO}`; spaced("0px"); x.fillStyle = nil ? C.nil : C.bright; x.fillText(fit(v, GW - 22), ix, iy + 36);
     x.font = `600 8.5px ${SANS}`; spaced(".6px"); x.fillStyle = C.muted; x.fillText(fit(String(k).toUpperCase(), GW - 22), ix, iy + 53);
   });
+  // what they wear, in small slot frames under the figure
+  if(thumbs.length){
+    const TS = 30, gap = 4, ty = FY + FH + 10, tx0 = (W - (thumbs.length*TS + (thumbs.length - 1)*gap))/2;
+    thumbs.forEach((t, i) => {
+      const tx = tx0 + i*(TS + gap);
+      box(tx, ty, TS, TS, 6); x.fillStyle = C.card; x.fill(); x.strokeStyle = C.line; x.stroke();
+      x.drawImage(t.im, tx + 2, ty + 2, TS - 4, TS - 4);
+    });
+  }
   // the pentagon, its corners named
-  const PC = {x: W/2, y: 418}, R = 44;
+  const PC = {x: W/2, y: 418 + off}, R = 44;
   const corner = (i, r) => { const a = -Math.PI/2 + i*2*Math.PI/5; return [PC.x + r*Math.cos(a), PC.y + r*Math.sin(a), a]; };
   x.strokeStyle = C.line; x.lineWidth = 1;
   for(const k of [.25, .5, .75, 1]){ x.beginPath(); for(let i = 0; i < 5; i++){ const [px, py] = corner(i, R*k); i ? x.lineTo(px, py) : x.moveTo(px, py); } x.closePath(); x.stroke(); }
@@ -440,11 +614,11 @@ async function picture(p, roster, o){
     x.fillText(I18N.t(name).toUpperCase(), lx, ly + (sin > .5 ? 9 : sin < -.5 ? -3 : 3));
   });
   // the credit
-  x.textAlign = "left"; spaced("0px"); x.strokeStyle = C.line; x.beginPath(); x.moveTo(16, 488.5); x.lineTo(W - 16, 488.5); x.stroke();
-  x.font = `400 9.5px ${MONO}`; x.fillStyle = C.faint; x.fillText(I18N.date(Date.now(), {day: "numeric", month: "short", year: "numeric"}), 16, 507);
+  x.textAlign = "left"; spaced("0px"); x.strokeStyle = C.line; x.beginPath(); x.moveTo(16, 488.5 + off); x.lineTo(W - 16, 488.5 + off); x.stroke();
+  x.font = `400 9.5px ${MONO}`; x.fillStyle = C.faint; x.fillText(I18N.date(Date.now(), {day: "numeric", month: "short", year: "numeric"}), 16, 507 + off);
   x.textAlign = "right"; x.font = `700 9.5px ${MONO}`; x.fillStyle = C.ink2;
-  const tail = "ForgeServer.fr", tw = x.measureText(tail).width; x.fillText(tail, W - 16, 507);
-  x.fillStyle = C.gold; x.fillText("ForgeMap · ", W - 16 - tw, 507);
+  const tail = "ForgeServer.fr", tw = x.measureText(tail).width; x.fillText(tail, W - 16, 507 + off);
+  x.fillStyle = C.gold; x.fillText("ForgeMap · ", W - 16 - tw, 507 + off);
   return new Promise((ok, no) => cv.toBlob(b => b ? ok(b) : no(new Error("toBlob")), "image/png"));
 }
 // hand a Blob to the browser as a file, by a link with download

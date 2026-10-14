@@ -172,7 +172,8 @@ textarea.field{resize:vertical;min-height:74px;font-size:.8rem;line-height:1.45}
 .radar.big .pt{fill:var(--gold)}
 .radar.big .lb{font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;fill:var(--muted)}
 .radar.big .lv{font-size:9px;fill:var(--ink-2);font-variant-numeric:tabular-nums}
-.viking{margin:0;padding:0;overflow:hidden;background:var(--stage)}
+.viking{margin:0;padding:0;overflow:hidden;background:var(--stage);
+  background:radial-gradient(ellipse 80% 64% at 50% 58%,#2b1c13 0%,#181210 54%,#0c0a09 100%)}   /* ForgeMap: a warm dark vignette behind the figure */
 .viking canvas{display:block;width:100%}
 .viking figcaption{padding:.35rem .6rem .4rem;border-top:1px solid var(--line);font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center}
 .viking.ok figcaption{color:var(--ok)}
@@ -311,3 +312,43 @@ body:not(.side-open) .sidebar{display:none}
 .fm-ping.good{color:var(--ok)}
 .fm-ping.fair{color:var(--gold)}
 .fm-ping.bad{color:var(--off)}
+
+/* ---------- ForgeMap: the gear, as a game's inventory (js/gear.js) ---------- */
+.eqs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.45rem}
+.eq{position:relative;display:grid;grid-template-columns:52px minmax(0,1fr);gap:.6rem;align-items:center;padding:.45rem .6rem .45rem .45rem;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);outline:none;transition:border-color .15s ease,box-shadow .15s ease}
+.eq:hover,.eq:focus-visible,.eq.open{border-color:rgba(249,115,22,.6);box-shadow:0 0 0 1px rgba(249,115,22,.16),0 0 16px -5px rgba(249,115,22,.5)}
+.eq.fav{grid-column:1 / -1;grid-template-columns:76px minmax(0,1fr);background:linear-gradient(100deg,var(--gold-dim),var(--card) 62%)}
+.eq-pic{width:52px;height:52px;display:grid;place-items:center;border-radius:6px;border:1px solid var(--line);color:var(--faint);overflow:hidden;
+  background:radial-gradient(circle at 50% 42%,#2c1e15 0%,#17120f 72%);box-shadow:inset 0 0 0 1px var(--hair),inset 0 -10px 16px rgba(0,0,0,.35)}
+.eq.fav .eq-pic{width:76px;height:76px}
+.eq-pic svg{width:24px;height:24px;opacity:.75}
+.eq-pic img{width:100%;height:100%;object-fit:contain;display:block;-webkit-user-drag:none}
+.eq-txt{display:grid;gap:.1rem;min-width:0}
+.eq-k{font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.eq.fav .eq-k{color:var(--gold)}
+.eq-n{font-family:var(--display);font-size:.76rem;font-weight:700;color:var(--bright);line-height:1.25;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.eq-s{font-size:.7rem;color:var(--muted);line-height:1.35}
+.eq-s b{font-family:var(--mono);color:var(--ink);font-weight:700}
+.eq-l{font-size:.62rem;color:var(--faint);line-height:1.35}
+.eq-q{display:inline-flex;gap:4px;margin-top:3px;align-items:center}
+.eq-q i{width:6px;height:6px;transform:rotate(45deg);border:1px solid var(--gold);opacity:.45}
+.eq-q i.on{background:var(--gold);opacity:1}
+.eq-more{display:none;position:absolute;left:-1px;right:-1px;top:calc(100% + 4px);z-index:30;gap:.22rem;padding:.6rem .7rem;
+  background:#1a1512;border:1px solid rgba(249,115,22,.55);border-radius:var(--r);box-shadow:0 12px 30px rgba(0,0,0,.6);font-size:.7rem;color:var(--ink-2);line-height:1.45}
+@media (hover:hover){ .eq:hover .eq-more{display:grid} }
+.eq:focus-visible .eq-more,.eq.open .eq-more{display:grid}
+.eq{cursor:pointer}
+.eq-more b{color:var(--bright);font-family:var(--display);font-size:.8rem}
+.eq-rows{display:grid;gap:.12rem;margin:.2rem 0;padding:.3rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.eq-row{display:flex;gap:.45rem;align-items:baseline}
+.eq-row span{flex:1 1 auto;color:var(--muted)}
+.eq-row b{font-family:var(--mono);font-size:.78rem}
+.eq-row i{font-style:normal;color:var(--gold);font-size:.64rem;font-family:var(--mono)}
+.eq-mod{color:var(--ok)}
+.eq-dim{color:var(--faint);font-size:.63rem}
+.eqstrip{display:flex;gap:4px;min-width:0;overflow:hidden}
+.eqstrip .eqs-f{flex:0 0 auto}
+.eqstrip .eq-pic{width:30px;height:30px;border-radius:5px}
+.eqstrip .eq-pic svg{width:15px;height:15px}
+@media (max-width:760px){ .eqs{grid-template-columns:repeat(2,minmax(0,1fr))} .eq{grid-template-columns:44px minmax(0,1fr);gap:.45rem} .eq-pic{width:44px;height:44px} .eq.fav{grid-template-columns:64px minmax(0,1fr)} .eq.fav .eq-pic{width:64px;height:64px} }

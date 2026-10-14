@@ -10,9 +10,11 @@
 <link rel="stylesheet" href="site.css">
 <script src="js/i18n.js"></script>
 <script src="js/lang/fr.js"></script>
+<script src="js/lang/noms.js"></script>
 <script src="site-config.js"></script>
 <script src="map-core.js"></script>
 <script src="js/card.js"></script>
+<script src="js/gear.js"></script>
 <script type="importmap">
 { "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/addons/" } }
 </script>
@@ -23,7 +25,7 @@
   html,body{height:100%;overflow:hidden}
   body{background:var(--bg);padding:0}
   html.clear,html.clear body{background:transparent}
-  .fc{position:relative;height:100%;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto auto;gap:10px;padding:14px 16px 10px;
+  .fc{position:relative;height:100%;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto auto auto;gap:10px;padding:14px 16px 10px;
     background:linear-gradient(180deg,var(--bg-2),var(--well));border:1px solid var(--line);border-radius:14px;overflow:hidden}
   .fc::before{content:"";position:absolute;left:16px;top:0;width:44px;height:2px;background:var(--gold)}   /* the ember mark */
   .clear .fc{background:rgba(20,17,16,.86)}
@@ -45,7 +47,7 @@
 
   /* the figure and six figures beside it */
   .fc .mid{display:grid;grid-template-columns:42% minmax(0,1fr);gap:8px;min-height:0}
-  .fc .fig3d{position:relative;min-height:0;border:1px solid var(--line);border-radius:10px;background:var(--stage);overflow:hidden}
+  .fc .fig3d{position:relative;min-height:0;border:1px solid var(--line);border-radius:10px;background:var(--stage);background:radial-gradient(ellipse 80% 64% at 50% 58%,#2b1c13 0%,#181210 54%,#0c0a09 100%);overflow:hidden}
   .fc .fig3d .viking{position:absolute;inset:0;border:0;border-radius:0;display:flex;flex-direction:column;background:transparent;box-shadow:none}
   .fc .fig3d .viking[hidden]{display:none}
   .fc .fig3d .viking canvas{flex:1 1 auto;min-height:0;height:auto}
@@ -69,19 +71,24 @@
   .fc .foot2 a:hover{text-decoration:none;color:var(--bright)}
 
   .fc .foot2{grid-row:-2 / -1}
-  .fc .msg{grid-row:2 / 5;align-self:center;text-align:center;color:var(--muted);font-size:.85rem;line-height:1.5;padding:0 .5rem}
+  /* what they wear, a row of small slot frames under the figure */
+  .fc .eqstrip{justify-content:center;margin-bottom:4px}
+  .fc .eqstrip .eqs-f:hover .eq-pic{border-color:rgba(249,115,22,.6)}
+  .fc .msg{grid-row:2 / 6;align-self:center;text-align:center;color:var(--muted);font-size:.85rem;line-height:1.5;padding:0 .5rem}
   .fc .msg b{display:block;color:var(--ink);font-size:.95rem;margin-bottom:.3rem}
 
   /* a short box keeps the figure and the figures; a very short one the figures alone */
   @media (max-height:470px){ .fc .pent{display:none} }
+  @media (max-height:400px){ .fc .eqstrip{display:none} }
   @media (max-height:300px){ .fc .fig3d{display:none} .fc .mid{grid-template-columns:1fr} }
   /* a wide box puts the pentagon beside the rest */
   @media (min-width:560px){
-    .fc{grid-template-columns:minmax(0,1fr) 180px;grid-template-rows:auto auto minmax(0,1fr) auto;column-gap:18px}
+    .fc{grid-template-columns:minmax(0,1fr) 180px;grid-template-rows:auto auto minmax(0,1fr) auto auto;column-gap:18px}
+    .fc .eqstrip{grid-column:1;grid-row:4;justify-content:flex-start}
     .fc .strip,.fc .head,.fc .foot2{grid-column:1 / -1}
     .fc .msg{grid-column:1 / -1;grid-row:2 / 4}
     .fc .mid{grid-column:1;grid-row:3}
-    .fc .pent{display:flex;grid-column:2;grid-row:3;height:auto;align-items:center}
+    .fc .pent{display:flex;grid-column:2;grid-row:3 / 5;height:auto;align-items:center}
   }
 </style>
 </head>
