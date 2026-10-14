@@ -46,6 +46,8 @@ namespace WebMap
             // seconds per hand family and chest class, the latest set worn, and hits by kind (Gear's)
             public double[] hand = new double[Gear.HandNames.Length], armor = new double[Gear.ArmorNames.Length];
             public string[] worn = new string[Gear.Slots.Length];
+            public int[] wornQ = new int[Gear.Slots.Length];   // the star level per slot where the game syncs it, 0 unknown
+            public Dictionary<string, double> held = new Dictionary<string, double>(StringComparer.Ordinal);   // seconds in hand, by item prefab
             public int[] hits = new int[Gear.HitNames.Length];
             public double[] diet = new double[Gear.DietNames.Length]; public float foodHp, foodSt, foodEitr;   // seconds per diet, and the latest food-borne figures
             public string look; public int yaw;          // RigExporter's look JSON as last seen, for a page to draw them offline
@@ -253,8 +255,11 @@ namespace WebMap
         private static int Busy(Kit s) => s.made[(int)Kitchen.Made.Cooked] + s.made[(int)Kitchen.Made.Brewed] + s.made[(int)Kitchen.Made.Smelted] + s.made[(int)Kitchen.Made.Honey];
 
         // Game thread, once per player per snapshot. Each hand adds the seconds to
-        // its family, a family in both hands once; both hands empty is none.
-        public static void Wore(string name, Gear.Hand right, Gear.Hand left, bool twoHanded, Gear.Armor armor, string[] worn, float seconds)
+        // its family, a family in both hands once; both hands empty is none. The items
+        // in hand add the seconds to themselves too, one in both hands once: the favourites.
+        // worn and quality are read here and not kept, so a caller may reuse them.
+        public static void Wore(string name, Gear.Hand right, Gear.Hand left, bool twoHanded, Gear.Armor armor, string[] worn, float seconds,
+                                string rightItem = null, string leftItem = null, int[] quality = null)
         {
             if (string.IsNullOrEmpty(name)) return;
             lock (gate)
@@ -265,9 +270,56 @@ namespace WebMap
                 if (right == Gear.Hand.None && left == Gear.Hand.None) p.hand[(int)Gear.Hand.None] += seconds;
                 if (twoHanded) p.hand[(int)Gear.Hand.TwoHanded] += seconds;
                 p.armor[(int)armor] += seconds;
-                for (int i = 0; i < p.worn.Length; i++) p.worn[i] = i < worn.Length && !string.IsNullOrEmpty(worn[i]) ? Clean(worn[i]) : null;
+                for (int i = 0; i < p.worn.Length; i++)
+                {
+                    p.worn[i] = i < worn.Length && !string.IsNullOrEmpty(worn[i]) ? Clean(worn[i]) : null;
+                    p.wornQ[i] = p.worn[i] != null && quality != null && i < quality.Length ? Gear.QualityOf(quality[i]) : 0;
+                }
+                Held(p, rightItem, seconds);
+                if (leftItem != rightItem) Held(p, leftItem, seconds);
                 dirty = true; jsonStale = true;
             }
+        }
+
+        // A player's items in hand are kept to this many; a new one past it takes the place
+        // of the least held, so a passing pick-up never pushes out a favourite.
+        internal const int MaxHeld = 64, FavShown = 3;
+        private static void Held(P p, string item, double seconds)   // caller holds gate
+        {
+            if (string.IsNullOrEmpty(item) || seconds <= 0) return;
+            if (p.held.TryGetValue(item, out double s)) { p.held[item] = s + seconds; return; }
+            if (p.held.Count >= MaxHeld)
+            {
+                string least = null; double ls = double.MaxValue;
+                foreach (var kv in p.held) if (kv.Value < ls) { ls = kv.Value; least = kv.Key; }
+                if (ls > seconds) return;                // everything kept is held longer than this
+                p.held.Remove(least);
+            }
+            p.held[Clean(item)] = seconds;
+        }
+
+        // The most held first, the name breaking a tie; at most `n`, none under a second.
+        private static void Favourites(StringBuilder sb, Dictionary<string, double> held, int n)
+        {
+            sb.Append('[');
+            string lastK = null; double lastV = double.MaxValue;
+            for (int k = 0; k < n; k++)
+            {
+                string best = null; double bv = 0;
+                foreach (var kv in held)
+                {
+                    double v = kv.Value;
+                    if (v < 1) continue;
+                    // strictly after the last one shown in (seconds desc, name asc) order
+                    if (lastK != null && (v > lastV || v == lastV && string.CompareOrdinal(kv.Key, lastK) <= 0)) continue;
+                    if (best == null || v > bv || v == bv && string.CompareOrdinal(kv.Key, best) < 0) { best = kv.Key; bv = v; }
+                }
+                if (best == null) break;
+                if (k > 0) sb.Append(',');
+                sb.Append("{\"item\":\"").Append(Esc(best)).Append("\",\"s\":").Append(Math.Round(bv).ToString(CultureInfo.InvariantCulture)).Append('}');
+                lastK = best; lastV = bv;
+            }
+            sb.Append(']');
         }
         public static void Fed(string name, Gear.Diet diet, float hp, float st, float eitr, float seconds)
         {
@@ -451,7 +503,16 @@ namespace WebMap
                         if (!wf) sb.Append(','); wf = false;
                         sb.Append('"').Append(Gear.Slots[i]).Append("\":\"").Append(Esc(p.worn[i])).Append('"');
                     }
-                    sb.Append("},\"hits\":{");
+                    sb.Append("},\"wornQ\":{");
+                    wf = true;
+                    for (int i = 0; i < p.wornQ.Length; i++)
+                    {
+                        if (p.wornQ[i] <= 0 || p.worn[i] == null) continue;
+                        if (!wf) sb.Append(','); wf = false;
+                        sb.Append('"').Append(Gear.Slots[i]).Append("\":").Append(p.wornQ[i]);
+                    }
+                    sb.Append("},\"fav\":"); Favourites(sb, p.held, FavShown);
+                    sb.Append(",\"hits\":{");
                     for (int i = 0; i < p.hits.Length; i++)
                         sb.Append(i > 0 ? ",\"" : "\"").Append(Gear.HitNames[i]).Append("\":").Append(p.hits[i]);
                     sb.Append("}}");
@@ -583,6 +644,18 @@ namespace WebMap
                             var p = Get(f[1]);
                             for (int i = 0; i < p.worn.Length && i + 2 < f.Length; i++) p.worn[i] = f[i + 2].Length > 0 ? f[i + 2] : null;
                         }
+                        else if (f.Length >= 2 && f[0] == "q")        // the star level of that set, 0 where unknown (1.2.0)
+                        {
+                            var p = Get(f[1]);
+                            for (int i = 0; i < p.wornQ.Length && i + 2 < f.Length; i++)
+                                p.wornQ[i] = int.TryParse(f[i + 2], out int q) ? Gear.QualityOf(q) : 0;
+                        }
+                        else if (f.Length >= 4 && f[0] == "u" && f[2].Length > 0)   // seconds an item was in hand (1.2.0)
+                        {
+                            var p = Get(f[1]);
+                            if (p.held.Count < MaxHeld && double.TryParse(f[3], NumberStyles.Float, CultureInfo.InvariantCulture, out double hs) && hs > 0)
+                                p.held[f[2]] = hs;
+                        }
                         else if (f.Length >= 2 + Gear.HitNames.Length && f[0] == "x")   // hits by kind
                         {
                             var p = Get(f[1]);
@@ -672,6 +745,10 @@ namespace WebMap
                         if (p.foodHp + p.foodSt + p.foodEitr > 0) sb.Append(FormattableString.Invariant($"n\t{p.name}\t{p.foodHp:0.#}\t{p.foodSt:0.#}\t{p.foodEitr:0.#}\n"));
                         if (Array.Exists(p.worn, w => w != null))
                             sb.Append("w\t").Append(p.name).Append('\t').Append(string.Join("\t", Array.ConvertAll(p.worn, w => w ?? ""))).Append('\n');
+                        if (Array.Exists(p.wornQ, q => q > 0))
+                            sb.Append("q\t").Append(p.name).Append('\t').Append(string.Join("\t", p.wornQ)).Append('\n');
+                        foreach (var kv in p.held)
+                            sb.Append(FormattableString.Invariant($"u\t{p.name}\t{kv.Key}\t{kv.Value:0.#}\n"));
                         if (Array.Exists(p.hits, n => n > 0))
                             sb.Append("x\t").Append(p.name).Append('\t').Append(string.Join("\t", p.hits)).Append('\n');
                         if (p.look != null)                           // its JSON escapes tabs and newlines

@@ -103,6 +103,19 @@ namespace WebMap
             return it;
         }
         private static string Name(int hash) => hash != 0 ? Of(hash).name : null;
+        private static readonly string[] wornBuf = new string[Slots.Length];   // Stats copies what it keeps: game thread only
+        private static readonly int[] qualityBuf = new int[Slots.Length];
+
+        // Quality, the item's star level, reaches the server for five slots only. The owner's
+        // VisEquipment writes it beside the prefab for the right and left hands, the two back
+        // slots and the cape (s_rightItemQuality, s_leftItemQuality, s_rightBackItemQuality,
+        // s_leftBackItemQuality, s_shoulderItemQuality), as Humanoid.SetupVisEquipment hands it
+        // ItemData.m_quality; the chest, legs, helmet, utility and trinket go as a prefab hash
+        // and nothing else, and no other message carries a worn item's data to the server.
+        // An upgrade at a station unequips the item first, so the field follows it. 0: unknown.
+        public const int MaxQuality = 10;
+        internal static int QualityOf(int value) => value >= 1 && value <= MaxQuality ? value : 0;
+        private static int Quality(string worn, ZDO z, int key) => worn != null ? QualityOf(z.GetInt(key)) : 0;
 
         // A player's food never reaches the server; the health, stamina and eitr it adds do.
         // max_health is synced, and stamina and eitr refill to their food-borne maxima whenever
@@ -128,16 +141,24 @@ namespace WebMap
             {
                 if (z.GetBool(ZDOVars.s_dead) || z.GetBool(ZDOVars.s_inBed)) return;
                 int r = z.GetInt(ZDOVars.s_rightItem), l = z.GetInt(ZDOVars.s_leftItem), c = z.GetInt(ZDOVars.s_chestItem);
+                int rb = z.GetInt(ZDOVars.s_rightBackItem), lb = z.GetInt(ZDOVars.s_leftBackItem);
                 Item ri = r != 0 ? Of(r) : default, li = l != 0 ? Of(l) : default, ci = c != 0 ? Of(c) : default;
-                var worn = new[]
-                {
-                    r != 0 ? ri.name : Name(z.GetInt(ZDOVars.s_rightBackItem)),   // a sheathed weapon is still carried
-                    l != 0 ? li.name : Name(z.GetInt(ZDOVars.s_leftBackItem)),
-                    ci.name, Name(z.GetInt(ZDOVars.s_legItem)), Name(z.GetInt(ZDOVars.s_helmetItem)), Name(z.GetInt(ZDOVars.s_shoulderItem)),
-                    // the back slots on their own too: a class reads the weapons carried while a hammer is in hand
-                    Name(z.GetInt(ZDOVars.s_rightBackItem)), Name(z.GetInt(ZDOVars.s_leftBackItem)),
-                };
-                Stats.Wore(player, ri.hand, li.hand, ri.twoHanded || li.twoHanded, ci.armor, worn, seconds);
+                string[] worn = wornBuf;
+                worn[0] = r != 0 ? ri.name : Name(rb);   // a sheathed weapon is still carried
+                worn[1] = l != 0 ? li.name : Name(lb);
+                worn[2] = ci.name; worn[3] = Name(z.GetInt(ZDOVars.s_legItem)); worn[4] = Name(z.GetInt(ZDOVars.s_helmetItem));
+                worn[5] = Name(z.GetInt(ZDOVars.s_shoulderItem));
+                // the back slots on their own too: a class reads the weapons carried while a hammer is in hand
+                worn[6] = Name(rb); worn[7] = Name(lb);
+                int[] q = qualityBuf;
+                q[0] = Quality(worn[0], z, r != 0 ? ZDOVars.s_rightItemQuality : ZDOVars.s_rightBackItemQuality);
+                q[1] = Quality(worn[1], z, l != 0 ? ZDOVars.s_leftItemQuality : ZDOVars.s_leftBackItemQuality);
+                q[2] = q[3] = q[4] = 0;                  // chest, legs, helmet: never synced
+                q[5] = Quality(worn[5], z, ZDOVars.s_shoulderItemQuality);
+                q[6] = Quality(worn[6], z, ZDOVars.s_rightBackItemQuality);
+                q[7] = Quality(worn[7], z, ZDOVars.s_leftBackItemQuality);
+                // the hands' own items, for the favourites: what is in hand, not what is on the back
+                Stats.Wore(player, ri.hand, li.hand, ri.twoHanded || li.twoHanded, ci.armor, worn, seconds, ri.name, li.name, q);
                 float hp = Math.Max(0f, z.GetFloat(ZDOVars.s_maxHealth, BaseHp) - BaseHp);
                 peaks.TryGetValue(player, out Peak pk);
                 pk.st = Math.Max(z.GetFloat(ZDOVars.s_stamina, 0f), pk.st - PeakFadePerSecond * seconds);

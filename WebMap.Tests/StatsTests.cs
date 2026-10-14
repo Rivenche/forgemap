@@ -158,7 +158,7 @@ namespace WebMap.Tests
             Stats.Load(Dir);
             Assert.Equal(3, Me().Int("joins"));
             Assert.Equal(new[] { 0, 0, 0 }, new[] { "kills", "trees", "rocks" }.Select(k => Me().Int(k)));
-            Assert.Equal("{\"hand\":{},\"armor\":{},\"diet\":{},\"food\":{\"hp\":0,\"st\":0,\"eitr\":0},\"worn\":{},\"hits\":{\"melee\":0,\"ranged\":0,\"magic\":0,\"backstab\":0}}",
+            Assert.Equal("{\"hand\":{},\"armor\":{},\"diet\":{},\"food\":{\"hp\":0,\"st\":0,\"eitr\":0},\"worn\":{},\"wornQ\":{},\"fav\":[],\"hits\":{\"melee\":0,\"ranged\":0,\"magic\":0,\"backstab\":0}}",
                          Me().GetProperty("gear").GetRawText());
             Assert.False(Me().TryGetProperty("look", out _));
         }

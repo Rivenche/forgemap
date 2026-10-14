@@ -415,7 +415,8 @@ Under `[Performance]`:
 | `/portals` | portals with their tag and the portal each is linked to, as the game has connected them (JSON) |
 | `/graves` | tombstones still holding gear: owner, position, seconds since the death (JSON) |
 | `/vehicles` | boats and carts, position and type (JSON) |
-| `/stats/players` | per-player tallies: joins, deaths, chat, distance (by biome, the sea as `Ocean`), portal hops, pins, standing pieces/portals/ships, graves, kills, trees felled, rock pieces broken, and `gear`: seconds with each kind of thing in hand and in each weight of chest armour, the set last worn, hits on creatures by kind; `kitchen`: dishes cooked and burnt, meads brewed, honey taken, items smelted and each product's count; and `look` and `yaw`, how the player was last seen, as `/state` carries them; at the top, the world's `kitchen` and its busiest stations (JSON) |
+| `/items` | `?ids=` up to 40 prefab names, comma separated (letters, digits, `_`): each item's own figures from the game's ObjectDB, `{"items":{"<prefab>":{...}}}`. Every item has `type` (the game's item type: `Helmet`, `Chest`, `Legs`, `Shoulder`, `Utility`, `Trinket`, `OneHandedWeapon`, `TwoHandedWeapon`, `TwoHandedWeaponLeft`, `Bow`, `Shield`, `Tool`, `Torch`, `Ammo`...), `maxQuality` and, when set, `token`, the game's name key (`$item_sword_iron`); then, where the game uses them and not zero: `skill` (what is held), `armor` and `armorPerLevel` (helmet, chest, legs, cape), `block`, `blockPerLevel`, `deflection`, `deflectionPerLevel` (shields and weapons), `damages` and `damagesPerLevel` (`{"slash": 55, ...}`: `damage`, `blunt`, `slash`, `pierce`, `chop`, `pickaxe`, `fire`, `frost`, `lightning`, `poison`, `spirit`), `durability` and `durabilityPerLevel` (items that wear), `weight`, `movement` (-0.05 is 5% slower), `eitrRegen`, `set` (`{"name","size"}`) and `damageMods` (`{"frost":"Resistant"}`). A figure at quality q is the base plus (q - 1) times its per-level. Unknown ids are left out, and all are while the game's item list is not read yet (the first second after start); 400 with `{"error"}` for a malformed list. Cacheable for an hour once ready (JSON) |
+| `/stats/players` | per-player tallies: joins, deaths, chat, distance (by biome, the sea as `Ocean`), portal hops, pins, standing pieces/portals/ships, graves, kills, trees felled, rock pieces broken, and `gear`: seconds with each kind of thing in hand and in each weight of chest armour, the set last worn and its star levels where the game syncs them (`wornQ`), the three items held longest (`fav`), hits on creatures by kind; `kitchen`: dishes cooked and burnt, meads brewed, honey taken, items smelted and each product's count; and `look` and `yaw`, how the player was last seen, as `/state` carries them; at the top, the world's `kitchen` and its busiest stations (JSON) |
 | `/players` | the players online: `{"count", "players":[{"name", "health", "maxHealth", "dead", "inBed", "hidden", "ping", "x", "z", "yaw", "look"}]}`. `ping` is the player's round trip to the server in whole milliseconds, averaged over the last minute: Steam's own measure of the connection where it has one, else (crossplay) the game's once-a-second heartbeat timed on the server, to a server frame; left out while unknown (just connected, or nothing measured in the last minute), and given for a hidden player too. `x`, `z`, `yaw` and `look` only for a player the map shows (JSON) |
 | `/messages` | the chat and event feed (JSON) |
 | `/pins` (GET) | the pins, a line each: `placer,id,type,owner,x,z,text` (CSV) |
@@ -493,7 +494,23 @@ still, so a slowly fading peak of each stands in for the maximum; `food` is the 
 `hp`, `st` and `eitr` above the base 25 and 75.
 
 `worn` is the latest set: `right`, `left` (a sheathed weapon still counts), `chest`,
-`legs`, `helmet`, `shoulder`, and the two back slots `rightBack` and `leftBack`, by prefab name. **`hits`** are colour, not a record: a hit
+`legs`, `helmet`, `shoulder`, and the two back slots `rightBack` and `leftBack`, by prefab name.
+`wornQ` is the star level (quality, 1 to 4 for most items) of that set, by the same slot
+names, **only for `right`, `left`, `shoulder`, `rightBack` and `leftBack`**: the player's game
+writes the level beside the prefab for the two hands, the two back slots and the cape, and
+for nothing else. The chest, legs, helmet, belt and trinket reach the server as a prefab
+and nothing more, and no other message carries a worn item's level (crafting and upgrading
+happen in the player's own game; the inventory lives in their character file), so those
+slots are never in `wornQ`. An upgrade unequips the item first, so the level follows it.
+A slot with no level known is left out.
+
+`fav` is the player's favourite items in hand: the three held longest, most first, as
+`[{"item": prefab, "s": seconds}]` -- weapons, tools, shields, torches, from the two hands'
+own slots (not the back), an item in both hands counted once, empty hands never. The
+seconds per item are kept for 64 items a player; a new one past that takes the place of
+the least held, and only if it was held longer.
+
+**`hits`** are colour, not a record: a hit
 on a creature counts only when it passes through the server on its way to another
 player's game, never one on a creature the hitter's own game runs, which alone in an
 area is all of them. Each is `melee`, `ranged` or `magic` (a staff's), and `backstab`

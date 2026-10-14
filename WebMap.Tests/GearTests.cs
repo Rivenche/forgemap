@@ -82,5 +82,78 @@ namespace WebMap.Tests
             Gear.Struck(A, false, Skill.Swords, 3f, false);          // the weapon's bonus alone is none
             Assert.Equal("{\"melee\":2,\"ranged\":1,\"magic\":1,\"backstab\":1}", Of("hits").GetRawText());
         }
+
+        static void Hold(string right, string left, float s, Gear.Hand rh = Gear.Hand.Sword, Gear.Hand lh = Gear.Hand.Shield)
+            => Stats.Wore(A, right != null ? rh : Gear.Hand.None, left != null ? lh : Gear.Hand.None, false, Gear.Armor.Light, Set(right, left, null), s, right, left);
+
+        [Fact]
+        public void TheFavouritesAreTheThreeItemsHeldLongest()
+        {
+            Hold("SwordIron", "ShieldBanded", 100f);
+            Hold("Bow", null, 300f, Gear.Hand.Bow);
+            Hold("PickaxeIron", null, 50f, Gear.Hand.Pickaxe);
+            Hold("Torch", null, 20f, Gear.Hand.Torch);
+            Hold(null, null, 1000f);                                   // empty hands are nobody's favourite
+            Assert.Equal("[{\"item\":\"Bow\",\"s\":300},{\"item\":\"ShieldBanded\",\"s\":100},{\"item\":\"SwordIron\",\"s\":100}]", Of("fav").GetRawText());
+        }
+
+        [Fact]
+        public void AnItemInBothHandsCountsOnce()
+        {
+            Stats.Wore(A, Gear.Hand.Staff, Gear.Hand.Staff, false, Gear.Armor.Mage, Set("StaffFireball", "StaffFireball", null), 5f, "StaffFireball", "StaffFireball");
+            Assert.Equal("[{\"item\":\"StaffFireball\",\"s\":5}]", Of("fav").GetRawText());
+        }
+
+        [Fact]
+        public void NothingHeldYetIsAnEmptyList()
+        {
+            Stats.Wore(A, Gear.Hand.None, Gear.Hand.None, false, Gear.Armor.Light, Set(null, null, "ArmorLeatherChest"), 1f);
+            Assert.Equal("[]", Of("fav").GetRawText());
+            Assert.Equal("{}", Of("wornQ").GetRawText());
+        }
+
+        [Fact]
+        public void APassingItemNeverPushesOutAFavourite()
+        {
+            Hold("SwordIron", null, 500f);
+            for (int i = 0; i < Stats.MaxHeld + 10; i++) Hold("Thing" + i, null, 2f);
+            Assert.Equal("SwordIron", Of("fav")[0].Str("item"));
+        }
+
+        [Fact]
+        public void TheStarLevelIsKeptWhereTheGameSyncsIt()
+        {
+            var q = new[] { 3, 2, 0, 0, 0, 1, 0, 4 };
+            Stats.Wore(A, Gear.Hand.Sword, Gear.Hand.Shield, false, Gear.Armor.Heavy,
+                       new[] { "SwordIron", "ShieldBanded", "ArmorIronChest", "ArmorIronLegs", "HelmetIron", "CapeWolf", null, "BowHuntsman" }, 1f,
+                       "SwordIron", "ShieldBanded", q);
+            Assert.Equal("{\"right\":3,\"left\":2,\"shoulder\":1,\"leftBack\":4}", Of("wornQ").GetRawText());
+            q[0] = 99;                                                 // not a level the game has; and a reused buffer changes nothing kept
+            Assert.Equal(3, Of("wornQ").Int("right"));
+            Stats.Wore(A, Gear.Hand.Sword, Gear.Hand.None, false, Gear.Armor.Light, Set("SwordIron", null, null), 1f, "SwordIron", null, q);
+            Assert.Equal("{}", Of("wornQ").GetRawText());
+        }
+
+        [Fact]
+        public void FavouritesAndStarLevelsSurviveARestart()
+        {
+            Stats.Wore(A, Gear.Hand.Axe, Gear.Hand.None, false, Gear.Armor.Light, Set("AxeBronze", null, null), 42f, "AxeBronze", null, new[] { 2, 0, 0, 0, 0, 0, 0, 0 });
+            Stats.Save();
+            Stats.Load(Dir);
+            Assert.Equal("[{\"item\":\"AxeBronze\",\"s\":42}]", Of("fav").GetRawText());
+            Assert.Equal("{\"right\":2}", Of("wornQ").GetRawText());
+        }
+
+        [Fact]
+        public void StatsSavedBeforeFavouritesStillLoad()
+        {
+            System.IO.File.WriteAllText(System.IO.Path.Combine(Dir, "stats.tsv"),
+                "since\t1700000000\np\t" + A + "\t3\t1\t0\t0\t120.5\t1700000100\nh\t" + A + "\tsword\t60\nw\t" + A + "\tSwordIron\t\tArmorLeatherChest\t\t\t\n");
+            Stats.Load(Dir);
+            Assert.Equal(60, Of("hand").Int("sword"));
+            Assert.Equal("SwordIron", Of("worn").Str("right"));
+            Assert.Equal("[]", Of("fav").GetRawText());
+            Assert.Equal("{}", Of("wornQ").GetRawText());
+        }
     }
 }

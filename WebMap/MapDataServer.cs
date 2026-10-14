@@ -637,6 +637,15 @@ namespace WebMap
                     res.ContentLength64 = textBytes.Length;
                     res.Close(textBytes, true);
                     return true;
+                case "/items":
+                    // the game's own data for the items a page shows: the same for the whole
+                    // run once ObjectDB is read, so an edge may keep it a while; not before
+                    {
+                        string body = Items.Json(req.QueryString["ids"], out string err);
+                        res.Headers.Add(HttpResponseHeader.CacheControl, err == null && Items.Ready ? "public, max-age=3600" : "no-cache");
+                        Answer(res, err == null ? 200 : 400, err == null ? body : "{\"error\":\"" + JsonEscape(err) + "\"}");
+                        return true;
+                    }
                 case "/structures/stats":
                     res.Headers.Add(HttpResponseHeader.CacheControl, "no-cache");
                     res.ContentType = "application/json";
@@ -1083,6 +1092,7 @@ namespace WebMap
             try
             {
                 Kitchen.Tick(Time.realtimeSinceStartup);    // catches its own, station by station
+                Items.Index();                              // once ObjectDB has its items; a compare after
                 LearnPublicIp();
                 Stats.MaybeSave();
                 Trails.MaybeSave();
