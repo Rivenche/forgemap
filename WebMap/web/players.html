@@ -423,7 +423,7 @@ const VK = PlayerCard.viking(API);
 let MODELS = 0;   // the library's revision, from /state
 function showViking(p, here){
   const slot = document.getElementById("vslot");
-  if(slot) slot.replaceWith(VK.el);
+  if(slot && !VK.big) slot.replaceWith(VK.el);   // open big: it stays on top, shrink() puts it back
   VK.show(p.name, lookOf(p, here), !!p.online, MODELS);
 }
 
@@ -486,7 +486,7 @@ document.getElementById("share").addEventListener("click", e => {
 function pick(name){
   if(SHARE && SHARE !== name) openShare(null);
   PICK = name || null; DLAST = ""; Spot.reset();
-  if(!PICK) VK.hide();
+  if(!PICK){ VK.shrink(); VK.hide(); }
   document.getElementById("app").classList.toggle("picked", !!PICK);
   for(const b of document.querySelectorAll("#list .player")) b.classList.toggle("pick", b.dataset.name === PICK);
   if(PICK){ renderDetail(); document.getElementById("detail").scrollTop = 0; }

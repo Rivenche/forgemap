@@ -206,6 +206,7 @@ I18N.add("fr", {
   "Embed on your site": "À intégrer sur ton site",
   "Enchanter": "Enchanteur",
   "Engineer": "Ingénieur",
+  "Enlarge": "Agrandir",
   "Erase": "Gomme",
   "Evening": "Soir",
   "Every path walked": "Tous les chemins parcourus",

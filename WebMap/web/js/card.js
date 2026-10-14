@@ -261,9 +261,39 @@ function viking(api){
   // speed, 0..1, eased back in after a drag; hold: until when (rAF time) the turn waits after one;
   // fit: the rig's height and reach, for the framing
   const VK = {el: document.createElement("figure"), ready: null, v: null, lib: null, gen: 0, built: -1, key: undefined, name: null, rig: null, missing: 0, want: null, raf: 0, w: 0, h: 0,
-    ang: 0.5, tilt: 0, auto: 1, hold: 0, drag: null, last: 0, fit: null};
+    ang: 0.5, tilt: 0, auto: 1, hold: 0, drag: null, last: 0, fit: null, zoom: 1, big: false};
   VK.el.className = "card viking"; VK.el.hidden = true;
   VK.el.innerHTML = `<canvas aria-hidden="true" title="${esc(I18N.t("Drag to turn"))}"></canvas><figcaption></figcaption>`;
+  // ForgeMap: a button that opens the figure big in the middle of the screen (wheel or pinch to come
+  // closer), and closes it again by the same button, Esc or a click beside it. The figure keeps its
+  // one renderer: the element itself is lifted onto the page's top layer and put back where it was.
+  VK.el.insertAdjacentHTML("beforeend", `<button type="button" class="vk-big" title="${esc(I18N.t("Enlarge"))}" aria-label="${esc(I18N.t("Enlarge"))}">`
+    + `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 4h6v2H7.4l3.3 3.3-1.4 1.4L6 7.4V10H4V4zm10 0h6v6h-2V7.4l-3.3 3.3-1.4-1.4L16.6 6H14V4zM4 14h2v2.6l3.3-3.3 1.4 1.4L7.4 18H10v2H4v-6zm14 0h2v6h-6v-2h2.6l-3.3-3.3 1.4-1.4 3.3 3.3V14z"/></svg></button>`);
+  const back = document.createElement("div"); back.className = "vk-back"; back.hidden = true;
+  let home = null;
+  function enlarge(){
+    if(VK.big) return;
+    VK.big = true; home = document.createComment("vk"); VK.el.replaceWith(home);
+    document.body.appendChild(back); back.hidden = false; back.appendChild(VK.el);
+    VK.el.classList.add("big"); VK.el.querySelector(".vk-big").title = I18N.t("Close");
+    document.documentElement.classList.add("vk-open"); wake();
+  }
+  function shrink(){
+    if(!VK.big) return;
+    VK.big = false; VK.zoom = 1; VK.el.classList.remove("big"); VK.el.querySelector(".vk-big").title = I18N.t("Enlarge");
+    const slot = document.getElementById("vslot") || document.getElementById("pvslot");
+    if(slot) slot.replaceWith(VK.el); else if(home && home.parentNode) home.replaceWith(VK.el);
+    if(home && home.parentNode) home.remove(); home = null;
+    back.hidden = true; document.documentElement.classList.remove("vk-open"); wake();
+  }
+  VK.enlarge = enlarge; VK.shrink = shrink;
+  VK.el.querySelector(".vk-big").addEventListener("click", e => { e.stopPropagation(); VK.big ? shrink() : enlarge(); });
+  back.addEventListener("click", e => { if(e.target === back) shrink(); });
+  addEventListener("keydown", e => { if(e.key === "Escape" && VK.big) shrink(); });
+  VK.el.addEventListener("wheel", e => {
+    if(!VK.big) return;
+    e.preventDefault(); VK.zoom = Math.max(0.45, Math.min(1.15, VK.zoom*Math.exp(e.deltaY*0.0012))); wake();
+  }, {passive: false});
   function load(){
     if(!VK.ready) VK.ready = Promise.all([import("three"), import("three/addons/loaders/GLTFLoader.js"), import("./rig.js" + VER)]).then(([THREE, {GLTFLoader}, rig]) => {
       const renderer = new THREE.WebGLRenderer({canvas: VK.el.querySelector("canvas"), antialias: true, alpha: true});
@@ -369,8 +399,8 @@ function viking(api){
   function aim(cam){
     const f = VK.fit || {top: 1.85, r: 0.55}, t = Math.tan(cam.fov*Math.PI/360), mid = f.top*0.5 - 0.04;
     const dist = Math.max(2.4, (f.top + 0.38)/2/t, (f.r + 0.12)/(t*cam.aspect));
-    const e = EL0 + VK.tilt;
-    cam.position.set(0, mid + dist*Math.sin(e), dist*Math.cos(e)); cam.lookAt(0, mid, 0);
+    const e = EL0 + VK.tilt, d = dist*VK.zoom, m = mid + (1 - VK.zoom)*f.top*0.22;   // zoomed in: the eye drifts up to the face
+    cam.position.set(0, m + d*Math.sin(e), d*Math.cos(e)); cam.lookAt(0, m, 0);
   }
   // a turn every 25 s; with reduced motion, one still from a little to the side that only a drag turns.
   // A drag holds the turn, and three seconds after it the turn picks up again from where the hand left it.

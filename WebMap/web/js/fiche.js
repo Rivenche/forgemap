@@ -42,7 +42,7 @@ function render(){
     + Gear.strip(p, lookOf(p, here))
     + `<div class="pent">${PlayerCard.radar(p, 112, true, true)}</div>`;
   card.classList.toggle("ok", on);
-  if(html !== LAST){ body.innerHTML = html; LAST = html; document.getElementById("fig").appendChild(VK.el); }   // untouched DOM, so no flicker on the minute
+  if(html !== LAST){ body.innerHTML = html; LAST = html; if(!VK.big) document.getElementById("fig").appendChild(VK.el); }   // untouched DOM, so no flicker on the minute
   btn.hidden = false;
   document.title = `${p.name} · ForgeMap`;
   VK.show(p.name, lookOf(p, here), on, MODELS);

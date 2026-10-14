@@ -569,7 +569,7 @@ function showPlayerCard(name){
   const look = (live && live.look) || p.look;
   if(look && !NARROW.matches){
     VIKING = VIKING || C.viking(API);
-    pcard.querySelector("#pvslot").replaceWith(VIKING.el);
+    if(!VIKING.big) pcard.querySelector("#pvslot").replaceWith(VIKING.el);
     VIKING.show(p.name, look, !!live, ((world.state || {}).rev || {}).models || 0);
   }else if(VIKING) VIKING.drop();
   clearTimeout(PCARD_T);
