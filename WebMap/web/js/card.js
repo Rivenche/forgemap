@@ -374,7 +374,7 @@ const MONO = '"JetBrains Mono", ui-monospace, Consolas, monospace', SANS = '-app
 // the six figures a card shows, [value, label, nothing?]
 function sixFigures(p){
   const d = num(p.deaths), m = num(p.dist_m), k = num(p.kills), pc = num(p.pieces), h = num(p.hops);
-  return [[I18N.num(d), lab(d, "death", "deaths"), !d], [km(m), "km", !m], [per(d, m).replace(/^1\D*?(?=\d)/, ""), I18N.t("km per death"), !(d && m)],
+  return [[I18N.num(d), lab(d, "death", "deaths"), !d], [km(m), "km", !m], [per(d, m).replace(/^1\D*?(?=\d)/, ""), I18N.t("per death"), !(d && m)],
     [I18N.num(k), lab(k, "kill", "kills"), !k], [I18N.num(pc), lab(pc, "piece", "pieces"), !pc], [I18N.num(h), lab(h, "hop", "hops"), !h]];
 }
 async function picture(p, roster, o){
