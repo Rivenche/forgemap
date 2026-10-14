@@ -45,7 +45,7 @@ function render(){
       // a big screen: the figure the whole height on the left; on the right the figures and the pentagon
       // drawn at its own size with its details, then the full gear panel (names, stats, favourite weapon)
       ? `<div class="wide"><div class="fig3d" id="fig"><span class="none">${FLAME}</span></div><div class="side">`
-        + `<div class="top"><div class="six">${six}</div><div class="pent">${PlayerCard.radar(p, 250, true)}</div></div>`
+        + `<div class="top"><div class="six">${six}</div><div class="pent">${PlayerCard.radar(p, 210, true)}</div></div>`
         + Gear.panel(p, lookOf(p, here)) + `</div></div>`
       : `<div class="mid"><div class="fig3d" id="fig"><span class="none">${FLAME}</span></div><div class="six">${six}</div></div>`
         + Gear.strip(p, lookOf(p, here))
