@@ -309,7 +309,8 @@ export function hdFor(maps, texFile, matName) {
   const g = e.m && matName ? e.m[matName] : null;
   const h = { v: e.v || 0, c: e.c || null, n: e.n || null, mr: e.mr || null, ns: typeof e.ns === 'number' ? e.ns : 1,
     e: g && g.e ? g.e : null, ei: g && typeof g.ei === 'number' ? g.ei : 1 };
-  if (typeof e.rf === 'number') { h.rf = e.rf; h.mf = typeof e.mf === 'number' ? e.mf : 0; }
+  // a plain material no smoother than 0.5 (the tool's rule too): Valheim's shaders read their gloss their own way
+  if (typeof e.rf === 'number') { h.rf = Math.min(1, Math.max(0.5, e.rf)); h.mf = typeof e.mf === 'number' ? Math.min(1, Math.max(0, e.mf)) : 0; }
   return h.c || h.n || h.mr || h.e || h.rf !== undefined ? h : null;
 }
 

@@ -47,6 +47,10 @@ WITH = {
 MAIN = (["_BumpMap", "_SkinBumpMap", "_NormalTex", "_Normal"], ["_MetallicGlossMap", "_MetallicTex", "_MetalTex"], ["_EmissionMap", "_EmissiveTex"])
 # the player's body draws a garment's paint with its own gloss, not the garment material's
 PLAYER_MATERIAL = "PlayerMaterial"
+# Valheim's own shaders read their gloss numbers their own way (a rock "glossiness 1" is no
+# mirror): a metal map's gloss is kept under MAX_GLOSS, a plain material no smoother than this
+MAX_GLOSS = 0.8
+MIN_ROUGH_PLAIN = 0.5
 
 
 def file_name(tex):
@@ -181,6 +185,7 @@ def mr_png(im, gloss, metal_gloss, alpha_gloss, mx):
         s = gloss + (metal_gloss - gloss) * m
         if alpha_gloss:
             s *= px[i + 3] / 255.0
+        s = min(MAX_GLOSS, max(0.0, s))
         j = i // 4 * 3
         out[j] = 255
         out[j + 1] = max(0, min(255, round((1 - s) * 255)))
@@ -354,11 +359,13 @@ def main():
             crc ^= save(mr_png(images[mk], gloss, metal_gloss, alpha, mx), os.path.join(a.out, f))
             entry["mr"] = f
         elif "n" in entry:
-            # no metal map: the material's own numbers
-            src = pf if p["paint"] else fl
-            gloss = float(src.get("_Glossiness", src.get("_Smoothness", 0.2)))
-            entry["rf"] = round(max(0.0, min(1.0, 1 - gloss)), 3)
-            entry["mf"] = round(max(0.0, min(1.0, float(fl.get("_Metallic", 0.0)))), 3)
+            # no metal map: the numbers of the materials that draw it, the middle one of each
+            # (one stray material -- a rock texture on a "metallic" prop -- does not make a rock metal)
+            srcs = [pf] if p["paint"] else [m["floats"] for m, _ in uses.get(k, [])] or [fl]
+            mid = lambda xs: sorted(xs)[len(xs) // 2]
+            gloss = mid([float(f.get("_Glossiness", f.get("_Smoothness", 0.2))) for f in srcs])
+            entry["rf"] = round(max(MIN_ROUGH_PLAIN, min(1.0, 1 - gloss)), 3)
+            entry["mf"] = 0.0 if p["paint"] else round(max(0.0, min(1.0, mid([float(f.get("_Metallic", 0.0)) for f in srcs]))), 3)
         made = {}
         for m, ek, rgb in p["glows"]:
             if images.get(ek) is None or not m["name"]:
