@@ -135,15 +135,27 @@ const pic = (item, kind, slot) => `<span class="eq-pic" data-item="${esc(item)}"
 const TOOL = /^(Hammer|Hoe|Cultivator|Pickaxe|Torch|Lantern|FishingRod)/;
 function favourites(p){
   const g = (p && p.gear) || {}, fav = Array.isArray(g.fav) ? g.fav.filter(f => f && f.item && num(f.s) > 0) : [];
-  if(!fav.length) return null;
+  if(!fav.length) return byKind(g);
   const hand = g.hand || {}, held = Object.entries(hand).filter(([k]) => k !== "none" && k !== "twohanded").reduce((t, [, v]) => t + num(v), 0);
   const total = Math.max(held, fav.reduce((t, f) => t + num(f.s), 0));
   const weapon = fav.find(f => !TOOL.test(f.item) && (!statsOf(f.item) || !/^(Tool|Torch)$/.test(statsOf(f.item).type)));
   return {top: weapon || fav[0], weapon: !!weapon, list: fav.map(f => ({item: f.item, share: num(f.s)/total}))};
 }
+// Until the server has timed each item in hand (gear.fav, ForgeMap 1.2), the kind of weapon held the
+// longest (gear.hand, kept from the start): its share, and the item itself when one of that kind is worn.
+const KIND = {bow: [/^Bow/, "Bow"], crossbow: [/^Crossbow/, "Crossbow"], axe: [/^Axe/, "Axe"], battleaxe: [/^Battleaxe/, "Battleaxe"],
+  sword: [/^Sword/, "Sword"], mace: [/^Mace/, "Mace"], club: [/^Club/, "Club"], sledge: [/^Sledge/, "Sledge"], spear: [/^Spear/, "Spear"],
+  knife: [/^Knife/, "Knife"], atgeir: [/^Atgeir/, "Atgeir"], staff: [/^Staff/, "Staff"], fist: [/^Fist/, "Fists"]};
+function byKind(g){
+  const hand = g.hand || {}, held = Object.entries(hand).filter(([k]) => k !== "none" && k !== "twohanded");
+  const total = held.reduce((t, [, v]) => t + num(v), 0); if(!total) return null;
+  const best = held.filter(([k]) => KIND[k]).sort((a, b) => num(b[1]) - num(a[1]))[0]; if(!best) return null;
+  const [k, v] = best, worn = Object.values(g.worn || {}).find(n => KIND[k][0].test(String(n || "")));
+  return {top: {item: worn || ""}, weapon: true, kind: KIND[k][1], list: [{item: worn || "", share: num(v)/total}]};
+}
 function favBlock(p){
   const F = favourites(p); if(!F) return "";
-  const it = F.top.item, name = word(it), f = figures(statsOf(it), level(p, "right", it) || level(p, "left", it));
+  const it = F.top.item, name = it ? word(it) : I18N.t(F.kind), f = it ? figures(statsOf(it), level(p, "right", it) || level(p, "left", it)) : null;
   const share = F.list.find(x => x.item === it).share;
   return `<div class="eq fav" tabindex="0">${pic(it, "right", "right")}<span class="eq-txt">`
     + `<span class="eq-k">${F.weapon ? I18N.t("Favourite weapon") : I18N.t("Most in hand")}</span>`

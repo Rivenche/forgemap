@@ -27,6 +27,9 @@ function message(title, text){
   card.classList.remove("ok");
   body.innerHTML = `<p class="msg"><b>${title}</b>${text}</p>`;
 }
+// ForgeMap: the card opened on its own on a big screen gets its own layout (see fiche.html)
+const WIDE = typeof matchMedia === "function" ? matchMedia("(min-width:900px) and (min-height:560px)") : {matches: false, addEventListener(){}};
+WIDE.addEventListener("change", () => { LAST = ""; render(); });
 function render(){
   if(!NAME) return message(I18N.t("Which player?"), I18N.t("Add ?p= and a player's name to the address."));
   const p = find(NAME);
@@ -38,9 +41,15 @@ function render(){
   const six = PlayerCard.sixFigures(p).map(([v, k, nil]) => `<div class="stat${nil ? " nil" : ""}"><div class="v">${v}</div><div class="k">${k}</div></div>`).join("");
   const html = `<div class="head"><div class="nm"><a href="${esc(full)}" target="_blank" rel="noopener" title="${esc(I18N.t("Open their full page"))}">${esc(p.name)}</a></div>`
     + `<div class="sub2">${PlayerCard.pill(cls)}${on ? `<span class="dot ok"></span>` : ""}<span class="seen">${on ? I18N.t("online now") + PlayerCard.ping(here && here.ping) : PlayerCard.seen(num(p.last_seen))}</span></div></div>`
-    + `<div class="mid"><div class="fig3d" id="fig"><span class="none">${FLAME}</span></div><div class="six">${six}</div></div>`
-    + Gear.strip(p, lookOf(p, here))
-    + `<div class="pent">${PlayerCard.radar(p, 112, true, true)}</div>`;
+    + (WIDE.matches
+      // a big screen: the figure the whole height on the left; on the right the figures and the pentagon
+      // drawn at its own size with its details, then the full gear panel (names, stats, favourite weapon)
+      ? `<div class="wide"><div class="fig3d" id="fig"><span class="none">${FLAME}</span></div><div class="side">`
+        + `<div class="top"><div class="six">${six}</div><div class="pent">${PlayerCard.radar(p, 250, true)}</div></div>`
+        + Gear.panel(p, lookOf(p, here)) + `</div></div>`
+      : `<div class="mid"><div class="fig3d" id="fig"><span class="none">${FLAME}</span></div><div class="six">${six}</div></div>`
+        + Gear.strip(p, lookOf(p, here))
+        + `<div class="pent">${PlayerCard.radar(p, 112, true, true)}</div>`);
   card.classList.toggle("ok", on);
   if(html !== LAST){ body.innerHTML = html; LAST = html; if(!VK.big) document.getElementById("fig").appendChild(VK.el); }   // untouched DOM, so no flicker on the minute
   btn.hidden = false;
