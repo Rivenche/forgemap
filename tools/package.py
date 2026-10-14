@@ -18,7 +18,7 @@ shutil.rmtree(pkg, ignore_errors=True)
 pkg.mkdir(parents=True)
 for f in ["manifest.json", "README.md", "README-WebMap.md", "CHANGELOG.md", "icon.png", "LICENSE"]:
     shutil.copy2(f, pkg / f)
-for f in ["WebMap.dll", "websocket-sharp.dll"]:
+for f in ["ForgeMap.dll", "websocket-sharp.dll"]:
     shutil.copy2(ROOT / "WebMap" / "bin" / "Release" / f, pkg / f)
 tar = subprocess.run(["git", "archive", "--format=tar", "HEAD", "WebMap/web"], check=True, capture_output=True).stdout
 with tarfile.open(fileobj=io.BytesIO(tar)) as t:

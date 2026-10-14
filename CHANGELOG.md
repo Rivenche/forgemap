@@ -1,5 +1,38 @@
 # Changelog
 
+## ForgeMap 1.1.0
+
+* **Its own mod.** ForgeMap has its own plugin GUID, `fr.forgeserver.forgemap`, and its own
+  DLL, `ForgeMap.dll`, where 1.0 kept WebMap's (`com.github.h0tw1r3.valheim.webmap`,
+  `WebMap.dll`). Install it in `BepInEx/plugins/ForgeMap/`; its config is
+  `BepInEx/config/fr.forgeserver.forgemap.cfg`.
+* **Nothing lost on the way, nothing to do by hand.** On the first start, WebMap's config is
+  copied under the new name before it is read, so every value carries over; and when
+  ForgeMap's own `map_data` is missing or empty, the `map_data` (fog, render, pins, names,
+  tallies, model library...) and `announce.token` of a WebMap install in another plugins
+  folder are copied over. Copied, never moved, never over a file ForgeMap has; the log
+  says what and from where. A `WebMap.dll` still under the plugins, or a WebMap plugin
+  loaded beside ForgeMap, is named in a warning: the two would fight over the port.
+* **Each player's ping.** `/players` and `/state` give each player online their round trip
+  to the server, `ping`, in whole milliseconds averaged over the last minute: Steam's own
+  measure of the connection, or for a crossplay one the game's heartbeat timed on the
+  server. Left out while unknown. Read once a player snapshot, nothing per frame.
+* **Chat commands in French.** `!repère` (`!pin`), `!annulerrepère` (`!undoPin`) and
+  `!supprrepère` (`!deletePin`), case and accents ignored, and the pin types `point`, `feu`,
+  `mine`, `maison`, `grotte` beside `dot`, `fire`, `mine`, `house`, `cave`. The command is
+  the whole first word now (`!pins` is chat), and a pin's label keeps accented letters,
+  where they used to be stripped (`éloignée` was `loigne`).
+* **Light mode** for small servers, `[Performance] light_mode` (and on the settings page),
+  off by default: no model export, no reading of the game's textures and meshes (the
+  peaks of several hundred MB), the 3D view sent buildings and locations only, a quarter
+  of the 3D ground cache, `render_size` capped at `texture_size`, a world sweep every 5
+  minutes rather than every minute. The 2D map keeps every layer.
+* The world render takes 4 bytes a pixel while it is built rather than 16 (64 MB less at
+  its peak at 2048, 256 MB at 4096), and lets go of its texture once encoded, which it
+  never did (16 MB at 2048).
+
+---
+
 ## ForgeMap 1.0.0
 
 ForgeMap, by ForgeServer.fr, starts from WebMap 2.16.1.

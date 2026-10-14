@@ -53,8 +53,8 @@ deploy)
   dotnet build WebMap/WebMap.csproj -c Release -v minimal
   # One podman cp of a staged directory: rootless podman owns the bind mount as a
   # subuid, so the host cannot write it directly, and cp creates the destination.
-  STAGE="$(mktemp -d)/WebMap"; mkdir -p "$STAGE"
-  cp WebMap/bin/Release/WebMap.dll WebMap/bin/Release/websocket-sharp.dll "$STAGE/"
+  STAGE="$(mktemp -d)/ForgeMap"; mkdir -p "$STAGE"
+  cp WebMap/bin/Release/ForgeMap.dll WebMap/bin/Release/websocket-sharp.dll "$STAGE/"
   cp -r WebMap/web "$STAGE/web"
   podman cp "$STAGE" "$NAME:/valheim/BepInEx/plugins/"
   podman restart "$NAME" >/dev/null

@@ -12,7 +12,7 @@ dotnet build WebMap/WebMap.csproj -c Release -v minimal
 rm -rf dist/pkg "dist/ForgeMap-$V.zip"
 mkdir -p dist/pkg
 cp manifest.json README.md README-WebMap.md CHANGELOG.md icon.png LICENSE dist/pkg/
-cp WebMap/bin/Release/WebMap.dll WebMap/bin/Release/websocket-sharp.dll dist/pkg/
+cp WebMap/bin/Release/ForgeMap.dll WebMap/bin/Release/websocket-sharp.dll dist/pkg/
 cp -r WebMap/web dist/pkg/web
 python3 tools/stamp-version.py dist/pkg/web   # ?v= on the copy: caches take the new build at once
 (cd dist/pkg && zip -qr "../ForgeMap-$V.zip" . -x '.*')

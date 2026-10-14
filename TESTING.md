@@ -2,7 +2,7 @@
 
 | Layer | Runs | Reaches |
 |---|---|---|
-| `dotnet test WebMap.Tests` | CI, every push and PR | the mod's logic, from the built `WebMap.dll` on .NET 10 |
+| `dotnet test WebMap.Tests` | CI, every push and PR | the mod's logic, from the built `ForgeMap.dll` on .NET 10 |
 | `node --test` | CI, every push and PR | `map-core.js`'s pure functions, the map spotlight's figures |
 | `./package.sh` | CI, every push and PR | the Thunderstore zip, as a tag publishes it; a C# warning fails the build |
 | `npm run lint` | CI, every push and PR | the viewer's scripts, the pages' inline ones, the tests and tools: ESLint, no style rules |

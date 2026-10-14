@@ -42,14 +42,39 @@ A fork of [h0tw1r3/valheim-webmap] rebuilt for **Valheim 1.0 (Deep North)**.
 
 ## Install
 
-1. With [BepInEx] working, put the `WebMap` directory in
-   `Valheim dedicated server/BepInEx/plugins/WebMap`.
-2. Start the server once to write a default config.
+1. With [BepInEx] working, put `ForgeMap.dll`, `websocket-sharp.dll` and the `web`
+   directory in `Valheim dedicated server/BepInEx/plugins/ForgeMap`.
+2. Start the server once to write a default config,
+   `BepInEx/config/fr.forgeserver.forgemap.cfg`.
 3. **Stop the server** before editing that config — BepInEx rewrites it on shutdown, so
    edits made while it runs are discarded.
 4. Open the configured port (default `3000`) and visit `http://your_ip:port`.
 
 After updating, hard-reload the page (`shift`+reload) to clear cached layers.
+
+### Coming from WebMap
+
+ForgeMap is a mod of its own since 1.1.0: plugin GUID `fr.forgeserver.forgemap`, DLL
+`ForgeMap.dll`. Up to 1.0 it ran under WebMap's GUID and DLL name. Nothing is lost on the
+way, and nothing needs doing by hand. On start, before anything is read:
+
+* **The config.** BepInEx names the file after the GUID. When
+  `fr.forgeserver.forgemap.cfg` does not exist and `com.github.h0tw1r3.valheim.webmap.cfg`
+  does, the old file is copied under the new name, then read: every value carries over.
+  The old file stays.
+* **The data.** `map_data` (fog, map render, pins, place names, portal hubs, tallies, trails,
+  the site's settings, the model library) and `announce.token` live beside the DLL. When
+  ForgeMap's own `map_data` is missing or empty and another folder under
+  `BepInEx/plugins` holds a `WebMap.dll` with a `map_data` that has something in it
+  (`plugins/WebMap`, `plugins/Mubs-WebMap`, a ForgeMap 1.0 folder...), that `map_data` is
+  copied over, and its `announce.token` if ForgeMap has none. Of several, the one written to
+  last. Copied, never moved: the old folder is left as it was, and a file ForgeMap already
+  has is never overwritten. ForgeMap's own `map_data` with anything in it is never touched.
+* **Both at once.** Every `WebMap.dll` under `BepInEx/plugins` is named in the log as a
+  warning, and so is a WebMap plugin BepInEx has already loaded: the two would fight over
+  the map's port. Delete it once ForgeMap has started.
+
+The log says what was copied, from where.
 
 ## Using the map
 
@@ -215,13 +240,17 @@ Delete the folder to export everything again.
 
 ### Chat commands
 
-* `!pin` — a dot where you stand. `!pin some text` labels it.
-* `!pin <type> <text>` — types are `dot`, `fire`, `mine`, `house`, `cave`.
-* `!undoPin` — remove your most recent pin.
-* `!deletePin <text>` — remove the pin matching that text. With no text, your most recent
-  unnamed pin.
+* `!pin` (French: `!repère`) — a dot where you stand. `!pin some text` labels it.
+* `!pin <type> <text>` — types are `dot`, `fire`, `mine`, `house`, `cave`, or in French
+  `point`, `feu`, `mine`, `maison`, `grotte` (either language with either command).
+* `!undoPin` (`!annulerrepère`) — remove your most recent pin.
+* `!deletePin <text>` (`!supprrepère <text>`) — remove the pin matching that text. With no
+  text, your most recent unnamed pin.
 
-Not case sensitive. Past the configured limit a player's oldest pin is dropped.
+Neither case nor accents matter (`!REPERE`, `!Repère`). The command is the whole first word:
+`!pins` is chat. A label keeps letters of any language, accents included, digits, spaces
+and hyphens, 20 characters at most. Past the configured limit a player's oldest pin is
+dropped.
 Signed in (see [below](#signing-in-with-discord)), members do the same from the map:
 tap walked ground and **Pin here**, or tap a pin to relabel, retype, move or delete it.
 
@@ -240,9 +269,9 @@ edit pins from the map, and its admins change the mod's settings on the settings
 1. In Discord, turn on Developer Mode (User Settings → Advanced), right-click your server
    and **Copy Server ID**.
 2. Stop the game server, put that id in `discord_guild` under `[Server]` in
-   `BepInEx/config/com.github.h0tw1r3.valheim.webmap.cfg`, and start it again. A host that
+   `BepInEx/config/fr.forgeserver.forgemap.cfg`, and start it again. A host that
    rewrites that file on every restart keeps it from you: put a line
-   `discord_guild<Tab><the id>` in `BepInEx/plugins/WebMap/map_data/settings.tsv` instead,
+   `discord_guild<Tab><the id>` in `BepInEx/plugins/ForgeMap/map_data/settings.tsv` instead,
    the file the settings page keeps.
 
 **Sign in** then shows in the map's bar, and anyone in that Discord server can use it. The
@@ -334,6 +363,34 @@ defaults are what runs):
 * `object_categories` — what the 3D view is sent, of `piece,other,rock,bush,tree`, default
   all five.
 
+Under `[Performance]`:
+
+* `light_mode` — one switch for small servers (2-4 GB of RAM), default false. Also on the
+  site's settings page (applied at the next restart). It has the last word over the config
+  and the site's settings, and the log lists what it changed on start. On, it:
+  * turns off `export_models`, `extract_textures` and `extract_meshes`. No prefab is
+    instantiated on the game thread to be exported, and above all no background thread
+    reads the game's asset files: each `.assets` file is read whole and each bundle node
+    decompressed whole, peaks of several hundred MB while it runs. Models already in the
+    library are still served and drawn; a prefab never exported is left out of the 3D view;
+  * keeps only `piece` and `other` of `object_categories` (buildings and the world's
+    locations): trees, rocks and bushes, by far most of the 3D view's objects, are no longer
+    held per chunk. Each object is about 56 bytes in the sweep's lists and as much again in
+    its chunk until it is first served, so on a well walked world of most of a million
+    objects that is some tens to a hundred MB;
+  * keeps the generator heights of 12 chunks of 3D ground rather than 48, with their
+    served bytes: about 5 MB rather than 20;
+  * caps `render_size` at `texture_size`: a 4096 render would hold four times the pixels
+    in memory (the PNG, the JPEG, and about 260 MB at the peak of the one-time render);
+  * sweeps the world (a walk of every ZDO on the game thread, and a copy of the ZDO list,
+    8 bytes a ZDO) at most every 5 minutes rather than every minute while someone watches.
+
+  **The 2D map loses nothing**: the fog, the render, structures, forest, trails, portals,
+  vehicles, graves, players and pins are all there. The layers the sweep paints
+  (structures, forest, portals, pieces, vehicles, graves) refresh every 5 minutes instead
+  of every minute. What stays whatever the mode: the fog, structures and forest overlays
+  (16 MB each at `texture_size` 2048) and the trails (4 MB).
+
 ## HTTP endpoints
 
 | Path | Returns |
@@ -359,11 +416,12 @@ defaults are what runs):
 | `/graves` | tombstones still holding gear: owner, position, seconds since the death (JSON) |
 | `/vehicles` | boats and carts, position and type (JSON) |
 | `/stats/players` | per-player tallies: joins, deaths, chat, distance (by biome, the sea as `Ocean`), portal hops, pins, standing pieces/portals/ships, graves, kills, trees felled, rock pieces broken, and `gear`: seconds with each kind of thing in hand and in each weight of chest armour, the set last worn, hits on creatures by kind; `kitchen`: dishes cooked and burnt, meads brewed, honey taken, items smelted and each product's count; and `look` and `yaw`, how the player was last seen, as `/state` carries them; at the top, the world's `kitchen` and its busiest stations (JSON) |
-| `/players`, `/messages` | live state (JSON) |
+| `/players` | the players online: `{"count", "players":[{"name", "health", "maxHealth", "dead", "inBed", "hidden", "ping", "x", "z", "yaw", "look"}]}`. `ping` is the player's round trip to the server in whole milliseconds, averaged over the last minute: Steam's own measure of the connection where it has one, else (crossplay) the game's once-a-second heartbeat timed on the server, to a server frame; left out while unknown (just connected, or nothing measured in the last minute), and given for a hidden player too. `x`, `z`, `yaw` and `look` only for a player the map shows (JSON) |
+| `/messages` | the chat and event feed (JSON) |
 | `/pins` (GET) | the pins, a line each: `placer,id,type,owner,x,z,text` (CSV) |
 | `/config` | what the page starts from: world name and start, zoom, texture and pixel size, update interval, explore radius, messages kept, `always_map`, `always_visible` (JSON) |
 | `/` (WebSocket) | `players`, `messages`, `pin`, `rmpin`, `ping` and `reload` frames as they happen; the bundled pages poll `/state` instead |
-| `/state` | all of the small JSON blocks in one document -- players, messages, pins, vehicles, portals, graves, traders, the last 500 deaths with where they happened, the structures and forest stats -- plus a content revision per layer (`rev.fog`, `rev.forest`, `rev.structures`, `rev.pieces`, `rev.chart`, `rev.trails`, `rev.features`, and for the 3D view `rev.objects`, `rev.height`, `rev.models`) so a viewer fetches a layer only when its picture changed; pass the revision as `?v=`. `time` is the game's clock: `{"day", "frac"}`, the fraction of the day the sun goes by (0.25 sunrise, 0.5 noon, 0.75 sunset). A player the map shows carries `yaw` (degrees clockwise from north) and `look`: `model` (the body), `skin` and `hair` (the colours, 0..1), `slots` (the prefab in each slot) and `parts`, the library parts to draw, body first |
+| `/state` | all of the small JSON blocks in one document -- players, messages, pins, vehicles, portals, graves, traders, the last 500 deaths with where they happened, the structures and forest stats -- plus a content revision per layer (`rev.fog`, `rev.forest`, `rev.structures`, `rev.pieces`, `rev.chart`, `rev.trails`, `rev.features`, and for the 3D view `rev.objects`, `rev.height`, `rev.models`) so a viewer fetches a layer only when its picture changed; pass the revision as `?v=`. `time` is the game's clock: `{"day", "frac"}`, the fraction of the day the sun goes by (0.25 sunrise, 0.5 noon, 0.75 sunset). Every player carries `ping` as `/players` does (left out while unknown); a player the map shows carries `yaw` (degrees clockwise from north) and `look`: `model` (the body), `skin` and `hair` (the colours, 0..1), `slots` (the prefab in each slot) and `parts`, the library parts to draw, body first |
 | `/height` | `?cx=&cz=[&step=]`, a 256 m chunk (`cx = floor(x / 256)`, `cz` likewise): (256/step + 1)² little-endian int16, decimetres of world height, `step` metres apart (1, 2, 4, 8 or 16: 257 a side down to 17; default 1, each step cached on its own under the same revision); row 0 is the south edge (`z = cz*256`), column 0 the west, both edges included so neighbours share a seam. Terraforming included; water stands at 30 m. 404 for a chunk nobody has walked; the chunk's terraform revision in `X-Rev` |
 | `/objects` | `?cx=&cz=`, every visible object in the chunk as `OBJ2`, little-endian: `'OBJ2'`, u32 count, u32 prefab count, i32 prefab hashes, then 44 bytes an object -- u16 prefab index, u8 flags (1 = player-built, 2 = pieces mined off), u8 pad, f32 x y z, f32 rotation quaternion x y z w, f32 scale x y z (Unity's frame, y up, z north) -- then the mined rocks: u32 count, and per rock u32 object index, u16 bit count, bits/8 bytes, bit i set when its hit area i is gone. (`OBJ1`, the first cut, was the same without the flag and the table; the page reads both.) 404 for a chunk nobody has walked; its revision in `X-Rev` |
 | `/prefabs` | the model library's index: per prefab hash, its name `n`, category `c`, whether it has a model `m` and its version `v`, bounds `b`, and for foliage the canopy bounds `k`, leaf texture `kt` and tint `kc`; for a rock mined in pieces its kind `rk` (5 MineRock5, 1 MineRock) and `pa`, the hit area of each glTF primitive in order (-1 none, -2 MineRock's whole-rock model); for a live player's part (category `rig`, named as a look's `parts`) the chest and legs paint it lays over the skin, `ct` and `lt` (JSON) |
@@ -489,7 +547,7 @@ inks the map sets names in (`NAME_STYLE` in `map-core.js`).
 ### Tests
 
 ```bash
-dotnet test WebMap.Tests     # the mod's logic: builds the mod, then loads WebMap.dll on .NET 10
+dotnet test WebMap.Tests     # the mod's logic: builds the mod, then loads ForgeMap.dll on .NET 10
 node --test                  # map-core.js's pure functions, from the repo root
 npm ci && npm run lint       # the viewer's scripts, the pages' inline ones too, the tests and tools
 ```
@@ -544,8 +602,8 @@ saves a world as a folder, `worlds_local/<name>/`) and run it under its own name
 ```bash
 VALHEIM_TEST_WORLD=Mothership ./testserver.sh up
 podman cp Mothership valheim-test:/valheim-saves/worlds_local/
-podman cp fog.png valheim-test:/valheim/BepInEx/plugins/WebMap/map_data/Mothership/fog.png
-podman exec valheim-test chown -R steam:steam /valheim-saves/worlds_local /valheim/BepInEx/plugins/WebMap/map_data
+podman cp fog.png valheim-test:/valheim/BepInEx/plugins/ForgeMap/map_data/Mothership/fog.png
+podman exec valheim-test chown -R steam:steam /valheim-saves/worlds_local /valheim/BepInEx/plugins/ForgeMap/map_data
 podman restart valheim-test
 ```
 
