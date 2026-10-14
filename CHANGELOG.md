@@ -1,5 +1,25 @@
 # Changelog
 
+## ForgeMap 1.2.0
+
+* **What each item is, from the game itself.** `GET /items?ids=SwordIron,ArmorWolfChest`
+  (up to 40 prefab names) answers each item's figures as the game's ObjectDB has them:
+  type, name key, skill, armour, block and deflection, damages by kind, durability, each
+  with what a level above the first adds, the highest quality, weight, movement penalty,
+  eitr regeneration, armour set and resistances (`damageMods`). Only the figures the game
+  uses for that kind of item, zeros left out. Read once on the game thread when the game's
+  item list is loaded, each item's JSON built once; unknown names are left out.
+* **Favourite items.** `/stats/players` gives each player's `gear.fav`: the three items held
+  longest, `[{"item": prefab, "s": seconds}]`, from the hands' own slots, empty hands never.
+  Kept with the other tallies (`u` lines in `stats.tsv`); a file from before loads with none.
+* **Star levels where the game shares them.** `gear.wornQ` gives the quality of what is in
+  the right and left hands, on the back and on the shoulders (the cape), the five slots
+  whose level the player's game writes beside the prefab; the chest, legs and helmet never
+  reach the server with theirs, so they are never given. Kept too (`q` lines).
+* A player snapshot reuses one buffer for the set worn instead of a new array each second.
+
+---
+
 ## ForgeMap 1.1.0
 
 * **Its own mod.** ForgeMap has its own plugin GUID, `fr.forgeserver.forgemap`, and its own
