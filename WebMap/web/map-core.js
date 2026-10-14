@@ -32,7 +32,7 @@ const cfg = {
   base:   XNV.base || "/map.jpg",
   brand:  XNV.brand || null,
   links:  Array.isArray(XNV.links) ? XNV.links
-          : [{label: "Map mod", href: "https://github.com/hunter-jsb/valheim-webmap"}],
+          : [{label: "Map mod", href: "https://github.com/Rivenche/forgemap"}],   // ForgeMap: our repo
   status: XNV.status || null,
   promo:  XNV.promo !== false,   // ForgeMap: the "rent your server" ribbon; site-config.js can set promo: false
   repo:   XNV.repo || null,
