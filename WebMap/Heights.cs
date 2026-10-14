@@ -34,7 +34,8 @@ namespace WebMap
     internal static class Heights
     {
         public const int N = 257, Size = 256;
-        private const long KeepSamples = 48L * N * N;           // generator heights held: 48 fine chunks, ~12 MB
+        // generator heights held: 48 fine chunks, ~12 MB, and their served bytes; 12 in light mode
+        internal static long KeepSamples => (WebMapConfig.LIGHT_MODE ? 12L : 48L) * N * N;
         private const int FrameMs = 4;                          // the game-thread fallback's budget a frame
 
         private sealed class Served { public int hash; public byte[] raw, gz; }

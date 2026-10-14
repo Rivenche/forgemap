@@ -102,6 +102,10 @@ namespace WebMap
                         get = () => I(WebMapConfig.RENDER_SIZE), set = OneOf(v => WebMapConfig.RENDER_SIZE = v, 1024, 2048, 4096, 8192) },
             new Entry { key = "debug", kind = "bool", live = true, desc = "Extra log lines: fog saves, routed RPC hashes, chat and pin diagnostics.",
                         get = () => B(WebMapConfig.DEBUG), set = Bool(v => WebMapConfig.DEBUG = v) },
+            new Entry { key = "light_mode", kind = "bool", desc = "Light mode for small servers (2-4 GB): no model export or reading of the game's textures and meshes, "
+                            + "the 3D view gets buildings and locations only (no trees, rocks or bushes), less 3D ground kept in memory, render_size at most texture_size, "
+                            + "a world sweep every 5 minutes. The 2D map stays complete.",
+                        get = () => B(WebMapConfig.LIGHT_MODE), set = Bool(v => WebMapConfig.LIGHT_MODE = v) },
             // the 3D view's model library
             new Entry { key = "export_models", kind = "bool", desc = "Export each prefab the world holds as a model for the 3D view. Off, the 3D view has ground and nothing on it.",
                         get = () => B(WebMapConfig.EXPORT_MODELS), set = Bool(v => WebMapConfig.EXPORT_MODELS = v) },

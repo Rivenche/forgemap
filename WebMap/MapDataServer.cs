@@ -265,7 +265,7 @@ namespace WebMap
         // clients don't have to speak websocket. Position is omitted for players
         // who chose to be hidden (unless ALWAYS_VISIBLE), matching the map's own
         // behaviour -- a hidden player must not leak coordinates over HTTP either.
-        private string BuildPlayersJson()
+        private string BuildPlayersJson(float now)
         {
             var entries = new List<string>();
             players.ForEach(player =>
@@ -293,6 +293,9 @@ namespace WebMap
                 sb.Append(",\"dead\":").Append(zdoData.GetBool(ZDOVars.s_dead) ? "true" : "false");
                 sb.Append(",\"inBed\":").Append(zdoData.GetBool(ZDOVars.s_inBed) ? "true" : "false");
                 sb.Append(",\"hidden\":").Append(hidden ? "true" : "false");
+                // the round trip to the server, ms, averaged over the last minute; left out while unknown
+                int ping = Ping.Of(player, now);
+                if (ping >= 0) sb.Append(",\"ping\":").Append(ping);
                 if (showPos)
                 {
                     sb.Append(FormattableString.Invariant($",\"x\":{pos.x:0.##},\"z\":{pos.z:0.##}"));
@@ -1057,8 +1060,10 @@ namespace WebMap
         {
             try
             {
+                float now = Time.realtimeSinceStartup;
+                foreach (var player in players) Ping.Sample(player, now);   // before the JSON that carries it
                 playersWs = BuildPlayerResponse();
-                playersJson = BuildPlayersJson();
+                playersJson = BuildPlayersJson(now);
                 foreach (var player in players)
                 {
                     ZDO z = null;

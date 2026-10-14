@@ -8,9 +8,13 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net48</TargetFramework>
     <LangVersion>9.0</LangVersion>
-    <AssemblyName>WebMap</AssemblyName>
-    <AssemblyTitle>ForgeMap (Valheim WebMap fork, ForgeServer.fr)</AssemblyTitle>
-    <Copyright>(c) 2025 Various Authors</Copyright>
+    <!-- ForgeMap is its own mod: its own DLL name and plugin GUID (WebMap.cs). The C#
+         namespace stays WebMap, as upstream's, to keep the code close to it. -->
+    <AssemblyName>ForgeMap</AssemblyName>
+    <Product>ForgeMap</Product>
+    <Company>ForgeServer.fr</Company>
+    <AssemblyTitle>ForgeMap, live web map for Valheim (ForgeServer.fr, based on WebMap)</AssemblyTitle>
+    <Copyright>(c) 2026 ForgeServer.fr; WebMap (c) 2025 Various Authors; MIT</Copyright>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>portable</DebugType>

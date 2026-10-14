@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <!-- The mod is net48 and runs under Unity's Mono; its pure logic is plain IL, so
-       a modern runtime loads the built WebMap.dll and the game's assemblies as files. -->
+       a modern runtime loads the built ForgeMap.dll and the game's assemblies as files. -->
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <IsPackable>false</IsPackable>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="WebMap"><HintPath>..\WebMap\bin\Release\WebMap.dll</HintPath></Reference>
+    <Reference Include="ForgeMap"><HintPath>..\WebMap\bin\Release\ForgeMap.dll</HintPath></Reference>
     <Reference Include="assembly_valheim"><HintPath>..\libs\valheim\assembly_valheim.dll</HintPath></Reference>
     <Reference Include="assembly_utils"><HintPath>..\libs\valheim\assembly_utils.dll</HintPath></Reference>
     <Reference Include="UnityEngine"><HintPath>..\libs\valheim\UnityEngine.dll</HintPath></Reference>

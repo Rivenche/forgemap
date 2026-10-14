@@ -25,6 +25,8 @@ namespace WebMap
         // A read arms the gate for WatchMs; sweeps start at least FloorMs apart.
         private const int WatchMs = 120_000;
         private const int FloorMs = 60_000;
+        private const int LightFloorMs = 300_000;           // light mode: a walk of every ZDO every 5 minutes at most
+        internal static int Floor => WebMapConfig.LIGHT_MODE ? LightFloorMs : FloorMs;
 
         // Only a few hundred pixels ever hold anything, so a dictionary costs a
         // fraction of a full-map array and needs no clearing pass.
@@ -115,7 +117,7 @@ namespace WebMap
                 string line = pendingLog;
                 if (line != null) { pendingLog = null; ZLog.Log(line); }
                 int now = Environment.TickCount;
-                if (unchecked((uint)(now - LastRead)) < WatchMs && unchecked((uint)(now - lastSweepStart)) >= FloorMs)
+                if (unchecked((uint)(now - LastRead)) < WatchMs && unchecked((uint)(now - lastSweepStart)) >= Floor)
                 {
                     // stepped by hand: a throw inside the walk would otherwise end this
                     // coroutine with `sweeping` stuck true and no sweep ever again

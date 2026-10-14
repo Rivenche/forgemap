@@ -62,6 +62,11 @@ namespace WebMap
         public static int TEXTURE_MAX_SIZE = 512;
         public static string OBJECT_CATEGORIES = "piece,other,rock,bush,tree";
 
+        // One switch for small servers (2-4 GB): ApplyLightMode says what it turns down.
+        public static bool LIGHT_MODE = false;
+        // what light mode keeps of object_categories: buildings and the world's locations
+        public static readonly string[] LightCategories = { "piece", "other" };
+
         public static void ReadConfigFile(ConfigFile config)
         {
             TEXTURE_SIZE = config.Bind("Texture", "texture_size",
@@ -217,6 +222,42 @@ namespace WebMap
             OBJECT_CATEGORIES = config.Bind("Models", "object_categories",
                 WebMapConfig.OBJECT_CATEGORIES,
                 "What the 3D view is sent, of piece, other, rock, bush, tree (comma separated).").Value;
+
+            LIGHT_MODE = config.Bind("Performance", "light_mode",
+                WebMapConfig.LIGHT_MODE,
+                "FR : mode léger pour les petits serveurs (2 à 4 Go). Coupe l'export des modèles 3D et la lecture "
+                + "des textures et maillages du jeu, n'envoie à la vue 3D que les constructions et les lieux (ni arbres, "
+                + "ni rochers, ni buissons), garde moins de terrain 3D en mémoire, limite render_size à texture_size et "
+                + "ne balaie le monde que toutes les 5 minutes. La carte 2D reste complète. "
+                + "EN: light mode for small servers (2-4 GB). Turns off the 3D model export and reading the game's "
+                + "textures and meshes, sends the 3D view buildings and locations only (no trees, rocks or bushes), keeps "
+                + "less 3D ground in memory, caps render_size at texture_size and sweeps the world every 5 minutes "
+                + "instead of every minute. The 2D map stays complete.").Value;
+        }
+
+        // Light mode, applied over the config and the site's settings alike: what it changed,
+        // a line each, for the log. The 2D map loses nothing but its layers' refresh rate
+        // (structures, forest, portals: every 5 minutes rather than every minute); the rest
+        // is the 3D view's. Heights and StructureMap read LIGHT_MODE for their own part.
+        public static List<string> ApplyLightMode()
+        {
+            var did = new List<string>();
+            if (!LIGHT_MODE) return did;
+            if (EXPORT_MODELS) { EXPORT_MODELS = false; did.Add("model export off (models already in the library are still served)"); }
+            if (EXTRACT_TEXTURES) { EXTRACT_TEXTURES = false; did.Add("texture extraction from the game files off"); }
+            if (EXTRACT_MESHES) { EXTRACT_MESHES = false; did.Add("mesh extraction from the game files off"); }
+            var kept = new List<string>();
+            foreach (var part in (OBJECT_CATEGORIES ?? "").Split(','))
+            {
+                string c = part.Trim().ToLowerInvariant();
+                if (Array.IndexOf(LightCategories, c) >= 0 && !kept.Contains(c)) kept.Add(c);
+            }
+            if (kept.Count == 0) kept.Add("piece");
+            string cats = string.Join(",", kept);
+            if (cats != OBJECT_CATEGORIES) { did.Add($"3D objects: {cats} only (was {OBJECT_CATEGORIES})"); OBJECT_CATEGORIES = cats; }
+            if (RENDER_SIZE > TEXTURE_SIZE) { did.Add($"render_size {TEXTURE_SIZE} (was {RENDER_SIZE})"); RENDER_SIZE = TEXTURE_SIZE; }
+            did.Add("3D ground cache 12 chunks (48 normally), world sweep every 5 minutes (every minute normally)");
+            return did;
         }
 
         public static string GetWorldName()

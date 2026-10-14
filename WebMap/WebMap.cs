@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using BepInEx;
 using HarmonyLib;
 using UnityEngine;
@@ -18,9 +17,10 @@ namespace WebMap
     [BepInPlugin(GUID, NAME, VERSION)]
     public class WebMap : BaseUnityPlugin
     {
-        // upstream's: BepInEx names the config file after it, so every operator's config hangs on it
-        public const string GUID = "com.github.h0tw1r3.valheim.webmap";
-        public const string NAME = "ForgeMap";   // ForgeServer.fr's fork; GUID kept so the config file and a WebMap install carry over
+        // ForgeMap's own since 1.1.0 (WebMap's was com.github.h0tw1r3.valheim.webmap). BepInEx
+        // names the config file after it: Migration copies WebMap's over on the first start.
+        public const string GUID = "fr.forgeserver.forgemap";
+        public const string NAME = "ForgeMap";
         public const string VERSION = Manifest.Version;        // manifest.json's, compiled in by WebMap.csproj
 
         internal static readonly string[] ALLOWED_PINS = { "dot", "fire", "mine", "house", "cave" };
@@ -47,15 +47,26 @@ namespace WebMap
         public void Awake()
         {
             instance = this;
+            pluginPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            // From WebMap (or ForgeMap 1.0, which still ran as WebMap): its config and its map
+            // data, copied before either is read. Then the warning should WebMap load as well.
+            string pluginsRoot = Paths.PluginPath;
+            if (string.IsNullOrEmpty(pluginsRoot)) pluginsRoot = Path.GetDirectoryName(pluginPath ?? "");
+            if (Migration.Run(Config.ConfigFilePath, pluginsRoot, pluginPath ?? "")) Config.Reload();
+            if (BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey(Migration.OldGuid))
+                ZLog.LogWarning("ForgeMap: WebMap is loaded as well: both would serve a map on the same port. Remove WebMap, ForgeMap replaces it.");
+
             harmony = new Harmony(GUID);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-            pluginPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             mapDataPath = Path.Combine(pluginPath ?? string.Empty, "map_data");
             Directory.CreateDirectory(mapDataPath);
 
             WebMapConfig.ReadConfigFile(Config);
             Settings.Load(mapDataPath);                       // what admins set on the site lies over the config
+            // the operator's switch for small servers has the last word, over the site's settings too
+            foreach (string line in WebMapConfig.ApplyLightMode()) ZLog.Log("ForgeMap: light mode: " + line);
 
             discordWebHook = new DiscordWebHook(WebMapConfig.DISCORD_WEBHOOK);
         }
@@ -432,7 +443,9 @@ namespace WebMap
 
                 float waterLevel = ZoneSystem.instance.m_waterLevel;
                 Vector3 sunDir = new Vector3(-0.57735f, 0.57735f, 0.57735f);
-                Color[] newColors = new Color[colorArray.Length];
+                // 4 bytes a pixel, what the RGBA32 texture holds anyway: a Color[] was 16, which
+                // at 2048 was 64 MB more at the peak of the render (256 MB at 4096)
+                Color32[] newColors = new Color32[colorArray.Length];
 
                 for (int t = 0; t < colorArray.Length; t++)
                 {
@@ -476,8 +489,9 @@ namespace WebMap
 
                 Texture2D newTexture = new Texture2D(R, R,
                     TextureFormat.RGBA32, false);
-                newTexture.SetPixels(newColors);
+                newTexture.SetPixels32(newColors);
                 byte[] pngBytes = ImageConv.EncodeToPNG(newTexture);
+                UnityEngine.Object.Destroy(newTexture);     // its pixels are the PNG now: 16 MB at 2048, never let go before
 
                 mapDataServer.mapImageData = pngBytes;
                     mapDataServer.BuildMapJpg();
@@ -690,9 +704,9 @@ namespace WebMap
                         string message = package.ReadString() ?? "";
                         message = message.Trim();
 
-                        bool isPinCommand = message.StartsWith("!", StringComparison.Ordinal)
-                            && (message.ToUpper().StartsWith("!PIN") || message.ToUpper().StartsWith("!UNDOPIN")
-                                || message.ToUpper().StartsWith("!DELETEPIN"));
+                        // !pin / !repère, !undoPin / !annulerrepère, !deletePin / !supprrepère
+                        ChatCommands.Command cmd = ChatCommands.Parse(message);
+                        bool isPinCommand = cmd.kind != ChatCommands.Kind.None;
                         Vector3 pos = Vector3.zero;
                         if (isPinCommand)
                         {
@@ -709,32 +723,15 @@ namespace WebMap
                             pos = zdoData.GetPosition();
                         }
 
-                        if (message.ToUpper().StartsWith("!PIN"))
+                        if (cmd.kind == ChatCommands.Kind.Pin)
                         {
-                            string[] messageParts = message.Split(' ');
-                            string pinType = "dot";
-                            int startIdx = 1;
-                            if (messageParts.Length > 1 && Array.Exists(ALLOWED_PINS, e => e == messageParts[1].ToLower()))
-                            {
-                                pinType = messageParts[1].ToLower();
-                                startIdx = 2;
-                            }
-
-                            string pinText = "";
-                            if (startIdx < messageParts.Length)
-                                pinText = string.Join(" ", messageParts, startIdx, messageParts.Length - startIdx);
-
-                            if (pinText.Length > 20) pinText = pinText.Substring(0, 20);
-
-                            string safePinsText = Regex.Replace(pinText, "[^a-zA-Z0-9 ]", "");
-
                             long timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
 
                             string pinId = $"{timestamp}-{Random.Range(1000, 9999)}";
                             // the site writes pins from HTTP threads: a find and its remove stay together
                             lock (mapDataServer.pins)
                             {
-                                mapDataServer.AddPin(steamid, pinId, pinType, userInfo.Name, pos, safePinsText);
+                                mapDataServer.AddPin(steamid, pinId, cmd.type, userInfo.Name, pos, cmd.text);
 
                                 List<string> usersPins = mapDataServer.pins.FindAll(pin => pin.StartsWith(steamid));
                                 int numOverflowPins = usersPins.Count - WebMapConfig.MAX_PINS_PER_USER;
@@ -747,7 +744,7 @@ namespace WebMap
 
                             SavePins();
                         }
-                        else if (message.ToUpper().StartsWith("!UNDOPIN"))
+                        else if (cmd.kind == ChatCommands.Kind.Undo)
                         {
                             bool took = false;
                             lock (mapDataServer.pins)
@@ -757,13 +754,9 @@ namespace WebMap
                             }
                             if (took) SavePins();
                         }
-                        else if (message.ToUpper().StartsWith("!DELETEPIN"))
+                        else if (cmd.kind == ChatCommands.Kind.Delete)
                         {
-                            string[] messageParts = message.Split(' ');
-                            string pinText = "";
-                            if (messageParts.Length > 1)
-                                pinText = string.Join(" ", messageParts, 1, messageParts.Length - 1);
-
+                            string pinText = cmd.text;
                             bool took = false;
                             lock (mapDataServer.pins)
                             {
