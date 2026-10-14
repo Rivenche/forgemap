@@ -15,6 +15,7 @@
  "Open the card": "Ouvrir la fiche",
  "Open their full page": "Ouvrir sa page complète",
  "Paste this code into a page of your site: the card stays live and updates every minute.": "Colle ce code dans une page de ton site : la fiche reste en direct et se met à jour chaque minute.",
+ "Ping: network delay between this player and the server": "Ping : délai réseau entre ce joueur et le serveur",
  "Preparing the image…": "Préparation de l'image…",
  "Ready in 5 minutes, mods in one click, a backup every night.": "Prêt en 5 minutes, mods en un clic, une sauvegarde chaque nuit.",
  "Rent yours": "Loue le tien",
@@ -23,5 +24,6 @@
  "Which player?": "Quel joueur ?",
  "Your own Valheim server": "Ton serveur Valheim à toi",
  "{forgemap} by {forgeserver}, based on {webmap}": "{forgemap} par {forgeserver}, d'après {webmap}",
- "{name} on ForgeMap": "{name} sur ForgeMap"
+ "{name} on ForgeMap": "{name} sur ForgeMap",
+ "{n} ms": "{n} ms"
 }

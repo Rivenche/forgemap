@@ -457,5 +457,11 @@ function save(blob, file){
 // a file name from a player's name: letters and digits kept, the rest a dash
 const fileName = name => "forgemap-" + (String(name || "player").normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/[^\w-]+/g, "-").replace(/^-+|-+$/g, "") || "player") + ".png";
 
-return {seen, sea, kpd, kit, BEST, rim, radar, classify, pill, figures, sixFigures, viking, picture, save, fileName};
+// ForgeMap: an online player's ping (ms, the server's 1-minute average), coloured by how it plays; "" when unknown
+function ping(ms){
+  if(typeof ms !== "number" || !(ms >= 0)) return "";
+  const q = ms < 80 ? "good" : ms < 150 ? "fair" : "bad";
+  return ` <span class="fm-ping ${q}" title="${I18N.t("Ping: network delay between this player and the server")}">${I18N.t("{n} ms", {n: Math.round(ms)})}</span>`;
+}
+return {seen, sea, kpd, kit, BEST, rim, radar, classify, pill, figures, sixFigures, viking, picture, save, fileName, ping};
 })();

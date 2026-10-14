@@ -248,10 +248,10 @@ function gearGroup(p){
     + slots.filter(([k]) => w[k]).map(([k, label]) => `<div class="stat fig txt" title="${esc(itemWord(w[k]))}"><div class="v">${esc(itemWord(w[k]))}</div><div class="k">${I18N.t(label)}</div></div>`).join("") + `</div></section>`;
 }
 function row(p){
-  const on = !!p.online;
+  const on = !!p.online, here = on ? ONLINE.find(q => q.name === p.name) : null;
   return `<button class="player${on ? " ok" : ""}${PICK === p.name ? " pick" : ""}" type="button" data-name="${esc(p.name || "")}">`
     + `<span class="rh"><span class="dot"></span><span class="nm">${esc(p.name || I18N.t("unnamed"))}</span>${PlayerCard.pill(classify(p))}`
-    + `<span class="seen">${on ? I18N.t("online now") : seen(num(p.last_seen))}</span></span>`
+    + `<span class="seen">${on ? I18N.t("online now") + PlayerCard.ping(here && here.ping) : seen(num(p.last_seen))}</span></span>`
     + PlayerCard.figures(p) + radar(p, 58, false) + `</button>`;
 }
 function render(){
@@ -300,7 +300,7 @@ function renderDetail(){
   head.className = "dhead" + (on ? " ok" : "");
   head.innerHTML = `<button class="btn quiet sm back" id="back">&larr; ${I18N.t("Players")}</button>`
     + `<h2><span class="dot${on ? " ok" : ""}"></span>${esc(p.name)}${PlayerCard.pill(cls)}</h2>`
-    + `<span class="state">${on ? I18N.t("online now") : seen(num(p.last_seen))}${where}${cls ? ` <i>· ${esc(cls.why)}</i>` : ""}</span>`
+    + `<span class="state">${on ? I18N.t("online now") + PlayerCard.ping(here && here.ping) : seen(num(p.last_seen))}${where}${cls ? ` <i>· ${esc(cls.why)}</i>` : ""}</span>`
     + `<span class="links">`
     + (here ? `<a class="btn quiet sm" href="index.html#at=${Math.round(here.x)},${Math.round(here.z)},20" title="${esc(I18N.t("Where they stand now"))}">${I18N.t("On the map")}</a>` : "")
     + (num(p.deaths) ? `<a class="btn quiet sm" href="${mapLink(p.name)}">${I18N.t("Deaths")}</a>` : "")

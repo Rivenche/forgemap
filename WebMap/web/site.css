@@ -305,3 +305,9 @@ body:not(.side-open) .sidebar{display:none}
 /* the small square button with an icon only: the card's "download image" */
 .btn.icon{width:30px;height:30px;min-width:0;padding:0}
 .btn.icon svg{width:15px;height:15px}
+
+/* ForgeMap: an online player's ping, coloured by how it plays */
+.fm-ping{font-family:var(--mono);font-size:.72em;font-weight:700;padding:.05em .4em;border-radius:var(--pill);border:1px solid currentColor;white-space:nowrap;vertical-align:1px}
+.fm-ping.good{color:var(--ok)}
+.fm-ping.fair{color:var(--gold)}
+.fm-ping.bad{color:var(--off)}

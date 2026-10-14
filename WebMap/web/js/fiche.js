@@ -37,7 +37,7 @@ function render(){
   const full = `players.html${LANG ? `?lang=${encodeURIComponent(LANG)}` : ""}#p=${encodeURIComponent(p.name)}`;
   const six = PlayerCard.sixFigures(p).map(([v, k, nil]) => `<div class="stat${nil ? " nil" : ""}"><div class="v">${v}</div><div class="k">${k}</div></div>`).join("");
   const html = `<div class="head"><div class="nm"><a href="${esc(full)}" target="_blank" rel="noopener" title="${esc(I18N.t("Open their full page"))}">${esc(p.name)}</a></div>`
-    + `<div class="sub2">${PlayerCard.pill(cls)}${on ? `<span class="dot ok"></span>` : ""}<span class="seen">${on ? I18N.t("online now") : PlayerCard.seen(num(p.last_seen))}</span></div></div>`
+    + `<div class="sub2">${PlayerCard.pill(cls)}${on ? `<span class="dot ok"></span>` : ""}<span class="seen">${on ? I18N.t("online now") + PlayerCard.ping(here && here.ping) : PlayerCard.seen(num(p.last_seen))}</span></div></div>`
     + `<div class="mid"><div class="fig3d" id="fig"><span class="none">${FLAME}</span></div><div class="six">${six}</div></div>`
     + `<div class="pent">${PlayerCard.radar(p, 112, true, true)}</div>`;
   card.classList.toggle("ok", on);
