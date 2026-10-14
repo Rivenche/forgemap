@@ -275,7 +275,7 @@ function viking(api){
       const pm = new THREE.PMREMGenerator(renderer), env = pm.fromScene(room(THREE), 0.03).texture;
       pm.dispose();
       const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(28, 232/300, 0.1, 50);
-      scene.environment = env; scene.environmentIntensity = 0.5;
+      scene.environment = env; scene.environmentIntensity = 0.32;   // ForgeMap: less mirror-like, closer to the game
       // the sun, warm and high on the left, the one light that casts a shadow (one 1024 map)
       const key = new THREE.DirectionalLight(0xffdcb4, 2.15); key.position.set(-2.7, 3.6, 1.5); key.target.position.set(0, 0.9, 0);
       key.castShadow = true; key.shadow.mapSize.set(1024, 1024); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.025;
@@ -298,7 +298,7 @@ function viking(api){
       pool.rotation.x = -Math.PI/2; pool.position.y = 0.002; scene.add(pool);
       const turn = new THREE.Group(); scene.add(turn);
       // the items' pictures: their own small scene under the same light, without the ground
-      const shelf = new THREE.Scene(); shelf.environment = env; shelf.environmentIntensity = 0.7;
+      const shelf = new THREE.Scene(); shelf.environment = env; shelf.environmentIntensity = 0.45;
       const sk = new THREE.DirectionalLight(0xffe0bc, 2.4); sk.position.set(-2, 3, 3); shelf.add(sk);
       const sf = new THREE.DirectionalLight(0xa9bede, 0.6); sf.position.set(3, 0.5, 2); shelf.add(sf);
       const sr = new THREE.DirectionalLight(0xff7a2a, 2.4); sr.position.set(2, 1.5, -3); shelf.add(sr);

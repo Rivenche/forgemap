@@ -76,7 +76,7 @@ export class RigBuilder {
       // no tangents in the export: three works them out on screen, and a glTF's unflipped UVs turn its Y over
       m.normalMap = n; m.normalScale = new T.Vector2(h.ns, -h.ns);
     }
-    if (mr) { m.metalnessMap = m.roughnessMap = mr; m.metalness = 1; m.roughness = 1; }
+    if (mr) { m.metalnessMap = m.roughnessMap = mr; m.metalness = MR_METAL; m.roughness = MR_ROUGH; }
     else if (h.rf !== undefined) { m.metalness = h.mf; m.roughness = h.rf; }
     if (e) { m.emissiveMap = e; m.emissive = new T.Color(0xffffff); m.emissiveIntensity = h.ei; }
     m.userData.hd = { n: n ? n.image : null, mr: mr ? mr.image : null, rf: h.rf, mf: h.mf };
@@ -233,7 +233,7 @@ export class RigBuilder {
     }
     const tex = (c) => { const t = new T.CanvasTexture(c); t.flipY = false; t.colorSpace = T.NoColorSpace; t.anisotropy = this.aniso; return t; };
     mat.normalMap = tex(nc); mat.normalScale = new T.Vector2(1, -1);
-    mat.metalnessMap = mat.roughnessMap = tex(mc); mat.metalness = 1; mat.roughness = 1;
+    mat.metalnessMap = mat.roughnessMap = tex(mc); mat.metalness = MR_METAL; mat.roughness = MR_ROUGH;
     mat.needsUpdate = true;
     return true;
   }
@@ -272,7 +272,7 @@ export class RigBuilder {
     x.putImageData(out, 0, 0);
     const t = new T.CanvasTexture(c);
     t.flipY = false; t.colorSpace = T.NoColorSpace; t.anisotropy = this.aniso;
-    mat.metalnessMap = mat.roughnessMap = t; mat.metalness = 1; mat.roughness = 1; mat.needsUpdate = true;
+    mat.metalnessMap = mat.roughnessMap = t; mat.metalness = MR_METAL; mat.roughness = MR_ROUGH; mat.needsUpdate = true;
   }
 
   image(file) {
@@ -350,13 +350,17 @@ export function partOf(item, names) {
 
 // What a material is made of, read off its name and its texture's: Valheim's own shaders
 // keep their metal and gloss in maps the export leaves behind, so the names stand in for them.
+// ForgeMap: the game's own metal / smoothness maps, read as they are, make iron look like chrome
+// under a browser's environment light (the game's own lighting is much flatter): metal is scaled
+// down and every surface made rougher, so iron reads dull and worn as in Valheim.
+export const MR_METAL = 0.55, MR_ROUGH = 1.45;
 // The figures are three.js's metalness / roughness for the game's look: dull iron, worn leather.
 export function surfaceOf(name, tex) {
   const n = `${name || ''} ${tex || ''}`.toLowerCase();
   if (/hair|beard/.test(n)) return { metalness: 0, roughness: 0.62 };
   if (/webmap:skin|body|skin/.test(n)) return { metalness: 0, roughness: 0.72 };
   if (/iron|bronze|steel|metal|silver|copper|blackmetal|flametal|chain|mail|blade|sword|axe|mace|knife|spear|atgeir|pickaxe|helmet_(iron|bronze|drake|padded|carapace|fenris)|padded/.test(n))
-    return { metalness: 0.55, roughness: 0.42 };
+    return { metalness: 0.4, roughness: 0.58 };
   if (/leather|hide|troll|deer|wolf|lox|fur|cloth|cape|linen|rag|feather|wood|bow|shield/.test(n)) return { metalness: 0, roughness: 0.82 };
   return { metalness: 0.05, roughness: 0.7 };
 }
