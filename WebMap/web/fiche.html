@@ -90,6 +90,25 @@
     .fc .mid{grid-column:1;grid-row:3}
     .fc .pent{display:flex;grid-column:2;grid-row:3 / 5;height:auto;align-items:center}
   }
+  /* a big screen (the card opened on its own): a centred card of a sensible size, figures kept
+     compact instead of stretched, the pentagon and the gear made big enough to read */
+  @media (min-width:900px) and (min-height:560px){
+    body{display:grid;place-items:center;padding:24px}
+    .fc{width:min(1120px,100%);height:min(760px,100%);grid-template-columns:minmax(0,1fr) 320px;padding:20px 24px 14px;column-gap:24px}
+    .fc .nm{font-size:1.9rem}
+    .fc .sub2{font-size:.82rem}
+    .fc .sub2 .cls{font-size:.68rem}
+    .fc .mid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:14px}
+    .fc .six{grid-template-columns:1fr 1fr;grid-template-rows:none;grid-auto-rows:auto;align-content:start;gap:8px}
+    .fc .six .stat{padding:10px 14px}
+    .fc .six .v{font-size:1.35rem}
+    .fc .six .k{font-size:.62rem}
+    .fc .pent .radar{width:280px;height:280px}
+    .fc .pent .radar .lb{font-size:11px}
+    .fc .eqstrip{gap:8px;margin-bottom:6px}
+    .fc .eqstrip .eq-pic{width:64px;height:64px;border-radius:8px}
+    .fc .eqstrip .eq-pic svg{width:26px;height:26px}
+  }
 </style>
 </head>
 <body>
