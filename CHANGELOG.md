@@ -1,6 +1,15 @@
 # Changelog
 
-## Unreleased
+## ForgeMap 1.3.0
+
+* **A figure you can look at.** A button opens a player's figure big in the middle of the screen
+  (wheel to come closer, Esc or a click beside it to close); the figure's light and materials are
+  closer to the game's (dull iron, matt leather, warm sun, cool shade).
+* **The player card on a big screen** has its own layout: the figure the whole height on the left,
+  the figures and a real-size pentagon on the right, then the full gear panel (names, stats,
+  favourite weapon). Small boxes and iframes keep the compact card.
+* **Favourite weapon from the start.** Until the server has timed each item in hand, the kind of
+  weapon held the longest (kept since the first day) shows, with a picture of that kind.
 
 * **The game's own textures, optionally.** `tools/textures-hd.py` reads a server owner's own
   Valheim install and writes the normal, metal / roughness and glow maps the dedicated server
