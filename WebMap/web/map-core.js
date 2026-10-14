@@ -949,17 +949,25 @@ function credits(){
       forgemap: "<b>ForgeMap</b>", forgeserver: link("https://forgeserver.fr", "ForgeServer.fr"), webmap: link("https://github.com/hunter-jsb/valheim-webmap", "WebMap")})}</span>`);
   }
 }
-// ForgeMap: a small "rent your own server" ribbon at the foot of every page, closed by its x for
+// ForgeMap: a small "rent your own server" card under the sidebar's footer, closed by its x for
 // the rest of the visit (sessionStorage, when the page may use it). Off with promo: false in site-config.js.
 function promo(){
-  if(!cfg.promo || document.querySelector(".fm-promo")) return;
+  if(!cfg.promo || document.querySelector(".fm-promo, .fm-ad")) return;
   try{ if(sessionStorage.getItem("forgemap.promo") === "closed") return; }catch(e){}
-  const el = document.createElement("div");
-  el.className = "fm-promo glass";
-  el.innerHTML = `<a href="https://forgeserver.fr/?utm_source=forgemap&amp;utm_medium=carte" target="_blank" rel="noopener">${FLAME}<span>${I18N.t("Your own Valheim server, ready in 5 minutes")}</span><b>${I18N.t("Rent yours on ForgeServer.fr")}</b></a>`
-    + `<button type="button" aria-label="${I18N.t("Close")}" title="${I18N.t("Close")}">&#215;</button>`;
-  el.querySelector("button").addEventListener("click", () => { el.remove(); try{ sessionStorage.setItem("forgemap.promo", "closed"); }catch(e){} });
-  document.body.appendChild(el);
+  const url = "https://forgeserver.fr/?utm_source=forgemap&amp;utm_medium=carte";
+  const close = el => { el.querySelector("button.x").addEventListener("click", e => { e.preventDefault(); el.remove(); try{ sessionStorage.setItem("forgemap.promo", "closed"); }catch(err){} }); };
+  // a card under the sidebar's footer (in the drawer on a phone), the art from forgeserver.fr; never over the map
+  const foot = document.querySelector(".foot");
+  if(foot){
+    const el = document.createElement("div");
+    el.className = "fm-ad";
+    el.innerHTML = `<a href="${url}" target="_blank" rel="noopener"><span class="art" aria-hidden="true"></span>`
+      + `<span class="txt"><span class="eyebrow">${FLAME}ForgeServer.fr</span><b>${I18N.t("Your own Valheim server")}</b>`
+      + `<span class="sub">${I18N.t("Ready in 5 minutes, mods in one click, a backup every night.")}</span>`
+      + `<span class="go">${I18N.t("Rent yours")} &#8594;</span></span></a>`
+      + `<button type="button" class="x" aria-label="${I18N.t("Close")}" title="${I18N.t("Close")}">&#215;</button>`;
+    close(el); foot.after(el); return;
+  }
 }
 // ForgeMap: ForgeServer's flame before the world's name in the bar
 const FLAME = '<svg class="flame" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 23a7.5 7.5 0 0 1-5.138-12.963C8.204 8.774 11.5 6.5 11 1.5c6 4 9 8 3 14 1 0 2.5 0 5-2.47.27.773.5 1.604.5 2.47A7.5 7.5 0 0 1 12 23z"/></svg>';

@@ -283,16 +283,17 @@ body:not(.side-open) .sidebar{display:none}
 .brand{display:inline-flex;align-items:center;gap:.45rem}
 .brand .flame{width:1.05em;height:1.05em;flex:0 0 auto;color:var(--gold)}
 .fm-credit b{color:var(--ink-2);font-weight:600}
-/* the "rent your own server" ribbon: a pill at the foot of the page, over whatever is there */
-.fm-promo{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:.2rem;
-  padding:.3rem .35rem .3rem .75rem;border-radius:var(--pill);border-color:var(--gold-dim);box-shadow:var(--shadow);font-size:.8rem;max-width:calc(100vw - 32px)}
-.fm-promo a{display:flex;align-items:center;gap:.55rem;color:var(--ink-2);white-space:nowrap;min-width:0}
-.fm-promo a:hover{text-decoration:none;color:var(--ink)}
-.fm-promo a span{overflow:hidden;text-overflow:ellipsis}
-.fm-promo .flame{width:1.1em;height:1.1em;flex:0 0 auto;color:var(--gold)}
-.fm-promo b{font-family:var(--mono);font-size:.74rem;font-weight:700;color:var(--gold-ink);background:var(--gold);border-radius:var(--pill);padding:.22rem .65rem;flex:0 0 auto}
-.fm-promo a:hover b{filter:brightness(1.1)}
-.fm-promo button{background:none;border:0;color:var(--muted);font-size:1.05rem;line-height:1;padding:.15rem .4rem;cursor:pointer;border-radius:var(--pill)}
-.fm-promo button:hover{color:var(--ink)}
-@media (max-width:760px){ .fm-promo{bottom:10px;font-size:.74rem} .fm-promo a span{display:none} }
-@media (min-width:761px){ body.side-open .fm-promo{left:calc(50% + var(--side)/2)} }
+/* the "rent your own server" card under the sidebar's footer: the art from forgeserver.fr fading into the card */
+.fm-ad{position:relative;margin-top:1rem;border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;background:var(--card)}
+.fm-ad a{display:block;color:var(--ink-2)}
+.fm-ad a:hover{text-decoration:none}
+.fm-ad .art{display:block;height:92px;background:linear-gradient(180deg,rgba(34,29,26,0) 35%,var(--card) 100%),url(https://forgeserver.fr/images/jeux/valheim-bandeau.jpg) 64% 38%/cover no-repeat,var(--card-2)}
+.fm-ad .txt{display:flex;flex-direction:column;gap:.2rem;padding:.15rem .85rem .85rem}
+.fm-ad .eyebrow{display:flex;align-items:center;gap:.35rem;color:var(--gold)}
+.fm-ad .eyebrow .flame{width:1.05em;height:1.05em}
+.fm-ad b{color:var(--bright);font-size:.95rem;font-weight:700}
+.fm-ad .sub{font-size:.76rem;color:var(--muted);line-height:1.45}
+.fm-ad .go{align-self:flex-start;margin-top:.45rem;font-family:var(--mono);font-size:.74rem;font-weight:700;color:var(--gold-ink);background:var(--gold);border-radius:var(--pill);padding:.28rem .8rem}
+.fm-ad a:hover .go{filter:brightness(1.1)}
+.fm-ad .x{position:absolute;top:.4rem;right:.4rem;width:1.5rem;height:1.5rem;border:0;border-radius:50%;background:rgba(12,10,9,.65);color:var(--ink-2);font-size:.95rem;line-height:1;cursor:pointer}
+.fm-ad .x:hover{color:var(--bright)}
