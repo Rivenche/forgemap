@@ -15,9 +15,9 @@ const HIDDEN = new Set(["portal", "grave"]);
 const PRESETS = [
   ["Default",    ["portal", "grave"]],
   ["Travel",     ["forest", "plan", "grave"]],
-  ["Builds",     ["vehicles", "portal", "grave", "trader", "pin"]],
+  ["Builds",     ["vehicles", "portal", "grave", "trader", "place", "pin"]],
   ["Wilds",      ["builds", "plan", "vehicles", "portal"]],
-  ["Bare",       ["forest", "builds", "plan", "vehicles", "portal", "grave", "trader", "pin"]],
+  ["Bare",       ["forest", "builds", "plan", "vehicles", "portal", "grave", "trader", "place", "pin"]],
 ];
 function markPresets(){
   const now = [...HIDDEN].sort().join();

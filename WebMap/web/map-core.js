@@ -816,6 +816,27 @@ const BOSS_ICON = {
                 ["M12 10.2a1.8 1.8 0 1 0 0 3.6a1.8 1.8 0 1 0 0-3.6z","#e8b45f",1]],
 };
 
+// ---------- the places the map marks ----------
+// Of the world's locations (/locations: walked ground, or what a Vegvisir pointed to), the map
+// marks a boss's altar by the boss it calls, and the Forge of Potential, the great stone where
+// idols are offered. Crypts, caves and camps are the 3D tour's. An unknown place a Vegvisir
+// pointed to is a boss's too -- the Deep North's, once the page learns its name.
+const PLACE_ICON = {
+  "place-forge":[["M5 21.8h14v-2.6H5z","#2c3034"],
+                 ["M7.6 19.4 8.4 6.6 12 2.2l3.6 4.4.8 12.8z","#454c54"],
+                 ["M11.2 8h1.6v8.6h-1.6zM9.4 11.6 12 9.6l2.6 2-.9 1.2L12 11.5l-1.7 1.3z","#8ff0fa",1]],
+};
+const PLACE_BOSS = [[/^Eikthyrnir/, "eikthyr"], [/^GDKing/, "gdking"], [/^Bonemass/, "bonemass"], [/^Dragonqueen/, "dragon"],
+                    [/^GoblinKing/, "goblinking"], [/^Mistlands_DvergrBossEntrance/, "queen"], [/^Fader/, "fader"]];
+function place(l){
+  const kind = String(l.kind || "");
+  if(/^AncientUpgradeStation/.test(kind)) return {icon: "place-forge", name: I18N.t("Forge of Potential"), boss: false};
+  const row = PLACE_BOSS.find(([re]) => re.test(kind));
+  if(row) return {icon: BOSSES.icon(row[1]), name: BOSSES.label(row[1]), boss: true};
+  if(l.v) return {icon: "boss-other", name: I18N.name(kind) || kind.replace(/\d+$/, "").replace(/_/g, " "), boss: true};
+  return null;
+}
+
 // ---------- the kitchens ----------
 // /stats/players' busiest stations as kitchens: the busiest station still unclaimed and
 // every other within 24 m of it make one, the most meals first. None from a mod without them.
@@ -1081,6 +1102,6 @@ return {cfg, nav, toggleSide, user, authHeaders, whoami,
         fetchJSON, fetchBytes, fetchState, fetchConfig, post, layers,
         drawRasters, parsePieces, explored, nearestExplored, filterExplored, walked, drawPieces, drawFires, drawDeaths, drawNames, hitName,
         clamp, view, viewCache, fitCanvas, scaleBar,
-        ICONS, spriteSVG, injectSprite, iconPaths, vehicleStyle, PIN_ICON, BOSSES, BOSS_ICON, kitchens, pic, BIOME_INK, biomeRows,
+        ICONS, spriteSVG, injectSprite, iconPaths, vehicleStyle, PIN_ICON, BOSSES, BOSS_ICON, PLACE_ICON, place, kitchens, pic, BIOME_INK, biomeRows,
         parsePins, plural, ord, num, km, metres, per, ago, secsAgo, everyMinute, esc};
 })();

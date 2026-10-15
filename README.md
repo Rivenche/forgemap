@@ -20,6 +20,8 @@ ForgeServer's look and a full French translation. Free, for the whole community.
 * La carte du monde avec le **brouillard partagé** : seulement ce que les joueurs ont exploré.
 * Les **joueurs en direct** avec leur **ping** (vert, orange, rouge), leurs constructions,
   les portails, les bateaux, les charrettes, les tombes et les marchands.
+* Les **autels de boss** et la **Forge du potentiel** dès qu'on les a explorés, et l'autel
+  qu'un **Vegvisir** a montré, même si personne n'y est encore allé.
 * Les **noms des lieux** (îles, montagnes, lacs, rivières) et les chemins les plus pratiqués.
 * **Le monde en 3D** : pose le petit bonhomme sur un endroit déjà parcouru, comme dans
   Street View ; Z Q S D sur un clavier français.
@@ -110,6 +112,8 @@ détaillé (en anglais) : `README-WebMap.md`, section « Full-quality textures �
 * The world map with a **shared fog of war**: only what players have explored.
 * **Live players** with their **ping** (green, orange, red), their builds, portals, ships,
   carts, graves and traders.
+* **Boss altars** and the **Forge of Potential** once explored, and the altar a
+  **Vegvisir** pointed to, even before anyone has been there.
 * **Place names** (islands, ranges, lakes, rivers) and the most walked trails.
 * **The world in 3D**: drop the little figure on any walked spot, as in Street View.
 * The **World** (records, lands, bosses), **Portals** (the portal atlas), **Players** and

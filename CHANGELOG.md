@@ -1,5 +1,14 @@
 # Changelog
 
+## ForgeMap 1.4.0
+
+* **Boss altars and the Forge of Potential on the map.** The map marks each boss's altar
+  (Eikthyr to Fader, with the boss's own icon) and the Deep North's Forge of Potential, the great
+  stone where idols are offered, from `/locations`; a legend row hides them.
+* **What a Vegvisir showed.** The server answers a Vegvisir itself (`RPC_DiscoverLocationResponse`),
+  so the mod remembers where it pointed (`map_data/<world>/vegvisir.tsv`) and `/locations` reports
+  that altar even in unwalked ground, with `"v":1`. A Vegvisir read before 1.4.0 has to be read again.
+
 ## ForgeMap 1.3.1
 
 * README (French and English) brought up to date with everything since 1.1: the Players page

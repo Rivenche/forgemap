@@ -131,10 +131,15 @@
     animation:hlring 1s ease-out infinite}
   @keyframes hlring{from{transform:scale(.5);opacity:1}to{transform:scale(3.4);opacity:0}}
   .marker.trader .nm{color:var(--trader)}
+  /* a boss's altar, the Forge of Potential: places, named like a trader */
+  .marker.place .ic{width:20px;height:20px}
+  .marker.place .nm{color:var(--portal-ink)}
+  .marker.place.boss .nm{color:var(--boss)}
   .marker.grave .nm{color:var(--grave)}
   .no-portal .marker.portal,.no-portal #portalLinks{display:none}
   .no-grave .marker.grave{display:none}
   .no-trader .marker.trader{display:none}
+  .no-place .marker.place{display:none}
   .no-pin .marker.pin{display:none}
   .no-vehicles .marker[data-kind="raft"],.no-vehicles .marker[data-kind="karve"],
   .no-vehicles .marker[data-kind="longship"],.no-vehicles .marker[data-kind="cart"]{display:none}
@@ -263,7 +268,7 @@
 
 <!-- The marker sprite, injected before the first <use> of it is parsed. -->
 <svg id="icons" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
-<script>MapCore.injectSprite(document.getElementById("icons"));</script>
+<script>MapCore.injectSprite(document.getElementById("icons"), Object.assign({}, MapCore.ICONS, MapCore.BOSS_ICON, MapCore.PLACE_ICON));</script>
 
 <nav class="nav" data-page="index" data-side></nav>
 <script>MapCore.nav();</script>
@@ -300,6 +305,7 @@
       <span class="ic" data-layer="portal"><svg style="width:16px;height:16px"><use href="#ic-portal"></use></svg></span><span data-layer="portal">portals</span>
       <span class="ic" data-layer="grave"><svg style="width:16px;height:16px"><use href="#ic-grave"></use></svg></span><span data-layer="grave">graves</span>
       <span class="ic" data-layer="trader"><svg style="width:16px;height:16px"><use href="#ic-trader"></use></svg></span><span data-layer="trader">traders</span>
+      <span class="ic" data-layer="place"><svg style="width:16px;height:16px"><use href="#ic-boss-eikthyr"></use></svg></span><span data-layer="place">boss altars &amp; the forge</span>
       <span class="ic" data-layer="pin"><svg style="width:17px;height:17px"><use href="#ic-pin-dot"></use></svg></span><span data-layer="pin">pins</span>
     </div>
     <p class="stamp" id="stamp"></p>
@@ -451,6 +457,7 @@ const WORLD = {
   portals: [],                    // portals and the links between connected pairs
   graves: [],                     // tombstones still standing, i.e. gear still out there
   traders: [],                    // Haldor, Hildir, the Bog Witch: only those in walked ground
+  places: [],                     // the boss altars and the Forge of Potential, walked or pointed to by a Vegvisir
   deaths: [], deathsAsCame: null, // where people died, newest last; as it came, to spot a change
   who: null,                      // one player's deaths only, from a link off the players page
   forest: {},                     // /forest/stats: trees standing, stumps cut
@@ -508,7 +515,7 @@ function paint(){
     `${(-V.tx/V.scale).toFixed(3)} ${(-V.ty/V.scale).toFixed(3)} ${(W/V.scale).toFixed(3)} ${(H/V.scale).toFixed(3)}`);
   positionMarkers();
 }
-// ---------- markers: players, pins, boats, portals, graves, traders ----------
+// ---------- markers: players, pins, boats, portals, graves, traders, places ----------
 function positionMarkers(){
   document.querySelectorAll("#markers .marker").forEach(el => {
     el.style.left = (V.tx + (+el.dataset.px) * V.scale) + "px";
@@ -555,7 +562,11 @@ function buildMarkers(){
   const t = (WORLD.traders||[]).map(m =>
     `<div class="marker trader" data-px="${m.px}" data-py="${m.py}" title="${esc(m.name)}">`
     + `<svg class="ic"><use href="#ic-trader"></use></svg><span class="nm">${esc(m.name)}</span></div>`);
-  document.getElementById("markers").innerHTML = p.concat(q).concat(v).concat(w).concat(g).concat(t).join("");
+  // A boss's altar or the forge: a place, under everything that moves.
+  const l = (WORLD.places||[]).map(m =>
+    `<div class="marker place${m.boss?" boss":""}" data-px="${m.px}" data-py="${m.py}" title="${esc(m.name)}">`
+    + `<svg class="ic"><use href="#ic-${m.icon}"></use></svg><span class="nm">${esc(m.name)}</span></div>`);
+  document.getElementById("markers").innerHTML = l.concat(p).concat(q).concat(v).concat(w).concat(g).concat(t).join("");
   drawPortalLinks();
   positionMarkers();
 }
@@ -674,6 +685,15 @@ function renderStatus(){
 function renderStamp(){
   document.getElementById("stamp").textContent = WORLD.live === false ? I18N.t("server unreachable")
     : I18N.t("live · updated {time}", {time: I18N.time(WORLD.updated)});
+}
+
+// ---------- the places ----------
+// The world's locations change only as ground is walked or a Vegvisir is read: once a minute.
+async function tickPlaces(){
+  let j; try{ j = await MapCore.fetchJSON(API, "/locations"); }catch(e){ return; }
+  const list = (j && Array.isArray(j.locations)) ? j.locations : [];
+  WORLD.places = list.map(l => { const k = MapCore.place(l); return k && {...k, ...toPx(l.x, l.z)}; }).filter(Boolean);
+  buildMarkers();
 }
 
 // ---------- the spotlight ----------
@@ -989,6 +1009,8 @@ async function boot(){
   setInterval(()=>{ if(document.visibilityState==="visible") tickState(); }, 5000);
   tickStats();
   setInterval(()=>{ if(document.visibilityState==="visible") tickStats(); }, 300000);
+  tickPlaces();
+  setInterval(()=>{ if(document.visibilityState==="visible") tickPlaces(); }, 60000);
   if(STATUS_JSON){
     tickStatus();
     setInterval(()=>{ if(document.visibilityState==="visible") tickStatus(); }, 60000);

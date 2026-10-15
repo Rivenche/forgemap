@@ -26,7 +26,7 @@
   /* the map's own hues: what a portal, a trader, a grave wears; the atlas's ground */
   --portal-ink:#9fe8f2;--portal-dim:#97c4d0;--portal-line:#3a5a65;
   --portal-well:rgba(14,21,24,.9);--portal-on:rgba(111,216,230,.14);
-  --trader:#f0cf7a;--grave:#d9c7a6;--chart:#05070a;--void:#000;
+  --trader:#f0cf7a;--grave:#d9c7a6;--boss:#f2a184;--chart:#05070a;--void:#000;
   /* over the world: a label's backing, a text's halo, an icon's shadow */
   --halo:rgba(12,9,7,.8);--halo-text:0 1px 3px #000,0 0 6px #000;
   --shadow-ink:drop-shadow(0 1px 2px rgba(0,0,0,.55));

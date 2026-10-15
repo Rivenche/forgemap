@@ -145,6 +145,7 @@ namespace WebMap
             Chart.Load(worldDataPath);
             Features.Load(worldDataPath);
             Portals.Load(worldDataPath);
+            Locations.Load(worldDataPath);
             // prefabs are the same in every world, so the model library sits beside the worlds
             if (Models.ModelStore.Root == null) Models.ModelStore.Init(mapDataPath);
 
